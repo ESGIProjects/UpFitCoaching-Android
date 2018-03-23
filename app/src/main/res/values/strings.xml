@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">MyCoaching</string>
+    <string name="mail_label">Mail</string>
+    <string name="passwd_label">Password</string>
+    <string name="confirm_label"> Confirm password</string>
+    <string name="sign_in">Sign in</string>
+    <string name="sign_up">Sign up</string>
+    <string name="forgot">Forgot your password ?</string>
+</resources>
