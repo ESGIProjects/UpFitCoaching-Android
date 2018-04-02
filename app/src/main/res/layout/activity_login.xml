@@ -64,6 +64,13 @@
                 android:maxLines="1" />
         </android.support.design.widget.TextInputLayout>
 
+        <CheckBox
+            android:id="@+id/coach"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Je suis un coach"
+            android:layout_marginTop="10dp"/>
+
         <Button
             android:id="@+id/signin"
             android:layout_width="match_parent"
@@ -72,7 +79,8 @@
             android:text="@string/sign_in"
             android:textColor="@color/colorWhite"
             android:textStyle="bold"
-            android:background="@color/colorPrimaryDark"/>
+            android:background="@color/colorPrimaryDark"
+            android:layout_marginTop="10dp"/>
 
         <Button
             android:id="@+id/signup"

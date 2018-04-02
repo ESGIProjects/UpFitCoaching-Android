@@ -1,14 +1,17 @@
-package com.mycoaching.mycoaching;
+package com.mycoaching.mycoaching.UserActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.mycoaching.mycoaching.LoginActivity;
+import com.mycoaching.mycoaching.R;
+
 /**
  * Created by tensa on 17/03/2018.
  */
 
-public class RegisterActivity extends AppCompatActivity {
+public class UserRegisterActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);

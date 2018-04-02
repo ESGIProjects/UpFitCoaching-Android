@@ -31,12 +31,16 @@
             android:name=".MessagingActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".UserActivity.UserRegisterActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MainActivity"
-            android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:name=".UserActivity.UserMainActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait" ></activity>
+        <activity
+            android:name=".CoachActivity.CoachMainActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait" ></activity>
     </application>
 
 </manifest>
