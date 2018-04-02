@@ -30,19 +30,20 @@ public class LoginActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(),"Test signin",Toast.LENGTH_LONG).show();
         Intent i = new Intent(this,ChatActivity.class);
         startActivity(i);
+        overridePendingTransition(R.animator.slide_from_right,R.animator.slide_to_right);
     }
 
     @OnClick(R.id.signup) void signUp(){
         Toast.makeText(getApplicationContext(),"Test signup",Toast.LENGTH_LONG).show();
         Intent i = new Intent(this,MessagingActivity.class);
         startActivity(i);
+        overridePendingTransition(R.animator.slide_from_right,R.animator.slide_to_right);
     }
 
     @OnClick(R.id.forgot) void forgot(){
-        if(CommonMethods.checkFields(email.toString(),password.toString()) && CommonMethods.isAvailable(getApplicationContext())){
-            Toast.makeText(getApplicationContext(),"Good",Toast.LENGTH_LONG).show();
-        }
-        Toast.makeText(getApplicationContext(),"Bad",Toast.LENGTH_LONG).show();
+        Intent i = new Intent(LoginActivity.this,RegisterActivity.class);
+        startActivity(i);
+        overridePendingTransition(R.animator.slide_from_right,R.animator.slide_to_right);
     }
 
     @Override

@@ -9,8 +9,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitSingleton {
 
-    static final String url = ""
-            ;
+    static final String url = "";
+
     private RetrofitSingleton(){
 
     }

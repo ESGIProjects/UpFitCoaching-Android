@@ -31,5 +31,4 @@ public class CommonMethods {
             fields[i].getText().clear();
         }
     }
-
 }
