@@ -28,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @OnClick(R.id.signin) void signIn(){
         Toast.makeText(getApplicationContext(),"Test signin",Toast.LENGTH_LONG).show();
-        Intent i = new Intent(this,ChatActivity.class);
+        Intent i = new Intent(this,MainActivity.class);
         startActivity(i);
         overridePendingTransition(R.animator.slide_from_right,R.animator.slide_to_right);
     }
