@@ -34,12 +34,11 @@
             android:name=".UserActivity.UserRegisterActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".CoachActivity.CoachMainActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".UserActivity.UserMainActivity"
-            android:label="@string/title_activity_user_main"></activity>
+            android:label="@string/title_activity_user_main" />
+        <activity
+            android:name=".CoachActivity.CoachMainActivity"
+            android:label="@string/title_activity_coach_main"></activity>
     </application>
 
 </manifest>

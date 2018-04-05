@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.mycoaching.mycoaching.CoachActivity.CoachMainActivity;
 import com.mycoaching.mycoaching.UserActivity.UserMainActivity;
 import com.mycoaching.mycoaching.UserActivity.UserRegisterActivity;
+import com.mycoaching.mycoaching.Util.CommonMethods;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,7 +22,7 @@ import butterknife.OnClick;
 
 public class LoginActivity extends AppCompatActivity {
 
-    Intent i;
+    private Intent i = null;
 
     @BindView(R.id.email)
     EditText email;
@@ -32,26 +34,29 @@ public class LoginActivity extends AppCompatActivity {
     CheckBox coach;
 
     @OnClick(R.id.signin) void signIn(){
-        if(coach.isChecked()){
-            i = new Intent(this,CoachMainActivity.class);
+        if(CommonMethods.isAvailable(getApplicationContext())){
+            if(coach.isChecked()){
+                i = new Intent(this,CoachMainActivity.class);
+                performTransition(i,R.animator.slide_from_right,R.animator.slide_to_right);
+            }
+            else{
+                i = new Intent(this,UserMainActivity.class);
+                performTransition(i,R.animator.slide_from_right,R.animator.slide_to_right);
+            }
         }
         else{
-            i = new Intent(this,UserMainActivity.class);
+            Toast.makeText(getApplicationContext(),R.string.no_connection,Toast.LENGTH_LONG).show();
         }
-        startActivity(i);
-        overridePendingTransition(R.animator.slide_from_right,R.animator.slide_to_right);
     }
 
     @OnClick(R.id.signup) void signUp(){
         i = new Intent(this,MessagingActivity.class);
-        startActivity(i);
-        overridePendingTransition(R.animator.slide_from_right,R.animator.slide_to_right);
+        performTransition(i,R.animator.slide_from_right,R.animator.slide_to_right);
     }
 
     @OnClick(R.id.forgot) void forgot(){
         i = new Intent(LoginActivity.this,UserRegisterActivity.class);
-        startActivity(i);
-        overridePendingTransition(R.animator.slide_from_right,R.animator.slide_to_right);
+        performTransition(i,R.animator.slide_from_right,R.animator.slide_to_right);
     }
 
     @Override
@@ -60,5 +65,10 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         getSupportActionBar().hide();
         ButterKnife.bind(this);
+    }
+
+    public void performTransition(Intent i, int from, int to){
+        startActivity(i);
+        overridePendingTransition(from,to);
     }
 }

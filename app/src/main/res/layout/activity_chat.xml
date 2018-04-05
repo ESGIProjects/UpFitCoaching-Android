@@ -7,7 +7,6 @@
 
     <ListView
         android:layout_width="match_parent"
-        android:id="@+id/messages_view"
         android:layout_weight="2"
         android:divider="@color/colorPrimary"
         android:layout_height="wrap_content"
@@ -20,7 +19,6 @@
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="2"
