@@ -5,6 +5,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.widget.EditText;
 
+import java.util.regex.Pattern;
+
 /**
  * Created by tensa on 17/03/2018.
  */
@@ -30,5 +32,13 @@ public class CommonMethods {
         for(int i = 0; i < fields.length; i++){
             fields[i].getText().clear();
         }
+    }
+
+    public static boolean checkEmail(String email){
+        return email.contains("@");
+    }
+
+    public static boolean checkPassword(String pwd){
+        return pwd.length() >= 8;
     }
 }

@@ -6,6 +6,7 @@
     <string name="sign_up">Inscription</string>
     <string name="forgot">Mot de passe oublié ?</string>
     <string name="no_connection">Aucune connection internet détectée</string>
+    <string name="wrong_credentials">Mauvais email/mot de passe !</string>
 
 
     <string name="title_activity_user_main">UserMainActivity</string>

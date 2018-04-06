@@ -35,13 +35,20 @@ public class LoginActivity extends AppCompatActivity {
 
     @OnClick(R.id.signin) void signIn(){
         if(CommonMethods.isAvailable(getApplicationContext())){
-            if(coach.isChecked()){
-                i = new Intent(this,CoachMainActivity.class);
-                performTransition(i,R.animator.slide_from_right,R.animator.slide_to_right);
+            if(CommonMethods.checkEmail(email.getText().toString())
+                    && CommonMethods.checkPassword(password.getText().toString())){
+                if(coach.isChecked()){
+                    i = new Intent(this,CoachMainActivity.class);
+                    performTransition(i,R.animator.slide_from_right,R.animator.slide_to_right);
+                }
+                else{
+                    i = new Intent(this,UserMainActivity.class);
+                    performTransition(i,R.animator.slide_from_right,R.animator.slide_to_right);
+                }
             }
             else{
-                i = new Intent(this,UserMainActivity.class);
-                performTransition(i,R.animator.slide_from_right,R.animator.slide_to_right);
+                Toast.makeText(getApplicationContext(),R.string.wrong_credentials,Toast.LENGTH_LONG).show();
+                CommonMethods.clearFields(email,password);
             }
         }
         else{
