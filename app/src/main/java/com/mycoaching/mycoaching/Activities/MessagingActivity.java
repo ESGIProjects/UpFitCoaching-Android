@@ -1,9 +1,11 @@
-package com.mycoaching.mycoaching;
+package com.mycoaching.mycoaching.Activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.mycoaching.mycoaching.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

@@ -1,10 +1,10 @@
-package com.mycoaching.mycoaching.UserActivity;
+package com.mycoaching.mycoaching.Activities.UserActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.mycoaching.mycoaching.LoginActivity;
+import com.mycoaching.mycoaching.Activities.LoginActivity;
 import com.mycoaching.mycoaching.R;
 
 /**

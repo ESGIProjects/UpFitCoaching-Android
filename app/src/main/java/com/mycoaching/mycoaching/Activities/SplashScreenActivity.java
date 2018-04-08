@@ -1,9 +1,11 @@
-package com.mycoaching.mycoaching;
+package com.mycoaching.mycoaching.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+
+import com.mycoaching.mycoaching.R;
 
 /**
  * Created by tensa on 06/03/2018.

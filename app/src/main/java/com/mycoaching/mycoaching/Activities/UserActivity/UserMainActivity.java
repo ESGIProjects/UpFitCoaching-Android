@@ -1,4 +1,4 @@
-package com.mycoaching.mycoaching.CoachActivity;
+package com.mycoaching.mycoaching.Activities.UserActivity;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.mycoaching.mycoaching.R;
 
-public class CoachMainActivity extends AppCompatActivity {
+public class UserMainActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
 
@@ -36,7 +36,7 @@ public class CoachMainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_coach_main);
+        setContentView(R.layout.activity_user_main);
 
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
