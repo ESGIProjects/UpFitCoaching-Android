@@ -11,8 +11,8 @@ import retrofit2.Response;
 
 public class CallService{
 
-    public static void signIn(String mail, String password, final ServiceResultListener srl){
-        ApiUtils.getRetrofitInstance().signIn(mail,password).enqueue(new Callback<Void>() {
+    public static void signIn(String isCoach, String mail, String password, final ServiceResultListener srl){
+        ApiUtils.getRetrofitInstance().signIn(isCoach,mail,password).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 ApiResults sir = new ApiResults();
