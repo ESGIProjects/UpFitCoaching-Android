@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -30,6 +31,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private Intent i = null;
     private ProgressDialog pd = null;
+    private String type = null;
+    private Button user,coach;
 
     @BindView(R.id.email)
     EditText email;
@@ -37,46 +40,60 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.password)
     EditText password;
 
-    @BindView(R.id.coach)
-    CheckBox coach;
+    @OnClick(R.id.user) void setUser(){
+        type = "0";
+        Log.i("TYPE : ", type);
+        findViewById(R.id.user).setBackgroundColor(getResources().getColor(R.color.colorAccent));
+        findViewById(R.id.coach).setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+    }
+
+    @OnClick(R.id.coach) void setCoach(){
+        type = "1";
+        Log.i("TYPE : ", type);
+        findViewById(R.id.coach).setBackgroundColor(getResources().getColor(R.color.colorAccent));
+        findViewById(R.id.user).setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+    }
 
     @OnClick(R.id.signin) void signIn(){
         if(CommonMethods.isAvailable(getApplicationContext())){
             if(CommonMethods.checkEmail(email.getText().toString())
-                    && CommonMethods.checkPassword(password.getText().toString())){
+                    && CommonMethods.checkPassword(password.getText().toString()) && type != null){
                 pd = new ProgressDialog(this,R.style.AppCompatAlertDialogStyle);
                 pd.setMessage("Connection en cours...");
                 pd.show();
-                if(coach.isChecked()){
-                    i = new Intent(this,CoachMainActivity.class);
-                    performTransition(i,R.animator.slide_from_right,R.animator.slide_to_right);
-                }
-                else{
-                    CallService.signIn(email.getText().toString(),password.getText().toString(),new ServiceResultListener(){
-                        @Override
-                        public void onResult(ApiResults ar){
-                            pd.dismiss();
-                            if(ar.getResponseCode() == 200){
-                                Toast.makeText(getApplicationContext(),"Connection réussie !",Toast.LENGTH_SHORT).show();
-                                i = new Intent(getApplicationContext(),UserMainActivity.class);
+                CallService.signIn(type,email.getText().toString(),password.getText().toString(),new ServiceResultListener(){
+                    @Override
+                    public void onResult(ApiResults ar){
+                        pd.dismiss();
+                        if(ar.getResponseCode() == 200){
+                            if(type.equals("1")){
+                                i = new Intent(getApplicationContext(),CoachMainActivity.class);
                                 performTransition(i,R.animator.slide_from_right,R.animator.slide_to_right);
                             }
                             else{
-                                Log.i("ERROR : ", "" + ar.getResponseCode());
-                                if(ar.getResponseCode() != 0){
-                                    Toast.makeText(getApplicationContext(),"Veuillez réessayer ultérieurement",Toast.LENGTH_SHORT).show();
-                                }
-                                else{
-                                    Toast.makeText(getApplicationContext(),"Pas de réponse du serveur",Toast.LENGTH_SHORT).show();
-                                }
-                                CommonMethods.clearFields(email,password);
+                                i = new Intent(getApplicationContext(),UserMainActivity.class);
+                                performTransition(i,R.animator.slide_from_right,R.animator.slide_to_right);
                             }
+                            Toast.makeText(getApplicationContext(),"Connection réussie !",Toast.LENGTH_SHORT).show();
                         }
-                    });
-                }
+                        else{
+                            Log.i("ERROR : ", "" + ar.getResponseCode());
+                            if(ar.getResponseCode() != 0){
+                                Toast.makeText(getApplicationContext(),"Veuillez réessayer ultérieurement",Toast.LENGTH_SHORT).show();
+                            }
+                            else{
+                                Toast.makeText(getApplicationContext(),"Pas de réponse du serveur",Toast.LENGTH_SHORT).show();
+                            }
+                            CommonMethods.clearFields(email,password);
+                        }
+                    }
+                });
+            }
+            else if(type == null){
+                Toast.makeText(getApplicationContext(),R.string.no_type_defined,Toast.LENGTH_LONG).show();
             }
             else{
-                Toast.makeText(getApplicationContext(),R.string.wrong_credentials,Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),R.string.missing_fields,Toast.LENGTH_LONG).show();
                 CommonMethods.clearFields(email,password);
             }
         }

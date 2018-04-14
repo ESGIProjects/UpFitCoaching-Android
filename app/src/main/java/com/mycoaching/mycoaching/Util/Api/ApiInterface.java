@@ -12,5 +12,5 @@ import retrofit2.http.POST;
 public interface ApiInterface {
     @POST("signin/")
     @FormUrlEncoded
-    Call<Void> signIn(String isCoach, @Field("mail") String mail, @Field("password") String password);
+    Call<Void> signIn(@Field("isCoach") String isCoach, @Field("mail") String mail, @Field("password") String password);
 }
