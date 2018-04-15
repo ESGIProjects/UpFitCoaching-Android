@@ -16,6 +16,21 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_weight="2">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/type_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/user_type"/>
+            <Spinner
+                android:id="@+id/user_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@array/user_type"></Spinner>
+        </LinearLayout>
         <android.support.design.widget.TextInputLayout
             android:theme="@style/AppThemeCustom"
             android:layout_width="match_parent"
@@ -23,13 +38,12 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp">
             <EditText
-                android:id="@+id/email"
+                android:id="@+id/mail"
                 android:focusableInTouchMode="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/mail_label"
                 android:textColor="@color/colorWhite"
-                android:inputType="textEmailAddress"
                 android:maxLines="1" />
         </android.support.design.widget.TextInputLayout>
 
@@ -41,12 +55,11 @@
             android:layout_marginBottom="8dp">
             <EditText
                 android:id="@+id/password"
+                android:focusableInTouchMode="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/passwd_label"
                 android:textColor="@color/colorWhite"
-                android:inputType="textPassword"
-                android:layout_alignParentTop="true"
                 android:maxLines="1" />
         </android.support.design.widget.TextInputLayout>
 
@@ -57,14 +70,88 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp">
             <EditText
+                android:id="@+id/firstName"
+                android:focusableInTouchMode="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/passwd_label"
+                android:hint="@string/firstName"
                 android:textColor="@color/colorWhite"
-                android:inputType="textPassword"
-                android:layout_alignParentTop="true"
                 android:maxLines="1" />
         </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:theme="@style/AppThemeCustom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+            <EditText
+                android:id="@+id/lastName"
+                android:focusableInTouchMode="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/lastName"
+                android:textColor="@color/colorWhite"
+                android:maxLines="1" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:theme="@style/AppThemeCustom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+            <EditText
+                android:id="@+id/birthDate"
+                android:focusableInTouchMode="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/birthDate"
+                android:textColor="@color/colorWhite"
+                android:maxLines="1" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:theme="@style/AppThemeCustom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+            <EditText
+                android:id="@+id/city"
+                android:focusableInTouchMode="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/city"
+                android:textColor="@color/colorWhite"
+                android:maxLines="1" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:theme="@style/AppThemeCustom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+            <EditText
+                android:id="@+id/phoneNumber"
+                android:focusableInTouchMode="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/phoneNumber"
+                android:textColor="@color/colorWhite"
+                android:maxLines="1" />
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/account_creation"
+            android:textColor="@color/colorWhite"
+            android:textStyle="bold"
+            android:background="@color/colorPrimaryDark"/>
+
     </LinearLayout>
 
 </LinearLayout>

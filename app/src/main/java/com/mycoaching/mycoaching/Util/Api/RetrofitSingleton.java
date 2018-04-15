@@ -1,4 +1,4 @@
-package com.mycoaching.mycoaching.Util;
+package com.mycoaching.mycoaching.Util.Api;
 
 import com.mycoaching.mycoaching.R;
 
