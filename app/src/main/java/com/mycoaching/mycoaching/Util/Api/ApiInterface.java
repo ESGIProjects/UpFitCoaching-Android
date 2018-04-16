@@ -1,5 +1,7 @@
 package com.mycoaching.mycoaching.Util.Api;
 
+import com.mycoaching.mycoaching.Util.Model.Retrofit.UserRetrofit;
+
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -12,7 +14,7 @@ import retrofit2.http.POST;
 public interface ApiInterface {
     @POST("signin/")
     @FormUrlEncoded
-    Call<Void> signIn(@Field("isCoach") String isCoach, @Field("mail") String mail, @Field("password") String password);
+    Call<UserRetrofit> signIn(@Field("isCoach") String isCoach, @Field("mail") String mail, @Field("password") String password);
 
     @POST("signup/")
     @FormUrlEncoded

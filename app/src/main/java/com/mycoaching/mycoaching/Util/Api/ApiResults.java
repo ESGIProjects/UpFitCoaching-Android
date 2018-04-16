@@ -1,5 +1,7 @@
 package com.mycoaching.mycoaching.Util.Api;
 
+import com.mycoaching.mycoaching.Util.Model.Retrofit.UserRetrofit;
+
 import java.util.List;
 
 /**
@@ -9,18 +11,10 @@ import java.util.List;
 
 public class ApiResults {
 
-    List<?> data;
+    String body;
     int responseCode;
     Throwable exception;
-    String body;
-
-    public List<?> getData(){
-        return data;
-    }
-
-    public void setData(List<?> data){
-        this.data = data;
-    }
+    UserRetrofit ur;
 
     public int getResponseCode(){
         return responseCode;
@@ -44,6 +38,14 @@ public class ApiResults {
 
     public void setBody(String body){
         this.body = body;
+    }
+
+    public UserRetrofit getUr() {
+        return ur;
+    }
+
+    public void setUr(UserRetrofit ur){
+        this.ur = ur;
     }
 }
 

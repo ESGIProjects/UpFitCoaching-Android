@@ -1,4 +1,4 @@
-package com.mycoaching.mycoaching.Util.Model;
+package com.mycoaching.mycoaching.Util.Model.Realm;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;

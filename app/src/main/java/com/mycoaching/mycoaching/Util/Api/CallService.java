@@ -1,5 +1,10 @@
 package com.mycoaching.mycoaching.Util.Api;
 
+import com.mycoaching.mycoaching.Util.Model.Retrofit.UserRetrofit;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -12,16 +17,17 @@ import retrofit2.Response;
 public class CallService{
 
     public static void signIn(String isCoach, String mail, String password, final ServiceResultListener srl){
-        ApiUtils.getRetrofitInstance().signIn(isCoach,mail,password).enqueue(new Callback<Void>() {
+        ApiUtils.getRetrofitInstance().signIn(isCoach,mail,password).enqueue(new Callback<UserRetrofit>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
+            public void onResponse(Call<UserRetrofit> call, Response<UserRetrofit> response) {
                 ApiResults sir = new ApiResults();
                 sir.setResponseCode(response.code());
+                sir.setUr(response.body());
                 srl.onResult(sir);
             }
 
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
+            public void onFailure(Call<UserRetrofit> call, Throwable t) {
                 ApiResults sir = new ApiResults();
                 sir.setException(t);
                 srl.onResult(sir);
