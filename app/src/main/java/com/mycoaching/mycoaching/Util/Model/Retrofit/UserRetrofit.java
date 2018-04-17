@@ -37,6 +37,18 @@ public class UserRetrofit {
     @Expose
     private String phoneNumber;
 
+    public UserRetrofit(String id, String type, String mail, String firstName, String lastName, String birthDate,
+                        String city, String phoneNumber){
+        this.id = id;
+        this.type = type;
+        this.mail = mail;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthDate = birthDate;
+        this.city = city;
+        this.phoneNumber = phoneNumber;
+    }
+
     public String getId() {
         return id;
     }

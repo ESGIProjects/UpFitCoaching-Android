@@ -23,6 +23,7 @@ import com.mycoaching.mycoaching.Util.Model.Retrofit.UserRetrofit;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.realm.Realm;
 
 /**
  * Created by tensa on 01/03/2018.
@@ -32,49 +33,25 @@ public class LoginActivity extends AppCompatActivity {
 
     private Intent i = null;
     private ProgressDialog pd = null;
-    private String type = null;
-    private Button user,coach;
+    Realm realm;
 
     @BindView(R.id.email)
     EditText email;
 
     @BindView(R.id.password)
     EditText password;
-
-    @OnClick(R.id.user) void setUser(){
-        type = "0";
-        Log.i("TYPE : ", type);
-        findViewById(R.id.user).setBackgroundColor(getResources().getColor(R.color.colorAccent));
-        findViewById(R.id.coach).setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-    }
-
-    @OnClick(R.id.coach) void setCoach(){
-        type = "1";
-        Log.i("TYPE : ", type);
-        findViewById(R.id.coach).setBackgroundColor(getResources().getColor(R.color.colorAccent));
-        findViewById(R.id.user).setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-    }
-
     @OnClick(R.id.signin) void signIn(){
         if(CommonMethods.isAvailable(getApplicationContext())){
             if(CommonMethods.checkEmail(email.getText().toString())
-                    && CommonMethods.checkPassword(password.getText().toString()) && type != null){
+                    && CommonMethods.checkPassword(password.getText().toString())){
                 pd = new ProgressDialog(this,R.style.AppCompatAlertDialogStyle);
                 pd.setMessage("Connection en cours...");
                 pd.show();
-                CallService.signIn(type,email.getText().toString(),password.getText().toString(),new ServiceResultListener(){
+                CallService.signIn(email.getText().toString(),password.getText().toString(),new ServiceResultListener(){
                     @Override
                     public void onResult(ApiResults ar){
                         pd.dismiss();
                         if(ar.getResponseCode() == 200){
-                            if(type.equals("1")){
-                                i = new Intent(getApplicationContext(),CoachMainActivity.class);
-                                performTransition(i,R.animator.slide_from_right,R.animator.slide_to_right);
-                            }
-                            else{
-                                i = new Intent(getApplicationContext(),UserMainActivity.class);
-                                performTransition(i,R.animator.slide_from_right,R.animator.slide_to_right);
-                            }
                             Toast.makeText(getApplicationContext(),"Connection réussie !",Toast.LENGTH_SHORT).show();
                         }
                         else{
@@ -89,9 +66,6 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 });
-            }
-            else if(type == null){
-                Toast.makeText(getApplicationContext(),R.string.no_type_defined,Toast.LENGTH_LONG).show();
             }
             else{
                 Toast.makeText(getApplicationContext(),R.string.missing_fields,Toast.LENGTH_LONG).show();
@@ -119,6 +93,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         getSupportActionBar().hide();
         ButterKnife.bind(this);
+        realm = Realm.getDefaultInstance();
     }
 
     public void performTransition(Intent i, int from, int to){

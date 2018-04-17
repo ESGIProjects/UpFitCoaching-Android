@@ -67,7 +67,6 @@ public class UserRealm extends RealmObject {
     }
 
     public int getId() {
-
         return id;
     }
 

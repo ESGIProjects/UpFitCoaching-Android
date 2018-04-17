@@ -14,11 +14,11 @@ import retrofit2.http.POST;
 public interface ApiInterface {
     @POST("signin/")
     @FormUrlEncoded
-    Call<UserRetrofit> signIn(@Field("isCoach") String isCoach, @Field("mail") String mail, @Field("password") String password);
+    Call<UserRetrofit> signIn(@Field("mail") String mail, @Field("password") String password);
 
     @POST("signup/")
     @FormUrlEncoded
-    Call<Void> singUp(@Field("tyoe") String type,@Field("mail") String mail,@Field("password") String password,
+    Call<Void> singUp(@Field("type") String type,@Field("mail") String mail,@Field("password") String password,
                       @Field("firstName") String firstName,@Field("lastName") String lastName,
                       @Field("birthDate") String birthDate, @Field("city") String city,
                       @Field("phoneNumber") String phoneNumber);

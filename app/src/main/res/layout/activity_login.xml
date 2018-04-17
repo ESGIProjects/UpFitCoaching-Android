@@ -7,13 +7,8 @@
     android:orientation="vertical"
     android:weightSum="5"
     android:background="@color/colorPrimary"
+    android:padding="10dp"
     tools:context="com.mycoaching.mycoaching.Activities.LoginActivity">
-
-    <ImageView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_weight="5"
-        android:src="@drawable/logo"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -63,33 +58,6 @@
                 android:layout_alignParentTop="true"
                 android:maxLines="1" />
         </android.support.design.widget.TextInputLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center">
-            <Button
-                android:layout_weight="1"
-                android:id="@+id/user"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/user"
-                android:textColor="@color/colorWhite"
-                android:textStyle="bold"
-                android:background="@color/colorPrimaryDark"
-                android:layout_marginTop="10dp" />
-            <Button
-                android:layout_weight="1"
-                android:id="@+id/coach"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/coach"
-                android:textColor="@color/colorWhite"
-                android:textStyle="bold"
-                android:background="@color/colorPrimaryDark"
-                android:layout_marginTop="10dp"/>
-        </LinearLayout>
 
         <Button
             android:id="@+id/signin"
