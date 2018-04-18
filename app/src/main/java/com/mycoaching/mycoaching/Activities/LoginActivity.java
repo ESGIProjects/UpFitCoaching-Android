@@ -52,6 +52,14 @@ public class LoginActivity extends AppCompatActivity {
                     public void onResult(ApiResults ar){
                         pd.dismiss();
                         if(ar.getResponseCode() == 200){
+                            if(ar.getUr().getType() == null){
+                                i = new Intent(LoginActivity.this,CoachMainActivity.class);
+                                performTransition(i,R.animator.slide_from_right,R.animator.slide_to_right);
+                            }
+                            else{
+                                i = new Intent(LoginActivity.this,UserMainActivity.class);
+                                performTransition(i,R.animator.slide_from_right,R.animator.slide_to_right);
+                            }
                             Toast.makeText(getApplicationContext(),"Connection réussie !",Toast.LENGTH_SHORT).show();
                         }
                         else{
