@@ -6,8 +6,7 @@
     android:gravity="center"
     android:orientation="vertical"
     android:weightSum="5"
-    android:background="@color/colorPrimary"
-    android:padding="10dp"
+    android:background="@drawable/login_wallpaper_blur"
     tools:context="com.mycoaching.mycoaching.Activities.LoginActivity">
 
     <TextView
@@ -16,7 +15,7 @@
         android:layout_weight="1"
         android:text="@string/app_name"
         android:textColor="@color/colorWhite"
-        android:textSize="25dp" />
+        android:textSize="35sp" />
 
     <LinearLayout
         android:layout_marginLeft="20dp"
@@ -24,20 +23,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:padding="15dp"
+        android:layout_marginTop="15dp"
         android:layout_weight="2">
         <android.support.design.widget.TextInputLayout
             android:theme="@style/AppThemeCustom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="15dp"
             android:layout_marginBottom="8dp">
             <EditText
                 android:id="@+id/email"
                 android:focusableInTouchMode="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/mail_label"
                 android:textColor="@color/colorWhite"
+                android:hint="@string/mail_label"
                 android:inputType="textEmailAddress"
                 android:maxLines="1" />
         </android.support.design.widget.TextInputLayout>
@@ -89,9 +90,8 @@
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="15dp"
         android:gravity="center"
         android:text="@string/forgot"
         android:textStyle="bold"/>
