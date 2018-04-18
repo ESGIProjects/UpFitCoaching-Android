@@ -92,7 +92,7 @@ public class UserRegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_register2);
         ButterKnife.bind(this);
     }
 

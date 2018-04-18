@@ -18,6 +18,9 @@
     <string name="city">Ville</string>
     <string name="phoneNumber">Numéro de téléphone</string>
     <string name="account_creation">Créer le compte</string>
+    <string name="user_choice">Je suis un client</string>
+    <string name="coach_choice">Je suis un coach</string>
+
 
     <string name="title_activity_user_main">UserMainActivity</string>
     <string name="title_home">Home</string>

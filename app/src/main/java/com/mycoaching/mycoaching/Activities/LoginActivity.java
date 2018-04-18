@@ -33,13 +33,14 @@ public class LoginActivity extends AppCompatActivity {
 
     private Intent i = null;
     private ProgressDialog pd = null;
-    Realm realm;
+    Realm realm = null;
 
     @BindView(R.id.email)
     EditText email;
 
     @BindView(R.id.password)
     EditText password;
+
     @OnClick(R.id.signin) void signIn(){
         if(CommonMethods.isAvailable(getApplicationContext())){
             if(CommonMethods.checkEmail(email.getText().toString())
@@ -54,11 +55,11 @@ public class LoginActivity extends AppCompatActivity {
                         if(ar.getResponseCode() == 200){
                             if(ar.getUr().getType() == null){
                                 i = new Intent(LoginActivity.this,CoachMainActivity.class);
-                                performTransition(i,R.animator.slide_from_right,R.animator.slide_to_right);
+                                performTransition(i,R.animator.slide_from_right,R.animator.slide_to_left);
                             }
                             else{
                                 i = new Intent(LoginActivity.this,UserMainActivity.class);
-                                performTransition(i,R.animator.slide_from_right,R.animator.slide_to_right);
+                                performTransition(i,R.animator.slide_from_right,R.animator.slide_to_left);
                             }
                             Toast.makeText(getApplicationContext(),"Connection réussie !",Toast.LENGTH_SHORT).show();
                         }
@@ -86,13 +87,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.signup) void signUp(){
-        i = new Intent(this,MessagingActivity.class);
-        performTransition(i,R.animator.slide_from_right,R.animator.slide_to_right);
+        i = new Intent(this,RegisterActivity.class);
+        performTransition(i,R.animator.slide_from_right,R.animator.slide_to_left);
     }
 
     @OnClick(R.id.forgot) void forgot(){
         i = new Intent(LoginActivity.this,UserRegisterActivity.class);
-        performTransition(i,R.animator.slide_from_right,R.animator.slide_to_right);
+        performTransition(i,R.animator.slide_from_right,R.animator.slide_to_left);
     }
 
     @Override
