@@ -1,6 +1,8 @@
 package com.mycoaching.mycoaching.Activities;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -53,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onResult(ApiResults ar){
                         pd.dismiss();
                         if(ar.getResponseCode() == 200){
+                            realm = Realm.getDefaultInstance();
                             if(ar.getUr().getType() == null){
                                 i = new Intent(LoginActivity.this,CoachMainActivity.class);
                                 performTransition(i,R.animator.slide_from_right,R.animator.slide_to_left);
@@ -108,5 +111,24 @@ public class LoginActivity extends AppCompatActivity {
     public void performTransition(Intent i, int from, int to){
         startActivity(i);
         overridePendingTransition(from,to);
+    }
+
+    @Override
+    public void onBackPressed(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this,R.style.AlertDialogCustom);
+        builder.setTitle(R.string.exit).setMessage(R.string.exit_application)
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finishAffinity();
+                    }
+                })
+                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                })
+                .setIcon(R.drawable.logo)
+                .show();
     }
 }

@@ -8,7 +8,7 @@
     <string name="coach">Coach</string>
     <string name="forgot">Mot de passe oublié ?</string>
     <string name="no_connection">Aucune connection internet détectée</string>
-    <string name="no_type_defined">Veuillez préciser le type d'utilisateur</string>
+    <string name="no_type_defined">Veuillez préciser le type d\'utilisateur</string>
     <string name="missing_fields">Champs manquants !</string>
     <string name="wrong_credentials">Mauvais email/mot de passe !</string>
     <string name="user_type">Type de compte : </string>
@@ -20,6 +20,10 @@
     <string name="account_creation">Créer le compte</string>
     <string name="user_choice">Je suis un client</string>
     <string name="coach_choice">Je suis un coach</string>
+    <string name="exit">Quitter</string>
+    <string name="exit_application">Souhaitez-vous quitter l\'application ?</string>
+    <string name="yes">Oui</string>
+    <string name="no">Non</string>
 
 
     <string name="title_activity_user_main">UserMainActivity</string>
