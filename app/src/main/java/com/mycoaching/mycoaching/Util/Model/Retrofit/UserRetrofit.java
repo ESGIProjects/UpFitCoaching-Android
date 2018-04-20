@@ -29,6 +29,10 @@ public class UserRetrofit {
     @Expose
     private String birthDate;
 
+    @SerializedName("address")
+    @Expose
+    private String address;
+
     @SerializedName("city")
     @Expose
     private String city;
@@ -38,13 +42,14 @@ public class UserRetrofit {
     private String phoneNumber;
 
     public UserRetrofit(String id, String type, String mail, String firstName, String lastName, String birthDate,
-                        String city, String phoneNumber){
+                        String address, String city, String phoneNumber){
         this.id = id;
         this.type = type;
         this.mail = mail;
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;
+        this.address = address;
         this.city = city;
         this.phoneNumber = phoneNumber;
     }
@@ -95,6 +100,14 @@ public class UserRetrofit {
 
     public void setBirthDate(String birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getCity() {

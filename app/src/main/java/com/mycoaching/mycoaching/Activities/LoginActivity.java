@@ -20,6 +20,7 @@ import com.mycoaching.mycoaching.Util.Api.ApiResults;
 import com.mycoaching.mycoaching.Util.Api.CallService;
 import com.mycoaching.mycoaching.Util.Api.ServiceResultListener;
 import com.mycoaching.mycoaching.Util.CommonMethods;
+import com.mycoaching.mycoaching.Util.Model.Realm.UserRealm;
 import com.mycoaching.mycoaching.Util.Model.Retrofit.UserRetrofit;
 
 import butterknife.BindView;
@@ -56,6 +57,9 @@ public class LoginActivity extends AppCompatActivity {
                         pd.dismiss();
                         if(ar.getResponseCode() == 200){
                             realm = Realm.getDefaultInstance();
+                            if(realm.isEmpty()){
+                                executeTransaction(realm,ar);
+                            }
                             if(ar.getUr().getType() == null){
                                 i = new Intent(LoginActivity.this,CoachMainActivity.class);
                                 performTransition(i,R.animator.slide_from_right,R.animator.slide_to_left);
@@ -120,6 +124,8 @@ public class LoginActivity extends AppCompatActivity {
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        realm.close();
+                        Realm.deleteRealm(Realm.getDefaultConfiguration());
                         finishAffinity();
                     }
                 })
@@ -130,5 +136,28 @@ public class LoginActivity extends AppCompatActivity {
                 })
                 .setIcon(R.drawable.logo)
                 .show();
+    }
+
+    public void executeTransaction(Realm r, final ApiResults ar){
+        r.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                UserRealm ur = realm.createObject(UserRealm.class,ar.getUr().getId());
+                ur.setCity(ar.getUr().getCity());
+                ur.setFirstName(ar.getUr().getFirstName());
+                ur.setLastName(ar.getUr().getLastName());
+                ur.setMail(ar.getUr().getMail());
+                ur.setPhoneNumber(ar.getUr().getPhoneNumber());
+                if(ar.getUr().getType() != null){
+                    ur.setType(ar.getUr().getType());
+                }
+                if(ar.getUr().getBirthDate() != null){
+                    ur.setBirthDate(ar.getUr().getBirthDate());
+                }
+                if(ar.getUr().getAddress() != null){
+                    ur.setAddress(ar.getUr().getAddress());
+                }
+            }
+        });
     }
 }

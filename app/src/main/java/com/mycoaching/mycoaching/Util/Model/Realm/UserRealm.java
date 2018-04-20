@@ -6,9 +6,9 @@ import io.realm.annotations.PrimaryKey;
 public class UserRealm extends RealmObject {
 
     @PrimaryKey
-    int id;
+    String id;
 
-    private String type, mail, firstName, lastName, birthDate, city, phoneNumber;
+    private String type, mail, firstName, lastName, birthDate, address, city, phoneNumber;
 
     public String getType() {
         return type;
@@ -50,6 +50,14 @@ public class UserRealm extends RealmObject {
         this.birthDate = birthDate;
     }
 
+    public String getAddress(){
+        return address;
+    }
+
+    public void setAddress(String address){
+        this.address = address;
+    }
+
     public String getCity() {
         return city;
     }
@@ -66,11 +74,11 @@ public class UserRealm extends RealmObject {
         this.phoneNumber = phoneNumber;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 }
