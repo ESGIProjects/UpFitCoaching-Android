@@ -25,12 +25,6 @@
             android:name=".Activities.LoginActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.ChatActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Activities.MessagingActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".Activities.UserActivity.UserRegisterActivity"
             android:screenOrientation="portrait" />
         <activity

@@ -94,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.signup) void signUp(){
-        i = new Intent(this,RegisterActivity.class);
+        i = new Intent(this,UserMainActivity.class);
         performTransition(i,R.animator.slide_from_right,R.animator.slide_to_left);
     }
 
