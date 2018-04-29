@@ -28,6 +28,13 @@ public class CommonMethods {
         return true;
     }
 
+    public static boolean isSame(String a, String b){
+        if(a.equals(b)){
+            return true;
+        }
+        return false;
+    }
+
     public static void clearFields(EditText ...fields){
         for(int i = 0; i < fields.length; i++){
             fields[i].getText().clear();

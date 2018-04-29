@@ -1,32 +1,30 @@
 package com.mycoaching.mycoaching.Activities;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.mycoaching.mycoaching.Activities.CoachActivity.CoachMainActivity;
 import com.mycoaching.mycoaching.Activities.UserActivity.UserMainActivity;
-import com.mycoaching.mycoaching.Activities.UserActivity.UserRegisterActivity;
 import com.mycoaching.mycoaching.R;
 import com.mycoaching.mycoaching.Util.Api.ApiResults;
 import com.mycoaching.mycoaching.Util.Api.CallService;
 import com.mycoaching.mycoaching.Util.Api.ServiceResultListener;
-import com.mycoaching.mycoaching.Util.CommonMethods;
 import com.mycoaching.mycoaching.Util.Model.Realm.UserRealm;
-import com.mycoaching.mycoaching.Util.Model.Retrofit.UserRetrofit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
+
+import static com.mycoaching.mycoaching.Util.CommonMethods.checkEmail;
+import static com.mycoaching.mycoaching.Util.CommonMethods.checkPassword;
+import static com.mycoaching.mycoaching.Util.CommonMethods.clearFields;
+import static com.mycoaching.mycoaching.Util.CommonMethods.isAvailable;
 
 /**
  * Created by tensa on 01/03/2018.
@@ -45,10 +43,9 @@ public class LoginActivity extends AppCompatActivity {
     EditText password;
 
     @OnClick(R.id.signin) void signIn(){
-        if(CommonMethods.isAvailable(getApplicationContext())){
-            if(CommonMethods.checkEmail(email.getText().toString())
-                    && CommonMethods.checkPassword(password.getText().toString())){
-                pd = new ProgressDialog(this,R.style.AppCompatAlertDialogStyle);
+        if(isAvailable(getApplicationContext())){
+            if(checkEmail(email.getText().toString()) && checkPassword(password.getText().toString())){
+                pd = new ProgressDialog(this,R.style.StyledDialog);
                 pd.setMessage("Connection en cours...");
                 pd.show();
                 CallService.signIn(email.getText().toString(),password.getText().toString(),new ServiceResultListener(){
@@ -60,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
                             if(realm.isEmpty()){
                                 executeTransaction(realm,ar);
                             }
-                            if(ar.getUr().getType() == null){
+                            if(ar.getUr().getType() == 2){
                                 i = new Intent(LoginActivity.this,CoachMainActivity.class);
                                 performTransition(i,R.animator.slide_from_right,R.animator.slide_to_left);
                             }
@@ -78,14 +75,14 @@ public class LoginActivity extends AppCompatActivity {
                             else{
                                 Toast.makeText(getApplicationContext(),"Pas de réponse du serveur",Toast.LENGTH_SHORT).show();
                             }
-                            CommonMethods.clearFields(email,password);
+                            clearFields(email,password);
                         }
                     }
                 });
             }
             else{
                 Toast.makeText(getApplicationContext(),R.string.missing_fields,Toast.LENGTH_LONG).show();
-                CommonMethods.clearFields(email,password);
+                clearFields(email,password);
             }
         }
         else{
@@ -94,12 +91,12 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.signup) void signUp(){
-        i = new Intent(this,UserMainActivity.class);
+        i = new Intent(this,RegisterActivity.class);
         performTransition(i,R.animator.slide_from_right,R.animator.slide_to_left);
     }
 
     @OnClick(R.id.forgot) void forgot(){
-        i = new Intent(LoginActivity.this,UserRegisterActivity.class);
+        i = new Intent(LoginActivity.this,UserMainActivity.class);
         performTransition(i,R.animator.slide_from_right,R.animator.slide_to_left);
     }
 
@@ -119,23 +116,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this,R.style.AlertDialogCustom);
-        builder.setTitle(R.string.exit).setMessage(R.string.exit_application)
-                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        realm.close();
-                        Realm.deleteRealm(Realm.getDefaultConfiguration());
-                        finishAffinity();
-                    }
-                })
-                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                    }
-                })
-                .setIcon(R.drawable.logo)
-                .show();
+        finishAffinity();
     }
 
     public void executeTransaction(Realm r, final ApiResults ar){
@@ -148,9 +129,7 @@ public class LoginActivity extends AppCompatActivity {
                 ur.setLastName(ar.getUr().getLastName());
                 ur.setMail(ar.getUr().getMail());
                 ur.setPhoneNumber(ar.getUr().getPhoneNumber());
-                if(ar.getUr().getType() != null){
-                    ur.setType(ar.getUr().getType());
-                }
+                ur.setType(ar.getUr().getType());
                 if(ar.getUr().getBirthDate() != null){
                     ur.setBirthDate(ar.getUr().getBirthDate());
                 }

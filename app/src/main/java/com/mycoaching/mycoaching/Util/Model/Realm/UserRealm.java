@@ -8,13 +8,14 @@ public class UserRealm extends RealmObject {
     @PrimaryKey
     String id;
 
-    private String type, mail, firstName, lastName, birthDate, address, city, phoneNumber;
+    private String mail, firstName, lastName, birthDate, address, city, phoneNumber;
+    int type;
 
-    public String getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(int type) {
         this.type = type;
     }
 

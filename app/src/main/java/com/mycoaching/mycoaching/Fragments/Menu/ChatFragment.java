@@ -1,4 +1,4 @@
-package com.mycoaching.mycoaching.Fragments;
+package com.mycoaching.mycoaching.Fragments.Menu;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

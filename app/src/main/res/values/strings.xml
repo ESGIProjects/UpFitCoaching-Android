@@ -2,6 +2,7 @@
     <string name="app_name">UpFit Coaching</string>
     <string name="mail_label">Email</string>
     <string name="passwd_label">Mot de passe</string>
+    <string name="passwd_confirmation">Confirmation du mot de passe</string>
     <string name="sign_in">Connexion</string>
     <string name="sign_up">Inscription</string>
     <string name="user">Utilisateur</string>
@@ -11,10 +12,13 @@
     <string name="no_type_defined">Veuillez préciser le type d\'utilisateur</string>
     <string name="missing_fields">Champs manquants !</string>
     <string name="wrong_credentials">Mauvais email/mot de passe !</string>
+    <string name="already_exists">Un compte est déjà relié à ce mail</string>
+    <string name="error">Veuillez réessayer plus tard</string>
     <string name="user_type">Type de compte : </string>
     <string name="firstName">Prénom</string>
     <string name="lastName">Nom de famille</string>
     <string name="birthDate">Date de naissance (yyyy-mm-dd)</string>
+    <string name="address">Adresse</string>
     <string name="city">Ville</string>
     <string name="phoneNumber">Numéro de téléphone</string>
     <string name="account_creation">Créer le compte</string>
@@ -22,8 +26,10 @@
     <string name="coach_choice">Je suis un coach</string>
     <string name="exit">Quitter</string>
     <string name="exit_application">Souhaitez-vous quitter l\'application ?</string>
+    <string name="exit_register">Souhaitez-vous quitter le formulaire d\'inscription ?</string>
     <string name="yes">Oui</string>
     <string name="no">Non</string>
+    <string name="next">Suivant</string>
 
 
     <string name="title_activity_user_main">UserMainActivity</string>

@@ -12,14 +12,19 @@ import retrofit2.http.POST;
  */
 
 public interface ApiInterface {
+
     @POST("signin/")
     @FormUrlEncoded
     Call<UserRetrofit> signIn(@Field("mail") String mail, @Field("password") String password);
 
     @POST("signup/")
     @FormUrlEncoded
-    Call<Void> singUp(@Field("type") String type,@Field("mail") String mail,@Field("password") String password,
+    Call<UserRetrofit> signUp(@Field("type") String type,@Field("mail") String mail,@Field("password") String password,
                       @Field("firstName") String firstName,@Field("lastName") String lastName,
-                      @Field("birthDate") String birthDate, @Field("city") String city,
+                      @Field("birthDate") String birthDate, @Field("city") String city, @Field("address") String address,
                       @Field("phoneNumber") String phoneNumber);
+
+    @POST("checkmail/")
+    @FormUrlEncoded
+    Call<Void> checkMail(@Field("mail") String mail);
 }

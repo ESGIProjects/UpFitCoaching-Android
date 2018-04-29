@@ -1,4 +1,4 @@
-package com.mycoaching.mycoaching.Fragments;
+package com.mycoaching.mycoaching.Fragments.Menu;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -39,7 +39,7 @@ public class CalendarFragment extends Fragment {
 
         rv = new RecyclerView(getContext());
 
-        rv = (RecyclerView) v.findViewById(R.id.list);
+        rv = v.findViewById(R.id.list);
         aa = new AppointmentsAdapter(listAppointments);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         rv.setLayoutManager(mLayoutManager);

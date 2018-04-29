@@ -11,7 +11,7 @@ public class UserRetrofit {
 
     @SerializedName("type")
     @Expose
-    private String type;
+    private int type;
 
     @SerializedName("mail")
     @Expose
@@ -41,7 +41,7 @@ public class UserRetrofit {
     @Expose
     private String phoneNumber;
 
-    public UserRetrofit(String id, String type, String mail, String firstName, String lastName, String birthDate,
+    public UserRetrofit(String id, int type, String mail, String firstName, String lastName, String birthDate,
                         String address, String city, String phoneNumber){
         this.id = id;
         this.type = type;
@@ -62,11 +62,11 @@ public class UserRetrofit {
         this.id = id;
     }
 
-    public String getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(int type) {
         this.type = type;
     }
 
