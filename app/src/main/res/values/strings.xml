@@ -33,9 +33,11 @@
 
 
     <string name="title_activity_user_main">UserMainActivity</string>
-    <string name="title_calendar">Calendrier</string>
     <string name="title_followUp">Suivi</string>
+    <string name="title_session">Séance</string>
+    <string name="title_calendar">Calendrier</string>
     <string name="title_chat">Message</string>
+    <string name="title_forum">Forum</string>
     <string name="title_activity_coach_main">CoachMainActivity</string>
 
     <string-array name="user_type">

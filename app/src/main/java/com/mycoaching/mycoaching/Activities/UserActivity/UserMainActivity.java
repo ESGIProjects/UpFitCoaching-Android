@@ -15,6 +15,8 @@ import com.mycoaching.mycoaching.Activities.LoginActivity;
 import com.mycoaching.mycoaching.Fragments.Menu.CalendarFragment;
 import com.mycoaching.mycoaching.Fragments.Menu.FollowUpFragment;
 import com.mycoaching.mycoaching.Fragments.Menu.ChatFragment;
+import com.mycoaching.mycoaching.Fragments.Menu.ForumFragment;
+import com.mycoaching.mycoaching.Fragments.Menu.SessionFragment;
 import com.mycoaching.mycoaching.R;
 
 import butterknife.BindView;
@@ -28,9 +30,11 @@ public class UserMainActivity extends FragmentActivity {
     @BindView(R.id.title)
     TextView title;
 
-    CalendarFragment cf = new CalendarFragment();
     FollowUpFragment fuf = new FollowUpFragment();
+    SessionFragment sf = new SessionFragment();
+    CalendarFragment cf = new CalendarFragment();
     ChatFragment chf = new ChatFragment();
+    ForumFragment ff = new ForumFragment();
     FragmentTransaction ft;
 
     Realm realm = null;
@@ -41,25 +45,34 @@ public class UserMainActivity extends FragmentActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.navigation_calendar:
-                    ft = getSupportFragmentManager().beginTransaction();
-                    ft.hide(fuf);
-                    ft.hide(chf);
-                    ft.show(cf);
-                    ft.commit();
-                    return true;
                 case R.id.navigation_followUp:
                     ft = getSupportFragmentManager().beginTransaction();
-                    ft.hide(cf);
-                    ft.hide(chf);
+                    hideFragments();
                     ft.show(fuf);
+                    ft.commit();
+                    return true;
+                case R.id.navigation_session:
+                    ft = getSupportFragmentManager().beginTransaction();
+                    hideFragments();
+                    ft.show(sf);
+                    ft.commit();
+                    return true;
+                case R.id.navigation_calendar:
+                    ft = getSupportFragmentManager().beginTransaction();
+                    hideFragments();
+                    ft.show(cf);
                     ft.commit();
                     return true;
                 case R.id.navigation_chat:
                     ft = getSupportFragmentManager().beginTransaction();
-                    ft.hide(fuf);
-                    ft.hide(cf);
+                    hideFragments();
                     ft.show(chf);
+                    ft.commit();
+                    return true;
+                case R.id.navigation_forum:
+                    ft = getSupportFragmentManager().beginTransaction();
+                    hideFragments();
+                    ft.show(ff);
                     ft.commit();
                     return true;
             }
@@ -73,10 +86,10 @@ public class UserMainActivity extends FragmentActivity {
         setContentView(R.layout.activity_user_main);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        navigation.getMenu().getItem(2).setChecked(true);
         ft = getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.container,cf);
-        ft.add(R.id.container,fuf);
-        ft.add(R.id.container,chf);
+        addFragments();
+        hideFragments();
         ft.show(cf);
         ft.commit();
         realm = realm.getDefaultInstance();
@@ -99,5 +112,21 @@ public class UserMainActivity extends FragmentActivity {
                 })
                 .setIcon(R.drawable.logo)
                 .show();
+    }
+
+    public void addFragments(){
+        ft.add(R.id.container,fuf);
+        ft.add(R.id.container,sf);
+        ft.add(R.id.container,cf);
+        ft.add(R.id.container,chf);
+        ft.add(R.id.container,ff);
+    }
+
+    public void hideFragments(){
+        ft.hide(fuf);
+        ft.hide(sf);
+        ft.hide(cf);
+        ft.hide(chf);
+        ft.hide(ff);
     }
 }
