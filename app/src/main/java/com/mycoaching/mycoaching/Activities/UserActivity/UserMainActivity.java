@@ -22,6 +22,10 @@ import com.mycoaching.mycoaching.R;
 import butterknife.BindView;
 import io.realm.Realm;
 
+/**
+ * Created by tensa on 07/03/2018.
+ */
+
 public class UserMainActivity extends FragmentActivity {
 
     @BindView(R.id.toolbar)
