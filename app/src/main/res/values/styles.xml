@@ -57,10 +57,4 @@
         <item name="android:color">@color/colorPrimary</item>
     </style>
 
-    <style name="BottomNavigation">
-        <item name="android:background">@color/colorPrimary</item>
-        <item name="android:itemBackground">@color/colorPrimary</item>
-        <item name="itemTextColor">@color/colorWhite</item>
-    </style>
-
 </resources>
