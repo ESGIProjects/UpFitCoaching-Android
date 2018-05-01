@@ -43,17 +43,23 @@ public class UserMainActivity extends FragmentActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_calendar:
                     ft = getSupportFragmentManager().beginTransaction();
-                    ft.replace(R.id.container,cf);
+                    ft.hide(fuf);
+                    ft.hide(chf);
+                    ft.show(cf);
                     ft.commit();
                     return true;
                 case R.id.navigation_followUp:
                     ft = getSupportFragmentManager().beginTransaction();
-                    ft.replace(R.id.container,fuf);
+                    ft.hide(cf);
+                    ft.hide(chf);
+                    ft.show(fuf);
                     ft.commit();
                     return true;
                 case R.id.navigation_chat:
                     ft = getSupportFragmentManager().beginTransaction();
-                    ft.replace(R.id.container,chf);
+                    ft.hide(fuf);
+                    ft.hide(cf);
+                    ft.show(chf);
                     ft.commit();
                     return true;
             }
@@ -68,7 +74,10 @@ public class UserMainActivity extends FragmentActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.container,cf);
+        ft.add(R.id.container,cf);
+        ft.add(R.id.container,fuf);
+        ft.add(R.id.container,chf);
+        ft.show(cf);
         ft.commit();
         realm = realm.getDefaultInstance();
     }
