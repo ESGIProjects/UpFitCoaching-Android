@@ -12,7 +12,8 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary">
+        android:background="@color/colorPrimary"
+        android:elevation="4dp">
         <TextView
             android:id="@+id/title"
             android:layout_gravity="center"
@@ -38,6 +39,8 @@
         app:menu="@menu/navigation"
         app:itemBackground="@color/colorPrimary"
         app:itemIconTint="@drawable/bottom_nav_colors"
-        app:itemTextColor="@drawable/bottom_nav_colors"/>
+        app:itemTextColor="@drawable/bottom_nav_colors"
+        android:background="@color/colorWhite"
+        app:elevation="8dp"/>
 
 </LinearLayout>

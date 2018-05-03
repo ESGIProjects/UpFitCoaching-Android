@@ -27,6 +27,8 @@
     <string name="exit">Quitter</string>
     <string name="exit_application">Souhaitez-vous quitter l\'application ?</string>
     <string name="exit_register">Souhaitez-vous quitter le formulaire d\'inscription ?</string>
+    <string name="profile">Profil</string>
+    <string name="disconnect">Déconnexion</string>
     <string name="yes">Oui</string>
     <string name="no">Non</string>
     <string name="next">Suivant</string>
