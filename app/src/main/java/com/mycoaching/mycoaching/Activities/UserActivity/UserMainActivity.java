@@ -5,15 +5,12 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.view.Menu;
-import android.view.MenuInflater;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
-import com.mycoaching.mycoaching.Activities.LoginActivity;
 import com.mycoaching.mycoaching.Fragments.Menu.CalendarFragment;
 import com.mycoaching.mycoaching.Fragments.Menu.FollowUpFragment;
 import com.mycoaching.mycoaching.Fragments.Menu.ChatFragment;
@@ -22,19 +19,25 @@ import com.mycoaching.mycoaching.Fragments.Menu.SessionFragment;
 import com.mycoaching.mycoaching.R;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.realm.Realm;
 
 /**
  * Created by tensa on 07/03/2018.
  */
 
-public class UserMainActivity extends FragmentActivity {
+public class UserMainActivity extends AppCompatActivity {
+
+    @BindView(R.id.title)
+    TextView title;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
-    @BindView(R.id.title)
-    TextView title;
+    @OnClick(R.id.option) void settings(){
+
+    }
 
     FollowUpFragment fuf = new FollowUpFragment();
     SessionFragment sf = new SessionFragment();
@@ -90,7 +93,6 @@ public class UserMainActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_main);
-        setActionBar(toolbar);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.getMenu().getItem(2).setChecked(true);
@@ -100,6 +102,7 @@ public class UserMainActivity extends FragmentActivity {
         ft.show(cf);
         ft.commit();
         realm = realm.getDefaultInstance();
+        ButterKnife.bind(this);
     }
 
     @Override
@@ -119,25 +122,6 @@ public class UserMainActivity extends FragmentActivity {
                 })
                 .setIcon(R.drawable.logo)
                 .show();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.user_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.profile:
-                return true;
-            case R.id.logout:
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
 
     public void addFragments(){
