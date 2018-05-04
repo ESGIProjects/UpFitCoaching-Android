@@ -29,13 +29,16 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activities.UserActivity.UserMainActivity"
-            android:label="@string/title_activity_user_main"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeNAB"/>
         <activity
             android:name=".Activities.CoachActivity.CoachMainActivity"
-            android:label="@string/title_activity_coach_main"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeNAB"></activity>
+        <activity
+            android:name=".Activities.UserActivity.SettingsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeNAB"/>
     </application>
 
 </manifest>

@@ -2,6 +2,7 @@ package com.mycoaching.mycoaching.Activities.UserActivity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -11,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.mycoaching.mycoaching.Activities.RegisterActivity;
 import com.mycoaching.mycoaching.Fragments.Menu.CalendarFragment;
 import com.mycoaching.mycoaching.Fragments.Menu.FollowUpFragment;
 import com.mycoaching.mycoaching.Fragments.Menu.ChatFragment;
@@ -35,8 +37,11 @@ public class UserMainActivity extends AppCompatActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
-    @OnClick(R.id.option) void settings(){
+    Intent i;
 
+    @OnClick(R.id.option) void settings(){
+        i = new Intent(this,SettingsActivity.class);
+        performTransition(i,R.animator.slide_from_right,R.animator.slide_to_left);
     }
 
     FollowUpFragment fuf = new FollowUpFragment();
@@ -138,5 +143,10 @@ public class UserMainActivity extends AppCompatActivity {
         ft.hide(cf);
         ft.hide(chf);
         ft.hide(ff);
+    }
+
+    public void performTransition(Intent i, int from, int to){
+        startActivity(i);
+        overridePendingTransition(from,to);
     }
 }
