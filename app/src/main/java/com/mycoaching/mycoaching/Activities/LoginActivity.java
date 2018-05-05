@@ -13,6 +13,7 @@ import com.mycoaching.mycoaching.Activities.UserActivity.UserMainActivity;
 import com.mycoaching.mycoaching.R;
 import com.mycoaching.mycoaching.Util.Api.ApiResults;
 import com.mycoaching.mycoaching.Util.Api.CallService;
+import com.mycoaching.mycoaching.Util.Api.OkHttpSingleton;
 import com.mycoaching.mycoaching.Util.Api.ServiceResultListener;
 import com.mycoaching.mycoaching.Util.Model.Realm.UserRealm;
 
@@ -20,6 +21,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.WebSocket;
+import okhttp3.WebSocketListener;
 
 import static com.mycoaching.mycoaching.Util.CommonMethods.checkEmail;
 import static com.mycoaching.mycoaching.Util.CommonMethods.checkPassword;
@@ -107,6 +113,26 @@ public class LoginActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         ButterKnife.bind(this);
         realm = Realm.getDefaultInstance();
+        OkHttpClient oc = OkHttpSingleton.getInstance();
+        Request request = new Request.Builder().url("ws://212.47.234.147/ws?id=2").build();
+        WebSocket ws = oc.newWebSocket(request, new WebSocketListener() {
+            @Override
+            public void onOpen(WebSocket webSocket, Response response) {
+                super.onOpen(webSocket, response);
+                Log.i("TEST WS :", response.toString());
+            }
+        });
+        CallService.getConversation("4", new ServiceResultListener() {
+            @Override
+            public void onResult(ApiResults ar) {
+                if(ar.getResponseCode()==200){
+                    Log.i("200 : ","SUCCESS");
+                }
+                else{
+                    Log.i("ONCHE : ","FAIL");
+                }
+            }
+        });
     }
 
     public void performTransition(Intent i, int from, int to){

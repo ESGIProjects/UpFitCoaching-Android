@@ -1,5 +1,7 @@
 package com.mycoaching.mycoaching.Util.Api;
 
+import android.app.Service;
+
 import com.mycoaching.mycoaching.Util.Model.Retrofit.UserRetrofit;
 
 import java.util.ArrayList;
@@ -58,6 +60,24 @@ public class CallService{
 
     public static void checkMail(String mail, final ServiceResultListener srl){
         ApiUtils.getRetrofitInstance().checkMail(mail).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                ApiResults sir = new ApiResults();
+                sir.setResponseCode(response.code());
+                srl.onResult(sir);
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                ApiResults sir = new ApiResults();
+                sir.setException(t);
+                srl.onResult(sir);
+            }
+        });
+    }
+
+    public static void getConversation(String id, final ServiceResultListener srl){
+        ApiUtils.getRetrofitInstance().getConversation(id).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 ApiResults sir = new ApiResults();

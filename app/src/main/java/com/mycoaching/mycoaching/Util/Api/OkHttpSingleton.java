@@ -11,7 +11,6 @@ import okhttp3.OkHttpClient;
 public class OkHttpSingleton {
 
     private OkHttpSingleton(){
-
     }
 
     public static OkHttpClient getInstance() {

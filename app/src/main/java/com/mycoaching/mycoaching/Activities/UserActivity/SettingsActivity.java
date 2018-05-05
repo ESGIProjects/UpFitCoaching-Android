@@ -18,7 +18,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     Realm realm;
 
-    @BindView(R.id.test)
+    @BindView(R.id.mailLabel)
     TextView tv;
 
     @Override
