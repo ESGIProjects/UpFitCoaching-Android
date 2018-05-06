@@ -15,12 +15,17 @@ import com.mycoaching.mycoaching.Util.Api.ApiResults;
 import com.mycoaching.mycoaching.Util.Api.CallService;
 import com.mycoaching.mycoaching.Util.Api.OkHttpSingleton;
 import com.mycoaching.mycoaching.Util.Api.ServiceResultListener;
+import com.mycoaching.mycoaching.Util.CommonMethods.*;
 import com.mycoaching.mycoaching.Util.Model.Realm.UserRealm;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -31,6 +36,7 @@ import static com.mycoaching.mycoaching.Util.CommonMethods.checkEmail;
 import static com.mycoaching.mycoaching.Util.CommonMethods.checkPassword;
 import static com.mycoaching.mycoaching.Util.CommonMethods.clearFields;
 import static com.mycoaching.mycoaching.Util.CommonMethods.isAvailable;
+import static com.mycoaching.mycoaching.Util.CommonMethods.getDate;
 
 /**
  * Created by tensa on 01/03/2018.
@@ -113,15 +119,7 @@ public class LoginActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         ButterKnife.bind(this);
         realm = Realm.getDefaultInstance();
-        OkHttpClient oc = OkHttpSingleton.getInstance();
-        Request request = new Request.Builder().url("ws://212.47.234.147/ws?id=2").build();
-        WebSocket ws = oc.newWebSocket(request, new WebSocketListener() {
-            @Override
-            public void onOpen(WebSocket webSocket, Response response) {
-                super.onOpen(webSocket, response);
-                Log.i("TEST WS :", response.toString());
-            }
-        });
+
         CallService.getConversation("4", new ServiceResultListener() {
             @Override
             public void onResult(ApiResults ar) {

@@ -7,8 +7,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mycoaching.mycoaching.R;
+import com.mycoaching.mycoaching.Util.Api.WebSocketSingleton;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import butterknife.ButterKnife;
+import okhttp3.WebSocket;
+
+import static com.mycoaching.mycoaching.Util.CommonMethods.getDate;
 
 public class ChatFragment extends Fragment{
 
@@ -19,6 +26,30 @@ public class ChatFragment extends Fragment{
         super.onCreate(savedInstanceState);
         v = inflater.inflate(R.layout.fragment_chat, container, false);
         ButterKnife.bind(this,v);
+
+
+        WebSocketSingleton.getInstance().send(sendMessage());
+
         return v;
+    }
+
+    public String sendMessage(){
+        JSONObject object = new JSONObject();
+        try{
+            JSONObject sender = new JSONObject();
+            sender.put("id",2);
+            object.put("sender",sender);
+
+            JSONObject receiver = new JSONObject();
+            receiver.put("id",15);
+            object.put("receiver",receiver);
+
+            object.put("date", getDate());
+            object.put("content", "Test onche 2 : le retour");
+        }
+        catch (JSONException e){
+            e.printStackTrace();
+        }
+        return object.toString();
     }
 }

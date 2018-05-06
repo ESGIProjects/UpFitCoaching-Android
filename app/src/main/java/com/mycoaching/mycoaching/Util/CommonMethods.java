@@ -5,6 +5,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.widget.EditText;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.regex.Pattern;
 
 /**
@@ -47,5 +49,11 @@ public class CommonMethods {
 
     public static boolean checkPassword(String pwd){
         return pwd.length() >= 8;
+    }
+
+    public static String getDate(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
+        return sdf.format(date);
     }
 }
