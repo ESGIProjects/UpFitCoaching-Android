@@ -14,7 +14,6 @@ import com.mycoaching.mycoaching.R;
 import com.mycoaching.mycoaching.Util.Api.ApiResults;
 import com.mycoaching.mycoaching.Util.Api.CallService;
 import com.mycoaching.mycoaching.Util.Api.ServiceResultListener;
-import com.mycoaching.mycoaching.Util.CommonMethods;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,6 +23,7 @@ import static com.mycoaching.mycoaching.Util.CommonMethods.checkEmail;
 import static com.mycoaching.mycoaching.Util.CommonMethods.checkFields;
 import static com.mycoaching.mycoaching.Util.CommonMethods.checkPassword;
 import static com.mycoaching.mycoaching.Util.CommonMethods.clearFields;
+import static com.mycoaching.mycoaching.Util.CommonMethods.getSHAPassword;
 import static com.mycoaching.mycoaching.Util.CommonMethods.isSame;
 
 public class CredentialsFragment extends Fragment {
@@ -55,14 +55,14 @@ public class CredentialsFragment extends Fragment {
                             if(b == null){
                                 b = new Bundle();
                                 b.putString("mail",mail.getText().toString());
-                                b.putString("password", CommonMethods.getSHAPassword(password.getText().toString()));
+                                b.putString("password", getSHAPassword(password.getText().toString()));
                                 UserDataFragment udf = new UserDataFragment();
                                 udf.setArguments(b);
                                 ((RegisterActivity)getActivity()).replaceFragment(udf,R.id.container);
                             }
                             else{
                                 b.putString("mail",mail.getText().toString());
-                                b.putString("password", CommonMethods.getSHAPassword(password.getText().toString()));
+                                b.putString("password", getSHAPassword(password.getText().toString()));
                                 CoachDataFragment cdf = new CoachDataFragment();
                                 cdf.setArguments(b);
                                 ((RegisterActivity)getActivity()).replaceFragment(cdf,R.id.container);

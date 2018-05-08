@@ -13,30 +13,19 @@ import com.mycoaching.mycoaching.Activities.UserActivity.UserMainActivity;
 import com.mycoaching.mycoaching.R;
 import com.mycoaching.mycoaching.Util.Api.ApiResults;
 import com.mycoaching.mycoaching.Util.Api.CallService;
-import com.mycoaching.mycoaching.Util.Api.OkHttpSingleton;
 import com.mycoaching.mycoaching.Util.Api.ServiceResultListener;
-import com.mycoaching.mycoaching.Util.CommonMethods.*;
 import com.mycoaching.mycoaching.Util.Model.Realm.UserRealm;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.WebSocket;
-import okhttp3.WebSocketListener;
 
 import static com.mycoaching.mycoaching.Util.CommonMethods.checkEmail;
 import static com.mycoaching.mycoaching.Util.CommonMethods.checkPassword;
 import static com.mycoaching.mycoaching.Util.CommonMethods.clearFields;
+import static com.mycoaching.mycoaching.Util.CommonMethods.getSHAPassword;
 import static com.mycoaching.mycoaching.Util.CommonMethods.isAvailable;
-import static com.mycoaching.mycoaching.Util.CommonMethods.getDate;
 
 /**
  * Created by tensa on 01/03/2018.
@@ -60,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
                 pd = new ProgressDialog(this,R.style.StyledDialog);
                 pd.setMessage("Connection en cours...");
                 pd.show();
-                CallService.signIn(email.getText().toString(),password.getText().toString(),new ServiceResultListener(){
+                CallService.signIn(email.getText().toString(), getSHAPassword(password.getText().toString()),new ServiceResultListener(){
                     @Override
                     public void onResult(ApiResults ar){
                         pd.dismiss();
