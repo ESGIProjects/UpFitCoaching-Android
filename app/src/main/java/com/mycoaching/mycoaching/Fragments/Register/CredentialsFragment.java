@@ -14,6 +14,7 @@ import com.mycoaching.mycoaching.R;
 import com.mycoaching.mycoaching.Util.Api.ApiResults;
 import com.mycoaching.mycoaching.Util.Api.CallService;
 import com.mycoaching.mycoaching.Util.Api.ServiceResultListener;
+import com.mycoaching.mycoaching.Util.CommonMethods;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -54,14 +55,14 @@ public class CredentialsFragment extends Fragment {
                             if(b == null){
                                 b = new Bundle();
                                 b.putString("mail",mail.getText().toString());
-                                b.putString("password",password.getText().toString());
+                                b.putString("password", CommonMethods.getSHAPassword(password.getText().toString()));
                                 UserDataFragment udf = new UserDataFragment();
                                 udf.setArguments(b);
                                 ((RegisterActivity)getActivity()).replaceFragment(udf,R.id.container);
                             }
                             else{
                                 b.putString("mail",mail.getText().toString());
-                                b.putString("password",password.getText().toString());
+                                b.putString("password", CommonMethods.getSHAPassword(password.getText().toString()));
                                 CoachDataFragment cdf = new CoachDataFragment();
                                 cdf.setArguments(b);
                                 ((RegisterActivity)getActivity()).replaceFragment(cdf,R.id.container);

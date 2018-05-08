@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import com.mycoaching.mycoaching.Fragments.Register.RegisterChoiceFragment;
 import com.mycoaching.mycoaching.R;
 
-import io.realm.Realm;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -52,5 +51,4 @@ public class RegisterActivity extends AppCompatActivity {
                 .setIcon(R.drawable.logo)
                 .show();
     }
-
 }
