@@ -19,6 +19,8 @@ public class RegisterChoiceFragment extends Fragment{
     CredentialsFragment cf = new CredentialsFragment();
 
     @OnClick(R.id.user) void userTransition(){
+        b.putString("type","0");
+        cf.setArguments(b);
         ((RegisterActivity)getActivity()).replaceFragment(cf,R.id.container);
     }
 

@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,12 +35,6 @@ public class UserDataFragment extends Fragment {
     Intent i;
     Realm realm = null;
 
-    @BindView(R.id.type_label)
-    TextView type_label;
-
-    @BindView(R.id.user_type)
-    Spinner user_type;
-
     @BindView(R.id.firstName)
     EditText firstName;
 
@@ -61,7 +56,7 @@ public class UserDataFragment extends Fragment {
             pd = new ProgressDialog(getContext(),R.style.StyledDialog);
             pd.setMessage("Création du compte en cours...");
             pd.show();
-            CallService.signUp(String.valueOf(user_type.getSelectedItemPosition()), b.getString("mail"),
+            CallService.signUp(b.getString("type"),b.getString("mail"),
                     b.getString("password"), firstName.getText().toString(), lastName.getText().toString(),
                     birthDate.getText().toString(), city.getText().toString(), null, phoneNumber.getText().toString(),
                     new ServiceResultListener() {
@@ -107,7 +102,7 @@ public class UserDataFragment extends Fragment {
                 ur.setBirthDate(birthDate.getText().toString());
                 ur.setMail(b.getString("mail"));
                 ur.setPhoneNumber(phoneNumber.getText().toString());
-                ur.setType(user_type.getSelectedItemPosition());
+                ur.setType(Integer.valueOf(b.getString("type")));
                 ur.setPhoneNumber(phoneNumber.getText().toString());
             }
         });

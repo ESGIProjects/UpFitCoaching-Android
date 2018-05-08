@@ -52,8 +52,7 @@ public class CredentialsFragment extends Fragment {
                     public void onResult(ApiResults ar) {
                         pd.dismiss();
                         if(ar.getResponseCode() == 200){
-                            if(b == null){
-                                b = new Bundle();
+                            if(b.getString("type") == "0"){
                                 b.putString("mail",mail.getText().toString());
                                 b.putString("password", getSHAPassword(password.getText().toString()));
                                 UserDataFragment udf = new UserDataFragment();
