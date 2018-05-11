@@ -1,4 +1,4 @@
-package com.mycoaching.mycoaching.Util.Api;
+package com.mycoaching.mycoaching.Util.Singletons;
 
 import java.util.concurrent.TimeUnit;
 

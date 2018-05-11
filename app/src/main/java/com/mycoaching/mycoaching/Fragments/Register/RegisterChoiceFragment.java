@@ -2,12 +2,11 @@ package com.mycoaching.mycoaching.Fragments.Register;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.mycoaching.mycoaching.Activities.RegisterActivity;
+import com.mycoaching.mycoaching.Activities.Common.RegisterActivity;
 import com.mycoaching.mycoaching.R;
 
 import butterknife.ButterKnife;

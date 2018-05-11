@@ -10,6 +10,11 @@ import com.mycoaching.mycoaching.R;
 
 import butterknife.ButterKnife;
 
+/**
+ * Created by kevin on 28/04/2018.
+ */
+
+
 public class ForumFragment extends Fragment {
 
     View v;

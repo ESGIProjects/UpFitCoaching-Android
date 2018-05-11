@@ -1,7 +1,7 @@
 package com.mycoaching.mycoaching.Activities.CoachActivity;
 
 /**
- * Created by tensa on 07/03/2018.
+ * Created by kevin on 07/03/2018.
  */
 
 import android.app.AlertDialog;
@@ -43,10 +43,10 @@ public class CoachMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coach_main);
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        realm = realm.getDefaultInstance();
+        realm = Realm.getDefaultInstance();
     }
 
     @Override

@@ -4,21 +4,18 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mycoaching.mycoaching.Activities.UserActivity.UserMainActivity;
 import com.mycoaching.mycoaching.R;
-import com.mycoaching.mycoaching.Util.Api.ApiResults;
-import com.mycoaching.mycoaching.Util.Api.CallService;
-import com.mycoaching.mycoaching.Util.Api.ServiceResultListener;
-import com.mycoaching.mycoaching.Util.Model.Realm.UserRealm;
+import com.mycoaching.mycoaching.Api.ApiResults;
+import com.mycoaching.mycoaching.Api.ApiCall;
+import com.mycoaching.mycoaching.Api.ServiceResultListener;
+import com.mycoaching.mycoaching.Models.Realm.UserRealm;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,7 +53,7 @@ public class UserDataFragment extends Fragment {
             pd = new ProgressDialog(getContext(),R.style.StyledDialog);
             pd.setMessage("Création du compte en cours...");
             pd.show();
-            CallService.signUp(b.getString("type"),b.getString("mail"),
+            ApiCall.signUp(b.getString("type"),b.getString("mail"),
                     b.getString("password"), firstName.getText().toString(), lastName.getText().toString(),
                     birthDate.getText().toString(), city.getText().toString(), null, phoneNumber.getText().toString(),
                     new ServiceResultListener() {
@@ -64,7 +61,7 @@ public class UserDataFragment extends Fragment {
                         public void onResult(ApiResults ar) {
                             pd.dismiss();
                             if(ar.getResponseCode() == 201){
-                                realm = realm.getDefaultInstance();
+                                realm = Realm.getDefaultInstance();
                                 executeTransaction(realm,ar);
                                 i = new Intent(getContext(),UserMainActivity.class);
                                 performTransition(i,R.animator.slide_from_left,R.animator.slide_to_right);

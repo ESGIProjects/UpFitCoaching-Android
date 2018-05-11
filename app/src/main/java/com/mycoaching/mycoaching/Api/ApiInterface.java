@@ -1,17 +1,19 @@
-package com.mycoaching.mycoaching.Util.Api;
+package com.mycoaching.mycoaching.Api;
 
-import com.mycoaching.mycoaching.Util.Model.Retrofit.UserRetrofit;
+import com.mycoaching.mycoaching.Models.Message;
+import com.mycoaching.mycoaching.Models.Retrofit.UserRetrofit;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
- * Created by tensa on 07/03/2018.
+ * Created by kevin on 07/03/2018.
  */
 
 public interface ApiInterface {
@@ -32,5 +34,5 @@ public interface ApiInterface {
     Call<Void> checkMail(@Field("mail") String mail);
 
     @GET("messages/")
-    Call<Void> getConversation(@Query("userId") String id);
+    Call<List<Message>> getConversation(@Query("userId") String id);
 }

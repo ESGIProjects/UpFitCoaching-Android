@@ -1,7 +1,11 @@
-package com.mycoaching.mycoaching.Util.Model.Retrofit;
+package com.mycoaching.mycoaching.Models.Retrofit;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+/**
+ * Created by kevin on 20/04/2018.
+ */
 
 public class UserRetrofit {
 
@@ -11,7 +15,7 @@ public class UserRetrofit {
 
     @SerializedName("type")
     @Expose
-    private int type;
+    private Integer type;
 
     @SerializedName("mail")
     @Expose
@@ -41,8 +45,12 @@ public class UserRetrofit {
     @Expose
     private String phoneNumber;
 
-    public UserRetrofit(String id, int type, String mail, String firstName, String lastName, String birthDate,
-                        String address, String city, String phoneNumber){
+    @SerializedName("coach")
+    @Expose
+    private UserRetrofit coach;
+
+    public UserRetrofit(String id, Integer type, String mail, String firstName, String lastName, String birthDate,
+                        String address, String city, String phoneNumber, UserRetrofit coach){
         this.id = id;
         this.type = type;
         this.mail = mail;
@@ -52,6 +60,7 @@ public class UserRetrofit {
         this.address = address;
         this.city = city;
         this.phoneNumber = phoneNumber;
+        this.coach = coach;
     }
 
     public String getId() {
@@ -62,11 +71,11 @@ public class UserRetrofit {
         this.id = id;
     }
 
-    public int getType() {
+    public Integer getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 
@@ -124,5 +133,13 @@ public class UserRetrofit {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public UserRetrofit getCoach() {
+        return coach;
+    }
+
+    public void setCoach(UserRetrofit coach) {
+        this.coach = coach;
     }
 }

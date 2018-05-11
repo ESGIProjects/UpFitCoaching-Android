@@ -12,10 +12,10 @@ import android.widget.Toast;
 
 import com.mycoaching.mycoaching.Activities.CoachActivity.CoachMainActivity;
 import com.mycoaching.mycoaching.R;
-import com.mycoaching.mycoaching.Util.Api.ApiResults;
-import com.mycoaching.mycoaching.Util.Api.CallService;
-import com.mycoaching.mycoaching.Util.Api.ServiceResultListener;
-import com.mycoaching.mycoaching.Util.Model.Realm.UserRealm;
+import com.mycoaching.mycoaching.Api.ApiResults;
+import com.mycoaching.mycoaching.Api.ApiCall;
+import com.mycoaching.mycoaching.Api.ServiceResultListener;
+import com.mycoaching.mycoaching.Models.Realm.UserRealm;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -53,7 +53,7 @@ public class CoachDataFragment extends Fragment {
             pd = new ProgressDialog(getContext(),R.style.StyledDialog);
             pd.setMessage("Création du compte en cours...");
             pd.show();
-            CallService.signUp(b.getString("type"), b.getString("mail"),
+            ApiCall.signUp(b.getString("type"), b.getString("mail"),
                     b.getString("password"), firstName.getText().toString(), lastName.getText().toString(),
                     null, city.getText().toString(), address.getText().toString(), phoneNumber.getText().toString(),
                     new ServiceResultListener() {
@@ -61,7 +61,7 @@ public class CoachDataFragment extends Fragment {
                         public void onResult(final ApiResults ar) {
                             pd.dismiss();
                             if(ar.getResponseCode() == 201){
-                                realm = realm.getDefaultInstance();
+                                realm = Realm.getDefaultInstance();
                                 executeTransaction(realm,ar);
                                 i = new Intent(getContext(),CoachMainActivity.class);
                                 performTransition(i,R.animator.slide_from_left,R.animator.slide_to_right);

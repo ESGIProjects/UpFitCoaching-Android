@@ -1,7 +1,11 @@
-package com.mycoaching.mycoaching.Util.Model.Realm;
+package com.mycoaching.mycoaching.Models.Realm;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
+
+/**
+ * Created by kevin on 20/04/2018.
+ */
 
 public class UserRealm extends RealmObject {
 
@@ -9,7 +13,11 @@ public class UserRealm extends RealmObject {
     String id;
 
     private String mail, firstName, lastName, birthDate, address, city, phoneNumber;
-    int type;
+
+    private String idCoach, mailCoach, firstNameCoach, lastNameCoach, addressCoach,
+            cityCoach, phoneNumberCoach;
+
+    private int type, typeCoach;
 
     public int getType() {
         return type;
@@ -81,5 +89,61 @@ public class UserRealm extends RealmObject {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getMailCoach() {
+        return mailCoach;
+    }
+
+    public void setMailCoach(String mailCoach) {
+        this.mailCoach = mailCoach;
+    }
+
+    public String getFirstNameCoach() {
+        return firstNameCoach;
+    }
+
+    public void setFirstNameCoach(String firstNameCoach) {
+        this.firstNameCoach = firstNameCoach;
+    }
+
+    public String getLastNameCoach() {
+        return lastNameCoach;
+    }
+
+    public void setLastNameCoach(String lastNameCoach) {
+        this.lastNameCoach = lastNameCoach;
+    }
+
+    public String getAddressCoach() {
+        return addressCoach;
+    }
+
+    public void setAddressCoach(String addressCoach) {
+        this.addressCoach = addressCoach;
+    }
+
+    public String getCityCoach() {
+        return cityCoach;
+    }
+
+    public void setCityCoach(String cityCoach) {
+        this.cityCoach = cityCoach;
+    }
+
+    public String getPhoneNumberCoach() {
+        return phoneNumberCoach;
+    }
+
+    public void setPhoneNumberCoach(String phoneNumberCoach) {
+        this.phoneNumberCoach = phoneNumberCoach;
+    }
+
+    public String getIdCoach() {
+        return idCoach;
+    }
+
+    public void setIdCoach(String idCoach) {
+        this.idCoach = idCoach;
     }
 }

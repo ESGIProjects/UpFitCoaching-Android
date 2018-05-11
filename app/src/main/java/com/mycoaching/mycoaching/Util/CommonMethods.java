@@ -5,6 +5,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.widget.EditText;
 
+import org.json.JSONObject;
+
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
@@ -12,7 +14,7 @@ import java.util.Date;
 import java.util.regex.Pattern;
 
 /**
- * Created by tensa on 17/03/2018.
+ * Created by kevin on 17/03/2018.
  */
 
 public class CommonMethods {
@@ -33,10 +35,7 @@ public class CommonMethods {
     }
 
     public static boolean isSame(String a, String b){
-        if(a.equals(b)){
-            return true;
-        }
-        return false;
+        return a.equals(b);
     }
 
     public static void clearFields(EditText ...fields){
@@ -74,5 +73,9 @@ public class CommonMethods {
             e.printStackTrace();
         }
         return hexString.toString();
+    }
+
+    public static JSONObject getJSONFromString(String s) throws Exception{
+        return new JSONObject(s);
     }
 }

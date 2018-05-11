@@ -1,4 +1,4 @@
-package com.mycoaching.mycoaching.Activities;
+package com.mycoaching.mycoaching.Activities.Common;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -10,6 +10,9 @@ import android.support.v7.app.AppCompatActivity;
 import com.mycoaching.mycoaching.Fragments.Register.RegisterChoiceFragment;
 import com.mycoaching.mycoaching.R;
 
+/**
+ * Created by kevin on 06/03/2018.
+ */
 
 public class RegisterActivity extends AppCompatActivity {
 

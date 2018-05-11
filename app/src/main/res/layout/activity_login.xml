@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:weightSum="5"
     android:background="@drawable/login_wallpaper_blur"
-    tools:context="com.mycoaching.mycoaching.Activities.LoginActivity">
+    tools:context="com.mycoaching.mycoaching.Activities.Common.LoginActivity">
 
     <TextView
         android:layout_width="wrap_content"

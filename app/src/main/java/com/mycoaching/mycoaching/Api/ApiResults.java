@@ -1,20 +1,30 @@
-package com.mycoaching.mycoaching.Util.Api;
+package com.mycoaching.mycoaching.Api;
 
-import com.mycoaching.mycoaching.Util.Model.Retrofit.UserRetrofit;
+import com.mycoaching.mycoaching.Models.Message;
+import com.mycoaching.mycoaching.Models.Retrofit.UserRetrofit;
 
 import java.util.List;
 
 /**
- * Created by tensa on 08/03/2018.
+ * Created by kevin on 08/03/2018.
  */
 
 
 public class ApiResults {
 
     String body;
+    List<Message> listMessage;
     int responseCode;
     Throwable exception;
     UserRetrofit ur;
+
+    public List<Message> getListMessage() {
+        return listMessage;
+    }
+
+    public void setListMessage(List<Message> listMessage) {
+        this.listMessage = listMessage;
+    }
 
     public int getResponseCode(){
         return responseCode;

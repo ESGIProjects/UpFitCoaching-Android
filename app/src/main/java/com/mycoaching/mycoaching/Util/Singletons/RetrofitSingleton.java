@@ -1,4 +1,4 @@
-package com.mycoaching.mycoaching.Util.Api;
+package com.mycoaching.mycoaching.Util.Singletons;
 
 import com.mycoaching.mycoaching.R;
 
@@ -6,7 +6,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Created by tensa on 17/03/2018.
+ * Created by kevin on 17/03/2018.
  */
 
 public class RetrofitSingleton {

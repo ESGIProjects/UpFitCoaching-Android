@@ -4,18 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!--<android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/refresh"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_weight="2"
-            android:divider="@color/colorPrimary"
-            android:layout_height="wrap_content" />
-    </android.support.v4.widget.SwipeRefreshLayout>-->
-
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_weight="2"
         android:divider="@color/colorPrimary"
@@ -34,23 +24,27 @@
         android:orientation="horizontal">
 
         <EditText
-            android:layout_width="match_parent"
+            android:id="@+id/input"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:hint="Envoyer un message"
+            android:hint="@string/send_message"
             android:inputType="textMultiLine"
             android:scrollHorizontally="false"
             android:scrollbars="vertical"
-            android:paddingHorizontal="10dp"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
             android:maxLines="5"/>
 
         <ImageButton
+            android:id="@+id/send"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_gravity="center"
             android:scaleType="fitCenter"
             android:padding="20dp"
-            android:layout_marginHorizontal="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:background="@drawable/ic_send_black_24dp"/>
     </LinearLayout>
 

@@ -1,4 +1,4 @@
-package com.mycoaching.mycoaching.Util;
+package com.mycoaching.mycoaching.Adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,9 +6,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.mycoaching.mycoaching.Models.Appointment;
 import com.mycoaching.mycoaching.R;
 
 import java.util.List;
+
+/**
+ * Created by kevin on 28/04/2018.
+ */
 
 public class AppointmentsAdapter extends RecyclerView.Adapter<AppointmentsAdapter.MyViewHolder> {
 

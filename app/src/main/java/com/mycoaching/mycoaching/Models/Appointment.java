@@ -1,4 +1,8 @@
-package com.mycoaching.mycoaching.Util;
+package com.mycoaching.mycoaching.Models;
+
+/**
+ * Created by kevin on 28/04/2018.
+ */
 
 public class Appointment {
 

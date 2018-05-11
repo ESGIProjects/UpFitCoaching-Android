@@ -12,7 +12,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.mycoaching.mycoaching.Activities.RegisterActivity;
 import com.mycoaching.mycoaching.Fragments.Menu.CalendarFragment;
 import com.mycoaching.mycoaching.Fragments.Menu.FollowUpFragment;
 import com.mycoaching.mycoaching.Fragments.Menu.ChatFragment;
@@ -26,7 +25,7 @@ import butterknife.OnClick;
 import io.realm.Realm;
 
 /**
- * Created by tensa on 07/03/2018.
+ * Created by kevin on 07/03/2018.
  */
 
 public class UserMainActivity extends AppCompatActivity {
@@ -98,7 +97,7 @@ public class UserMainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_main);
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.getMenu().getItem(2).setChecked(true);
         ft = getSupportFragmentManager().beginTransaction();
@@ -106,7 +105,7 @@ public class UserMainActivity extends AppCompatActivity {
         hideFragments();
         ft.show(cf);
         ft.commit();
-        realm = realm.getDefaultInstance();
+        realm = Realm.getDefaultInstance();
         ButterKnife.bind(this);
     }
 

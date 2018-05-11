@@ -12,14 +12,19 @@ import android.view.ViewGroup;
 import android.widget.CalendarView;
 
 import com.mycoaching.mycoaching.R;
-import com.mycoaching.mycoaching.Util.Appointment;
-import com.mycoaching.mycoaching.Util.AppointmentsAdapter;
+import com.mycoaching.mycoaching.Models.Appointment;
+import com.mycoaching.mycoaching.Adapters.AppointmentsAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+/**
+ * Created by kevin on 28/04/2018.
+ */
+
 
 public class CalendarFragment extends Fragment {
 

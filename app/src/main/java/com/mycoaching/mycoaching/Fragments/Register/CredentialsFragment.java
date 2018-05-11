@@ -9,11 +9,11 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.mycoaching.mycoaching.Activities.RegisterActivity;
+import com.mycoaching.mycoaching.Activities.Common.RegisterActivity;
 import com.mycoaching.mycoaching.R;
-import com.mycoaching.mycoaching.Util.Api.ApiResults;
-import com.mycoaching.mycoaching.Util.Api.CallService;
-import com.mycoaching.mycoaching.Util.Api.ServiceResultListener;
+import com.mycoaching.mycoaching.Api.ApiResults;
+import com.mycoaching.mycoaching.Api.ApiCall;
+import com.mycoaching.mycoaching.Api.ServiceResultListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,7 +47,7 @@ public class CredentialsFragment extends Fragment {
                     isSame(password.getText().toString(), passwordConfirmation.getText().toString())){
                 pd = new ProgressDialog(getContext(),R.style.StyledDialog);
                 pd.show();
-                CallService.checkMail(mail.getText().toString(), new ServiceResultListener() {
+                ApiCall.checkMail(mail.getText().toString(), new ServiceResultListener() {
                     @Override
                     public void onResult(ApiResults ar) {
                         pd.dismiss();

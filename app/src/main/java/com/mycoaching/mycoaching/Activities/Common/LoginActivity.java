@@ -1,4 +1,4 @@
-package com.mycoaching.mycoaching.Activities;
+package com.mycoaching.mycoaching.Activities.Common;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -11,10 +11,10 @@ import android.widget.Toast;
 import com.mycoaching.mycoaching.Activities.CoachActivity.CoachMainActivity;
 import com.mycoaching.mycoaching.Activities.UserActivity.UserMainActivity;
 import com.mycoaching.mycoaching.R;
-import com.mycoaching.mycoaching.Util.Api.ApiResults;
-import com.mycoaching.mycoaching.Util.Api.CallService;
-import com.mycoaching.mycoaching.Util.Api.ServiceResultListener;
-import com.mycoaching.mycoaching.Util.Model.Realm.UserRealm;
+import com.mycoaching.mycoaching.Api.ApiResults;
+import com.mycoaching.mycoaching.Api.ApiCall;
+import com.mycoaching.mycoaching.Api.ServiceResultListener;
+import com.mycoaching.mycoaching.Models.Realm.UserRealm;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,7 +28,7 @@ import static com.mycoaching.mycoaching.Util.CommonMethods.getSHAPassword;
 import static com.mycoaching.mycoaching.Util.CommonMethods.isAvailable;
 
 /**
- * Created by tensa on 01/03/2018.
+ * Created by kevin on 01/03/2018.
  */
 
 public class LoginActivity extends AppCompatActivity {
@@ -49,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
                 pd = new ProgressDialog(this,R.style.StyledDialog);
                 pd.setMessage("Connection en cours...");
                 pd.show();
-                CallService.signIn(email.getText().toString(), getSHAPassword(password.getText().toString()),new ServiceResultListener(){
+                ApiCall.signIn(email.getText().toString(), getSHAPassword(password.getText().toString()),new ServiceResultListener(){
                     @Override
                     public void onResult(ApiResults ar){
                         pd.dismiss();
@@ -109,7 +109,7 @@ public class LoginActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         realm = Realm.getDefaultInstance();
 
-        CallService.getConversation("4", new ServiceResultListener() {
+        ApiCall.getConversation("4", new ServiceResultListener() {
             @Override
             public void onResult(ApiResults ar) {
                 if(ar.getResponseCode()==200){
@@ -148,6 +148,15 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 if(ar.getUr().getAddress() != null){
                     ur.setAddress(ar.getUr().getAddress());
+                }
+                if(ar.getUr().getCoach() != null){
+                    ur.setIdCoach(ar.getUr().getCoach().getId());
+                    ur.setMailCoach(ar.getUr().getCoach().getMail());
+                    ur.setFirstNameCoach(ar.getUr().getCoach().getFirstName());
+                    ur.setLastNameCoach(ar.getUr().getCoach().getLastName());
+                    ur.setCityCoach(ar.getUr().getCoach().getCity());
+                    ur.setPhoneNumberCoach(ar.getUr().getCoach().getPhoneNumber());
+                    ur.setAddressCoach(ar.getUr().getCoach().getAddress());
                 }
             }
         });
