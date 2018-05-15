@@ -44,7 +44,6 @@ import static com.mycoaching.mycoaching.Util.CommonMethods.getJSONFromString;
  * Created by kevin on 28/04/2018.
  */
 
-
 public class ChatFragment extends Fragment {
 
     View v;
@@ -59,7 +58,6 @@ public class ChatFragment extends Fragment {
     EditText et;
 
     private final class CustomWSListener extends WebSocketListener {
-
 
         @Override
         public void onOpen(WebSocket ws, Response r){
@@ -138,7 +136,6 @@ public class ChatFragment extends Fragment {
         v = inflater.inflate(R.layout.fragment_chat, container, false);
         r = Realm.getDefaultInstance();
         ur = r.where(UserRealm.class).findFirst();
-        Log.i("TEST COACH : ", ur.getMailCoach());
 
         rv = v.findViewById(R.id.list);
 

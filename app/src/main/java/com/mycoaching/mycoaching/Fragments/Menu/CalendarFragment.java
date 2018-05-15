@@ -13,7 +13,7 @@ import android.widget.CalendarView;
 
 import com.mycoaching.mycoaching.R;
 import com.mycoaching.mycoaching.Models.Appointment;
-import com.mycoaching.mycoaching.Adapters.AppointmentsAdapter;
+import com.mycoaching.mycoaching.Adapters.AppointmentAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,7 @@ public class CalendarFragment extends Fragment {
     private View v;
     private List<Appointment> listAppointments = new ArrayList<>();
     private RecyclerView rv;
-    private AppointmentsAdapter aa;
+    private AppointmentAdapter aa;
 
     @BindView(R.id.calendar)
     CalendarView cv;
@@ -45,7 +45,7 @@ public class CalendarFragment extends Fragment {
         rv = new RecyclerView(getContext());
 
         rv = v.findViewById(R.id.list);
-        aa = new AppointmentsAdapter(listAppointments);
+        aa = new AppointmentAdapter(listAppointments);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         rv.setLayoutManager(mLayoutManager);
         rv.setItemAnimator(new DefaultItemAnimator());
@@ -59,6 +59,8 @@ public class CalendarFragment extends Fragment {
 
     private void prepareData(){
         Appointment a = new Appointment("24 Mai", "nom de rue au hasard");
+        listAppointments.add(a);
+        a = new Appointment("25 Mai", "45 rue des Saints Pères");
         listAppointments.add(a);
         aa.notifyDataSetChanged();
     }

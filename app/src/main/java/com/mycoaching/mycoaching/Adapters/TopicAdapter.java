@@ -4,52 +4,53 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.mycoaching.mycoaching.Models.Appointment;
+import com.mycoaching.mycoaching.Models.Topic;
 import com.mycoaching.mycoaching.R;
 
 import java.util.List;
 
 /**
- * Created by kevin on 28/04/2018.
+ * Created by kevin on 16/05/2018.
  */
+public class TopicAdapter extends  RecyclerView.Adapter<TopicAdapter.MyViewHolder>{
 
-public class AppointmentsAdapter extends RecyclerView.Adapter<AppointmentsAdapter.MyViewHolder> {
-
-    private List<Appointment> listAppointments;
+    private List<Topic> listTopics;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView date, address;
+        public ImageView iv;
+        public TextView title;
 
         public MyViewHolder(View view) {
             super(view);
-            date = view.findViewById(R.id.date);
-            address = view.findViewById(R.id.address);
+            iv = view.findViewById(R.id.topic_icon);
+            title = view.findViewById(R.id.topic_name);
         }
     }
 
-    public AppointmentsAdapter(List<Appointment> listAppointments){
-        this.listAppointments = listAppointments;
+    public TopicAdapter(List<Topic> listAppointments){
+        this.listTopics = listAppointments;
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.appointment_row, parent, false);
+                .inflate(R.layout.topic_row, parent, false);
 
         return new MyViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        Appointment appointment = listAppointments.get(position);
-        holder.date.setText(appointment.getDate());
-        holder.address.setText(appointment.getAddress());
+        Topic topic = listTopics.get(position);
+        holder.iv.setImageResource(topic.getIcon());
+        holder.title.setText(topic.getTitle());
     }
 
     @Override
     public int getItemCount() {
-        return listAppointments.size();
+        return listTopics.size();
     }
 }

@@ -23,6 +23,7 @@ public class MessageAdapter extends RecyclerView.Adapter{
     Realm r;
     int sent = 1;
     int received = 2;
+    int receivedChained = 3;
 
     private List<Message> listMessages;
 
