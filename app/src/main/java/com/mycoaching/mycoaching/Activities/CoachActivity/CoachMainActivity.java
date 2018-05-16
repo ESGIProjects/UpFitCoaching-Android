@@ -6,6 +6,7 @@ package com.mycoaching.mycoaching.Activities.CoachActivity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -13,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.mycoaching.mycoaching.Activities.Common.LoginActivity;
 import com.mycoaching.mycoaching.Activities.UserActivity.UserMainActivity;
 import com.mycoaching.mycoaching.R;
 
@@ -22,6 +24,7 @@ public class CoachMainActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
     Realm realm = null;
+    Intent intent;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -56,7 +59,12 @@ public class CoachMainActivity extends AppCompatActivity {
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        finishAffinity();
+                        intent = new Intent(getApplicationContext(), LoginActivity.class);
+                        realm.beginTransaction();
+                        realm.deleteAll();
+                        realm.commitTransaction();
+                        realm.close();
+                        performTransition(intent,R.animator.slide_from_left,R.animator.slide_to_right);
                     }
                 })
                 .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
@@ -66,6 +74,11 @@ public class CoachMainActivity extends AppCompatActivity {
                 })
                 .setIcon(R.drawable.logo)
                 .show();
+    }
+
+    public void performTransition(Intent i, int from, int to){
+        startActivity(i);
+        overridePendingTransition(from,to);
     }
 
 }
