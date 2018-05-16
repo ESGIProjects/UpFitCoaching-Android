@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Created by kevin on 16/05/2018.
  */
-public class TopicAdapter extends  RecyclerView.Adapter<TopicAdapter.MyViewHolder>{
+public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.MyViewHolder>{
 
     private List<Topic> listTopics;
 
