@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.mycoaching.mycoaching.Activities.Common.LoginActivity;
 import com.mycoaching.mycoaching.Fragments.Menu.CalendarFragment;
 import com.mycoaching.mycoaching.Fragments.Menu.FollowUpFragment;
 import com.mycoaching.mycoaching.Fragments.Menu.ChatFragment;
@@ -36,11 +37,11 @@ public class UserMainActivity extends AppCompatActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
-    Intent i;
+    Intent intent;
 
     @OnClick(R.id.option) void settings(){
-        i = new Intent(this,SettingsActivity.class);
-        performTransition(i,R.animator.slide_from_right,R.animator.slide_to_left);
+        intent = new Intent(this,SettingsActivity.class);
+        performTransition(intent,R.animator.slide_from_right,R.animator.slide_to_left);
     }
 
     FollowUpFragment fuf = new FollowUpFragment();
@@ -116,7 +117,12 @@ public class UserMainActivity extends AppCompatActivity {
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        finishAffinity();
+                        intent = new Intent(getApplicationContext(), LoginActivity.class);
+                        realm.beginTransaction();
+                        realm.deleteAll();
+                        realm.commitTransaction();
+                        realm.close();
+                        performTransition(intent,R.animator.slide_from_left,R.animator.slide_to_right);
                     }
                 })
                 .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
