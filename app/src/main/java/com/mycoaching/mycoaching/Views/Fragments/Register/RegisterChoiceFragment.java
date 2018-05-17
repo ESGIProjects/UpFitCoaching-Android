@@ -1,4 +1,4 @@
-package com.mycoaching.mycoaching.Fragments.Register;
+package com.mycoaching.mycoaching.Views.Fragments.Register;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

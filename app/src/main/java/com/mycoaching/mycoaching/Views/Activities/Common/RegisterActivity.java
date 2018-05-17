@@ -7,8 +7,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
-import com.mycoaching.mycoaching.Fragments.Register.RegisterChoiceFragment;
 import com.mycoaching.mycoaching.R;
+import com.mycoaching.mycoaching.Views.Fragments.Register.RegisterChoiceFragment;
 
 /**
  * Created by kevin on 06/03/2018.

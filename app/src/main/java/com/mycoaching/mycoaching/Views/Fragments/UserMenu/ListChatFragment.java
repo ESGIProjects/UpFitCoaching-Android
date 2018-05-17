@@ -1,4 +1,4 @@
-package com.mycoaching.mycoaching.Fragments.UserMenu;
+package com.mycoaching.mycoaching.Views.Fragments.UserMenu;
 
 /**
  * Created by kevin on 28/04/2018.

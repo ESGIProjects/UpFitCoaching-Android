@@ -1,4 +1,4 @@
-package com.mycoaching.mycoaching.Fragments.UserMenu;
+package com.mycoaching.mycoaching.Views.Fragments.UserMenu;
 
 
 import android.graphics.Color;
@@ -47,7 +47,7 @@ public class FollowUpFragment extends Fragment {
         super.onCreate(savedInstanceState);
         v = inflater.inflate(R.layout.fragment_combined_chart, container, false);
 
-        cc = (CombinedChart) v.findViewById(R.id.chart);
+        cc = v.findViewById(R.id.chart);
         cc.getDescription().setEnabled(false);
         cc.setBackgroundColor(Color.WHITE);
         cc.setDrawGridBackground(false);

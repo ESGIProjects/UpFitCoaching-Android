@@ -13,12 +13,12 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.mycoaching.mycoaching.Views.Activities.Common.LoginActivity;
-import com.mycoaching.mycoaching.Fragments.UserMenu.CalendarFragment;
-import com.mycoaching.mycoaching.Fragments.UserMenu.ChatFragment;
-import com.mycoaching.mycoaching.Fragments.UserMenu.FollowUpFragment;
-import com.mycoaching.mycoaching.Fragments.UserMenu.ForumFragment;
-import com.mycoaching.mycoaching.Fragments.UserMenu.SessionFragment;
 import com.mycoaching.mycoaching.R;
+import com.mycoaching.mycoaching.Views.Fragments.UserMenu.CalendarFragment;
+import com.mycoaching.mycoaching.Views.Fragments.UserMenu.ChatFragment;
+import com.mycoaching.mycoaching.Views.Fragments.UserMenu.FollowUpFragment;
+import com.mycoaching.mycoaching.Views.Fragments.UserMenu.ForumFragment;
+import com.mycoaching.mycoaching.Views.Fragments.UserMenu.SessionFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
