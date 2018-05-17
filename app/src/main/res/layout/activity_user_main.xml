@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activities.UserActivity.UserMainActivity"
@@ -33,15 +32,15 @@
                 android:id="@+id/option"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:tint="@color/colorWhite"
-                android:paddingRight="10dp"
+                android:paddingEnd="10dp"
                 android:src="@drawable/ic_settings_black_24dp" />
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
 
     <FrameLayout
-        android:id="@id/container"
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
@@ -52,7 +51,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        app:menu="@menu/navigation"
+        app:menu="@menu/navigation_user"
         app:itemBackground="@color/colorPrimary"
         app:itemIconTint="@drawable/bottom_nav_colors"
         app:itemTextColor="@drawable/bottom_nav_colors"

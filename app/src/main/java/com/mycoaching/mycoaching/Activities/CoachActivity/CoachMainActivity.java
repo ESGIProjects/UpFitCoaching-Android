@@ -15,7 +15,6 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.mycoaching.mycoaching.Activities.Common.LoginActivity;
-import com.mycoaching.mycoaching.Activities.UserActivity.UserMainActivity;
 import com.mycoaching.mycoaching.R;
 
 import io.realm.Realm;
@@ -34,7 +33,9 @@ public class CoachMainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_calendar:
                     return true;
-                case R.id.navigation_followUp:
+                case R.id.navigation_chat:
+                    return true;
+                case R.id.navigation_forum:
                     return true;
             }
             return false;

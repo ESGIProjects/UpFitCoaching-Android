@@ -66,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
                                 i = new Intent(LoginActivity.this,UserMainActivity.class);
                                 performTransition(i,R.animator.slide_from_right,R.animator.slide_to_left);
                             }
-                            Toast.makeText(getApplicationContext(),"Connection réussie !",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),"Connexion réussie !",Toast.LENGTH_SHORT).show();
                         }
                         else{
                             Log.i("ERROR : ", "" + ar.getResponseCode());
@@ -108,18 +108,6 @@ public class LoginActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         ButterKnife.bind(this);
         realm = Realm.getDefaultInstance();
-
-        ApiCall.getConversation("4", new ServiceResultListener() {
-            @Override
-            public void onResult(ApiResults ar) {
-                if(ar.getResponseCode()==200){
-                    Log.i("200 : ","SUCCESS");
-                }
-                else{
-                    Log.i("ONCHE : ","FAIL");
-                }
-            }
-        });
     }
 
     public void performTransition(Intent i, int from, int to){
