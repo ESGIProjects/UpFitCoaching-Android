@@ -47,5 +47,6 @@
         <item>Gratuit</item>
         <item>Payant</item>
     </string-array>
+    <string name="title_activity_test">TEST</string>
 
 </resources>

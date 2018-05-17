@@ -20,6 +20,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by kevin on 28/04/2018.
@@ -32,6 +33,13 @@ public class CalendarFragment extends Fragment {
     private List<Appointment> listAppointments = new ArrayList<>();
     private RecyclerView rv;
     private AppointmentAdapter aa;
+    private Appointment a;
+
+    @OnClick(R.id.buttonCalendar) void action(){
+        a = new Appointment("26 Mai", "Paris");
+        listAppointments.add(a);
+        aa.notifyDataSetChanged();
+    }
 
     @BindView(R.id.calendar)
     CalendarView cv;
@@ -44,7 +52,7 @@ public class CalendarFragment extends Fragment {
 
         rv = new RecyclerView(getContext());
 
-        rv = v.findViewById(R.id.list);
+        rv = v.findViewById(R.id.listCalendar);
         aa = new AppointmentAdapter(listAppointments);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         rv.setLayoutManager(mLayoutManager);
@@ -58,7 +66,7 @@ public class CalendarFragment extends Fragment {
     }
 
     private void prepareData(){
-        Appointment a = new Appointment("24 Mai", "nom de rue au hasard");
+        a = new Appointment("24 Mai", "nom de rue au hasard");
         listAppointments.add(a);
         a = new Appointment("25 Mai", "45 rue des Saints Pères");
         listAppointments.add(a);

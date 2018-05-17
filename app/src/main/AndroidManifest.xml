@@ -30,15 +30,15 @@
         <activity
             android:name=".Activities.UserActivity.UserMainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeNAB"/>
+            android:theme="@style/AppThemeNAB" />
         <activity
             android:name=".Activities.CoachActivity.CoachMainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeNAB"></activity>
+            android:theme="@style/AppThemeNAB" />
         <activity
             android:name=".Activities.UserActivity.SettingsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeNAB"/>
+            android:theme="@style/AppThemeNAB" />
     </application>
 
 </manifest>

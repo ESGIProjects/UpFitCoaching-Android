@@ -20,6 +20,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by kevin on 28/04/2018.
@@ -31,9 +32,16 @@ public class SessionFragment extends Fragment {
     private List<Session> listSessions = new ArrayList<>();
     private RecyclerView rv;
     private SessionAdapter sa;
+    Session s;
 
     @BindView(R.id.calendarSession)
     CalendarView cv;
+
+    @OnClick(R.id.buttonSession) void action(){
+        s = new Session("Footing","Durée : 1h","Séries : x","Rep : x","A faire",R.drawable.logo);
+        listSessions.add(s);
+        sa.notifyDataSetChanged();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -57,7 +65,7 @@ public class SessionFragment extends Fragment {
     }
 
     private void prepareData(){
-        Session s = new Session("Squat","Durée : 30m","Séries : 15"," Rep : 10","A faire",R.drawable.ic_fitness_center_black_24dp);
+        s = new Session("Squat","Durée : 30m","Séries : 15"," Rep : 10","A faire",R.drawable.ic_fitness_center_black_24dp);
         listSessions.add(s);
         s = new Session("Pompes","Durée : 20m","Séries : 10","Rep : 15","Fait",R.drawable.ic_fitness_center_black_24dp);
         listSessions.add(s);

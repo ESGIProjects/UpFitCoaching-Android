@@ -109,6 +109,7 @@
             android:text="@string/account_creation"
             android:textColor="@color/colorWhite"
             android:textStyle="bold"
+            android:elevation="4dp"
             android:background="@color/colorPrimaryDark"/>
     </LinearLayout>
 
