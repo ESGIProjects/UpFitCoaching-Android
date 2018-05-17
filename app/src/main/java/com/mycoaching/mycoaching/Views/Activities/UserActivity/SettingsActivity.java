@@ -1,4 +1,4 @@
-package com.mycoaching.mycoaching.Activities.UserActivity;
+package com.mycoaching.mycoaching.Views.Activities.UserActivity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

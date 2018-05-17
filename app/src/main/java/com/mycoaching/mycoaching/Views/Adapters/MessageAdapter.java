@@ -1,4 +1,4 @@
-package com.mycoaching.mycoaching.Adapters;
+package com.mycoaching.mycoaching.Views.Adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,8 +7,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mycoaching.mycoaching.Models.Message;
-import com.mycoaching.mycoaching.R;
 import com.mycoaching.mycoaching.Models.Realm.UserRealm;
+import com.mycoaching.mycoaching.R;
 
 import java.util.List;
 

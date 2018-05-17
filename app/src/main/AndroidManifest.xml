@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Activities.Common.SplashScreenActivity"
+            android:name=".Views.Activities.Common.SplashScreenActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,21 +22,21 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activities.Common.LoginActivity"
+            android:name=".Views.Activities.Common.LoginActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.Common.RegisterActivity"
+            android:name=".Views.Activities.Common.RegisterActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.UserActivity.UserMainActivity"
+            android:name=".Views.Activities.UserActivity.UserMainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeNAB" />
         <activity
-            android:name=".Activities.CoachActivity.CoachMainActivity"
+            android:name=".Views.Activities.CoachActivity.CoachMainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeNAB" />
         <activity
-            android:name=".Activities.UserActivity.SettingsActivity"
+            android:name=".Views.Activities.UserActivity.SettingsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeNAB" />
     </application>

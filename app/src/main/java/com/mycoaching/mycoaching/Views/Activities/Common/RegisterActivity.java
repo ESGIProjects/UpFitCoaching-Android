@@ -1,4 +1,4 @@
-package com.mycoaching.mycoaching.Activities.Common;
+package com.mycoaching.mycoaching.Views.Activities.Common;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;

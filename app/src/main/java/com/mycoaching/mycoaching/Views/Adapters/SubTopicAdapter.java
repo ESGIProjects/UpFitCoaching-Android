@@ -1,13 +1,12 @@
-package com.mycoaching.mycoaching.Adapters;
+package com.mycoaching.mycoaching.Views.Adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.mycoaching.mycoaching.Models.Topic;
+import com.mycoaching.mycoaching.Models.SubTopic;
 import com.mycoaching.mycoaching.R;
 
 import java.util.List;
@@ -15,42 +14,41 @@ import java.util.List;
 /**
  * Created by kevin on 16/05/2018.
  */
-public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.MyViewHolder>{
+public class SubTopicAdapter extends RecyclerView.Adapter<SubTopicAdapter.MyViewHolder>{
 
-    private List<Topic> listTopics;
+    private List<SubTopic> listSubTopics;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public ImageView iv;
-        public TextView title;
+        public TextView title, subtitle;
 
         public MyViewHolder(View view) {
             super(view);
-            iv = view.findViewById(R.id.topic_icon);
-            title = view.findViewById(R.id.topic_name);
+            title = view.findViewById(R.id.subtopic_name);
+            subtitle = view.findViewById(R.id.subtopic_subtitle);
         }
     }
 
-    public TopicAdapter(List<Topic> listAppointments){
-        this.listTopics = listAppointments;
+    public SubTopicAdapter(List<SubTopic> listSubTopics){
+        this.listSubTopics = listSubTopics;
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.topic_row, parent, false);
+                .inflate(R.layout.subtopic_row, parent, false);
 
         return new MyViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        Topic topic = listTopics.get(position);
-        holder.iv.setImageResource(topic.getIcon());
-        holder.title.setText(topic.getTitle());
+        SubTopic subTopic = listSubTopics.get(position);
+        holder.title.setText(subTopic.getTitle());
+        holder.subtitle.setText(subTopic.getSubtitle());
     }
 
     @Override
     public int getItemCount() {
-        return listTopics.size();
+        return listSubTopics.size();
     }
 }

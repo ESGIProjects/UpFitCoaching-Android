@@ -1,4 +1,4 @@
-package com.mycoaching.mycoaching.Activities.CoachActivity;
+package com.mycoaching.mycoaching.Views.Activities.CoachActivity;
 
 /**
  * Created by kevin on 07/03/2018.
@@ -14,7 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.mycoaching.mycoaching.Activities.Common.LoginActivity;
+import com.mycoaching.mycoaching.Views.Activities.Common.LoginActivity;
 import com.mycoaching.mycoaching.R;
 
 import io.realm.Realm;

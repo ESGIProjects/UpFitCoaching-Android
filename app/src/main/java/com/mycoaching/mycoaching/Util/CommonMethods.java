@@ -11,7 +11,6 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.regex.Pattern;
 
 /**
  * Created by kevin on 17/03/2018.

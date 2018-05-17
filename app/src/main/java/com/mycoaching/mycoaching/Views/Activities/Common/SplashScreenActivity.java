@@ -1,4 +1,4 @@
-package com.mycoaching.mycoaching.Activities.Common;
+package com.mycoaching.mycoaching.Views.Activities.Common;
 
 import android.content.Intent;
 import android.os.Bundle;

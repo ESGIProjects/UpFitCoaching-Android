@@ -1,4 +1,4 @@
-package com.mycoaching.mycoaching.Fragments.Menu;
+package com.mycoaching.mycoaching.Fragments.UserMenu;
 
 
 import android.graphics.Color;
@@ -22,7 +22,6 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.mycoaching.mycoaching.R;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import butterknife.ButterKnife;
 

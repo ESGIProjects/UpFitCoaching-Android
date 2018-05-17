@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.mycoaching.mycoaching.Activities.Common.RegisterActivity;
+import com.mycoaching.mycoaching.Views.Activities.Common.RegisterActivity;
 import com.mycoaching.mycoaching.R;
 
 import butterknife.ButterKnife;

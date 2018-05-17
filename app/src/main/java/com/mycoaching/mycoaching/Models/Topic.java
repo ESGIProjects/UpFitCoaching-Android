@@ -1,7 +1,5 @@
 package com.mycoaching.mycoaching.Models;
 
-import android.media.Image;
-
 /**
  * Created by kevin on 16/05/2018.
  */

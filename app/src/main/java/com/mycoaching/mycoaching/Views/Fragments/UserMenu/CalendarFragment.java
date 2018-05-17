@@ -1,4 +1,4 @@
-package com.mycoaching.mycoaching.Fragments.Menu;
+package com.mycoaching.mycoaching.Fragments.UserMenu;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,8 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
 
-import com.mycoaching.mycoaching.Adapters.SessionAdapter;
-import com.mycoaching.mycoaching.Models.Session;
+import com.mycoaching.mycoaching.Views.Adapters.AppointmentAdapter;
+import com.mycoaching.mycoaching.Models.Appointment;
 import com.mycoaching.mycoaching.R;
 
 import java.util.ArrayList;
@@ -26,38 +26,39 @@ import butterknife.OnClick;
  * Created by kevin on 28/04/2018.
  */
 
-public class SessionFragment extends Fragment {
+
+public class CalendarFragment extends Fragment {
 
     private View v;
-    private List<Session> listSessions = new ArrayList<>();
+    private List<Appointment> listAppointments = new ArrayList<>();
     private RecyclerView rv;
-    private SessionAdapter sa;
-    Session s;
+    private AppointmentAdapter aa;
+    private Appointment a;
 
-    @BindView(R.id.calendarSession)
-    CalendarView cv;
-
-    @OnClick(R.id.buttonSession) void action(){
-        s = new Session("Footing","Durée : 1h","Séries : x","Rep : x","A faire",R.drawable.logo);
-        listSessions.add(s);
-        sa.notifyDataSetChanged();
+    @OnClick(R.id.buttonCalendar) void action(){
+        a = new Appointment("26 Mai", "Paris");
+        listAppointments.add(a);
+        aa.notifyDataSetChanged();
     }
+
+    @BindView(R.id.calendar)
+    CalendarView cv;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        v = inflater.inflate(R.layout.fragment_session, container, false);
+        v = inflater.inflate(R.layout.fragment_calendar, container, false);
         ButterKnife.bind(this,v);
 
         rv = new RecyclerView(getContext());
 
-        rv = v.findViewById(R.id.listSession);
-        sa = new SessionAdapter(listSessions);
+        rv = v.findViewById(R.id.listCalendar);
+        aa = new AppointmentAdapter(listAppointments);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         rv.setLayoutManager(mLayoutManager);
         rv.setItemAnimator(new DefaultItemAnimator());
         rv.addItemDecoration(new DividerItemDecoration(getContext(),LinearLayoutManager.VERTICAL));
-        rv.setAdapter(sa);
+        rv.setAdapter(aa);
 
         prepareData();
 
@@ -65,10 +66,10 @@ public class SessionFragment extends Fragment {
     }
 
     private void prepareData(){
-        s = new Session("Squat","Durée : 30m","Séries : 15"," Rep : 10","A faire",R.drawable.ic_fitness_center_black_24dp);
-        listSessions.add(s);
-        s = new Session("Pompes","Durée : 20m","Séries : 10","Rep : 15","Fait",R.drawable.ic_fitness_center_black_24dp);
-        listSessions.add(s);
-        sa.notifyDataSetChanged();
+        a = new Appointment("24 Mai", "nom de rue au hasard");
+        listAppointments.add(a);
+        a = new Appointment("25 Mai", "45 rue des Saints Pères");
+        listAppointments.add(a);
+        aa.notifyDataSetChanged();
     }
 }

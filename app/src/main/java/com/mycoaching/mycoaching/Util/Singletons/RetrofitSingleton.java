@@ -1,7 +1,5 @@
 package com.mycoaching.mycoaching.Util.Singletons;
 
-import com.mycoaching.mycoaching.R;
-
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 

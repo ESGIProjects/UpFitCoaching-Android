@@ -1,4 +1,4 @@
-package com.mycoaching.mycoaching.Activities.UserActivity;
+package com.mycoaching.mycoaching.Views.Activities.UserActivity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -12,12 +12,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.mycoaching.mycoaching.Activities.Common.LoginActivity;
-import com.mycoaching.mycoaching.Fragments.Menu.CalendarFragment;
-import com.mycoaching.mycoaching.Fragments.Menu.FollowUpFragment;
-import com.mycoaching.mycoaching.Fragments.Menu.ChatFragment;
-import com.mycoaching.mycoaching.Fragments.Menu.ForumFragment;
-import com.mycoaching.mycoaching.Fragments.Menu.SessionFragment;
+import com.mycoaching.mycoaching.Views.Activities.Common.LoginActivity;
+import com.mycoaching.mycoaching.Fragments.UserMenu.CalendarFragment;
+import com.mycoaching.mycoaching.Fragments.UserMenu.ChatFragment;
+import com.mycoaching.mycoaching.Fragments.UserMenu.FollowUpFragment;
+import com.mycoaching.mycoaching.Fragments.UserMenu.ForumFragment;
+import com.mycoaching.mycoaching.Fragments.UserMenu.SessionFragment;
 import com.mycoaching.mycoaching.R;
 
 import butterknife.BindView;
