@@ -1,5 +1,8 @@
 package com.mycoaching.mycoaching.Models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.mycoaching.mycoaching.Models.Retrofit.UserRetrofit;
@@ -7,7 +10,7 @@ import com.mycoaching.mycoaching.Models.Retrofit.UserRetrofit;
 /**
  * Created by kevin on 06/05/2018.
  */
-public class Message {
+public class Message implements Parcelable{
 
     @SerializedName("id")
     @Expose
@@ -35,6 +38,14 @@ public class Message {
         this.receiver = receiver;
         this.date = date;
         this.content = content;
+    }
+
+    public Message(Parcel in) {
+        this.id = in.readInt();
+        this.sender = in.readParcelable(UserRetrofit.class.getClassLoader());
+        this.receiver = in.readParcelable(UserRetrofit.class.getClassLoader());
+        this.date = in.readString();
+        this.content = in.readString();
     }
 
     public Integer getId() {
@@ -75,5 +86,30 @@ public class Message {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public static final Parcelable.Creator<Message> CREATOR = new Parcelable.Creator<Message>()
+    {
+        @Override
+        public Message createFromParcel(Parcel source)
+        {
+            return new Message(source);
+        }
+
+        @Override
+        public Message[] newArray(int size)
+        {
+            return new Message[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+
     }
 }

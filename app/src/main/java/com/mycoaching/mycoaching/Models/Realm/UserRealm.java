@@ -17,7 +17,7 @@ public class UserRealm extends RealmObject {
     private String idCoach, mailCoach, firstNameCoach, lastNameCoach, addressCoach,
             cityCoach, phoneNumberCoach;
 
-    private int type, typeCoach;
+    private int type,typeCoach;
 
     public int getType() {
         return type;
@@ -145,5 +145,13 @@ public class UserRealm extends RealmObject {
 
     public void setIdCoach(String idCoach) {
         this.idCoach = idCoach;
+    }
+
+    public int getTypeCoach() {
+        return typeCoach;
+    }
+
+    public void setTypeCoach(int typeCoach) {
+        this.typeCoach = typeCoach;
     }
 }

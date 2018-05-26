@@ -123,6 +123,7 @@ public class UserMainActivity extends AppCompatActivity {
                         realm.commitTransaction();
                         realm.close();
                         performTransition(intent,R.animator.slide_from_left,R.animator.slide_to_right);
+                        finish();
                     }
                 })
                 .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {

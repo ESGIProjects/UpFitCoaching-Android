@@ -125,25 +125,24 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void execute(Realm realm) {
                 UserRealm ur = realm.createObject(UserRealm.class,ar.getUr().getId());
-                ur.setCity(ar.getUr().getCity());
+                ur.setMail(ar.getUr().getMail());
                 ur.setFirstName(ar.getUr().getFirstName());
                 ur.setLastName(ar.getUr().getLastName());
-                ur.setMail(ar.getUr().getMail());
+                ur.setCity(ar.getUr().getCity());
                 ur.setPhoneNumber(ar.getUr().getPhoneNumber());
                 ur.setType(ar.getUr().getType());
-                if(ar.getUr().getBirthDate() != null){
+                if(ar.getUr().getCoach() == null){
                     ur.setBirthDate(ar.getUr().getBirthDate());
                 }
-                if(ar.getUr().getAddress() != null){
+                else{
                     ur.setAddress(ar.getUr().getAddress());
-                }
-                if(ar.getUr().getCoach() != null){
                     ur.setIdCoach(ar.getUr().getCoach().getId());
                     ur.setMailCoach(ar.getUr().getCoach().getMail());
                     ur.setFirstNameCoach(ar.getUr().getCoach().getFirstName());
                     ur.setLastNameCoach(ar.getUr().getCoach().getLastName());
                     ur.setCityCoach(ar.getUr().getCoach().getCity());
                     ur.setPhoneNumberCoach(ar.getUr().getCoach().getPhoneNumber());
+                    ur.setTypeCoach(ar.getUr().getCoach().getType());
                     ur.setAddressCoach(ar.getUr().getCoach().getAddress());
                 }
             }

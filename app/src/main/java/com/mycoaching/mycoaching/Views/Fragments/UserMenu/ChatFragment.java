@@ -21,6 +21,7 @@ import com.mycoaching.mycoaching.Models.Realm.UserRealm;
 import com.mycoaching.mycoaching.Models.Retrofit.UserRetrofit;
 import com.mycoaching.mycoaching.R;
 import com.mycoaching.mycoaching.Util.Singletons.OkHttpSingleton;
+import com.mycoaching.mycoaching.Views.Fragments.CoachMenu.ListChatFragment;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -48,49 +49,15 @@ public class ChatFragment extends Fragment {
 
     View v;
     RecyclerView rv;
-    static MessageAdapter ma;
-    static List<Message> lm = new ArrayList<>();
+    MessageAdapter ma;
+    List<Message> lm = new ArrayList<>();
     Realm r;
     UserRealm ur;
     WebSocket ws = null;
+    boolean isCoach = false;
 
     @BindView(R.id.input)
     EditText et;
-
-    private final class CustomWSListener extends WebSocketListener {
-
-        @Override
-        public void onOpen(WebSocket ws, Response r){
-            Log.i("TEST WS : ", r.toString());
-        }
-
-        @Override
-        public void onMessage(WebSocket ws, String text){
-            Log.i("TEST OM :", text);
-            try{
-                JSONObject message = getJSONFromString(text);
-                JSONObject sender = message.getJSONObject("sender");
-                JSONObject receiver = message.getJSONObject("receiver");
-                String content = message.getString("content");
-                addMessageToList(String.valueOf(sender.getInt("id")),
-                        String.valueOf(receiver.getInt("id")),content);
-            }
-            catch (Exception e){
-                e.printStackTrace();
-            }
-        }
-
-        @Override public void onClosing(WebSocket webSocket, int code, String reason) {
-            webSocket.close(1000, null);
-            Log.i("CLOSE: ", code + " & " + reason);
-        }
-
-        @Override public void onFailure(WebSocket webSocket, Throwable t, Response response) {
-            t.printStackTrace();
-        }
-
-    }
-
 
     @OnClick(R.id.send) void sendMessage(){
         if(!et.getText().toString().equals("")){
@@ -104,18 +71,36 @@ public class ChatFragment extends Fragment {
                 sender.put("lastName",ur.getLastName());
                 sender.put("city",ur.getCity());
                 sender.put("phoneNumber",ur.getPhoneNumber());
-                sender.put("birthDate",ur.getBirthDate());
+                if(!isCoach){
+                    sender.put("birthDate",ur.getBirthDate());
+                }
+                else{
+                    sender.put("address",ur.getAddress());
+                }
                 object.put("sender",sender);
 
                 JSONObject receiver = new JSONObject();
-                receiver.put("id",Integer.valueOf(ur.getIdCoach()));
-                receiver.put("type",2);
-                receiver.put("mail",ur.getMailCoach());
-                receiver.put("firstName",ur.getFirstNameCoach());
-                receiver.put("lastName",ur.getLastNameCoach());
-                receiver.put("city",ur.getCityCoach());
-                receiver.put("phoneNumber",ur.getPhoneNumberCoach());
-                receiver.put("address",ur.getAddressCoach());
+
+                if(!isCoach){
+                    receiver.put("id",Integer.valueOf(ur.getIdCoach()));
+                    receiver.put("type",2);
+                    receiver.put("mail",ur.getMailCoach());
+                    receiver.put("firstName",ur.getFirstNameCoach());
+                    receiver.put("lastName",ur.getLastNameCoach());
+                    receiver.put("city",ur.getCityCoach());
+                    receiver.put("phoneNumber",ur.getPhoneNumberCoach());
+                    receiver.put("address",ur.getAddressCoach());
+                }
+                else{
+                    receiver.put("id",Integer.valueOf(lm.get(lm.size()-1).getSender().getId()));
+                    receiver.put("type",lm.get(lm.size()-1).getSender().getType());
+                    receiver.put("mail",lm.get(lm.size()-1).getSender().getMail());
+                    receiver.put("firstName",lm.get(lm.size()-1).getSender().getFirstName());
+                    receiver.put("lastName",lm.get(lm.size()-1).getSender().getLastName());
+                    receiver.put("city",lm.get(lm.size()-1).getSender().getCity());
+                    receiver.put("phoneNumber",lm.get(lm.size()-1).getSender().getPhoneNumber());
+                    receiver.put("birthDate",lm.get(lm.size()-1).getSender().getBirthDate());
+                }
                 object.put("receiver",receiver);
 
                 object.put("date", getDate());
@@ -124,8 +109,19 @@ public class ChatFragment extends Fragment {
             catch (JSONException e){
                 e.printStackTrace();
             }
-            ws.send(object.toString());
-            addMessageToList(ur.getId(),ur.getIdCoach(),et.getText().toString());
+            if(isCoach){
+                ListChatFragment lcf = (ListChatFragment)getActivity().getSupportFragmentManager().findFragmentByTag("LIST");
+                lcf.getWs().send(object.toString());
+                lcf.addMessageToList(ur.getId(),lm.get(lm.size()-1).getSender().getId(),ur.getFirstName(),
+                        lm.get(lm.size()-1).getSender().getFirstName(),et.getText().toString());
+                addMessageToList(ur.getId(),lm.get(lm.size()-1).getSender().getId(),ur.getFirstName(),
+                        lm.get(lm.size()-1).getSender().getFirstName(),et.getText().toString());
+            }
+            else{
+                ws.send(object.toString());
+                addMessageToList(ur.getId(),ur.getIdCoach(),ur.getFirstName(), ur.getFirstNameCoach(),
+                        et.getText().toString());
+            }
             et.getText().clear();
         }
     }
@@ -133,23 +129,40 @@ public class ChatFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         v = inflater.inflate(R.layout.fragment_chat, container, false);
         r = Realm.getDefaultInstance();
         ur = r.where(UserRealm.class).findFirst();
 
         rv = v.findViewById(R.id.list);
 
-        ma = new MessageAdapter(lm);
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            lm.addAll(bundle.<Message>getParcelableArrayList("listMessages"));
+            ma = new MessageAdapter(lm);
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    ma.notifyDataSetChanged();
+                }
+            });
+            isCoach = true;
+        }
+        else{
+            getConversation();
+            ma = new MessageAdapter(lm);
+        }
+
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext()
                 ,LinearLayoutManager.VERTICAL, true);
         rv.setLayoutManager(mLayoutManager);
         rv.setItemAnimator(new DefaultItemAnimator());
         rv.setAdapter(ma);
 
-        getConversation();
-
-        Request request = new Request.Builder().url("ws://212.47.234.147/ws?id=2").build();
-        ws = OkHttpSingleton.getInstance().newWebSocket(request, new CustomWSListener());
+        if(!isCoach){
+            Request request = new Request.Builder().url("ws://212.47.234.147/ws?id="+ur.getId()).build();
+            ws = OkHttpSingleton.getInstance().newWebSocket(request, new CustomWSListener());
+        }
 
         ButterKnife.bind(this,v);
 
@@ -162,7 +175,12 @@ public class ChatFragment extends Fragment {
             public void onResult(ApiResults ar) {
                 if(ar.getResponseCode() == 200){
                     lm.addAll(ar.getListMessage());
-                    ma.notifyDataSetChanged();
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ma.notifyDataSetChanged();
+                        }
+                    });
                 }
                 else{
                     Toast.makeText(getContext(),"Veuillez réessayer ultérieurement",Toast.LENGTH_SHORT).show();
@@ -171,10 +189,11 @@ public class ChatFragment extends Fragment {
         });
     }
 
-    public void addMessageToList(String senderID, String receiverID, String content) {
-        UserRetrofit sender = new UserRetrofit(senderID, null, null, null,
+    public void addMessageToList(String senderID, String receiverID, String firstNameS,
+                                         String firstNameR, String content) {
+        UserRetrofit sender = new UserRetrofit(senderID, null, null, firstNameS,
                 null, null, null, null, null, null);
-        UserRetrofit receiver = new UserRetrofit(receiverID, null, null, null, null,
+        UserRetrofit receiver = new UserRetrofit(receiverID, null, null, firstNameR, null,
                 null, null, null, null, null);
         Message m = new Message(null, sender, receiver, getDate(), content);
         lm.add(0, m);
@@ -184,5 +203,39 @@ public class ChatFragment extends Fragment {
                 ma.notifyDataSetChanged();
             }
         });
+    }
+
+    private final class CustomWSListener extends WebSocketListener {
+
+        @Override
+        public void onOpen(WebSocket ws, Response r){
+            Log.i("CF ws is open : ", r.toString());
+        }
+
+        @Override
+        public void onMessage(WebSocket ws, String text){
+            Log.i("Message on CF :", text);
+            try{
+                JSONObject message = getJSONFromString(text);
+                JSONObject sender = message.getJSONObject("sender");
+                JSONObject receiver = message.getJSONObject("receiver");
+                String content = message.getString("content");
+                addMessageToList(String.valueOf(sender.getInt("id")),
+                        String.valueOf(receiver.getInt("id")),sender.getString("firstName"),
+                        receiver.getString("firstName"),content);
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
+        @Override public void onClosing(WebSocket webSocket, int code, String reason) {
+            webSocket.close(1000, null);
+            Log.i("CLOSE CF ws : ", code + " & " + reason);
+        }
+
+        @Override public void onFailure(WebSocket webSocket, Throwable t, Response response) {
+            t.printStackTrace();
+        }
     }
 }

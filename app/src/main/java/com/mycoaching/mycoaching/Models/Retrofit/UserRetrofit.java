@@ -1,5 +1,8 @@
 package com.mycoaching.mycoaching.Models.Retrofit;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -7,7 +10,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by kevin on 20/04/2018.
  */
 
-public class UserRetrofit {
+public class UserRetrofit implements Parcelable{
 
     @SerializedName("id")
     @Expose
@@ -61,6 +64,19 @@ public class UserRetrofit {
         this.city = city;
         this.phoneNumber = phoneNumber;
         this.coach = coach;
+    }
+
+    public UserRetrofit(Parcel in){
+        this.id = in.readString();
+        this.type = in.readInt();
+        this.mail = in.readString();
+        this.firstName = in.readString();
+        this.lastName = in.readString();
+        this.birthDate = in.readString();
+        this.address = in.readString();
+        this.city = in.readString();
+        this.phoneNumber = in.readString();
+        this.coach = in.readParcelable(UserRetrofit.class.getClassLoader());
     }
 
     public String getId() {
@@ -142,4 +158,29 @@ public class UserRetrofit {
     public void setCoach(UserRetrofit coach) {
         this.coach = coach;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+
+    }
+
+    public static final Parcelable.Creator<UserRetrofit> CREATOR = new Parcelable.Creator<UserRetrofit>()
+    {
+        @Override
+        public UserRetrofit createFromParcel(Parcel source)
+        {
+            return new UserRetrofit(source);
+        }
+
+        @Override
+        public UserRetrofit[] newArray(int size)
+        {
+            return new UserRetrofit[size];
+        }
+    };
 }
