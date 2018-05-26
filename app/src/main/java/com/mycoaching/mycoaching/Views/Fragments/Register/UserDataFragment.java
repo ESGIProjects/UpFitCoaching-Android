@@ -100,7 +100,6 @@ public class UserDataFragment extends Fragment {
                 ur.setMail(b.getString("mail"));
                 ur.setPhoneNumber(phoneNumber.getText().toString());
                 ur.setType(Integer.valueOf(b.getString("type")));
-                ur.setPhoneNumber(phoneNumber.getText().toString());
             }
         });
     }

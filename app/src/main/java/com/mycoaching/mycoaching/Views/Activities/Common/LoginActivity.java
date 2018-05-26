@@ -25,7 +25,7 @@ import static com.mycoaching.mycoaching.Util.CommonMethods.checkEmail;
 import static com.mycoaching.mycoaching.Util.CommonMethods.checkPassword;
 import static com.mycoaching.mycoaching.Util.CommonMethods.clearFields;
 import static com.mycoaching.mycoaching.Util.CommonMethods.getSHAPassword;
-import static com.mycoaching.mycoaching.Util.CommonMethods.isAvailable;
+import static com.mycoaching.mycoaching.Util.CommonMethods.isNetworkAvailable;
 
 /**
  * Created by kevin on 01/03/2018.
@@ -35,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private Intent i = null;
     private ProgressDialog pd = null;
-    Realm realm = null;
+    private Realm realm = null;
 
     @BindView(R.id.email)
     EditText email;
@@ -44,7 +44,11 @@ public class LoginActivity extends AppCompatActivity {
     EditText password;
 
     @OnClick(R.id.signin) void signIn(){
-        if(isAvailable(getApplicationContext())){
+
+        //we check if the network is available
+        if(isNetworkAvailable(getApplicationContext())){
+
+            //we check if email and password are set
             if(checkEmail(email.getText().toString()) && checkPassword(password.getText().toString())){
                 pd = new ProgressDialog(this,R.style.StyledDialog);
                 pd.setMessage("Connection en cours...");
@@ -54,10 +58,12 @@ public class LoginActivity extends AppCompatActivity {
                     public void onResult(ApiResults ar){
                         pd.dismiss();
                         if(ar.getResponseCode() == 200){
-                            realm = Realm.getDefaultInstance();
+                            //we save
                             if(realm.isEmpty()){
                                 executeTransaction(realm,ar);
                             }
+
+                            //we check if the user is a coach or a regular
                             if(ar.getUr().getType() == 2){
                                 i = new Intent(LoginActivity.this,CoachMainActivity.class);
                                 performTransition(i,R.animator.slide_from_right,R.animator.slide_to_left);
@@ -115,11 +121,13 @@ public class LoginActivity extends AppCompatActivity {
         overridePendingTransition(from,to);
     }
 
+    //if the back button is pressed, we kill the application
     @Override
     public void onBackPressed(){
         finishAffinity();
     }
 
+    //we save in database all informations about the user/coach
     public void executeTransaction(Realm r, final ApiResults ar){
         r.executeTransaction(new Realm.Transaction() {
             @Override

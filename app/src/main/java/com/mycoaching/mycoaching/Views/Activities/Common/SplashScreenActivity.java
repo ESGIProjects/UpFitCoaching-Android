@@ -21,6 +21,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splashscreen);
         getSupportActionBar().hide();
+        Realm.init(getApplicationContext());
 
         // we start the transition to LoginActivity when the time is up
 

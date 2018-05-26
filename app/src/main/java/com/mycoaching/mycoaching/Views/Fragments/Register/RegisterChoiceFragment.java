@@ -23,11 +23,13 @@ public class RegisterChoiceFragment extends Fragment{
         ((RegisterActivity)getActivity()).replaceFragment(cf,R.id.container);
     }
 
+    //this method is for later, when multiple coach feature will be enabled
+    /*
     @OnClick(R.id.coach) void coachTransition(){
         b.putString("type","2");
         cf.setArguments(b);
         ((RegisterActivity)getActivity()).replaceFragment(cf,R.id.container);
-    }
+    }*/
 
     View v;
 

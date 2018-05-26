@@ -52,6 +52,15 @@ public class CredentialsFragment extends Fragment {
                     public void onResult(ApiResults ar) {
                         pd.dismiss();
                         if(ar.getResponseCode() == 200){
+                            b.putString("mail",mail.getText().toString());
+                            b.putString("password", getSHAPassword(password.getText().toString()));
+                            UserDataFragment udf = new UserDataFragment();
+                            udf.setArguments(b);
+                            ((RegisterActivity)getActivity()).replaceFragment(udf,R.id.container);
+
+                            //that part is commented for the moment due to single coach capacity
+
+                            /*
                             if(b.getString("type") == "0"){
                                 b.putString("mail",mail.getText().toString());
                                 b.putString("password", getSHAPassword(password.getText().toString()));
@@ -65,7 +74,7 @@ public class CredentialsFragment extends Fragment {
                                 CoachDataFragment cdf = new CoachDataFragment();
                                 cdf.setArguments(b);
                                 ((RegisterActivity)getActivity()).replaceFragment(cdf,R.id.container);
-                            }
+                            }*/
                         }
                         else{
                             Toast.makeText(getContext(),R.string.already_exists,Toast.LENGTH_LONG).show();
