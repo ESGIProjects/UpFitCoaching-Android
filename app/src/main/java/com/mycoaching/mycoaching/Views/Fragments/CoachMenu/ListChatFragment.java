@@ -22,7 +22,7 @@ import com.mycoaching.mycoaching.Models.Retrofit.UserRetrofit;
 import com.mycoaching.mycoaching.R;
 import com.mycoaching.mycoaching.Util.Singletons.OkHttpSingleton;
 import com.mycoaching.mycoaching.Views.Adapters.ContactAdapter;
-import com.mycoaching.mycoaching.Views.Fragments.UserMenu.ChatFragment;
+import com.mycoaching.mycoaching.Views.Fragments.Common.ChatFragment;
 
 import org.json.JSONObject;
 

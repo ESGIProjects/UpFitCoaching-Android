@@ -1,4 +1,4 @@
-package com.mycoaching.mycoaching.Views.Fragments.UserMenu;
+package com.mycoaching.mycoaching.Views.Fragments.Common;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -60,7 +60,7 @@ public class ChatFragment extends Fragment {
     EditText et;
 
     @OnClick(R.id.send) void sendMessage(){
-        if(!et.getText().toString().equals("")){
+        if(!et.getText().toString().equals("") && !lm.isEmpty()){
             JSONObject object = new JSONObject();
             try{
                 JSONObject sender = new JSONObject();
@@ -104,7 +104,12 @@ public class ChatFragment extends Fragment {
                 object.put("receiver",receiver);
 
                 object.put("date", getDate());
-                object.put("content", et.getText().toString());
+                if(lm.isEmpty()){
+                    object.put("content", "Premier message !");
+                }
+                else{
+                    object.put("content", et.getText().toString());
+                }
             }
             catch (JSONException e){
                 e.printStackTrace();
@@ -129,8 +134,8 @@ public class ChatFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         v = inflater.inflate(R.layout.fragment_chat, container, false);
+        ButterKnife.bind(this,v);
         r = Realm.getDefaultInstance();
         ur = r.where(UserRealm.class).findFirst();
 
@@ -149,7 +154,12 @@ public class ChatFragment extends Fragment {
             isCoach = true;
         }
         else{
+            Request request = new Request.Builder().url("ws://212.47.234.147/ws?id="+ur.getId()).build();
+            ws = OkHttpSingleton.getInstance().newWebSocket(request, new CustomWSListener());
             getConversation();
+            if(lm.isEmpty()){
+                sendMessage();
+            }
             ma = new MessageAdapter(lm);
         }
 
@@ -158,13 +168,6 @@ public class ChatFragment extends Fragment {
         rv.setLayoutManager(mLayoutManager);
         rv.setItemAnimator(new DefaultItemAnimator());
         rv.setAdapter(ma);
-
-        if(!isCoach){
-            Request request = new Request.Builder().url("ws://212.47.234.147/ws?id="+ur.getId()).build();
-            ws = OkHttpSingleton.getInstance().newWebSocket(request, new CustomWSListener());
-        }
-
-        ButterKnife.bind(this,v);
 
         return v;
     }
