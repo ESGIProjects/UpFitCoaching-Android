@@ -60,7 +60,7 @@ public class ChatFragment extends Fragment {
     EditText et;
 
     @OnClick(R.id.send) void sendMessage(){
-        if(!et.getText().toString().equals("") && !lm.isEmpty()){
+        if(!et.getText().toString().equals("")){
             JSONObject object = new JSONObject();
             try{
                 JSONObject sender = new JSONObject();
@@ -102,14 +102,7 @@ public class ChatFragment extends Fragment {
                     receiver.put("birthDate",lm.get(lm.size()-1).getSender().getBirthDate());
                 }
                 object.put("receiver",receiver);
-
-                object.put("date", getDate());
-                if(lm.isEmpty()){
-                    object.put("content", "Premier message !");
-                }
-                else{
-                    object.put("content", et.getText().toString());
-                }
+                object.put("content", et.getText().toString());
             }
             catch (JSONException e){
                 e.printStackTrace();
@@ -157,9 +150,6 @@ public class ChatFragment extends Fragment {
             Request request = new Request.Builder().url("ws://212.47.234.147/ws?id="+ur.getId()).build();
             ws = OkHttpSingleton.getInstance().newWebSocket(request, new CustomWSListener());
             getConversation();
-            if(lm.isEmpty()){
-                sendMessage();
-            }
             ma = new MessageAdapter(lm);
         }
 
