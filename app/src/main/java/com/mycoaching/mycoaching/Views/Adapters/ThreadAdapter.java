@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.mycoaching.mycoaching.Models.SubTopic;
+import com.mycoaching.mycoaching.Models.Thread;
 import com.mycoaching.mycoaching.R;
 
 import java.util.List;
@@ -14,9 +14,9 @@ import java.util.List;
 /**
  * Created by kevin on 16/05/2018.
  */
-public class SubTopicAdapter extends RecyclerView.Adapter<SubTopicAdapter.MyViewHolder>{
+public class ThreadAdapter extends RecyclerView.Adapter<ThreadAdapter.MyViewHolder>{
 
-    private List<SubTopic> listSubTopics;
+    private List<Thread> listThreads;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView title, subtitle;
@@ -28,8 +28,8 @@ public class SubTopicAdapter extends RecyclerView.Adapter<SubTopicAdapter.MyView
         }
     }
 
-    public SubTopicAdapter(List<SubTopic> listSubTopics){
-        this.listSubTopics = listSubTopics;
+    public ThreadAdapter(List<Thread> listThreads){
+        this.listThreads = listThreads;
     }
 
     @Override
@@ -42,13 +42,13 @@ public class SubTopicAdapter extends RecyclerView.Adapter<SubTopicAdapter.MyView
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        SubTopic subTopic = listSubTopics.get(position);
-        holder.title.setText(subTopic.getTitle());
-        holder.subtitle.setText(subTopic.getSubtitle());
+        Thread thread = listThreads.get(position);
+        holder.title.setText(thread.getTitle());
+        //holder.subtitle.setText(thread.getSubtitle());
     }
 
     @Override
     public int getItemCount() {
-        return listSubTopics.size();
+        return listThreads.size();
     }
 }

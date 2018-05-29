@@ -3,22 +3,22 @@ package com.mycoaching.mycoaching.Models;
 /**
  * Created by kevin on 16/05/2018.
  */
-public class Topic {
+public class Forum {
 
-    private int icon;
+    private int id;
     private String title;
 
-    public Topic(int icon, String title){
-        this.icon = icon;
+    public Forum(int id, String title){
+        this.id = id;
         this.title = title;
     }
 
-    public int getIcon() {
-        return icon;
+    public int getId() {
+        return id;
     }
 
-    public void setIcon(int icon) {
-        this.icon = icon;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {

@@ -10,8 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.mycoaching.mycoaching.Views.Adapters.TopicAdapter;
-import com.mycoaching.mycoaching.Models.Topic;
+import com.mycoaching.mycoaching.Views.Adapters.ForumAdapter;
+import com.mycoaching.mycoaching.Models.Forum;
 import com.mycoaching.mycoaching.R;
 
 import java.util.ArrayList;
@@ -27,9 +27,9 @@ import butterknife.ButterKnife;
 public class ForumFragment extends Fragment {
 
     View v;
-    List<Topic> listTopic = new ArrayList<>();
+    List<Forum> listForum = new ArrayList<>();
     RecyclerView rv;
-    TopicAdapter ta;
+    ForumAdapter ta;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -40,7 +40,7 @@ public class ForumFragment extends Fragment {
         rv = new RecyclerView(getContext());
 
         rv = v.findViewById(R.id.topic_list);
-        ta = new TopicAdapter(listTopic);
+        ta = new ForumAdapter(listForum);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         rv.setLayoutManager(mLayoutManager);
         rv.setItemAnimator(new DefaultItemAnimator());
@@ -53,12 +53,12 @@ public class ForumFragment extends Fragment {
     }
 
     private void prepareData(){
-        Topic t = new Topic(R.drawable.ic_trending_up_black_24dp, "Motivation");
-        listTopic.add(t);
-        t = new Topic(R.drawable.ic_fitness_center_black_24dp, "Conseils sportifs");
-        listTopic.add(t);
-        t = new Topic(R.drawable.ic_forum_black_24dp, "Venez discuter !");
-        listTopic.add(t);
+        Forum t = new Forum(1, "Motivation");
+        listForum.add(t);
+        t = new Forum(2, "Conseils sportifs");
+        listForum.add(t);
+        t = new Forum(3, "Venez discuter !");
+        listForum.add(t);
         ta.notifyDataSetChanged();
     }
 
