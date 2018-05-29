@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "103359715387",
+    "firebase_url": "https://upfit-coaching.firebaseio.com",
+    "project_id": "upfit-coaching",
+    "storage_bucket": "upfit-coaching.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:103359715387:android:d8a08cd320312be7",
+        "android_client_info": {
+          "package_name": "com.mycoaching.mycoaching"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "103359715387-548agc9eb1i8jfakbb8hs4io45f007hm.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "103359715387-548agc9eb1i8jfakbb8hs4io45f007hm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4rgwKIqPYngGjhO60V-XuEkC2tB7OG40"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
