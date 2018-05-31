@@ -18,6 +18,10 @@ import java.util.Date;
 
 public class CommonMethods {
 
+    private CommonMethods(){
+        
+    }
+
 
     /**
      *
