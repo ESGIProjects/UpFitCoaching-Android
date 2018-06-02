@@ -100,12 +100,12 @@ public class ListChatFragment extends Fragment implements ContactAdapter.OnClick
     public void updateContacts(){
         for(Message m : lm){
             if(!ids.contains(Integer.valueOf(m.getSender().getId()))){
-                c = new Contact(m.getSender().getFirstName(),m.getContent(),m.getSender().getId());
+                c = new Contact(m.getSender().getFirstName(),m.getSender().getLastName(),m.getContent(),m.getSender().getId());
                 ids.add(Integer.valueOf(m.getSender().getId()));
                 lc.add(c);
             }
             else if(!ids.contains(Integer.valueOf(m.getReceiver().getId()))){
-                c = new Contact(m.getReceiver().getFirstName(),m.getContent(),m.getReceiver().getId());
+                c = new Contact(m.getReceiver().getFirstName(),m.getReceiver().getLastName(),m.getContent(),m.getReceiver().getId());
                 ids.add(Integer.valueOf(m.getReceiver().getId()));
                 lc.add(c);
             }
@@ -156,12 +156,14 @@ public class ListChatFragment extends Fragment implements ContactAdapter.OnClick
                 String content = message.getString("content");
                 addMessageToList(String.valueOf(receiver.getInt("id")),
                         String.valueOf(sender.getInt("id")),receiver.getString("firstName"),
-                        sender.getString("firstName"),content);
+                        receiver.getString("lastName"), sender.getString("firstName"),
+                        sender.getString("lastName"),content);
                 if(getFragmentManager().findFragmentByTag("MESSAGES") != null){
                     ChatFragment cf = (ChatFragment) getFragmentManager().findFragmentByTag("MESSAGES");
                     cf.addMessageToList(String.valueOf(sender.getInt("id")),
                             String.valueOf(receiver.getInt("id")),sender.getString("firstName"),
-                            receiver.getString("firstName"),content);
+                            sender.getString("lastName"), receiver.getString("firstName"),
+                            receiver.getString("lastName"),content);
                 }
             }
             catch (Exception e){
@@ -179,11 +181,11 @@ public class ListChatFragment extends Fragment implements ContactAdapter.OnClick
         }
     }
 
-    public void addMessageToList(String senderID, String receiverID, String firstNameS,
-                                 String firstNameR, String content) {
+    public void addMessageToList(String senderID, String receiverID, String firstNameS, String lastNameS,
+                                 String firstNameR, String lastNameR, String content) {
         UserRetrofit sender = new UserRetrofit(senderID, null, null, firstNameS,
-                null, null, null, null, null, null);
-        UserRetrofit receiver = new UserRetrofit(receiverID, null, null, firstNameR, null,
+                lastNameS, null, null, null, null, null);
+        UserRetrofit receiver = new UserRetrofit(receiverID, null, null, firstNameR, lastNameR,
                 null, null, null, null, null);
         Message m = new Message(null, sender, receiver, getDate(), content);
         lm.add(0,m);

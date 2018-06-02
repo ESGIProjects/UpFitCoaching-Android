@@ -111,14 +111,16 @@ public class ChatFragment extends Fragment {
                 ListChatFragment lcf = (ListChatFragment)getActivity().getSupportFragmentManager().findFragmentByTag("LIST");
                 lcf.getWs().send(object.toString());
                 lcf.addMessageToList(ur.getId(),lm.get(lm.size()-1).getSender().getId(),ur.getFirstName(),
-                        lm.get(lm.size()-1).getSender().getFirstName(),et.getText().toString());
+                        ur.getLastName(),lm.get(lm.size()-1).getSender().getFirstName(),
+                        lm.get(lm.size()-1).getSender().getLastName(),et.getText().toString());
                 addMessageToList(ur.getId(),lm.get(lm.size()-1).getSender().getId(),ur.getFirstName(),
-                        lm.get(lm.size()-1).getSender().getFirstName(),et.getText().toString());
+                        ur.getLastName(),lm.get(lm.size()-1).getSender().getFirstName(),
+                        lm.get(lm.size()-1).getSender().getLastName(),et.getText().toString());
             }
             else{
                 ws.send(object.toString());
-                addMessageToList(ur.getId(),ur.getIdCoach(),ur.getFirstName(), ur.getFirstNameCoach(),
-                        et.getText().toString());
+                addMessageToList(ur.getId(),ur.getIdCoach(),ur.getFirstName(),ur.getLastName(),
+                        ur.getFirstNameCoach(),ur.getLastNameCoach(),et.getText().toString());
             }
             et.getText().clear();
         }
@@ -182,11 +184,11 @@ public class ChatFragment extends Fragment {
         });
     }
 
-    public void addMessageToList(String senderID, String receiverID, String firstNameS,
-                                         String firstNameR, String content) {
+    public void addMessageToList(String senderID, String receiverID, String firstNameS, String lastNameS,
+                                 String firstNameR, String lastNameR, String content) {
         UserRetrofit sender = new UserRetrofit(senderID, null, null, firstNameS,
-                null, null, null, null, null, null);
-        UserRetrofit receiver = new UserRetrofit(receiverID, null, null, firstNameR, null,
+                lastNameS, null, null, null, null, null);
+        UserRetrofit receiver = new UserRetrofit(receiverID, null, null, firstNameR, lastNameR,
                 null, null, null, null, null);
         Message m = new Message(null, sender, receiver, getDate(), content);
         lm.add(0, m);
@@ -215,7 +217,8 @@ public class ChatFragment extends Fragment {
                 String content = message.getString("content");
                 addMessageToList(String.valueOf(sender.getInt("id")),
                         String.valueOf(receiver.getInt("id")),sender.getString("firstName"),
-                        receiver.getString("firstName"),content);
+                        sender.getString("lastName"), receiver.getString("firstName"),
+                        receiver.getString("lastName"),content);
             }
             catch (Exception e){
                 e.printStackTrace();

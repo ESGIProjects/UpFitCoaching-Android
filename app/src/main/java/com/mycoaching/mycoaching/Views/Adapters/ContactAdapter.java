@@ -29,12 +29,13 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
         void onItemClick(int position);
     }
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView letter,name,lastMessage;
+        public TextView letter,firstName,lastName,lastMessage;
 
         public MyViewHolder(View view) {
             super(view);
             letter = view.findViewById(R.id.contact_letter);
-            name = view.findViewById(R.id.contact_name);
+            firstName = view.findViewById(R.id.contact_firstName);
+            lastName = view.findViewById(R.id.contact_lastName);
             lastMessage = view.findViewById(R.id.contact_message);
         }
     }
@@ -60,8 +61,9 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
                 onClick.onItemClick(position);
             }
         });
-        holder.letter.setText(c.getName().substring(0,1));
-        holder.name.setText(c.getName());
+        holder.letter.setText(c.getFirstName().substring(0,1));
+        holder.firstName.setText(c.getFirstName());
+        holder.lastName.setText(c.getLastName());
         holder.lastMessage.setText(c.getLastMessage());
     }
 
