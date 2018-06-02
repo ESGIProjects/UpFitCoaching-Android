@@ -1,7 +1,9 @@
 package com.mycoaching.mycoaching.Api;
 
 import com.mycoaching.mycoaching.Models.Message;
+import com.mycoaching.mycoaching.Models.Post;
 import com.mycoaching.mycoaching.Models.Retrofit.UserRetrofit;
+import com.mycoaching.mycoaching.Models.Thread;
 
 import java.util.List;
 
@@ -14,6 +16,8 @@ public class ApiResults {
 
     String body;
     List<Message> listMessage;
+    List<Thread> listThread;
+    List<Post> listPost;
     int responseCode;
     Throwable exception;
     UserRetrofit ur;
@@ -24,6 +28,22 @@ public class ApiResults {
 
     public void setListMessage(List<Message> listMessage) {
         this.listMessage = listMessage;
+    }
+
+    public List<Thread> getListThread() {
+        return listThread;
+    }
+
+    public void setListThread(List<Thread> listThread) {
+        this.listThread = listThread;
+    }
+
+    public List<Post> getListPost() {
+        return listPost;
+    }
+
+    public void setListPost(List<Post> listPost) {
+        this.listPost = listPost;
     }
 
     public int getResponseCode(){

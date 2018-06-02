@@ -1,7 +1,9 @@
 package com.mycoaching.mycoaching.Api;
 
 import com.mycoaching.mycoaching.Models.Message;
+import com.mycoaching.mycoaching.Models.Post;
 import com.mycoaching.mycoaching.Models.Retrofit.UserRetrofit;
+import com.mycoaching.mycoaching.Models.Thread;
 
 import java.util.List;
 
@@ -86,6 +88,44 @@ public class ApiCall {
 
             @Override
             public void onFailure(Call<List<Message>> call, Throwable t) {
+                ApiResults sir = new ApiResults();
+                sir.setException(t);
+                srl.onResult(sir);
+            }
+        });
+    }
+
+    public static void getThreads(String id, final ServiceResultListener srl){
+        ApiUtils.getApiInstance().getThreads(id).enqueue(new Callback<List<Thread>>() {
+            @Override
+            public void onResponse(Call<List<Thread>> call, Response<List<Thread>> response) {
+                ApiResults sir = new ApiResults();
+                sir.setResponseCode(response.code());
+                sir.setListThread(response.body());
+                srl.onResult(sir);
+            }
+
+            @Override
+            public void onFailure(Call<List<Thread>> call, Throwable t) {
+                ApiResults sir = new ApiResults();
+                sir.setException(t);
+                srl.onResult(sir);
+            }
+        });
+    }
+
+    public static void getPosts(String id, final ServiceResultListener srl){
+        ApiUtils.getApiInstance().getPosts(id).enqueue(new Callback<List<Post>>() {
+            @Override
+            public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
+                ApiResults sir = new ApiResults();
+                sir.setResponseCode(response.code());
+                sir.setListPost(response.body());
+                srl.onResult(sir);
+            }
+
+            @Override
+            public void onFailure(Call<List<Post>> call, Throwable t) {
                 ApiResults sir = new ApiResults();
                 sir.setException(t);
                 srl.onResult(sir);

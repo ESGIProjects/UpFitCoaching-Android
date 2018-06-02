@@ -1,7 +1,9 @@
 package com.mycoaching.mycoaching.Api;
 
 import com.mycoaching.mycoaching.Models.Message;
+import com.mycoaching.mycoaching.Models.Post;
 import com.mycoaching.mycoaching.Models.Retrofit.UserRetrofit;
+import com.mycoaching.mycoaching.Models.Thread;
 
 import java.util.List;
 
@@ -35,4 +37,10 @@ public interface ApiInterface {
 
     @GET("messages/")
     Call<List<Message>> getConversation(@Query("userId") String id);
+
+    @GET("threads/")
+    Call<List<Thread>> getThreads(@Query("forumId") String id);
+
+    @GET("thread/")
+    Call<List<Post>> getPosts(@Query("threadId") String id);
 }
