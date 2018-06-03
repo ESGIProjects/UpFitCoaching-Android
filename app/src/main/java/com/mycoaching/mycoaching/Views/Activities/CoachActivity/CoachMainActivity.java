@@ -22,6 +22,7 @@ import com.mycoaching.mycoaching.Views.Activities.Common.LoginActivity;
 import com.mycoaching.mycoaching.R;
 import com.mycoaching.mycoaching.Views.Fragments.CoachMenu.ListChatFragment;
 import com.mycoaching.mycoaching.Views.Fragments.Common.PostFragment;
+import com.mycoaching.mycoaching.Views.Fragments.Common.ThreadFragment;
 
 import io.realm.Realm;
 import okhttp3.Request;
@@ -36,9 +37,8 @@ public class CoachMainActivity extends AppCompatActivity {
     UserRealm ur;
 
     ListChatFragment lcf = new ListChatFragment();
-    PostFragment pf = new PostFragment();
+    ThreadFragment tf = new ThreadFragment();
     FragmentTransaction ft;
-    WebSocket ws;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -49,14 +49,15 @@ public class CoachMainActivity extends AppCompatActivity {
                 case R.id.navigation_calendar:
                     return true;
                 case R.id.navigation_chat:
-                    ft.add(R.id.container, lcf, "LIST");
+                    ft = getSupportFragmentManager().beginTransaction();
+                    hideFragments();
                     ft.show(lcf);
                     ft.commit();
                     return true;
                 case R.id.navigation_forum:
-                    ft.add(R.id.container, pf, "LIST");
-                    ft.hide(lcf);
-                    ft.show(pf);
+                    ft = getSupportFragmentManager().beginTransaction();
+                    hideFragments();
+                    ft.show(tf);
                     ft.commit();
                     return true;
             }
@@ -76,6 +77,12 @@ public class CoachMainActivity extends AppCompatActivity {
 
         realm = Realm.getDefaultInstance();
         ur = realm.where(UserRealm.class).findFirst();
+
+        ft = getSupportFragmentManager().beginTransaction();
+        addFragments();
+        hideFragments();
+        ft.show(lcf);
+        ft.commit();
 
     }
 
@@ -107,6 +114,16 @@ public class CoachMainActivity extends AppCompatActivity {
                     .setIcon(R.drawable.logo)
                     .show();
         }
+    }
+
+    public void addFragments() {
+        ft.add(R.id.container, lcf,"LIST");
+        ft.add(R.id.container, tf);
+    }
+
+    public void hideFragments() {
+        ft.hide(lcf);
+        ft.hide(tf);
     }
 
     public void performTransition(Intent i, int from, int to) {

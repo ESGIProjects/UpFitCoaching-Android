@@ -49,7 +49,7 @@ public class UserMainActivity extends AppCompatActivity {
     SessionFragment sf = new SessionFragment();
     CalendarFragment cf = new CalendarFragment();
     ChatFragment chf = new ChatFragment();
-    ThreadFragment ff = new ThreadFragment();
+    ThreadFragment tf = new ThreadFragment();
     FragmentTransaction ft;
 
     Realm realm = null;
@@ -87,7 +87,7 @@ public class UserMainActivity extends AppCompatActivity {
                 case R.id.navigation_forum:
                     ft = getSupportFragmentManager().beginTransaction();
                     hideFragments();
-                    ft.show(ff);
+                    ft.show(tf);
                     ft.commit();
                     return true;
             }
@@ -146,7 +146,7 @@ public class UserMainActivity extends AppCompatActivity {
         ft.add(R.id.container, sf);
         ft.add(R.id.container, cf);
         ft.add(R.id.container, chf);
-        ft.add(R.id.container, ff);
+        ft.add(R.id.container, tf);
     }
 
     public void hideFragments() {
@@ -154,7 +154,7 @@ public class UserMainActivity extends AppCompatActivity {
         ft.hide(sf);
         ft.hide(cf);
         ft.hide(chf);
-        ft.hide(ff);
+        ft.hide(tf);
     }
 
     public void performTransition(Intent i, int from, int to) {
