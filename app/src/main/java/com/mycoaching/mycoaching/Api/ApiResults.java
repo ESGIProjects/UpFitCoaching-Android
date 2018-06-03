@@ -46,27 +46,27 @@ public class ApiResults {
         this.listPost = listPost;
     }
 
-    public int getResponseCode(){
+    public int getResponseCode() {
         return responseCode;
     }
 
-    public void setResponseCode(int responseCode){
+    public void setResponseCode(int responseCode) {
         this.responseCode = responseCode;
     }
 
-    public Throwable getException(){
+    public Throwable getException() {
         return exception;
     }
 
-    public void setException(Throwable e){
+    public void setException(Throwable e) {
         this.exception = e;
     }
 
-    public String getBody(){
+    public String getBody() {
         return body;
     }
 
-    public void setBody(String body){
+    public void setBody(String body) {
         this.body = body;
     }
 
@@ -74,7 +74,7 @@ public class ApiResults {
         return ur;
     }
 
-    public void setUr(UserRetrofit ur){
+    public void setUr(UserRetrofit ur) {
         this.ur = ur;
     }
 }

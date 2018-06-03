@@ -10,7 +10,7 @@ import static android.content.ContentValues.TAG;
 /**
  * Created by kevin on 28/05/2018.
  */
-public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService{
+public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
 
     @Override
     public void onTokenRefresh() {
@@ -19,8 +19,8 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService{
         sendRegistrationToServer(refreshedToken);
     }
 
-        private void sendRegistrationToServer(String token) {
-            // TODO
-        }
+    private void sendRegistrationToServer(String token) {
+        // TODO
+    }
 
 }

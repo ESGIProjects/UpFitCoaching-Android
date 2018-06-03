@@ -5,10 +5,10 @@ package com.mycoaching.mycoaching.Models;
  */
 public class Session {
 
-    String title,time,series,rep,status;
+    String title, time, series, rep, status;
     int icon;
 
-    public Session(String title, String time, String series, String rep, String status, int icon){
+    public Session(String title, String time, String series, String rep, String status, int icon) {
         this.title = title;
         this.time = time;
         this.series = series;

@@ -16,13 +16,13 @@ import java.util.List;
 /**
  * Created by kevin on 16/05/2018.
  */
-public class SessionAdapter extends RecyclerView.Adapter<SessionAdapter.MyViewHolder>{
+public class SessionAdapter extends RecyclerView.Adapter<SessionAdapter.MyViewHolder> {
 
     private List<Session> listSession;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public ImageView iv;
-        public TextView title,time,series,rep,status;
+        public TextView title, time, series, rep, status;
 
         public MyViewHolder(View view) {
             super(view);
@@ -35,7 +35,7 @@ public class SessionAdapter extends RecyclerView.Adapter<SessionAdapter.MyViewHo
         }
     }
 
-    public SessionAdapter(List<Session> listSessions){
+    public SessionAdapter(List<Session> listSessions) {
         this.listSession = listSessions;
     }
 
@@ -55,11 +55,10 @@ public class SessionAdapter extends RecyclerView.Adapter<SessionAdapter.MyViewHo
         holder.time.setText(session.getTime());
         holder.series.setText(session.getSeries());
         holder.rep.setText(session.getRep());
-        if(session.getStatus().equals("A faire")){
-            holder.status.setTextColor(Color.rgb(255,50,50));
-        }
-        else{
-            holder.status.setTextColor(Color.rgb(50,255,50));
+        if (session.getStatus().equals("A faire")) {
+            holder.status.setTextColor(Color.rgb(255, 50, 50));
+        } else {
+            holder.status.setTextColor(Color.rgb(50, 255, 50));
         }
         holder.status.setText(session.getStatus());
     }

@@ -10,9 +10,9 @@ public class Post {
     private int id;
     private Thread thread;
     private UserRetrofit user;
-    private String date,content;
+    private String date, content;
 
-    public Post(int id, Thread thread, UserRetrofit user, String date, String content){
+    public Post(int id, Thread thread, UserRetrofit user, String date, String content) {
         this.id = id;
         this.thread = thread;
         this.user = user;

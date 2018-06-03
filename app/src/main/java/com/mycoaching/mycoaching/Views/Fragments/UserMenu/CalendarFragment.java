@@ -35,7 +35,8 @@ public class CalendarFragment extends Fragment {
     private AppointmentAdapter aa;
     private Appointment a;
 
-    @OnClick(R.id.buttonCalendar) void action(){
+    @OnClick(R.id.buttonCalendar)
+    void action() {
         a = new Appointment("26 Mai", "Paris");
         listAppointments.add(a);
         aa.notifyDataSetChanged();
@@ -48,7 +49,7 @@ public class CalendarFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         v = inflater.inflate(R.layout.fragment_calendar, container, false);
-        ButterKnife.bind(this,v);
+        ButterKnife.bind(this, v);
 
         rv = new RecyclerView(getContext());
 
@@ -57,7 +58,7 @@ public class CalendarFragment extends Fragment {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         rv.setLayoutManager(mLayoutManager);
         rv.setItemAnimator(new DefaultItemAnimator());
-        rv.addItemDecoration(new DividerItemDecoration(getContext(),LinearLayoutManager.VERTICAL));
+        rv.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         rv.setAdapter(aa);
 
         prepareData();
@@ -65,7 +66,7 @@ public class CalendarFragment extends Fragment {
         return v;
     }
 
-    private void prepareData(){
+    private void prepareData() {
         a = new Appointment("24 Mai", "nom de rue au hasard");
         listAppointments.add(a);
         a = new Appointment("25 Mai", "45 rue des Saints Pères");

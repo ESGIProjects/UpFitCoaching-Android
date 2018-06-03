@@ -18,7 +18,7 @@ import io.realm.Realm;
  * Created by kevin on 08/05/2018.
  */
 
-public class MessageAdapter extends RecyclerView.Adapter{
+public class MessageAdapter extends RecyclerView.Adapter {
 
     Realm r;
     int sent = 1;
@@ -34,13 +34,13 @@ public class MessageAdapter extends RecyclerView.Adapter{
             content = view.findViewById(R.id.message_body);
         }
 
-        public void bind(Message m){
+        public void bind(Message m) {
             content.setText(m.getContent());
         }
     }
 
     public class SenderHolder extends RecyclerView.ViewHolder {
-        public TextView content,name;
+        public TextView content, name;
 
         public SenderHolder(View view) {
             super(view);
@@ -48,13 +48,13 @@ public class MessageAdapter extends RecyclerView.Adapter{
             name = view.findViewById(R.id.name);
         }
 
-        public void bind(Message m){
+        public void bind(Message m) {
             content.setText(m.getContent());
             name.setText(m.getSender().getFirstName());
         }
     }
 
-    public MessageAdapter(List<Message> listMessages){
+    public MessageAdapter(List<Message> listMessages) {
         this.listMessages = listMessages;
     }
 
@@ -74,12 +74,11 @@ public class MessageAdapter extends RecyclerView.Adapter{
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v;
-        if(viewType == sent){
+        if (viewType == sent) {
             v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.self_message, parent, false);
             return new Holder(v);
-        }
-        else{
+        } else {
             v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.message, parent, false);
             return new SenderHolder(v);
@@ -89,10 +88,9 @@ public class MessageAdapter extends RecyclerView.Adapter{
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         Message message = listMessages.get(position);
-        if(getItemViewType(position) == 1){
+        if (getItemViewType(position) == 1) {
             ((Holder) holder).bind(message);
-        }
-        else{
+        } else {
             ((SenderHolder) holder).bind(message);
         }
     }

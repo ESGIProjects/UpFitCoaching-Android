@@ -10,7 +10,7 @@ import okhttp3.OkHttpClient;
 
 public class OkHttpSingleton {
 
-    private OkHttpSingleton(){
+    private OkHttpSingleton() {
 
     }
 
@@ -19,7 +19,7 @@ public class OkHttpSingleton {
     }
 
     private static class SingletonHolder {
-        public final static OkHttpClient getInstance(){
+        public final static OkHttpClient getInstance() {
             return new OkHttpClient.Builder().readTimeout(3, TimeUnit.SECONDS).
                     retryOnConnectionFailure(true).build();
         }

@@ -8,7 +8,7 @@ public class Forum {
     private int id;
     private String title;
 
-    public Forum(int id, String title){
+    public Forum(int id, String title) {
         this.id = id;
         this.title = title;
     }

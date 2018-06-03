@@ -6,7 +6,7 @@ import android.view.View;
 /**
  * Created by kevin on 20/05/2018.
  */
-public class MessagePagerAdapter extends PagerAdapter{
+public class MessagePagerAdapter extends PagerAdapter {
 
     @Override
     public boolean isViewFromObject(View view, Object object) {

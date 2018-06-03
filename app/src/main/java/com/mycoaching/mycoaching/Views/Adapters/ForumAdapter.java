@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Created by kevin on 16/05/2018.
  */
-public class ForumAdapter extends RecyclerView.Adapter<ForumAdapter.MyViewHolder>{
+public class ForumAdapter extends RecyclerView.Adapter<ForumAdapter.MyViewHolder> {
 
     private List<Forum> listForums;
 
@@ -31,8 +31,8 @@ public class ForumAdapter extends RecyclerView.Adapter<ForumAdapter.MyViewHolder
         }
     }
 
-    public ForumAdapter(List<Forum> listAppointments){
-        this.listForums = listAppointments;
+    public ForumAdapter(List<Forum> listForums) {
+        this.listForums = listForums;
     }
 
     @Override
@@ -47,7 +47,7 @@ public class ForumAdapter extends RecyclerView.Adapter<ForumAdapter.MyViewHolder
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Forum forum = listForums.get(position);
 
-        switch (forum.getId()){
+        switch (forum.getId()) {
             case 1:
                 holder.iv.setImageResource(R.drawable.ic_trending_up_black_24dp);
                 break;
@@ -58,7 +58,7 @@ public class ForumAdapter extends RecyclerView.Adapter<ForumAdapter.MyViewHolder
                 holder.iv.setImageResource(R.drawable.ic_forum_black_24dp);
                 break;
             default:
-                Log.i("Missing res for id : ", ""+forum.getId());
+                Log.i("Missing res for id : ", "" + forum.getId());
 
         }
         holder.title.setText(forum.getTitle());

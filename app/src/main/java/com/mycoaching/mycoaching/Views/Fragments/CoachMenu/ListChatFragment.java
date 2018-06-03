@@ -59,7 +59,7 @@ public class ListChatFragment extends Fragment implements ContactAdapter.OnClick
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        v = inflater.inflate(R.layout.fragment_list_contact,container,false);
+        v = inflater.inflate(R.layout.fragment_list_contact, container, false);
         r = Realm.getDefaultInstance();
         ur = r.where(UserRealm.class).findFirst();
 
@@ -72,7 +72,7 @@ public class ListChatFragment extends Fragment implements ContactAdapter.OnClick
         rv.setItemAnimator(new DefaultItemAnimator());
         rv.setAdapter(ca);
 
-        Request request = new Request.Builder().url("ws://212.47.234.147/ws?id="+ur.getId()).build();
+        Request request = new Request.Builder().url("ws://212.47.234.147/ws?id=" + ur.getId()).build();
         ws = OkHttpSingleton.getInstance().newWebSocket(request, new CustomWebSocketListener());
 
         getContacts();
@@ -86,8 +86,8 @@ public class ListChatFragment extends Fragment implements ContactAdapter.OnClick
         return ws;
     }
 
-    private void getContacts(){
-        ApiCall.getConversation(ur.getId(), new ServiceResultListener() {
+    private void getContacts() {
+        ApiCall.getConversation(Integer.valueOf(ur.getId()), new ServiceResultListener() {
             @Override
             public void onResult(ApiResults ar) {
                 lm.addAll(ar.getListMessage());
@@ -97,15 +97,14 @@ public class ListChatFragment extends Fragment implements ContactAdapter.OnClick
         });
     }
 
-    public void updateContacts(){
-        for(Message m : lm){
-            if(!ids.contains(Integer.valueOf(m.getSender().getId()))){
-                c = new Contact(m.getSender().getFirstName(),m.getSender().getLastName(),m.getContent(),m.getSender().getId());
+    public void updateContacts() {
+        for (Message m : lm) {
+            if (!ids.contains(Integer.valueOf(m.getSender().getId()))) {
+                c = new Contact(m.getSender().getFirstName(), m.getSender().getLastName(), m.getContent(), m.getSender().getId());
                 ids.add(Integer.valueOf(m.getSender().getId()));
                 lc.add(c);
-            }
-            else if(!ids.contains(Integer.valueOf(m.getReceiver().getId()))){
-                c = new Contact(m.getReceiver().getFirstName(),m.getReceiver().getLastName(),m.getContent(),m.getReceiver().getId());
+            } else if (!ids.contains(Integer.valueOf(m.getReceiver().getId()))) {
+                c = new Contact(m.getReceiver().getFirstName(), m.getReceiver().getLastName(), m.getContent(), m.getReceiver().getId());
                 ids.add(Integer.valueOf(m.getReceiver().getId()));
                 lc.add(c);
             }
@@ -122,61 +121,62 @@ public class ListChatFragment extends Fragment implements ContactAdapter.OnClick
     public void onItemClick(int position) {
         String id = lc.get(position).getId();
         ArrayList<Message> listSpecificMessages = new ArrayList<>();
-        for(Message m : lm){
-            if(m.getSender().getId().equals(id) || m.getReceiver().getId().equals(id)){
+        for (Message m : lm) {
+            if (m.getSender().getId().equals(id) || m.getReceiver().getId().equals(id)) {
                 listSpecificMessages.add(m);
             }
         }
         fm = getActivity().getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         Bundle b = new Bundle();
-        b.putParcelableArrayList("listMessages",listSpecificMessages);
-        ChatFragment fm = new ChatFragment();
-        fm.setArguments(b);
+        b.putParcelableArrayList("listMessages", listSpecificMessages);
+        ChatFragment cf = new ChatFragment();
+        cf.setArguments(b);
         ft.hide(getFragmentManager().findFragmentById(R.id.container));
-        ft.add(R.id.container,fm,"MESSAGES");
+        ft.add(R.id.container, cf, "MESSAGES");
         ft.addToBackStack(null);
         ft.commit();
     }
 
-    public class CustomWebSocketListener extends WebSocketListener{
+    public class CustomWebSocketListener extends WebSocketListener {
 
         @Override
-        public void onOpen(WebSocket ws, Response r){
+        public void onOpen(WebSocket ws, Response r) {
             Log.i("LCF ws is open :", r.toString());
         }
 
         @Override
-        public void onMessage(WebSocket ws, String text){
+        public void onMessage(WebSocket ws, String text) {
             Log.i("Message on LCF :", text);
-            try{
+            try {
                 JSONObject message = getJSONFromString(text);
                 JSONObject sender = message.getJSONObject("sender");
                 JSONObject receiver = message.getJSONObject("receiver");
                 String content = message.getString("content");
                 addMessageToList(String.valueOf(receiver.getInt("id")),
-                        String.valueOf(sender.getInt("id")),receiver.getString("firstName"),
+                        String.valueOf(sender.getInt("id")), receiver.getString("firstName"),
                         receiver.getString("lastName"), sender.getString("firstName"),
-                        sender.getString("lastName"),content);
-                if(getFragmentManager().findFragmentByTag("MESSAGES") != null){
+                        sender.getString("lastName"), content);
+                if (getFragmentManager().findFragmentByTag("MESSAGES") != null) {
                     ChatFragment cf = (ChatFragment) getFragmentManager().findFragmentByTag("MESSAGES");
                     cf.addMessageToList(String.valueOf(sender.getInt("id")),
-                            String.valueOf(receiver.getInt("id")),sender.getString("firstName"),
+                            String.valueOf(receiver.getInt("id")), sender.getString("firstName"),
                             sender.getString("lastName"), receiver.getString("firstName"),
-                            receiver.getString("lastName"),content);
+                            receiver.getString("lastName"), content);
                 }
-            }
-            catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
 
-        @Override public void onClosing(WebSocket webSocket, int code, String reason) {
+        @Override
+        public void onClosing(WebSocket webSocket, int code, String reason) {
             webSocket.close(1000, null);
             Log.i("CLOSE LCF ws : ", code + " & " + reason);
         }
 
-        @Override public void onFailure(WebSocket webSocket, Throwable t, Response response) {
+        @Override
+        public void onFailure(WebSocket webSocket, Throwable t, Response response) {
             t.printStackTrace();
         }
     }
@@ -188,7 +188,7 @@ public class ListChatFragment extends Fragment implements ContactAdapter.OnClick
         UserRetrofit receiver = new UserRetrofit(receiverID, null, null, firstNameR, lastNameR,
                 null, null, null, null, null);
         Message m = new Message(null, sender, receiver, getDate(), content);
-        lm.add(0,m);
+        lm.add(0, m);
         lc.clear();
         ids.clear();
         ids.add(Integer.valueOf(senderID));

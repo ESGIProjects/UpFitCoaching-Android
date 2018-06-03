@@ -11,7 +11,7 @@ public class ApiUtils {
 
     private static final String BASE_URL = "http://212.47.234.147/";
 
-    public static final ApiInterface getApiInstance(){
+    public static final ApiInterface getApiInstance() {
         return RetrofitSingleton.getInstance(BASE_URL).create(ApiInterface.class);
     }
 

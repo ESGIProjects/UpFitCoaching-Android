@@ -21,6 +21,7 @@ import com.mycoaching.mycoaching.Util.Singletons.OkHttpSingleton;
 import com.mycoaching.mycoaching.Views.Activities.Common.LoginActivity;
 import com.mycoaching.mycoaching.R;
 import com.mycoaching.mycoaching.Views.Fragments.CoachMenu.ListChatFragment;
+import com.mycoaching.mycoaching.Views.Fragments.Common.PostFragment;
 
 import io.realm.Realm;
 import okhttp3.Request;
@@ -35,6 +36,7 @@ public class CoachMainActivity extends AppCompatActivity {
     UserRealm ur;
 
     ListChatFragment lcf = new ListChatFragment();
+    PostFragment pf = new PostFragment();
     FragmentTransaction ft;
     WebSocket ws;
 
@@ -47,11 +49,15 @@ public class CoachMainActivity extends AppCompatActivity {
                 case R.id.navigation_calendar:
                     return true;
                 case R.id.navigation_chat:
-                    ft.add(R.id.container,lcf,"LIST");
+                    ft.add(R.id.container, lcf, "LIST");
                     ft.show(lcf);
                     ft.commit();
                     return true;
                 case R.id.navigation_forum:
+                    ft.add(R.id.container, pf, "LIST");
+                    ft.hide(lcf);
+                    ft.show(pf);
+                    ft.commit();
                     return true;
             }
             return false;
@@ -74,13 +80,12 @@ public class CoachMainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         int count = getSupportFragmentManager().getBackStackEntryCount();
-        if(count > 0 && getSupportFragmentManager().findFragmentByTag("MESSAGES").isVisible()){
+        if (count > 0 && (getSupportFragmentManager().findFragmentByTag("MESSAGES").isVisible() || getSupportFragmentManager().findFragmentByTag("POSTS").isVisible())) {
             getSupportFragmentManager().popBackStack();
-        }
-        else{
-            AlertDialog.Builder builder = new AlertDialog.Builder(CoachMainActivity.this,R.style.AlertDialogCustom);
+        } else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(CoachMainActivity.this, R.style.AlertDialogCustom);
             builder.setTitle(R.string.exit).setMessage(R.string.exit_application)
                     .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                         @Override
@@ -90,7 +95,7 @@ public class CoachMainActivity extends AppCompatActivity {
                             realm.deleteAll();
                             realm.commitTransaction();
                             realm.close();
-                            performTransition(intent,R.animator.slide_from_left,R.animator.slide_to_right);
+                            performTransition(intent, R.animator.slide_from_left, R.animator.slide_to_right);
                             finish();
                         }
                     })
@@ -104,8 +109,8 @@ public class CoachMainActivity extends AppCompatActivity {
         }
     }
 
-    public void performTransition(Intent i, int from, int to){
+    public void performTransition(Intent i, int from, int to) {
         startActivity(i);
-        overridePendingTransition(from,to);
+        overridePendingTransition(from, to);
     }
 }

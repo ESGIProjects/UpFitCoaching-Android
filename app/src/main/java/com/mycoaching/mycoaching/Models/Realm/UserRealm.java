@@ -17,7 +17,7 @@ public class UserRealm extends RealmObject {
     private String idCoach, mailCoach, firstNameCoach, lastNameCoach, addressCoach,
             cityCoach, phoneNumberCoach;
 
-    private int type,typeCoach;
+    private int type, typeCoach;
 
     public int getType() {
         return type;
@@ -59,11 +59,11 @@ public class UserRealm extends RealmObject {
         this.birthDate = birthDate;
     }
 
-    public String getAddress(){
+    public String getAddress() {
         return address;
     }
 
-    public void setAddress(String address){
+    public void setAddress(String address) {
         this.address = address;
     }
 

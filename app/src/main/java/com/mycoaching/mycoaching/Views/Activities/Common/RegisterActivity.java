@@ -25,20 +25,20 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         getSupportActionBar().hide();
         ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.container,cf);
+        ft.replace(R.id.container, cf);
         ft.commit();
     }
 
-    public void replaceFragment(Fragment f, int layout){
+    public void replaceFragment(Fragment f, int layout) {
         ft = getSupportFragmentManager().beginTransaction();
-        ft.setCustomAnimations(R.animator.slide_from_right,R.animator.slide_to_left);
+        ft.setCustomAnimations(R.animator.slide_from_right, R.animator.slide_to_left);
         ft.replace(layout, f);
         ft.commit();
     }
 
     @Override
-    public void onBackPressed(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this,R.style.AlertDialogCustom);
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this, R.style.AlertDialogCustom);
         builder.setTitle(R.string.exit).setMessage(R.string.exit_register)
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override

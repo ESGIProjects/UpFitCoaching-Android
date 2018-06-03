@@ -12,15 +12,16 @@ import com.mycoaching.mycoaching.R;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class RegisterChoiceFragment extends Fragment{
+public class RegisterChoiceFragment extends Fragment {
 
     Bundle b = new Bundle();
     CredentialsFragment cf = new CredentialsFragment();
 
-    @OnClick(R.id.user) void userTransition(){
-        b.putString("type","0");
+    @OnClick(R.id.user)
+    void userTransition() {
+        b.putString("type", "0");
         cf.setArguments(b);
-        ((RegisterActivity)getActivity()).replaceFragment(cf,R.id.container);
+        ((RegisterActivity) getActivity()).replaceFragment(cf, R.id.container);
     }
 
     //this method is for later, when multiple coach feature will be enabled
@@ -37,7 +38,7 @@ public class RegisterChoiceFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         v = inflater.inflate(R.layout.fragment_register_choice, container, false);
-        ButterKnife.bind(this,v);
+        ButterKnife.bind(this, v);
         return v;
     }
 }

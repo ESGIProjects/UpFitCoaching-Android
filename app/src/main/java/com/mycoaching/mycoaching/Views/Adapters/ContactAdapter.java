@@ -17,7 +17,7 @@ import io.realm.Realm;
 /**
  * Created by kevin on 20/05/2018.
  */
-public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHolder>{
+public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHolder> {
 
     Realm r;
 
@@ -25,11 +25,12 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
 
     private OnClick onClick;
 
-    public interface OnClick{
+    public interface OnClick {
         void onItemClick(int position);
     }
+
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView letter,firstName,lastName,lastMessage;
+        public TextView letter, firstName, lastName, lastMessage;
 
         public MyViewHolder(View view) {
             super(view);
@@ -40,7 +41,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
         }
     }
 
-    public ContactAdapter(List<Contact> listMessages){
+    public ContactAdapter(List<Contact> listMessages) {
         this.listContacts = listMessages;
     }
 
@@ -61,7 +62,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
                 onClick.onItemClick(position);
             }
         });
-        holder.letter.setText(c.getFirstName().substring(0,1));
+        holder.letter.setText(c.getFirstName().substring(0, 1));
         holder.firstName.setText(c.getFirstName());
         holder.lastName.setText(c.getLastName());
         holder.lastMessage.setText(c.getLastMessage());
@@ -72,7 +73,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
         return listContacts.size();
     }
 
-    public void setOnClick(OnClick oc){
+    public void setOnClick(OnClick oc) {
         this.onClick = oc;
     }
 

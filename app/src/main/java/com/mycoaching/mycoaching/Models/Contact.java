@@ -7,7 +7,7 @@ public class Contact {
 
     private String firstName, lastName, lastMessage, id;
 
-    public Contact(String firstName, String lastName, String lastMessage, String id){
+    public Contact(String firstName, String lastName, String lastMessage, String id) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.lastMessage = lastMessage;

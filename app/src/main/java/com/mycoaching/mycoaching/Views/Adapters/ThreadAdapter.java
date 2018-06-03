@@ -14,37 +14,50 @@ import java.util.List;
 /**
  * Created by kevin on 16/05/2018.
  */
-public class ThreadAdapter extends RecyclerView.Adapter<ThreadAdapter.MyViewHolder>{
+public class ThreadAdapter extends RecyclerView.Adapter<ThreadAdapter.MyViewHolder> {
 
     private List<Thread> listThreads;
+    private OnClick onClick;
+
+    public interface OnClick {
+        void onItemClick(int position);
+    }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView title, subtitle;
+        public TextView title;
 
         public MyViewHolder(View view) {
             super(view);
-            title = view.findViewById(R.id.subtopic_name);
-            subtitle = view.findViewById(R.id.subtopic_subtitle);
+            title = view.findViewById(R.id.thread_name);
         }
     }
 
-    public ThreadAdapter(List<Thread> listThreads){
+    public ThreadAdapter(List<Thread> listThreads) {
         this.listThreads = listThreads;
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.subtopic_row, parent, false);
+                .inflate(R.layout.thread_row, parent, false);
 
         return new MyViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(MyViewHolder holder, final int position) {
         Thread thread = listThreads.get(position);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClick.onItemClick(position);
+            }
+        });
         holder.title.setText(thread.getTitle());
-        //holder.subtitle.setText(thread.getSubtitle());
+    }
+
+    public void setOnClick(OnClick oc) {
+        this.onClick = oc;
     }
 
     @Override

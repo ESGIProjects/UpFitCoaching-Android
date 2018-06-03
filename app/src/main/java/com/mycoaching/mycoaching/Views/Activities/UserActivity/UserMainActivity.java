@@ -17,7 +17,7 @@ import com.mycoaching.mycoaching.R;
 import com.mycoaching.mycoaching.Views.Fragments.UserMenu.CalendarFragment;
 import com.mycoaching.mycoaching.Views.Fragments.Common.ChatFragment;
 import com.mycoaching.mycoaching.Views.Fragments.UserMenu.FollowUpFragment;
-import com.mycoaching.mycoaching.Views.Fragments.UserMenu.ForumFragment;
+import com.mycoaching.mycoaching.Views.Fragments.Common.ThreadFragment;
 import com.mycoaching.mycoaching.Views.Fragments.UserMenu.SessionFragment;
 
 import butterknife.BindView;
@@ -39,16 +39,17 @@ public class UserMainActivity extends AppCompatActivity {
 
     Intent intent;
 
-    @OnClick(R.id.option) void settings(){
-        intent = new Intent(this,SettingsActivity.class);
-        performTransition(intent,R.animator.slide_from_right,R.animator.slide_to_left);
+    @OnClick(R.id.option)
+    void settings() {
+        intent = new Intent(this, SettingsActivity.class);
+        performTransition(intent, R.animator.slide_from_right, R.animator.slide_to_left);
     }
 
     FollowUpFragment fuf = new FollowUpFragment();
     SessionFragment sf = new SessionFragment();
     CalendarFragment cf = new CalendarFragment();
     ChatFragment chf = new ChatFragment();
-    ForumFragment ff = new ForumFragment();
+    ThreadFragment ff = new ThreadFragment();
     FragmentTransaction ft;
 
     Realm realm = null;
@@ -111,39 +112,44 @@ public class UserMainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(UserMainActivity.this,R.style.AlertDialogCustom);
-        builder.setTitle(R.string.exit).setMessage(R.string.exit_application)
-                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        intent = new Intent(getApplicationContext(), LoginActivity.class);
-                        realm.beginTransaction();
-                        realm.deleteAll();
-                        realm.commitTransaction();
-                        realm.close();
-                        performTransition(intent,R.animator.slide_from_left,R.animator.slide_to_right);
-                        finish();
-                    }
-                })
-                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                    }
-                })
-                .setIcon(R.drawable.logo)
-                .show();
+    public void onBackPressed() {
+        int count = getSupportFragmentManager().getBackStackEntryCount();
+        if (count > 0 && getSupportFragmentManager().findFragmentByTag("POSTS").isVisible()) {
+            getSupportFragmentManager().popBackStack();
+        } else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(UserMainActivity.this, R.style.AlertDialogCustom);
+            builder.setTitle(R.string.exit).setMessage(R.string.exit_application)
+                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            intent = new Intent(getApplicationContext(), LoginActivity.class);
+                            realm.beginTransaction();
+                            realm.deleteAll();
+                            realm.commitTransaction();
+                            realm.close();
+                            performTransition(intent, R.animator.slide_from_left, R.animator.slide_to_right);
+                            finish();
+                        }
+                    })
+                    .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                        }
+                    })
+                    .setIcon(R.drawable.logo)
+                    .show();
+        }
     }
 
-    public void addFragments(){
-        ft.add(R.id.container,fuf);
-        ft.add(R.id.container,sf);
-        ft.add(R.id.container,cf);
-        ft.add(R.id.container,chf);
-        ft.add(R.id.container,ff);
+    public void addFragments() {
+        ft.add(R.id.container, fuf);
+        ft.add(R.id.container, sf);
+        ft.add(R.id.container, cf);
+        ft.add(R.id.container, chf);
+        ft.add(R.id.container, ff);
     }
 
-    public void hideFragments(){
+    public void hideFragments() {
         ft.hide(fuf);
         ft.hide(sf);
         ft.hide(cf);
@@ -151,8 +157,8 @@ public class UserMainActivity extends AppCompatActivity {
         ft.hide(ff);
     }
 
-    public void performTransition(Intent i, int from, int to){
+    public void performTransition(Intent i, int from, int to) {
         startActivity(i);
-        overridePendingTransition(from,to);
+        overridePendingTransition(from, to);
     }
 }

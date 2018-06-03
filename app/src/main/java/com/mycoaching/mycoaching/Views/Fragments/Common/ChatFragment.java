@@ -59,68 +59,65 @@ public class ChatFragment extends Fragment {
     @BindView(R.id.input)
     EditText et;
 
-    @OnClick(R.id.send) void sendMessage(){
-        if(!et.getText().toString().equals("")){
+    @OnClick(R.id.send)
+    void sendMessage() {
+        if (!et.getText().toString().equals("")) {
             JSONObject object = new JSONObject();
-            try{
+            try {
                 JSONObject sender = new JSONObject();
-                sender.put("id",Integer.valueOf(ur.getId()));
-                sender.put("type",Integer.valueOf(ur.getType()));
-                sender.put("mail",ur.getMail());
-                sender.put("firstName",ur.getFirstName());
-                sender.put("lastName",ur.getLastName());
-                sender.put("city",ur.getCity());
-                sender.put("phoneNumber",ur.getPhoneNumber());
-                if(!isCoach){
-                    sender.put("birthDate",ur.getBirthDate());
+                sender.put("id", Integer.valueOf(ur.getId()));
+                sender.put("type", Integer.valueOf(ur.getType()));
+                sender.put("mail", ur.getMail());
+                sender.put("firstName", ur.getFirstName());
+                sender.put("lastName", ur.getLastName());
+                sender.put("city", ur.getCity());
+                sender.put("phoneNumber", ur.getPhoneNumber());
+                if (!isCoach) {
+                    sender.put("birthDate", ur.getBirthDate());
+                } else {
+                    sender.put("address", ur.getAddress());
                 }
-                else{
-                    sender.put("address",ur.getAddress());
-                }
-                object.put("sender",sender);
+                object.put("sender", sender);
 
                 JSONObject receiver = new JSONObject();
 
-                if(!isCoach){
-                    receiver.put("id",Integer.valueOf(ur.getIdCoach()));
-                    receiver.put("type",2);
-                    receiver.put("mail",ur.getMailCoach());
-                    receiver.put("firstName",ur.getFirstNameCoach());
-                    receiver.put("lastName",ur.getLastNameCoach());
-                    receiver.put("city",ur.getCityCoach());
-                    receiver.put("phoneNumber",ur.getPhoneNumberCoach());
-                    receiver.put("address",ur.getAddressCoach());
+                if (!isCoach) {
+                    receiver.put("id", Integer.valueOf(ur.getIdCoach()));
+                    receiver.put("type", 2);
+                    receiver.put("mail", ur.getMailCoach());
+                    receiver.put("firstName", ur.getFirstNameCoach());
+                    receiver.put("lastName", ur.getLastNameCoach());
+                    receiver.put("city", ur.getCityCoach());
+                    receiver.put("phoneNumber", ur.getPhoneNumberCoach());
+                    receiver.put("address", ur.getAddressCoach());
+                } else {
+                    receiver.put("id", Integer.valueOf(lm.get(lm.size() - 1).getSender().getId()));
+                    receiver.put("type", lm.get(lm.size() - 1).getSender().getType());
+                    receiver.put("mail", lm.get(lm.size() - 1).getSender().getMail());
+                    receiver.put("firstName", lm.get(lm.size() - 1).getSender().getFirstName());
+                    receiver.put("lastName", lm.get(lm.size() - 1).getSender().getLastName());
+                    receiver.put("city", lm.get(lm.size() - 1).getSender().getCity());
+                    receiver.put("phoneNumber", lm.get(lm.size() - 1).getSender().getPhoneNumber());
+                    receiver.put("birthDate", lm.get(lm.size() - 1).getSender().getBirthDate());
                 }
-                else{
-                    receiver.put("id",Integer.valueOf(lm.get(lm.size()-1).getSender().getId()));
-                    receiver.put("type",lm.get(lm.size()-1).getSender().getType());
-                    receiver.put("mail",lm.get(lm.size()-1).getSender().getMail());
-                    receiver.put("firstName",lm.get(lm.size()-1).getSender().getFirstName());
-                    receiver.put("lastName",lm.get(lm.size()-1).getSender().getLastName());
-                    receiver.put("city",lm.get(lm.size()-1).getSender().getCity());
-                    receiver.put("phoneNumber",lm.get(lm.size()-1).getSender().getPhoneNumber());
-                    receiver.put("birthDate",lm.get(lm.size()-1).getSender().getBirthDate());
-                }
-                object.put("receiver",receiver);
+                object.put("receiver", receiver);
                 object.put("content", et.getText().toString());
-            }
-            catch (JSONException e){
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
-            if(isCoach){
-                ListChatFragment lcf = (ListChatFragment)getActivity().getSupportFragmentManager().findFragmentByTag("LIST");
+            if (isCoach) {
+                ListChatFragment lcf = (ListChatFragment) getActivity().getSupportFragmentManager().findFragmentByTag("LIST");
                 lcf.getWs().send(object.toString());
-                lcf.addMessageToList(ur.getId(),lm.get(lm.size()-1).getSender().getId(),ur.getFirstName(),
-                        ur.getLastName(),lm.get(lm.size()-1).getSender().getFirstName(),
-                        lm.get(lm.size()-1).getSender().getLastName(),et.getText().toString());
-                addMessageToList(ur.getId(),lm.get(lm.size()-1).getSender().getId(),ur.getFirstName(),
-                        ur.getLastName(),lm.get(lm.size()-1).getSender().getFirstName(),
-                        lm.get(lm.size()-1).getSender().getLastName(),et.getText().toString());
-            }
-            else{
+                lcf.addMessageToList(ur.getId(), lm.get(lm.size() - 1).getSender().getId(), ur.getFirstName(),
+                        ur.getLastName(), lm.get(lm.size() - 1).getSender().getFirstName(),
+                        lm.get(lm.size() - 1).getSender().getLastName(), et.getText().toString());
+                addMessageToList(ur.getId(), lm.get(lm.size() - 1).getSender().getId(), ur.getFirstName(),
+                        ur.getLastName(), lm.get(lm.size() - 1).getSender().getFirstName(),
+                        lm.get(lm.size() - 1).getSender().getLastName(), et.getText().toString());
+            } else {
                 ws.send(object.toString());
-                addMessageToList(ur.getId(),ur.getIdCoach(),ur.getFirstName(),ur.getLastName(),
-                        ur.getFirstNameCoach(),ur.getLastNameCoach(),et.getText().toString());
+                addMessageToList(ur.getId(), ur.getIdCoach(), ur.getFirstName(), ur.getLastName(),
+                        ur.getFirstNameCoach(), ur.getLastNameCoach(), et.getText().toString());
             }
             et.getText().clear();
         }
@@ -130,7 +127,7 @@ public class ChatFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         v = inflater.inflate(R.layout.fragment_chat, container, false);
-        ButterKnife.bind(this,v);
+        ButterKnife.bind(this, v);
         r = Realm.getDefaultInstance();
         ur = r.where(UserRealm.class).findFirst();
 
@@ -147,16 +144,15 @@ public class ChatFragment extends Fragment {
                 }
             });
             isCoach = true;
-        }
-        else{
-            Request request = new Request.Builder().url("ws://212.47.234.147/ws?id="+ur.getId()).build();
+        } else {
+            Request request = new Request.Builder().url("ws://212.47.234.147/ws?id=" + ur.getId()).build();
             ws = OkHttpSingleton.getInstance().newWebSocket(request, new CustomWSListener());
             getConversation();
             ma = new MessageAdapter(lm);
         }
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext()
-                ,LinearLayoutManager.VERTICAL, true);
+                , LinearLayoutManager.VERTICAL, true);
         rv.setLayoutManager(mLayoutManager);
         rv.setItemAnimator(new DefaultItemAnimator());
         rv.setAdapter(ma);
@@ -164,11 +160,11 @@ public class ChatFragment extends Fragment {
         return v;
     }
 
-    public void getConversation(){
-        ApiCall.getConversation(ur.getId(), new ServiceResultListener() {
+    public void getConversation() {
+        ApiCall.getConversation(Integer.valueOf(ur.getId()), new ServiceResultListener() {
             @Override
             public void onResult(ApiResults ar) {
-                if(ar.getResponseCode() == 200){
+                if (ar.getResponseCode() == 200) {
                     lm.addAll(ar.getListMessage());
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
@@ -176,9 +172,8 @@ public class ChatFragment extends Fragment {
                             ma.notifyDataSetChanged();
                         }
                     });
-                }
-                else{
-                    Toast.makeText(getContext(),"Veuillez réessayer ultérieurement",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getContext(), "Veuillez réessayer ultérieurement", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -203,34 +198,35 @@ public class ChatFragment extends Fragment {
     private final class CustomWSListener extends WebSocketListener {
 
         @Override
-        public void onOpen(WebSocket ws, Response r){
+        public void onOpen(WebSocket ws, Response r) {
             Log.i("CF ws is open : ", r.toString());
         }
 
         @Override
-        public void onMessage(WebSocket ws, String text){
+        public void onMessage(WebSocket ws, String text) {
             Log.i("Message on CF :", text);
-            try{
+            try {
                 JSONObject message = getJSONFromString(text);
                 JSONObject sender = message.getJSONObject("sender");
                 JSONObject receiver = message.getJSONObject("receiver");
                 String content = message.getString("content");
                 addMessageToList(String.valueOf(sender.getInt("id")),
-                        String.valueOf(receiver.getInt("id")),sender.getString("firstName"),
+                        String.valueOf(receiver.getInt("id")), sender.getString("firstName"),
                         sender.getString("lastName"), receiver.getString("firstName"),
-                        receiver.getString("lastName"),content);
-            }
-            catch (Exception e){
+                        receiver.getString("lastName"), content);
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
 
-        @Override public void onClosing(WebSocket webSocket, int code, String reason) {
+        @Override
+        public void onClosing(WebSocket webSocket, int code, String reason) {
             webSocket.close(1000, null);
             Log.i("CLOSE CF ws : ", code + " & " + reason);
         }
 
-        @Override public void onFailure(WebSocket webSocket, Throwable t, Response response) {
+        @Override
+        public void onFailure(WebSocket webSocket, Throwable t, Response response) {
             t.printStackTrace();
         }
     }

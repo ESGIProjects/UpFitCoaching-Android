@@ -41,22 +41,23 @@ public class CredentialsFragment extends Fragment {
     @BindView(R.id.passwordConfirmation)
     EditText passwordConfirmation;
 
-    @OnClick(R.id.next) void dataTransition(){
-        if(checkFields(mail.getText().toString(),password.getText().toString(), passwordConfirmation.getText().toString())){
-            if(checkEmail(mail.getText().toString()) && checkPassword(password.getText().toString()) &&
-                    isSame(password.getText().toString(), passwordConfirmation.getText().toString())){
-                pd = new ProgressDialog(getContext(),R.style.StyledDialog);
+    @OnClick(R.id.next)
+    void dataTransition() {
+        if (checkFields(mail.getText().toString(), password.getText().toString(), passwordConfirmation.getText().toString())) {
+            if (checkEmail(mail.getText().toString()) && checkPassword(password.getText().toString()) &&
+                    isSame(password.getText().toString(), passwordConfirmation.getText().toString())) {
+                pd = new ProgressDialog(getContext(), R.style.StyledDialog);
                 pd.show();
                 ApiCall.checkMail(mail.getText().toString(), new ServiceResultListener() {
                     @Override
                     public void onResult(ApiResults ar) {
                         pd.dismiss();
-                        if(ar.getResponseCode() == 200){
-                            b.putString("mail",mail.getText().toString());
+                        if (ar.getResponseCode() == 200) {
+                            b.putString("mail", mail.getText().toString());
                             b.putString("password", getSHAPassword(password.getText().toString()));
                             UserDataFragment udf = new UserDataFragment();
                             udf.setArguments(b);
-                            ((RegisterActivity)getActivity()).replaceFragment(udf,R.id.container);
+                            ((RegisterActivity) getActivity()).replaceFragment(udf, R.id.container);
 
                             //that part is commented for the moment due to single coach capacity
 
@@ -75,20 +76,17 @@ public class CredentialsFragment extends Fragment {
                                 cdf.setArguments(b);
                                 ((RegisterActivity)getActivity()).replaceFragment(cdf,R.id.container);
                             }*/
-                        }
-                        else{
-                            Toast.makeText(getContext(),R.string.already_exists,Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(getContext(), R.string.already_exists, Toast.LENGTH_LONG).show();
                         }
                     }
                 });
+            } else {
+                Toast.makeText(getContext(), R.string.wrong_credentials, Toast.LENGTH_LONG).show();
+                clearFields(mail, password, passwordConfirmation);
             }
-            else{
-                Toast.makeText(getContext(),R.string.wrong_credentials,Toast.LENGTH_LONG).show();
-                clearFields(mail,password,passwordConfirmation);
-            }
-        }
-        else{
-            Toast.makeText(getContext(),R.string.missing_fields,Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(getContext(), R.string.missing_fields, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -96,7 +94,7 @@ public class CredentialsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         v = inflater.inflate(R.layout.fragment_credentials, container, false);
-        ButterKnife.bind(this,v);
+        ButterKnife.bind(this, v);
         b = getArguments();
         return v;
     }

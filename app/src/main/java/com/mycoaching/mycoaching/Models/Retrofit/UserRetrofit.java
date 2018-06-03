@@ -10,7 +10,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by kevin on 20/04/2018.
  */
 
-public class UserRetrofit implements Parcelable{
+public class UserRetrofit implements Parcelable {
 
     @SerializedName("id")
     @Expose
@@ -53,7 +53,7 @@ public class UserRetrofit implements Parcelable{
     private UserRetrofit coach;
 
     public UserRetrofit(String id, Integer type, String mail, String firstName, String lastName, String birthDate,
-                        String address, String city, String phoneNumber, UserRetrofit coach){
+                        String address, String city, String phoneNumber, UserRetrofit coach) {
         this.id = id;
         this.type = type;
         this.mail = mail;
@@ -66,7 +66,7 @@ public class UserRetrofit implements Parcelable{
         this.coach = coach;
     }
 
-    public UserRetrofit(Parcel in){
+    public UserRetrofit(Parcel in) {
         this.id = in.readString();
         this.type = in.readInt();
         this.mail = in.readString();
@@ -169,17 +169,14 @@ public class UserRetrofit implements Parcelable{
 
     }
 
-    public static final Parcelable.Creator<UserRetrofit> CREATOR = new Parcelable.Creator<UserRetrofit>()
-    {
+    public static final Parcelable.Creator<UserRetrofit> CREATOR = new Parcelable.Creator<UserRetrofit>() {
         @Override
-        public UserRetrofit createFromParcel(Parcel source)
-        {
+        public UserRetrofit createFromParcel(Parcel source) {
             return new UserRetrofit(source);
         }
 
         @Override
-        public UserRetrofit[] newArray(int size)
-        {
+        public UserRetrofit[] newArray(int size) {
             return new UserRetrofit[size];
         }
     };

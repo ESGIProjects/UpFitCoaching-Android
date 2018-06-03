@@ -43,6 +43,11 @@
     <string name="title_forum">Forum</string>
     <string name="title_activity_coach_main">CoachMainActivity</string>
 
+    <string name="create_thread">Création d\'un sujet</string>
+    <string name="thread_title">Nom du sujet</string>
+    <string name="thread_message">Corps du sujet</string>
+    <string name="send_thread">Confirmer</string>
+
     <string-array name="user_type">
         <item>Gratuit</item>
         <item>Payant</item>

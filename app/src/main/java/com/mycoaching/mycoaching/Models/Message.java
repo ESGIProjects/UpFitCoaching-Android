@@ -10,7 +10,7 @@ import com.mycoaching.mycoaching.Models.Retrofit.UserRetrofit;
 /**
  * Created by kevin on 06/05/2018.
  */
-public class Message implements Parcelable{
+public class Message implements Parcelable {
 
     @SerializedName("id")
     @Expose
@@ -88,17 +88,14 @@ public class Message implements Parcelable{
         this.content = content;
     }
 
-    public static final Parcelable.Creator<Message> CREATOR = new Parcelable.Creator<Message>()
-    {
+    public static final Parcelable.Creator<Message> CREATOR = new Parcelable.Creator<Message>() {
         @Override
-        public Message createFromParcel(Parcel source)
-        {
+        public Message createFromParcel(Parcel source) {
             return new Message(source);
         }
 
         @Override
-        public Message[] newArray(int size)
-        {
+        public Message[] newArray(int size) {
             return new Message[size];
         }
     };

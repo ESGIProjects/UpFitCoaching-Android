@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitSingleton {
 
-    private RetrofitSingleton(){
+    private RetrofitSingleton() {
     }
 
     public static Retrofit getInstance(String url) {
@@ -17,7 +17,7 @@ public class RetrofitSingleton {
     }
 
     private static class SingletonHolder {
-        public final static Retrofit getInstance(String url){
+        public final static Retrofit getInstance(String url) {
             return new Retrofit.Builder().baseUrl(url)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();

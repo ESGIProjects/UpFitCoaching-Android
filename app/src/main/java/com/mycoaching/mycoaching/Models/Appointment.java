@@ -8,7 +8,7 @@ public class Appointment {
 
     private String date, address;
 
-    public Appointment(String date, String address){
+    public Appointment(String date, String address) {
         this.date = date;
         this.address = address;
     }

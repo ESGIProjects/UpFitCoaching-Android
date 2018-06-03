@@ -37,9 +37,9 @@ public class FollowUpFragment extends Fragment {
     LineData ld;
     BarData bd;
 
-    int bmiColor = Color.rgb(244,67,54);
-    int bfpColor = Color.rgb(0,150,136);
-    int weightColor = Color.rgb(33,150,243);
+    int bmiColor = Color.rgb(244, 67, 54);
+    int bfpColor = Color.rgb(0, 150, 136);
+    int weightColor = Color.rgb(33, 150, 243);
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -83,7 +83,7 @@ public class FollowUpFragment extends Fragment {
         cc.setData(cd);
         cc.invalidate();
 
-        ButterKnife.bind(this,v);
+        ButterKnife.bind(this, v);
         return v;
     }
 
@@ -91,9 +91,9 @@ public class FollowUpFragment extends Fragment {
 
         ArrayList<Entry> entries = new ArrayList<Entry>();
 
-        entries.add(new Entry(2,21.2f));
-        entries.add(new Entry(4,25));
-        entries.add(new Entry(7,24));
+        entries.add(new Entry(2, 21.2f));
+        entries.add(new Entry(4, 25));
+        entries.add(new Entry(7, 24));
 
         LineDataSet set = new LineDataSet(entries, "IMC");
         set.setColor(bmiColor);
@@ -114,9 +114,9 @@ public class FollowUpFragment extends Fragment {
 
         ArrayList<Entry> entries = new ArrayList<Entry>();
 
-        entries.add(new Entry(2,23));
-        entries.add(new Entry(5,22.4f));
-        entries.add(new Entry(8,22));
+        entries.add(new Entry(2, 23));
+        entries.add(new Entry(5, 22.4f));
+        entries.add(new Entry(8, 22));
 
         LineDataSet set = new LineDataSet(entries, "IMG");
         set.setColor(bfpColor);
@@ -133,16 +133,16 @@ public class FollowUpFragment extends Fragment {
         ld.addDataSet(set);
     }
 
-    public void generateWeight(){
+    public void generateWeight() {
 
         ArrayList<BarEntry> entries = new ArrayList<BarEntry>();
 
-        entries.add(new BarEntry(2,61.2f));
-        entries.add(new BarEntry(3,62.3f));
-        entries.add(new BarEntry(6,62));
-        entries.add(new BarEntry(10,63.3f));
+        entries.add(new BarEntry(2, 61.2f));
+        entries.add(new BarEntry(3, 62.3f));
+        entries.add(new BarEntry(6, 62));
+        entries.add(new BarEntry(10, 63.3f));
 
-        BarDataSet set = new BarDataSet(entries,"Poids");
+        BarDataSet set = new BarDataSet(entries, "Poids");
         set.setColor(weightColor);
         set.setValueTextSize(10f);
         set.setValueTextColor(weightColor);

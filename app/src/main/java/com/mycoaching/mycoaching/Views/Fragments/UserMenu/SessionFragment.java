@@ -37,8 +37,9 @@ public class SessionFragment extends Fragment {
     @BindView(R.id.calendarSession)
     CalendarView cv;
 
-    @OnClick(R.id.buttonSession) void action(){
-        s = new Session("Footing","Durée : 1h","Séries : x","Rep : x","A faire",R.drawable.logo);
+    @OnClick(R.id.buttonSession)
+    void action() {
+        s = new Session("Footing", "Durée : 1h", "Séries : x", "Rep : x", "A faire", R.drawable.logo);
         listSessions.add(s);
         sa.notifyDataSetChanged();
     }
@@ -47,7 +48,7 @@ public class SessionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         v = inflater.inflate(R.layout.fragment_session, container, false);
-        ButterKnife.bind(this,v);
+        ButterKnife.bind(this, v);
 
         rv = new RecyclerView(getContext());
 
@@ -56,7 +57,7 @@ public class SessionFragment extends Fragment {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         rv.setLayoutManager(mLayoutManager);
         rv.setItemAnimator(new DefaultItemAnimator());
-        rv.addItemDecoration(new DividerItemDecoration(getContext(),LinearLayoutManager.VERTICAL));
+        rv.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         rv.setAdapter(sa);
 
         prepareData();
@@ -64,10 +65,10 @@ public class SessionFragment extends Fragment {
         return v;
     }
 
-    private void prepareData(){
-        s = new Session("Squat","Durée : 30m","Séries : 15"," Rep : 10","A faire",R.drawable.ic_fitness_center_black_24dp);
+    private void prepareData() {
+        s = new Session("Squat", "Durée : 30m", "Séries : 15", " Rep : 10", "A faire", R.drawable.ic_fitness_center_black_24dp);
         listSessions.add(s);
-        s = new Session("Pompes","Durée : 20m","Séries : 10","Rep : 15","Fait",R.drawable.ic_fitness_center_black_24dp);
+        s = new Session("Pompes", "Durée : 20m", "Séries : 10", "Rep : 15", "Fait", R.drawable.ic_fitness_center_black_24dp);
         listSessions.add(s);
         sa.notifyDataSetChanged();
     }

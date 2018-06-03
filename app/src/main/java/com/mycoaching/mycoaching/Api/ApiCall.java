@@ -18,8 +18,8 @@ import retrofit2.Response;
 
 public class ApiCall {
 
-    public static void signIn(String mail, String password, final ServiceResultListener srl){
-        ApiUtils.getApiInstance().signIn(mail,password).enqueue(new Callback<UserRetrofit>() {
+    public static void signIn(String mail, String password, final ServiceResultListener srl) {
+        ApiUtils.getApiInstance().signIn(mail, password).enqueue(new Callback<UserRetrofit>() {
             @Override
             public void onResponse(Call<UserRetrofit> call, Response<UserRetrofit> response) {
                 ApiResults sir = new ApiResults();
@@ -38,8 +38,8 @@ public class ApiCall {
     }
 
     public static void signUp(String type, String mail, String password, String firstName, String lastName,
-                              String birthDate, String city, String address, String phoneNumber, final ServiceResultListener srl){
-        ApiUtils.getApiInstance().signUp(type,mail,password,firstName,lastName,birthDate,city, address, phoneNumber)
+                              String birthDate, String city, String address, String phoneNumber, final ServiceResultListener srl) {
+        ApiUtils.getApiInstance().signUp(type, mail, password, firstName, lastName, birthDate, city, address, phoneNumber)
                 .enqueue(new Callback<UserRetrofit>() {
                     @Override
                     public void onResponse(Call<UserRetrofit> call, Response<UserRetrofit> response) {
@@ -58,7 +58,7 @@ public class ApiCall {
                 });
     }
 
-    public static void checkMail(String mail, final ServiceResultListener srl){
+    public static void checkMail(String mail, final ServiceResultListener srl) {
         ApiUtils.getApiInstance().checkMail(mail).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
@@ -76,7 +76,7 @@ public class ApiCall {
         });
     }
 
-    public static void getConversation(String id, final ServiceResultListener srl){
+    public static void getConversation(int id, final ServiceResultListener srl) {
         ApiUtils.getApiInstance().getConversation(id).enqueue(new Callback<List<Message>>() {
             @Override
             public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
@@ -95,7 +95,7 @@ public class ApiCall {
         });
     }
 
-    public static void getThreads(String id, final ServiceResultListener srl){
+    public static void getThreads(int id, final ServiceResultListener srl) {
         ApiUtils.getApiInstance().getThreads(id).enqueue(new Callback<List<Thread>>() {
             @Override
             public void onResponse(Call<List<Thread>> call, Response<List<Thread>> response) {
@@ -114,7 +114,28 @@ public class ApiCall {
         });
     }
 
-    public static void getPosts(String id, final ServiceResultListener srl){
+    public static void createThread(String title, String date, String content, String forumId, String userId, final ServiceResultListener srl) {
+        ApiUtils.getApiInstance().createThread(title, date, content, forumId, userId).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                ApiResults sir = new ApiResults();
+                sir.setResponseCode(response.code());
+                srl.onResult(sir);
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                ApiResults sir = new ApiResults();
+                sir.setException(t);
+                srl.onResult(sir);
+            }
+        });
+        {
+
+        }
+    }
+
+    public static void getPosts(int id, final ServiceResultListener srl) {
         ApiUtils.getApiInstance().getPosts(id).enqueue(new Callback<List<Post>>() {
             @Override
             public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
@@ -131,5 +152,26 @@ public class ApiCall {
                 srl.onResult(sir);
             }
         });
+    }
+
+    public static void sendPost(String threadId, String date, String content, String userId, final ServiceResultListener srl) {
+        ApiUtils.getApiInstance().sendPost(threadId, date, content, userId).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                ApiResults sir = new ApiResults();
+                sir.setResponseCode(response.code());
+                srl.onResult(sir);
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                ApiResults sir = new ApiResults();
+                sir.setException(t);
+                srl.onResult(sir);
+            }
+        });
+        {
+
+        }
     }
 }
