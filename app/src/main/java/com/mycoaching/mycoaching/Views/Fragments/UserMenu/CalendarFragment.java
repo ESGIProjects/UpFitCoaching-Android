@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.CalendarView;
 
 import com.mycoaching.mycoaching.Views.Adapters.AppointmentAdapter;
-import com.mycoaching.mycoaching.Models.Appointment;
+import com.mycoaching.mycoaching.Models.Event;
 import com.mycoaching.mycoaching.R;
 
 import java.util.ArrayList;
@@ -30,15 +30,15 @@ import butterknife.OnClick;
 public class CalendarFragment extends Fragment {
 
     private View v;
-    private List<Appointment> listAppointments = new ArrayList<>();
+    private List<Event> listEvents = new ArrayList<>();
     private RecyclerView rv;
     private AppointmentAdapter aa;
-    private Appointment a;
+    private Event a;
 
     @OnClick(R.id.buttonCalendar)
     void action() {
-        a = new Appointment("26 Mai", "Paris");
-        listAppointments.add(a);
+        a = new Event("26 Mai", "Paris");
+        listEvents.add(a);
         aa.notifyDataSetChanged();
     }
 
@@ -54,7 +54,7 @@ public class CalendarFragment extends Fragment {
         rv = new RecyclerView(getContext());
 
         rv = v.findViewById(R.id.listCalendar);
-        aa = new AppointmentAdapter(listAppointments);
+        aa = new AppointmentAdapter(listEvents);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         rv.setLayoutManager(mLayoutManager);
         rv.setItemAnimator(new DefaultItemAnimator());
@@ -67,10 +67,10 @@ public class CalendarFragment extends Fragment {
     }
 
     private void prepareData() {
-        a = new Appointment("24 Mai", "nom de rue au hasard");
-        listAppointments.add(a);
-        a = new Appointment("25 Mai", "45 rue des Saints Pères");
-        listAppointments.add(a);
+        a = new Event("24 Mai", "nom de rue au hasard");
+        listEvents.add(a);
+        a = new Event("25 Mai", "45 rue des Saints Pères");
+        listEvents.add(a);
         aa.notifyDataSetChanged();
     }
 }

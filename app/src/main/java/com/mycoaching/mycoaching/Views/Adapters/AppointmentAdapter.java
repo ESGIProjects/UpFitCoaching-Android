@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.mycoaching.mycoaching.Models.Appointment;
+import com.mycoaching.mycoaching.Models.Event;
 import com.mycoaching.mycoaching.R;
 
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.List;
 
 public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.MyViewHolder> {
 
-    private List<Appointment> listAppointments;
+    private List<Event> listEvents;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView date, address;
@@ -29,8 +29,8 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         }
     }
 
-    public AppointmentAdapter(List<Appointment> listAppointments) {
-        this.listAppointments = listAppointments;
+    public AppointmentAdapter(List<Event> listEvents) {
+        this.listEvents = listEvents;
     }
 
     @Override
@@ -43,13 +43,13 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        Appointment appointment = listAppointments.get(position);
-        holder.date.setText(appointment.getDate());
-        holder.address.setText(appointment.getAddress());
+        Event event = listEvents.get(position);
+        holder.date.setText(event.getDate());
+        holder.address.setText(event.getAddress());
     }
 
     @Override
     public int getItemCount() {
-        return listAppointments.size();
+        return listEvents.size();
     }
 }
