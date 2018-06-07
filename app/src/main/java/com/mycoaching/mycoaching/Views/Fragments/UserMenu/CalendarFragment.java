@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
 
-import com.mycoaching.mycoaching.Views.Adapters.AppointmentAdapter;
+//import com.mycoaching.mycoaching.Views.Adapters.AppointmentAdapter;
 import com.mycoaching.mycoaching.Models.Event;
 import com.mycoaching.mycoaching.R;
 
@@ -32,8 +32,10 @@ public class CalendarFragment extends Fragment {
     private View v;
     private List<Event> listEvents = new ArrayList<>();
     private RecyclerView rv;
-    private AppointmentAdapter aa;
+    //private AppointmentAdapter aa;
     private Event a;
+
+    /*
 
     @OnClick(R.id.buttonCalendar)
     void action() {
@@ -73,4 +75,6 @@ public class CalendarFragment extends Fragment {
         listEvents.add(a);
         aa.notifyDataSetChanged();
     }
+
+    */
 }

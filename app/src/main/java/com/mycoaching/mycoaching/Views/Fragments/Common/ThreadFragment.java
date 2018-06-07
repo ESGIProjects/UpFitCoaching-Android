@@ -42,6 +42,7 @@ public class ThreadFragment extends Fragment implements ThreadAdapter.OnClick {
     RecyclerView rv;
     ThreadAdapter ta;
     FragmentManager fm;
+    PostFragment pf;
 
     @OnClick(R.id.buttonThread) void openDialog(){
         final AddThread at = new AddThread(getActivity());
@@ -65,6 +66,7 @@ public class ThreadFragment extends Fragment implements ThreadAdapter.OnClick {
         ButterKnife.bind(this, v);
 
         rv = new RecyclerView(getContext());
+        pf = null;
 
         rv = v.findViewById(R.id.container_thread);
         ta = new ThreadAdapter(lt);
@@ -80,7 +82,7 @@ public class ThreadFragment extends Fragment implements ThreadAdapter.OnClick {
         return v;
     }
 
-    private void prepareData() {
+    public void prepareData() {
         ApiCall.getThreads(1, new ServiceResultListener() {
             @Override
             public void onResult(ApiResults ar) {
@@ -97,6 +99,10 @@ public class ThreadFragment extends Fragment implements ThreadAdapter.OnClick {
         });
     }
 
+    public List<Thread> getLt(){
+        return lt;
+    }
+
     @Override
     public void onItemClick(int position) {
         int id = lt.get(position).getId();
@@ -104,13 +110,12 @@ public class ThreadFragment extends Fragment implements ThreadAdapter.OnClick {
         FragmentTransaction ft = fm.beginTransaction();
         Bundle b = new Bundle();
         b.putInt("idThread", id);
-        PostFragment pf = new PostFragment();
+        pf = new PostFragment();
         pf.setArguments(b);
         lt.clear();
         ft.add(R.id.container, pf, "POSTS");
-        ft.replace(R.id.container, pf);
-        ft.addToBackStack(null);
+        ft.hide(getActivity().getSupportFragmentManager().findFragmentByTag("TF"));
+        ft.show(pf);
         ft.commit();
     }
-
 }

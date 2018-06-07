@@ -64,6 +64,7 @@ public class ChatFragment extends Fragment {
         if (!et.getText().toString().equals("")) {
             JSONObject object = new JSONObject();
             try {
+                object.put("date",getDate());
                 JSONObject sender = new JSONObject();
                 sender.put("id", Integer.valueOf(ur.getId()));
                 sender.put("type", Integer.valueOf(ur.getType()));
@@ -105,8 +106,8 @@ public class ChatFragment extends Fragment {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            if (isCoach) {
-                ListChatFragment lcf = (ListChatFragment) getActivity().getSupportFragmentManager().findFragmentByTag("LIST");
+            if(isCoach) {
+                ListChatFragment lcf = (ListChatFragment) getActivity().getSupportFragmentManager().findFragmentByTag("LCF");
                 lcf.getWs().send(object.toString());
                 lcf.addMessageToList(ur.getId(), lm.get(lm.size() - 1).getSender().getId(), ur.getFirstName(),
                         ur.getLastName(), lm.get(lm.size() - 1).getSender().getFirstName(),
@@ -116,6 +117,7 @@ public class ChatFragment extends Fragment {
                         lm.get(lm.size() - 1).getSender().getLastName(), et.getText().toString());
             } else {
                 ws.send(object.toString());
+                Log.i("WS TEST : ",object.toString());
                 addMessageToList(ur.getId(), ur.getIdCoach(), ur.getFirstName(), ur.getLastName(),
                         ur.getFirstNameCoach(), ur.getLastNameCoach(), et.getText().toString());
             }
@@ -156,8 +158,11 @@ public class ChatFragment extends Fragment {
         rv.setLayoutManager(mLayoutManager);
         rv.setItemAnimator(new DefaultItemAnimator());
         rv.setAdapter(ma);
-
         return v;
+    }
+
+    public WebSocket getWs() {
+        return ws;
     }
 
     public void getConversation() {

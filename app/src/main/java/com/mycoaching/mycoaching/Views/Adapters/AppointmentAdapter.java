@@ -15,6 +15,7 @@ import java.util.List;
  * Created by kevin on 28/04/2018.
  */
 
+/*
 public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.MyViewHolder> {
 
     private List<Event> listEvents;
@@ -53,3 +54,4 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         return listEvents.size();
     }
 }
+*/

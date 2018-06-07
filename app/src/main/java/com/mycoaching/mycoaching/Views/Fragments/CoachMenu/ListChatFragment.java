@@ -132,9 +132,8 @@ public class ListChatFragment extends Fragment implements ContactAdapter.OnClick
         b.putParcelableArrayList("listMessages", listSpecificMessages);
         ChatFragment cf = new ChatFragment();
         cf.setArguments(b);
-        ft.hide(getFragmentManager().findFragmentById(R.id.container));
+        ft.hide(getFragmentManager().findFragmentByTag("LCF"));
         ft.add(R.id.container, cf, "MESSAGES");
-        ft.addToBackStack(null);
         ft.commit();
     }
 

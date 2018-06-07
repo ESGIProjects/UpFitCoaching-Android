@@ -18,17 +18,16 @@ public class SplashScreenActivity extends AppCompatActivity {
     final int TIMER = 1500;
 
     protected void onCreate(Bundle savedInstanceState) {
-        Realm.init(getApplicationContext());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splashscreen);
         getSupportActionBar().hide();
-
         // we start the transition to LoginActivity when the time is up
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 startActivity(new Intent(SplashScreenActivity.this, LoginActivity.class));
+                Realm.init(getApplicationContext());
                 finish();
             }
         }, TIMER);

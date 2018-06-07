@@ -38,6 +38,7 @@ public class UserMainActivity extends AppCompatActivity {
     Toolbar toolbar;
 
     Intent intent;
+    BottomNavigationView navigation;
 
     @OnClick(R.id.option)
     void settings() {
@@ -63,31 +64,40 @@ public class UserMainActivity extends AppCompatActivity {
                 case R.id.navigation_followUp:
                     ft = getSupportFragmentManager().beginTransaction();
                     hideFragments();
+                    hideTF();
                     ft.show(fuf);
                     ft.commit();
                     return true;
                 case R.id.navigation_session:
                     ft = getSupportFragmentManager().beginTransaction();
                     hideFragments();
+                    hideTF();
                     ft.show(sf);
                     ft.commit();
                     return true;
                 case R.id.navigation_calendar:
                     ft = getSupportFragmentManager().beginTransaction();
                     hideFragments();
+                    hideTF();
                     ft.show(cf);
                     ft.commit();
                     return true;
                 case R.id.navigation_chat:
                     ft = getSupportFragmentManager().beginTransaction();
                     hideFragments();
+                    hideTF();
                     ft.show(chf);
                     ft.commit();
                     return true;
                 case R.id.navigation_forum:
                     ft = getSupportFragmentManager().beginTransaction();
                     hideFragments();
-                    ft.show(tf);
+                    if(getSupportFragmentManager().findFragmentByTag("POSTS") != null){
+                        ft.show(getSupportFragmentManager().findFragmentByTag("POSTS"));
+                    }
+                    else{
+                        ft.show(tf);
+                    }
                     ft.commit();
                     return true;
             }
@@ -99,7 +109,7 @@ public class UserMainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_main);
-        BottomNavigationView navigation = findViewById(R.id.navigation);
+        navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.getMenu().getItem(2).setChecked(true);
         ft = getSupportFragmentManager().beginTransaction();
@@ -113,10 +123,17 @@ public class UserMainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        int count = getSupportFragmentManager().getBackStackEntryCount();
-        if (count > 0 && getSupportFragmentManager().findFragmentByTag("POSTS").isVisible()) {
-            getSupportFragmentManager().popBackStack();
-        } else {
+        if(getSupportFragmentManager().findFragmentByTag("POSTS") != null && navigation.getMenu().getItem(4).isChecked()){
+            if(getSupportFragmentManager().findFragmentByTag("TF").isHidden()){
+                ft = getSupportFragmentManager().beginTransaction();
+                ft.remove(getSupportFragmentManager().findFragmentByTag("POSTS"));
+                tf.getLt().clear();
+                tf.prepareData();
+                ft.show(getSupportFragmentManager().findFragmentByTag("TF"));
+                ft.commit();
+            }
+        }
+        else {
             AlertDialog.Builder builder = new AlertDialog.Builder(UserMainActivity.this, R.style.AlertDialogCustom);
             builder.setTitle(R.string.exit).setMessage(R.string.exit_application)
                     .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
@@ -127,6 +144,7 @@ public class UserMainActivity extends AppCompatActivity {
                             realm.deleteAll();
                             realm.commitTransaction();
                             realm.close();
+                            chf.getWs().close(1000,null);
                             performTransition(intent, R.animator.slide_from_left, R.animator.slide_to_right);
                             finish();
                         }
@@ -146,7 +164,7 @@ public class UserMainActivity extends AppCompatActivity {
         ft.add(R.id.container, sf);
         ft.add(R.id.container, cf);
         ft.add(R.id.container, chf);
-        ft.add(R.id.container, tf);
+        ft.add(R.id.container, tf,"TF");
     }
 
     public void hideFragments() {
@@ -155,6 +173,12 @@ public class UserMainActivity extends AppCompatActivity {
         ft.hide(cf);
         ft.hide(chf);
         ft.hide(tf);
+    }
+
+    public void hideTF(){
+        if(getSupportFragmentManager().findFragmentByTag("POSTS") != null){
+            ft.hide(getSupportFragmentManager().findFragmentByTag("POSTS"));
+        }
     }
 
     public void performTransition(Intent i, int from, int to) {
