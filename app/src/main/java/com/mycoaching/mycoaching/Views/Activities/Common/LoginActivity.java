@@ -8,6 +8,8 @@ import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.FirebaseInstanceIdService;
 import com.mycoaching.mycoaching.Views.Activities.CoachActivity.CoachMainActivity;
 import com.mycoaching.mycoaching.Views.Activities.UserActivity.UserMainActivity;
 import com.mycoaching.mycoaching.Api.ApiCall;
@@ -63,6 +65,13 @@ public class LoginActivity extends AppCompatActivity {
                             if (realm.isEmpty()) {
                                 executeTransaction(realm, ar);
                             }
+
+                            ApiCall.putToken(ar.getUr().getId(), FirebaseInstanceId.getInstance().getToken(), null, new ServiceResultListener() {
+                                @Override
+                                public void onResult(ApiResults ar) {
+                                    Log.i("RESPONSE : ", ""+ar.getResponseCode());
+                                }
+                            });
 
                             //we check if the user is a coach or a regular
                             if (ar.getUr().getType() == 2) {
