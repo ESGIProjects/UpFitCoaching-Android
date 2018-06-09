@@ -1,5 +1,6 @@
 package com.mycoaching.mycoaching.Views.Fragments.Common;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.mycoaching.mycoaching.Views.Adapters.MessageAdapter;
@@ -59,6 +61,7 @@ public class ChatFragment extends Fragment {
     Request request;
     boolean isCoach = false;
     int TIMER = 1000;
+    ProgressDialog pd;
 
     @BindView(R.id.input)
     EditText et;
@@ -170,6 +173,9 @@ public class ChatFragment extends Fragment {
     }
 
     public void getConversation() {
+        pd = new ProgressDialog(getActivity(), R.style.StyledDialog);
+        pd.setMessage("Récupération des messages en cours...");
+        pd.show();
         ApiCall.getConversation(Integer.valueOf(ur.getId()), new ServiceResultListener() {
             @Override
             public void onResult(ApiResults ar) {
@@ -186,6 +192,7 @@ public class ChatFragment extends Fragment {
                 }
             }
         });
+        pd.dismiss();
     }
 
     public void addMessageToList(String senderID, String receiverID, String firstNameS, String lastNameS,
