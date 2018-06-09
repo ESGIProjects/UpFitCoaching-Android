@@ -8,6 +8,8 @@ import com.mycoaching.mycoaching.Models.Thread;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -86,4 +88,13 @@ public interface ApiInterface {
     @FormUrlEncoded
     Call<Void> updateEvent(@Field("eventId") String eventId, @Field("name") String name, @Field("start") String start,
                            @Field("end") String end, @Field("updated") String updated, @Field("updateBy") String updateBy);
+
+    /**
+     * Endpoint for firebase token
+     */
+
+    @PUT("token/")
+    @FormUrlEncoded
+    Call<Void> putToken(@Field("userId") String userId,@Field("token") String token,
+                           @Nullable @Field("oldToken") String oldToken);
 }

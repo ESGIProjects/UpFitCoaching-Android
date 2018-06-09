@@ -8,6 +8,8 @@ import com.mycoaching.mycoaching.Models.Thread;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -233,6 +235,29 @@ public class ApiCall {
             String updated, String updatedBy, final ServiceResultListener srl) {
         ApiUtils.getApiInstance().updateEvent(eventId,name,start,end,updated,
                 updatedBy).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                ApiResults sir = new ApiResults();
+                sir.setResponseCode(response.code());
+                srl.onResult(sir);
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                ApiResults sir = new ApiResults();
+                sir.setException(t);
+                srl.onResult(sir);
+            }
+        });
+    }
+
+    /**
+     * Endpoint for firebase token
+     */
+
+    public static void putToken(String userId, String token, @Nullable String oldToken,
+                                final ServiceResultListener srl){
+        ApiUtils.getApiInstance().putToken(userId,token,oldToken).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 ApiResults sir = new ApiResults();
