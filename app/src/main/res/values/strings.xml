@@ -48,6 +48,11 @@
     <string name="thread_message">Corps du sujet</string>
     <string name="send_thread">Confirmer</string>
 
+    <string name="weight">Poids</string>
+    <string name="index">Indices corporels</string>
+    <string name="bmi">IMC actuel</string>
+    <string name="bfp">IMG actuel</string>
+
     <string-array name="user_type">
         <item>Gratuit</item>
         <item>Payant</item>

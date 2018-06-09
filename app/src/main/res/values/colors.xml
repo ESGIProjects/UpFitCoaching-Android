@@ -6,4 +6,7 @@
     <color name="colorAccent">#FFFFAA</color>
     <color name="colorBlack">#000000</color>
     <color name="colorGray">#bdbdbd</color>
+    <color name="bmi">#F44336</color>
+    <color name="bfp">#009688</color>
+    <color name="weight">#2196F3</color>
 </resources>

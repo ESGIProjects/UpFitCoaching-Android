@@ -23,7 +23,9 @@ import com.mycoaching.mycoaching.R;
 import com.mycoaching.mycoaching.Views.Fragments.CoachMenu.ListChatFragment;
 import com.mycoaching.mycoaching.Views.Fragments.Common.PostFragment;
 import com.mycoaching.mycoaching.Views.Fragments.Common.ThreadFragment;
+import com.mycoaching.mycoaching.Views.Fragments.UserMenu.CalendarFragment;
 import com.mycoaching.mycoaching.Views.Fragments.UserMenu.FollowUpFragment;
+import com.mycoaching.mycoaching.Views.Fragments.UserMenu.SessionFragment;
 
 import io.realm.Realm;
 import okhttp3.Request;
@@ -41,7 +43,7 @@ public class CoachMainActivity extends AppCompatActivity {
 
     ListChatFragment lcf = new ListChatFragment();
     ThreadFragment tf = new ThreadFragment();
-    FollowUpFragment ff = new FollowUpFragment();
+    SessionFragment sf = new SessionFragment();
     FragmentTransaction ft;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -54,7 +56,7 @@ public class CoachMainActivity extends AppCompatActivity {
                     ft = getSupportFragmentManager().beginTransaction();
                     hideFragments();
                     hideSpecificFragments();
-                    ft.show(ff);
+                    ft.show(sf);
                     ft.commit();
                     return true;
                 case R.id.navigation_chat:
@@ -156,13 +158,13 @@ public class CoachMainActivity extends AppCompatActivity {
     }
 
     public void addFragments() {
-        ft.add(R.id.container, ff);
+        ft.add(R.id.container, sf);
         ft.add(R.id.container, lcf,"LCF");
         ft.add(R.id.container, tf,"TF");
     }
 
     public void hideFragments() {
-        ft.hide(ff);
+        ft.hide(sf);
         ft.hide(lcf);
         ft.hide(tf);
     }

@@ -1,5 +1,6 @@
 package com.mycoaching.mycoaching.Api;
 
+import com.mycoaching.mycoaching.Models.Event;
 import com.mycoaching.mycoaching.Models.Message;
 import com.mycoaching.mycoaching.Models.Post;
 import com.mycoaching.mycoaching.Models.Retrofit.UserRetrofit;
@@ -12,6 +13,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Query;
 
 /**
@@ -19,6 +21,10 @@ import retrofit2.http.Query;
  */
 
 public interface ApiInterface {
+
+    /**
+     * Endpoints for authentication
+     */
 
     @POST("signin/")
     @FormUrlEncoded
@@ -35,6 +41,17 @@ public interface ApiInterface {
     @FormUrlEncoded
     Call<Void> checkMail(@Field("mail") String mail);
 
+    /**
+     * Endpoint for message
+     */
+
+    @GET("messages/")
+    Call<List<Message>> getConversation(@Query("userId") int id);
+
+    /**
+     * Endpoints for threads and posts
+     */
+
     @POST("thread/")
     @FormUrlEncoded
     Call<Void> createThread(@Field("title") String title, @Field("date") String date, @Field("content") String content,
@@ -45,12 +62,28 @@ public interface ApiInterface {
     Call<Void> sendPost(@Field("threadId") String threadId, @Field("date") String date, @Field("content") String content,
                         @Field("userId") String userId);
 
-    @GET("messages/")
-    Call<List<Message>> getConversation(@Query("userId") int id);
 
     @GET("threads/")
     Call<List<Thread>> getThreads(@Query("forumId") int id);
 
     @GET("thread/")
     Call<List<Post>> getPosts(@Query("threadId") int id);
+
+    /**
+     * Endpoints for events
+     */
+
+    @GET("events/")
+    Call<List<Event>> getEvents(@Query("userId") int id);
+
+    @POST("events/")
+    @FormUrlEncoded
+    Call<Void> addEvent(@Field("name") String name, @Field("type") String type, @Field("firstUser") String firstUser,
+                        @Field("secondUser") String secondUser, @Field("start") String start, @Field("end") String end,
+                        @Field("created") String created, @Field("createdBy") String createdBy);
+
+    @PUT("events/")
+    @FormUrlEncoded
+    Call<Void> updateEvent(@Field("eventId") String eventId, @Field("name") String name, @Field("start") String start,
+                           @Field("end") String end, @Field("updated") String updated, @Field("updateBy") String updateBy);
 }

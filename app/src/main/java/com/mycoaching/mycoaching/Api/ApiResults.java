@@ -1,5 +1,6 @@
 package com.mycoaching.mycoaching.Api;
 
+import com.mycoaching.mycoaching.Models.Event;
 import com.mycoaching.mycoaching.Models.Message;
 import com.mycoaching.mycoaching.Models.Post;
 import com.mycoaching.mycoaching.Models.Retrofit.UserRetrofit;
@@ -18,6 +19,7 @@ public class ApiResults {
     List<Message> listMessage;
     List<Thread> listThread;
     List<Post> listPost;
+    List<Event> listEvent;
     int responseCode;
     Throwable exception;
     UserRetrofit ur;
@@ -44,6 +46,14 @@ public class ApiResults {
 
     public void setListPost(List<Post> listPost) {
         this.listPost = listPost;
+    }
+
+    public List<Event> getListEvent() {
+        return listEvent;
+    }
+
+    public void setListEvent(List<Event> listEvent) {
+        this.listEvent = listEvent;
     }
 
     public int getResponseCode() {

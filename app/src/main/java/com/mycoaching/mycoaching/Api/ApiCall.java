@@ -1,5 +1,6 @@
 package com.mycoaching.mycoaching.Api;
 
+import com.mycoaching.mycoaching.Models.Event;
 import com.mycoaching.mycoaching.Models.Message;
 import com.mycoaching.mycoaching.Models.Post;
 import com.mycoaching.mycoaching.Models.Retrofit.UserRetrofit;
@@ -17,6 +18,10 @@ import retrofit2.Response;
 
 
 public class ApiCall {
+
+    /**
+     * Endpoints for authentication
+     */
 
     public static void signIn(String mail, String password, final ServiceResultListener srl) {
         ApiUtils.getApiInstance().signIn(mail, password).enqueue(new Callback<UserRetrofit>() {
@@ -76,6 +81,10 @@ public class ApiCall {
         });
     }
 
+    /**
+     * Endpoint for message
+     */
+
     public static void getConversation(int id, final ServiceResultListener srl) {
         ApiUtils.getApiInstance().getConversation(id).enqueue(new Callback<List<Message>>() {
             @Override
@@ -94,6 +103,10 @@ public class ApiCall {
             }
         });
     }
+
+    /**
+     * Endpoints for threads and posts
+     */
 
     public static void getThreads(int id, final ServiceResultListener srl) {
         ApiUtils.getApiInstance().getThreads(id).enqueue(new Callback<List<Thread>>() {
@@ -170,8 +183,70 @@ public class ApiCall {
                 srl.onResult(sir);
             }
         });
-        {
-
-        }
     }
+
+    /**
+     * Endpoints for events
+     */
+
+    public static void getEvents(int id, final ServiceResultListener srl) {
+        ApiUtils.getApiInstance().getEvents(id).enqueue(new Callback<List<Event>>() {
+            @Override
+            public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
+                ApiResults sir = new ApiResults();
+                sir.setResponseCode(response.code());
+                sir.setListEvent(response.body());
+                srl.onResult(sir);
+            }
+
+            @Override
+            public void onFailure(Call<List<Event>> call, Throwable t) {
+                ApiResults sir = new ApiResults();
+                sir.setException(t);
+                srl.onResult(sir);
+            }
+        });
+    }
+
+    public static void addEvent (String name, String type, String firstUser, String secondUser,
+                                 String start, String end, String created, String createdBy,
+                                 final ServiceResultListener srl) {
+        ApiUtils.getApiInstance().addEvent(name,type,firstUser,secondUser,start,
+                end,created,createdBy).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                ApiResults sir = new ApiResults();
+                sir.setResponseCode(response.code());
+                srl.onResult(sir);
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                ApiResults sir = new ApiResults();
+                sir.setException(t);
+                srl.onResult(sir);
+            }
+        });
+    }
+
+    public static void updateEvent(String eventId, String name, String start, String end,
+            String updated, String updatedBy, final ServiceResultListener srl) {
+        ApiUtils.getApiInstance().updateEvent(eventId,name,start,end,updated,
+                updatedBy).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                ApiResults sir = new ApiResults();
+                sir.setResponseCode(response.code());
+                srl.onResult(sir);
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                ApiResults sir = new ApiResults();
+                sir.setException(t);
+                srl.onResult(sir);
+            }
+        });
+    }
+
 }

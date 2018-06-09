@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.mikephil.charting.charts.CombinedChart;
+import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -32,56 +33,49 @@ import butterknife.ButterKnife;
 public class FollowUpFragment extends Fragment {
 
     View v;
-    CombinedChart cc;
-    CombinedData cd;
-    LineData ld;
-    BarData bd;
 
-    int bmiColor = Color.rgb(244, 67, 54);
-    int bfpColor = Color.rgb(0, 150, 136);
-    int weightColor = Color.rgb(33, 150, 243);
+    LineChart lcWeight;
+    LineData weightData;
+    LineChart lcBody;
+    LineData bodyData;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         v = inflater.inflate(R.layout.fragment_combined_chart, container, false);
 
-        cc = v.findViewById(R.id.chart);
-        cc.getDescription().setEnabled(false);
-        cc.setBackgroundColor(Color.WHITE);
-        cc.setDrawGridBackground(false);
-        cc.setDrawBarShadow(false);
-        cc.setHighlightFullBarEnabled(false);
+        lcWeight = v.findViewById(R.id.chartWeight);
+        lcWeight.getDescription().setEnabled(false);
+        lcWeight.setDrawGridBackground(false);
+        lcWeight.getLegend().setEnabled(false);
+        lcWeight.getXAxis().setEnabled(false);
 
-        Legend l = cc.getLegend();
-        l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
-        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+        lcBody = v.findViewById(R.id.charts);
+        lcBody.getDescription().setEnabled(false);
+        lcBody.setDrawGridBackground(false);
+        lcBody.getLegend().setEnabled(false);
 
-        YAxis weightAxis = cc.getAxisLeft();
-        weightAxis.setDrawGridLines(false);
-        weightAxis.setAxisMinimum(0f);
+        XAxis lcbAxis = lcBody.getXAxis();
+        lcbAxis.setDrawGridLines(false);
+        lcbAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
 
-        YAxis indexAxis = cc.getAxisRight();
-        indexAxis.setDrawGridLines(true);
-        indexAxis.setAxisMinimum(0f);
+        YAxis lcwYAxis = lcWeight.getAxisLeft();
+        lcwYAxis.setDrawLabels(false);
+        YAxis lcbYAxis = lcBody.getAxisLeft();
+        lcbYAxis.setDrawLabels(false);
 
-        XAxis xAxis = cc.getXAxis();
-        xAxis.setPosition(XAxis.XAxisPosition.BOTH_SIDED);
-        xAxis.setAxisMinimum(1f);
-        xAxis.setGranularity(1f);
+        weightData = new LineData();
+        bodyData = new LineData();
 
-        cd = new CombinedData();
-        ld = new LineData();
-        bd = new BarData();
         generateBFP();
         generateBMI();
         generateWeight();
-        cd.setData(ld);
-        cd.setData(bd);
 
-        cc.setData(cd);
-        cc.invalidate();
+        lcWeight.setData(weightData);
+        lcBody.setData(bodyData);
+
+        lcWeight.invalidate();
+        lcBody.invalidate();
 
         ButterKnife.bind(this, v);
         return v;
@@ -91,62 +85,54 @@ public class FollowUpFragment extends Fragment {
 
         ArrayList<Entry> entries = new ArrayList<Entry>();
 
-        entries.add(new Entry(2, 21.2f));
-        entries.add(new Entry(4, 25));
-        entries.add(new Entry(7, 24));
+        entries.add(new Entry(1, 19));
+        entries.add(new Entry(3, 18.2f));
+        entries.add(new Entry(6, 18.8f));
+        entries.add(new Entry(10, 19.1f));
 
         LineDataSet set = new LineDataSet(entries, "IMC");
-        set.setColor(bmiColor);
-        set.setLineWidth(2.5f);
-        set.setCircleColor(bmiColor);
+        set.setColor(R.color.bmi);
         set.setCircleRadius(5f);
-        set.setFillColor(bmiColor);
+        set.setDrawValues(false);
         set.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
-        set.setDrawValues(true);
-        set.setValueTextSize(10f);
-        set.setValueTextColor(bmiColor);
-
-        set.setAxisDependency(YAxis.AxisDependency.LEFT);
-        ld.addDataSet(set);
+        set.setAxisDependency(YAxis.AxisDependency.RIGHT);
+        bodyData.addDataSet(set);
     }
 
     public void generateBFP() {
 
         ArrayList<Entry> entries = new ArrayList<Entry>();
 
-        entries.add(new Entry(2, 23));
-        entries.add(new Entry(5, 22.4f));
-        entries.add(new Entry(8, 22));
+        entries.add(new Entry(1, 22));
+        entries.add(new Entry(3, 23.3f));
+        entries.add(new Entry(6, 21));
+        entries.add(new Entry(10, 20.3f));
 
         LineDataSet set = new LineDataSet(entries, "IMG");
-        set.setColor(bfpColor);
-        set.setLineWidth(2.5f);
-        set.setCircleColor(bfpColor);
+        set.setColor(R.color.bfp);
         set.setCircleRadius(5f);
-        set.setFillColor(bfpColor);
-        set.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-        set.setDrawValues(true);
-        set.setValueTextSize(10f);
-        set.setValueTextColor(bfpColor);
-
-        set.setAxisDependency(YAxis.AxisDependency.LEFT);
-        ld.addDataSet(set);
+        set.setDrawValues(false);
+        set.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
+        set.setAxisDependency(YAxis.AxisDependency.RIGHT);
+        bodyData.addDataSet(set);
     }
 
     public void generateWeight() {
 
-        ArrayList<BarEntry> entries = new ArrayList<BarEntry>();
+        ArrayList<Entry> entries = new ArrayList<Entry>();
 
-        entries.add(new BarEntry(2, 61.2f));
-        entries.add(new BarEntry(3, 62.3f));
-        entries.add(new BarEntry(6, 62));
-        entries.add(new BarEntry(10, 63.3f));
+        entries.add(new Entry(1, 61.2f));
+        entries.add(new Entry(3, 62.3f));
+        entries.add(new Entry(6, 62));
+        entries.add(new Entry(10, 57.3f));
 
-        BarDataSet set = new BarDataSet(entries, "Poids");
-        set.setColor(weightColor);
-        set.setValueTextSize(10f);
-        set.setValueTextColor(weightColor);
+        LineDataSet set = new LineDataSet(entries, "Poids");
+        set.setColor(R.color.weight);
+        set.setCircleRadius(5f);
+        set.setDrawValues(false);
+        set.setDrawFilled(true);
+        set.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
         set.setAxisDependency(YAxis.AxisDependency.RIGHT);
-        bd.addDataSet(set);
+        weightData.addDataSet(set);
     }
 }

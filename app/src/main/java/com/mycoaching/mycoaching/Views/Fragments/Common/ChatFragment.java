@@ -1,6 +1,8 @@
 package com.mycoaching.mycoaching.Views.Fragments.Common;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -54,7 +56,9 @@ public class ChatFragment extends Fragment {
     Realm r;
     UserRealm ur;
     WebSocket ws = null;
+    Request request;
     boolean isCoach = false;
+    int TIMER = 1000;
 
     @BindView(R.id.input)
     EditText et;
@@ -147,7 +151,7 @@ public class ChatFragment extends Fragment {
             });
             isCoach = true;
         } else {
-            Request request = new Request.Builder().url("ws://212.47.234.147/ws?id=" + ur.getId()).build();
+            request = new Request.Builder().url("ws://212.47.234.147/ws?id=" + ur.getId()).build();
             ws = OkHttpSingleton.getInstance().newWebSocket(request, new CustomWSListener());
             getConversation();
             ma = new MessageAdapter(lm);
@@ -200,7 +204,7 @@ public class ChatFragment extends Fragment {
         });
     }
 
-    private final class CustomWSListener extends WebSocketListener {
+    private class CustomWSListener extends WebSocketListener {
 
         @Override
         public void onOpen(WebSocket ws, Response r) {
@@ -232,6 +236,13 @@ public class ChatFragment extends Fragment {
 
         @Override
         public void onFailure(WebSocket webSocket, Throwable t, Response response) {
+            ws.close(1000,"Network issue");
+            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    ws = OkHttpSingleton.getInstance().newWebSocket(request, new CustomWSListener());
+                }
+            },TIMER);
             t.printStackTrace();
         }
     }

@@ -1,6 +1,8 @@
 package com.mycoaching.mycoaching.Views.Fragments.CoachMenu;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -55,6 +57,9 @@ public class ListChatFragment extends Fragment implements ContactAdapter.OnClick
 
     WebSocket ws;
 
+    int TIMER = 1000;
+    Request request;
+
     FragmentManager fm;
 
     @Override
@@ -72,7 +77,7 @@ public class ListChatFragment extends Fragment implements ContactAdapter.OnClick
         rv.setItemAnimator(new DefaultItemAnimator());
         rv.setAdapter(ca);
 
-        Request request = new Request.Builder().url("ws://212.47.234.147/ws?id=" + ur.getId()).build();
+        request = new Request.Builder().url("ws://212.47.234.147/ws?id=" + ur.getId()).build();
         ws = OkHttpSingleton.getInstance().newWebSocket(request, new CustomWebSocketListener());
 
         getContacts();
@@ -176,6 +181,13 @@ public class ListChatFragment extends Fragment implements ContactAdapter.OnClick
 
         @Override
         public void onFailure(WebSocket webSocket, Throwable t, Response response) {
+            ws.close(1000,"Network issue");
+            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    ws = OkHttpSingleton.getInstance().newWebSocket(request, new CustomWebSocketListener());
+                }
+            },TIMER);
             t.printStackTrace();
         }
     }
