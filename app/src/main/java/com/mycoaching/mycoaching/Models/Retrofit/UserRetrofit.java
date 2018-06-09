@@ -6,11 +6,13 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import io.realm.RealmObject;
+
 /**
  * Created by kevin on 20/04/2018.
  */
 
-public class UserRetrofit implements Parcelable {
+public class UserRetrofit extends RealmObject implements Parcelable {
 
     @SerializedName("id")
     @Expose
@@ -77,6 +79,10 @@ public class UserRetrofit implements Parcelable {
         this.city = in.readString();
         this.phoneNumber = in.readString();
         this.coach = in.readParcelable(UserRetrofit.class.getClassLoader());
+    }
+
+    public UserRetrofit(){
+
     }
 
     public String getId() {

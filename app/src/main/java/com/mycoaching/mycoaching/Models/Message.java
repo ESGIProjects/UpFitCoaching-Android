@@ -7,10 +7,12 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.mycoaching.mycoaching.Models.Retrofit.UserRetrofit;
 
+import io.realm.RealmObject;
+
 /**
  * Created by kevin on 06/05/2018.
  */
-public class Message implements Parcelable {
+public class Message extends RealmObject implements Parcelable {
 
     @SerializedName("id")
     @Expose
@@ -46,6 +48,10 @@ public class Message implements Parcelable {
         this.receiver = in.readParcelable(UserRetrofit.class.getClassLoader());
         this.date = in.readString();
         this.content = in.readString();
+    }
+
+    public Message(){
+
     }
 
     public Integer getId() {

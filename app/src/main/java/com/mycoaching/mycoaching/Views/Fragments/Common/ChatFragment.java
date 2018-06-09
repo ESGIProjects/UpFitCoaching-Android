@@ -37,6 +37,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
+import io.realm.RealmList;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.WebSocket;
@@ -185,6 +186,16 @@ public class ChatFragment extends Fragment {
                         @Override
                         public void run() {
                             ma.notifyDataSetChanged();
+                        }
+                    });
+                    r.executeTransaction(new Realm.Transaction() {
+                        @Override
+                        public void execute(Realm realm) {
+                            RealmList<Message> messages = new RealmList<>();
+                            messages.addAll(lm);
+                            r.insert(messages);
+                            Message m = r.where(Message.class).findFirst();
+                            Log.i("TEST MESSAGE : ",m.getContent());
                         }
                     });
                 } else {
