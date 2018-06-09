@@ -32,6 +32,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
+import io.realm.RealmList;
+import io.realm.RealmResults;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.WebSocket;
@@ -97,6 +99,14 @@ public class ListChatFragment extends Fragment implements ContactAdapter.OnClick
             public void onResult(ApiResults ar) {
                 lm.addAll(ar.getListMessage());
                 ids.add(Integer.valueOf(ur.getId()));
+                r.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        RealmList<Message> messages = new RealmList<>();
+                        messages.addAll(lm);
+                        r.insert(messages);
+                    }
+                });
                 updateContacts();
             }
         });

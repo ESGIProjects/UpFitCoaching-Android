@@ -174,7 +174,7 @@ public class ChatFragment extends Fragment {
     }
 
     public void getConversation() {
-        pd = new ProgressDialog(getActivity(), R.style.StyledDialog);
+        pd = new ProgressDialog(getContext(), R.style.StyledDialog);
         pd.setMessage("Récupération des messages en cours...");
         pd.show();
         ApiCall.getConversation(Integer.valueOf(ur.getId()), new ServiceResultListener() {
@@ -194,8 +194,6 @@ public class ChatFragment extends Fragment {
                             RealmList<Message> messages = new RealmList<>();
                             messages.addAll(lm);
                             r.insert(messages);
-                            Message m = r.where(Message.class).findFirst();
-                            Log.i("TEST MESSAGE : ",m.getContent());
                         }
                     });
                 } else {
