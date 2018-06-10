@@ -60,6 +60,9 @@ public class SessionFragment extends Fragment {
         rv.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         rv.setAdapter(sa);
 
+        cv.setDate(1528649714L);
+        cv.setDate(1528549714L);
+
         prepareData();
 
         return v;
