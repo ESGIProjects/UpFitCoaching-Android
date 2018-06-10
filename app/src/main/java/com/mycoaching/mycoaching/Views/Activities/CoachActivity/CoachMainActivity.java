@@ -28,6 +28,8 @@ import com.mycoaching.mycoaching.Views.Fragments.UserMenu.CalendarFragment;
 import com.mycoaching.mycoaching.Views.Fragments.UserMenu.FollowUpFragment;
 import com.mycoaching.mycoaching.Views.Fragments.UserMenu.SessionFragment;
 
+import java.io.IOException;
+
 import io.realm.Realm;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -139,19 +141,23 @@ public class CoachMainActivity extends AppCompatActivity {
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        try{
-                            intent = new Intent(getApplicationContext(), LoginActivity.class);
-                            realm.beginTransaction();
-                            realm.deleteAll();
-                            realm.commitTransaction();
-                            realm.close();
-                            performTransition(intent, R.animator.slide_from_left, R.animator.slide_to_right);
-                            lcf.getWs().close(1000,null);
-                            FirebaseInstanceId.getInstance().deleteInstanceId();
-                        }
-                        catch(Exception e){
-                            e.printStackTrace();
-                        }
+                        intent = new Intent(getApplicationContext(), LoginActivity.class);
+                        realm.beginTransaction();
+                        realm.deleteAll();
+                        realm.commitTransaction();
+                        realm.close();
+                        lcf.getWs().close(1000,null);
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    FirebaseInstanceId.getInstance().deleteInstanceId();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }).start();
+                        performTransition(intent, R.animator.slide_from_left, R.animator.slide_to_right);
                         finish();
                     }
                 })
