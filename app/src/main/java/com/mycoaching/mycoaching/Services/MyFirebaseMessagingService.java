@@ -16,6 +16,8 @@ import com.google.firebase.messaging.RemoteMessage;
 import com.mycoaching.mycoaching.R;
 import com.mycoaching.mycoaching.Views.Activities.Common.LoginActivity;
 
+import java.util.Set;
+
 /**
  * Created by kevin on 28/05/2018.
  */
@@ -23,7 +25,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage rm) {
-
 
         Intent intent = new Intent(this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -41,7 +42,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         .setSound(defaultSoundUri)
                         .setContentIntent(pendingIntent);
 
-        Log.i("REMOTE MESSAGE : ", rm.toString());
+        Log.d("TEST : ", ""+rm.getData());
 
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);

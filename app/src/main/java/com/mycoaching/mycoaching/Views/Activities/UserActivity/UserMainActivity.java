@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.mycoaching.mycoaching.Views.Activities.Common.LoginActivity;
 import com.mycoaching.mycoaching.R;
 import com.mycoaching.mycoaching.Views.Fragments.UserMenu.CalendarFragment;
@@ -139,13 +140,19 @@ public class UserMainActivity extends AppCompatActivity {
                     .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            intent = new Intent(getApplicationContext(), LoginActivity.class);
-                            realm.beginTransaction();
-                            realm.deleteAll();
-                            realm.commitTransaction();
-                            realm.close();
-                            chf.getWs().close(1000,null);
-                            performTransition(intent, R.animator.slide_from_left, R.animator.slide_to_right);
+                            try{
+                                intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                realm.beginTransaction();
+                                realm.deleteAll();
+                                realm.commitTransaction();
+                                realm.close();
+                                chf.getWs().close(1000,null);
+                                FirebaseInstanceId.getInstance().deleteInstanceId();
+                                performTransition(intent, R.animator.slide_from_left, R.animator.slide_to_right);
+                            }
+                            catch (Exception e){
+                                e.printStackTrace();
+                            }
                             finish();
                         }
                     })

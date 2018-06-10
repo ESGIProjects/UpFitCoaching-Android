@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.mycoaching.mycoaching.Models.Realm.UserRealm;
 import com.mycoaching.mycoaching.Util.Singletons.OkHttpSingleton;
 import com.mycoaching.mycoaching.Views.Activities.Common.LoginActivity;
@@ -138,13 +139,19 @@ public class CoachMainActivity extends AppCompatActivity {
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        intent = new Intent(getApplicationContext(), LoginActivity.class);
-                        realm.beginTransaction();
-                        realm.deleteAll();
-                        realm.commitTransaction();
-                        realm.close();
-                        performTransition(intent, R.animator.slide_from_left, R.animator.slide_to_right);
-                        lcf.getWs().close(1000,null);
+                        try{
+                            intent = new Intent(getApplicationContext(), LoginActivity.class);
+                            realm.beginTransaction();
+                            realm.deleteAll();
+                            realm.commitTransaction();
+                            realm.close();
+                            performTransition(intent, R.animator.slide_from_left, R.animator.slide_to_right);
+                            lcf.getWs().close(1000,null);
+                            FirebaseInstanceId.getInstance().deleteInstanceId();
+                        }
+                        catch(Exception e){
+                            e.printStackTrace();
+                        }
                         finish();
                     }
                 })

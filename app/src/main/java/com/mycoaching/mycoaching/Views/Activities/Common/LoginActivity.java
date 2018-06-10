@@ -2,6 +2,7 @@ package com.mycoaching.mycoaching.Views.Activities.Common;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -38,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
     private Intent i = null;
     private ProgressDialog pd = null;
     private Realm realm = null;
+    private SharedPreferences sp;
 
     @BindView(R.id.email)
     EditText email;
@@ -65,14 +67,17 @@ public class LoginActivity extends AppCompatActivity {
                             if (realm.isEmpty()) {
                                 executeTransaction(realm, ar);
                             }
-
-                            ApiCall.putToken(ar.getUr().getId(), FirebaseInstanceId.getInstance().getToken(), null, new ServiceResultListener() {
-                                @Override
-                                public void onResult(ApiResults ar) {
-                                    Log.i("RESPONSE : ", ""+ar.getResponseCode());
-                                }
-                            });
-
+                            sp = getApplicationContext().getSharedPreferences("user_prefs",MODE_PRIVATE);
+                            if((sp.getString("firebase_token", null) == null) || (!sp.getString("firebase_token", null).equals(FirebaseInstanceId.getInstance().getToken()))){
+                                ApiCall.putToken(ar.getUr().getId(), FirebaseInstanceId.getInstance().getToken(), null, new ServiceResultListener() {
+                                    @Override
+                                    public void onResult(ApiResults ar) {
+                                        Log.i("RESPONSE : ", ""+ar.getResponseCode());
+                                        sp = getApplicationContext().getSharedPreferences("user_prefs",MODE_PRIVATE);
+                                        sp.edit().putString("firebase_token", FirebaseInstanceId.getInstance().getToken()).apply();
+                                    }
+                                });
+                            }
                             //we check if the user is a coach or a regular
                             if (ar.getUr().getType() == 2) {
                                 i = new Intent(LoginActivity.this, CoachMainActivity.class);

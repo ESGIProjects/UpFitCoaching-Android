@@ -5,8 +5,6 @@ import android.util.Log;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 
-import io.realm.Realm;
-
 import static android.content.ContentValues.TAG;
 
 /**
@@ -14,17 +12,9 @@ import static android.content.ContentValues.TAG;
  */
 public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
 
-    Realm r;
-
     @Override
     public void onTokenRefresh() {
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
         Log.d(TAG, "Refreshed token: " + refreshedToken);
-        sendRegistrationToServer(refreshedToken);
     }
-
-    private void sendRegistrationToServer(String token) {
-
-    }
-
 }
