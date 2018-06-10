@@ -1,5 +1,6 @@
 package com.mycoaching.mycoaching.Services;
 
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -32,17 +33,15 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 PendingIntent.FLAG_ONE_SHOT);
 
         String channelId = getString(R.string.default_notification_channel_id);
-        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(this, channelId)
                         .setSmallIcon(R.drawable.logo)
-                        .setContentTitle("FCM Message")
-                        .setContentText(rm.toString())
+                        .setDefaults(Notification.DEFAULT_ALL)
+                        .setContentText(rm.getNotification().getBody())
+                        .setContentTitle(rm.getNotification().getTitle())
                         .setAutoCancel(true)
-                        .setSound(defaultSoundUri)
+                        .setColor(getResources().getColor(R.color.colorPrimary))
                         .setContentIntent(pendingIntent);
-
-        Log.d("TEST : ", ""+rm.getData());
 
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
