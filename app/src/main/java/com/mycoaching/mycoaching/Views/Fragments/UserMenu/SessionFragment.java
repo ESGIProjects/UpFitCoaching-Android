@@ -14,6 +14,7 @@ import android.widget.CalendarView;
 import com.mycoaching.mycoaching.Views.Adapters.SessionAdapter;
 import com.mycoaching.mycoaching.Models.Session;
 import com.mycoaching.mycoaching.R;
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,8 +35,8 @@ public class SessionFragment extends Fragment {
     private SessionAdapter sa;
     Session s;
 
-    @BindView(R.id.calendarSession)
-    CalendarView cv;
+    @BindView(R.id.calendar)
+    MaterialCalendarView mcv;
 
     @OnClick(R.id.buttonSession)
     void action() {
@@ -59,9 +60,6 @@ public class SessionFragment extends Fragment {
         rv.setItemAnimator(new DefaultItemAnimator());
         rv.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         rv.setAdapter(sa);
-
-        cv.setDate(1528649714L);
-        cv.setDate(1528549714L);
 
         prepareData();
 
