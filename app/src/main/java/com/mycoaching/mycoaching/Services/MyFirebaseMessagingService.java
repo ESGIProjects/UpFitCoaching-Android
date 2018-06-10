@@ -1,5 +1,7 @@
 package com.mycoaching.mycoaching.Services;
 
+import android.app.ActivityManager;
+import android.app.FragmentManager;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -16,6 +18,7 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.mycoaching.mycoaching.R;
 import com.mycoaching.mycoaching.Views.Activities.Common.LoginActivity;
+import com.mycoaching.mycoaching.Views.Fragments.Common.ChatFragment;
 
 import java.util.Set;
 
@@ -26,6 +29,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage rm) {
+
+        ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+        Log.i("TEST", am.getRunningAppProcesses().get(0).getClass().getName());
 
         Intent intent = new Intent(this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -46,13 +52,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(channelId,
-                    "Channel human readable title",
-                    NotificationManager.IMPORTANCE_DEFAULT);
-            notificationManager.createNotificationChannel(channel);
+        if(!ChatFragment.isActive){
+            notificationManager.notify(0, notificationBuilder.build());
         }
-
-        notificationManager.notify(0, notificationBuilder.build());
     }
 }

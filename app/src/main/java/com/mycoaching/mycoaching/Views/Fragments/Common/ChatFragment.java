@@ -61,6 +61,7 @@ public class ChatFragment extends Fragment {
     WebSocket ws = null;
     Request request;
     boolean isCoach = false;
+    public static boolean isActive = false;
     int TIMER = 1000;
     ProgressDialog pd;
 
@@ -135,6 +136,7 @@ public class ChatFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        isActive = true;
         super.onCreate(savedInstanceState);
         v = inflater.inflate(R.layout.fragment_chat, container, false);
         ButterKnife.bind(this, v);

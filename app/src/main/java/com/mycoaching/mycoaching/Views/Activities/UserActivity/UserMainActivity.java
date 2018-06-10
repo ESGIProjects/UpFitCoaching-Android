@@ -88,6 +88,7 @@ public class UserMainActivity extends AppCompatActivity {
                 case R.id.navigation_chat:
                     ft = getSupportFragmentManager().beginTransaction();
                     hideFragments();
+                    ChatFragment.isActive = true;
                     hideTF();
                     ft.show(chf);
                     ft.commit();
@@ -181,6 +182,7 @@ public class UserMainActivity extends AppCompatActivity {
     }
 
     public void hideFragments() {
+        ChatFragment.isActive = false;
         ft.hide(fuf);
         ft.hide(sf);
         ft.hide(cf);
