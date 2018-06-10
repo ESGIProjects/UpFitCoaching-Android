@@ -53,6 +53,7 @@ public class ListChatFragment extends Fragment implements ContactAdapter.OnClick
     List<Contact> lc = new ArrayList<>();
     ArrayList<Message> lm = new ArrayList<>();
     List<Integer> ids = new ArrayList();
+    public static boolean isActive = false;
     Realm r;
     UserRealm ur;
     Contact c;
@@ -66,6 +67,7 @@ public class ListChatFragment extends Fragment implements ContactAdapter.OnClick
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        isActive = true;
         v = inflater.inflate(R.layout.fragment_list_contact, container, false);
         r = Realm.getDefaultInstance();
         ur = r.where(UserRealm.class).findFirst();

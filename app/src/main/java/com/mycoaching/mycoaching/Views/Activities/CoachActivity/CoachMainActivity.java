@@ -22,6 +22,7 @@ import com.mycoaching.mycoaching.Util.Singletons.OkHttpSingleton;
 import com.mycoaching.mycoaching.Views.Activities.Common.LoginActivity;
 import com.mycoaching.mycoaching.R;
 import com.mycoaching.mycoaching.Views.Fragments.CoachMenu.ListChatFragment;
+import com.mycoaching.mycoaching.Views.Fragments.Common.ChatFragment;
 import com.mycoaching.mycoaching.Views.Fragments.Common.PostFragment;
 import com.mycoaching.mycoaching.Views.Fragments.Common.ThreadFragment;
 import com.mycoaching.mycoaching.Views.Fragments.UserMenu.CalendarFragment;
@@ -68,9 +69,11 @@ public class CoachMainActivity extends AppCompatActivity {
                     hideSpecificFragments();
                     if(getSupportFragmentManager().findFragmentByTag("MESSAGES") != null){
                         ft.show(getSupportFragmentManager().findFragmentByTag("MESSAGES"));
+                        ChatFragment.isActive = true;
                     }
                     else{
                         ft.show(lcf);
+                        ListChatFragment.isActive = true;
                     }
                     ft.commit();
                     return true;
@@ -177,6 +180,8 @@ public class CoachMainActivity extends AppCompatActivity {
     }
 
     public void hideFragments() {
+        ListChatFragment.isActive = false;
+        ChatFragment.isActive = false;
         ft.hide(sf);
         ft.hide(lcf);
         ft.hide(tf);
