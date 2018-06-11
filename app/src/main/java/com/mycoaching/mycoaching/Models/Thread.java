@@ -2,6 +2,7 @@ package com.mycoaching.mycoaching.Models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.mycoaching.mycoaching.Models.Retrofit.UserRetrofit;
 
 import java.util.Date;
 
@@ -21,6 +22,14 @@ public class Thread {
     @SerializedName("forum")
     @Expose
     private Forum forum;
+
+    @SerializedName("lastUpdated")
+    @Expose
+    private String lastUpdated;
+
+    @SerializedName("lastUser")
+    @Expose
+    private UserRetrofit lastUser;
 
 
     public Thread(int id, String title, Forum forum) {
@@ -51,5 +60,21 @@ public class Thread {
 
     public void setForum(Forum forum) {
         this.forum = forum;
+    }
+
+    public String getLastUpdated() {
+        return lastUpdated;
+    }
+
+    public void setLastUpdated(String lastUpdated) {
+        this.lastUpdated = lastUpdated;
+    }
+
+    public UserRetrofit getLastUser() {
+        return lastUser;
+    }
+
+    public void setLastUser(UserRetrofit lastUser) {
+        this.lastUser = lastUser;
     }
 }
