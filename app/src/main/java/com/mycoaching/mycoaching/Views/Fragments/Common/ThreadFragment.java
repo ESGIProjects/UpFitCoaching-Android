@@ -24,7 +24,12 @@ import com.mycoaching.mycoaching.R;
 import com.mycoaching.mycoaching.Views.Adapters.ThreadAdapter;
 import com.mycoaching.mycoaching.Views.Dialogs.AddThread;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -39,6 +44,7 @@ public class ThreadFragment extends Fragment implements ThreadAdapter.OnClick {
 
     View v;
     List<Thread> lt = new ArrayList<>();
+    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     RecyclerView rv;
     ThreadAdapter ta;
     FragmentManager fm;
@@ -82,11 +88,25 @@ public class ThreadFragment extends Fragment implements ThreadAdapter.OnClick {
         return v;
     }
 
-    public void prepareData() {
+    public void prepareData(){
         ApiCall.getThreads(1, new ServiceResultListener() {
             @Override
             public void onResult(ApiResults ar) {
                 if (ar.getResponseCode() == 200) {
+                    Collections.sort(ar.getListThread(), new Comparator<Thread>() {
+                        @Override
+                        public int compare(Thread t1, Thread t2) {
+                            int comp = 0;
+                            try{
+                                comp = formatter.parse(t1.getLastUpdated()).compareTo(formatter.parse(t2.getLastUpdated()));
+                            }
+                            catch (ParseException pe){
+                                pe.printStackTrace();
+                            }
+                            return comp;
+                        }
+                    });
+                    Collections.reverse(ar.getListThread());
                     lt.addAll(ar.getListThread());
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
