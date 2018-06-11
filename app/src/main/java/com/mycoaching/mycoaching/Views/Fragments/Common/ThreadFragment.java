@@ -69,7 +69,7 @@ public class ThreadFragment extends Fragment implements ThreadAdapter.OnClick {
         pf = null;
 
         rv = v.findViewById(R.id.container_thread);
-        ta = new ThreadAdapter(lt);
+        ta = new ThreadAdapter(lt,getContext());
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         rv.setLayoutManager(mLayoutManager);
         rv.setItemAnimator(new DefaultItemAnimator());

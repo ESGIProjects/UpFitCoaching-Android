@@ -1,5 +1,6 @@
 package com.mycoaching.mycoaching.Views.Adapters;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ public class ThreadAdapter extends RecyclerView.Adapter<ThreadAdapter.MyViewHold
 
     private List<Thread> listThreads;
     private OnClick onClick;
+    Context c;
 
     public interface OnClick {
         void onItemClick(int position);
@@ -25,15 +27,18 @@ public class ThreadAdapter extends RecyclerView.Adapter<ThreadAdapter.MyViewHold
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView title;
+        public TextView infos;
 
         public MyViewHolder(View view) {
             super(view);
             title = view.findViewById(R.id.thread_name);
+            infos = view.findViewById(R.id.infos);
         }
     }
 
-    public ThreadAdapter(List<Thread> listThreads) {
+    public ThreadAdapter(List<Thread> listThreads, Context c) {
         this.listThreads = listThreads;
+        this.c = c;
     }
 
     @Override
@@ -54,6 +59,9 @@ public class ThreadAdapter extends RecyclerView.Adapter<ThreadAdapter.MyViewHold
             }
         });
         holder.title.setText(thread.getTitle());
+        String name = thread.getLastUser().getFirstName() + " " + thread.getLastUser().getLastName();
+        String[] time = thread.getLastUpdated().split(" ");
+        holder.infos.setText(c.getString(R.string.last_message, time[0], time[1], name));
     }
 
     public void setOnClick(OnClick oc) {
