@@ -12,30 +12,20 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.mycoaching.mycoaching.Models.Realm.UserRealm;
-import com.mycoaching.mycoaching.Util.Singletons.OkHttpSingleton;
 import com.mycoaching.mycoaching.Views.Activities.Common.LoginActivity;
 import com.mycoaching.mycoaching.R;
 import com.mycoaching.mycoaching.Views.Fragments.CoachMenu.ListChatFragment;
 import com.mycoaching.mycoaching.Views.Fragments.Common.ChatFragment;
-import com.mycoaching.mycoaching.Views.Fragments.Common.PostFragment;
 import com.mycoaching.mycoaching.Views.Fragments.Common.ThreadFragment;
-import com.mycoaching.mycoaching.Views.Fragments.UserMenu.CalendarFragment;
-import com.mycoaching.mycoaching.Views.Fragments.UserMenu.FollowUpFragment;
-import com.mycoaching.mycoaching.Views.Fragments.UserMenu.SessionFragment;
+import com.mycoaching.mycoaching.Views.Fragments.UserMenu.EventFragment;
 
 import java.io.IOException;
 
 import io.realm.Realm;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.WebSocket;
-import okhttp3.WebSocketListener;
 
 public class CoachMainActivity extends AppCompatActivity {
 
@@ -47,7 +37,8 @@ public class CoachMainActivity extends AppCompatActivity {
 
     ListChatFragment lcf = new ListChatFragment();
     ThreadFragment tf = new ThreadFragment();
-    SessionFragment sf = new SessionFragment();
+    EventFragment ef = new EventFragment();
+    Bundle b = new Bundle();
     FragmentTransaction ft;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -60,7 +51,7 @@ public class CoachMainActivity extends AppCompatActivity {
                     ft = getSupportFragmentManager().beginTransaction();
                     hideFragments();
                     hideSpecificFragments();
-                    ft.show(sf);
+                    ft.show(ef);
                     ft.commit();
                     return true;
                 case R.id.navigation_chat:
@@ -98,6 +89,9 @@ public class CoachMainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coach_main);
+
+        b.putBoolean("isCoach",true);
+        ef.setArguments(b);
 
         navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -174,7 +168,7 @@ public class CoachMainActivity extends AppCompatActivity {
     }
 
     public void addFragments() {
-        ft.add(R.id.container, sf);
+        ft.add(R.id.container, ef);
         ft.add(R.id.container, lcf,"LCF");
         ft.add(R.id.container, tf,"TF");
     }
@@ -182,7 +176,7 @@ public class CoachMainActivity extends AppCompatActivity {
     public void hideFragments() {
         ListChatFragment.isActive = false;
         ChatFragment.isActive = false;
-        ft.hide(sf);
+        ft.hide(ef);
         ft.hide(lcf);
         ft.hide(tf);
     }

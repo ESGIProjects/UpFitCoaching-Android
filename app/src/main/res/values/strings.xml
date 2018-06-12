@@ -34,7 +34,6 @@
     <string name="next">Suivant</string>
     <string name="send_message">Envoyer un message</string>
 
-
     <string name="title_activity_user_main">UserMainActivity</string>
     <string name="title_followUp">Suivi</string>
     <string name="title_session">Séance</string>
@@ -48,6 +47,11 @@
     <string name="thread_message">Corps du sujet</string>
     <string name="send_thread">Confirmer</string>
     <string name="last_message">Dernier message le %1$s, à %2$s par %3$s</string>
+
+    <string name="time">Le %1$s</string>
+    <string name="duration">De %1$s à %2$s</string>
+    <string name="event_location_session">Adresse : %1$s</string>
+    <string name="event_location">Adresse : %1$s - %2$s</string>
 
     <string name="weight">Poids</string>
     <string name="index">Indices corporels</string>

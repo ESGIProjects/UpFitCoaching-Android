@@ -19,7 +19,7 @@ import com.mycoaching.mycoaching.Views.Fragments.UserMenu.CalendarFragment;
 import com.mycoaching.mycoaching.Views.Fragments.Common.ChatFragment;
 import com.mycoaching.mycoaching.Views.Fragments.UserMenu.FollowUpFragment;
 import com.mycoaching.mycoaching.Views.Fragments.Common.ThreadFragment;
-import com.mycoaching.mycoaching.Views.Fragments.UserMenu.SessionFragment;
+import com.mycoaching.mycoaching.Views.Fragments.UserMenu.EventFragment;
 
 import java.io.IOException;
 
@@ -50,11 +50,12 @@ public class UserMainActivity extends AppCompatActivity {
     }
 
     FollowUpFragment fuf = new FollowUpFragment();
-    SessionFragment sf = new SessionFragment();
+    EventFragment ef = new EventFragment();
     CalendarFragment cf = new CalendarFragment();
     ChatFragment chf = new ChatFragment();
     ThreadFragment tf = new ThreadFragment();
     FragmentTransaction ft;
+    Bundle b = new Bundle();
 
     Realm realm = null;
 
@@ -75,7 +76,7 @@ public class UserMainActivity extends AppCompatActivity {
                     ft = getSupportFragmentManager().beginTransaction();
                     hideFragments();
                     hideTF();
-                    ft.show(sf);
+                    ft.show(ef);
                     ft.commit();
                     return true;
                 case R.id.navigation_calendar:
@@ -113,6 +114,10 @@ public class UserMainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_main);
+
+        b.putBoolean("isCoach",false);
+        ef.setArguments(b);
+
         navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.getMenu().getItem(2).setChecked(true);
@@ -175,7 +180,7 @@ public class UserMainActivity extends AppCompatActivity {
 
     public void addFragments() {
         ft.add(R.id.container, fuf);
-        ft.add(R.id.container, sf);
+        ft.add(R.id.container, ef);
         ft.add(R.id.container, cf);
         ft.add(R.id.container, chf);
         ft.add(R.id.container, tf,"TF");
@@ -184,7 +189,7 @@ public class UserMainActivity extends AppCompatActivity {
     public void hideFragments() {
         ChatFragment.isActive = false;
         ft.hide(fuf);
-        ft.hide(sf);
+        ft.hide(ef);
         ft.hide(cf);
         ft.hide(chf);
         ft.hide(tf);
