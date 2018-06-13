@@ -87,14 +87,6 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder
                         event.getSecondUser().getCoach().getCity()));
             }
         }
-        else{
-            if(event.getFirstUser().getCoach() != null){
-                holder.location.setText(c.getString(R.string.event_location_session,event.getFirstUser().getCoach().getAddress()));
-            }
-            else{
-                holder.location.setText(c.getString(R.string.event_location_session,event.getSecondUser().getCoach().getAddress()));
-            }
-        }
     }
 
     @Override

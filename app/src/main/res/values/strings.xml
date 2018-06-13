@@ -50,7 +50,6 @@
 
     <string name="time">Le %1$s</string>
     <string name="duration">De %1$s à %2$s</string>
-    <string name="event_location_session">Adresse : %1$s</string>
     <string name="event_location">Adresse : %1$s - %2$s</string>
 
     <string name="weight">Poids</string>
