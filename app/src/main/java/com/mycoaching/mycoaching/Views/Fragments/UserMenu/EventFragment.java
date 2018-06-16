@@ -1,5 +1,6 @@
 package com.mycoaching.mycoaching.Views.Fragments.UserMenu;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -16,10 +17,15 @@ import com.mycoaching.mycoaching.Api.ServiceResultListener;
 import com.mycoaching.mycoaching.Models.Event;
 import com.mycoaching.mycoaching.Models.Realm.UserRealm;
 import com.mycoaching.mycoaching.R;
+import com.mycoaching.mycoaching.Util.EventDecorator;
 import com.mycoaching.mycoaching.Views.Adapters.EventAdapter;
+import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -35,6 +41,10 @@ public class EventFragment extends Fragment {
 
     private View v;
     private List<Event> listEvents = new ArrayList<>();
+    private List<CalendarDay> listDaysSession = new ArrayList<>();
+    private List<CalendarDay> listDaysAppointment = new ArrayList<>();
+    private List<CalendarDay> listDaysCombined = new ArrayList<>();
+    private SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
     private RecyclerView rv;
     private Realm r;
     private UserRealm ur;
@@ -82,14 +92,57 @@ public class EventFragment extends Fragment {
             public void onResult(ApiResults ar) {
                 if(ar.getResponseCode() == 200){
                     listEvents.addAll(ar.getListEvent());
+
+                    sortElements();
+                    addCombinedElements();
+                    removeDuplicateElements();
+
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            int colorsAppointment = Color.rgb(0, 0, 255);
+                            int colorsSession = Color.rgb(0, 255, 0);
+                            int[] colorsCombined = {Color.rgb(0, 0, 255) ,Color.rgb(0, 255, 0)};
+                            mcv.addDecorator(new EventDecorator(listDaysAppointment,colorsAppointment));
+                            mcv.addDecorator(new EventDecorator(listDaysSession,colorsSession));
+                            mcv.addDecorator(new EventDecorator(listDaysCombined,colorsCombined));
+                            mcv.setSelectedDate(new Date());
                             ea.notifyDataSetChanged();
                         }
                     });
                 }
             }
         });
+    }
+
+    private void sortElements(){
+        for(Event e : listEvents){
+            try{
+                if(e.getType().equals("0")){
+                    listDaysAppointment.add(CalendarDay.from(formatter.parse(e.getStart())));
+                }
+                else{
+                    listDaysSession.add(CalendarDay.from(formatter.parse(e.getStart())));
+                }
+            }
+            catch (ParseException pe){
+                pe.printStackTrace();
+            }
+        }
+    }
+
+    private void addCombinedElements(){
+        for(CalendarDay cd : listDaysAppointment){
+            if(listDaysSession.contains(cd)){
+                listDaysCombined.add(cd);
+            }
+        }
+    }
+
+    private void removeDuplicateElements(){
+        for(CalendarDay cd : listDaysCombined){
+            listDaysSession.remove(cd);
+            listDaysAppointment.remove(cd);
+        }
     }
 }
