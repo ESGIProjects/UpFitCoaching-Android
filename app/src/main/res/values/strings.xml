@@ -51,6 +51,7 @@
     <string name="time">Le %1$s</string>
     <string name="duration">De %1$s à %2$s</string>
     <string name="event_location">Adresse : %1$s - %2$s</string>
+    <string name="no_data_available">Pas d\'évènement pour le moment ! </string>
 
     <string name="weight">Poids</string>
     <string name="index">Indices corporels</string>

@@ -29,6 +29,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
 
+    <TextView
+        android:id="@+id/no_data"
+        android:layout_below="@+id/separatorSession"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone"
+        android:text="@string/no_data_available" />
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/buttonEvents"
         android:layout_alignParentBottom="true"

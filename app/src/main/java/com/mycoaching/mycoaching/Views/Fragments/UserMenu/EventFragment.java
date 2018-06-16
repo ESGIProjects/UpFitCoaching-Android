@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.mycoaching.mycoaching.Api.ApiCall;
 import com.mycoaching.mycoaching.Api.ApiResults;
@@ -55,6 +56,9 @@ public class EventFragment extends Fragment {
     @BindView(R.id.calendar)
     MaterialCalendarView mcv;
 
+    @BindView(R.id.no_data)
+    TextView label;
+
     @OnClick(R.id.buttonEvents)
     void action() {
     }
@@ -91,8 +95,11 @@ public class EventFragment extends Fragment {
             @Override
             public void onResult(ApiResults ar) {
                 if(ar.getResponseCode() == 200){
+                    if(ar.getListEvent().size() == 0){
+                        label.setVisibility(View.VISIBLE);
+                        rv.setVisibility(View.GONE);
+                    }
                     listEvents.addAll(ar.getListEvent());
-
                     sortElements();
                     addCombinedElements();
                     removeDuplicateElements();
