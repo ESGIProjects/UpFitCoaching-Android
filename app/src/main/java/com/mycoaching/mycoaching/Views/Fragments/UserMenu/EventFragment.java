@@ -118,6 +118,10 @@ public class EventFragment extends Fragment {
                         label.setVisibility(View.VISIBLE);
                         rv.setVisibility(View.GONE);
                     }
+                    else{
+                        label.setVisibility(View.GONE);
+                        rv.setVisibility(View.VISIBLE);
+                    }
                     listEvents.addAll(ar.getListEvent());
                     sortElements();
                     addCombinedElements();
@@ -129,6 +133,7 @@ public class EventFragment extends Fragment {
                             int colorsAppointment = Color.rgb(0, 0, 255);
                             int colorsSession = Color.rgb(0, 255, 0);
                             int[] colorsCombined = {Color.rgb(0, 0, 255) ,Color.rgb(0, 255, 0)};
+                            mcv.removeDecorators();
                             mcv.addDecorator(new EventDecorator(listDaysAppointment,colorsAppointment));
                             mcv.addDecorator(new EventDecorator(listDaysSession,colorsSession));
                             mcv.addDecorator(new EventDecorator(listDaysCombined,colorsCombined));
