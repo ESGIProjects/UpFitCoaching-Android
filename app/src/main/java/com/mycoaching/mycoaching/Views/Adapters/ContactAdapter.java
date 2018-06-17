@@ -11,7 +11,6 @@ import com.mycoaching.mycoaching.R;
 
 import java.util.List;
 
-import butterknife.OnClick;
 import io.realm.Realm;
 
 /**

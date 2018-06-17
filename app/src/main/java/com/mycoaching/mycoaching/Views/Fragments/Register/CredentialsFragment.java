@@ -9,11 +9,11 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.mycoaching.mycoaching.Views.Activities.Common.RegisterActivity;
 import com.mycoaching.mycoaching.Api.ApiCall;
 import com.mycoaching.mycoaching.Api.ApiResults;
 import com.mycoaching.mycoaching.Api.ServiceResultListener;
 import com.mycoaching.mycoaching.R;
+import com.mycoaching.mycoaching.Views.Activities.Common.RegisterActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

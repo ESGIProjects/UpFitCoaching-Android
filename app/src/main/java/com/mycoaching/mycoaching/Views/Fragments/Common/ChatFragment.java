@@ -13,10 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.mycoaching.mycoaching.Views.Adapters.MessageAdapter;
 import com.mycoaching.mycoaching.Api.ApiCall;
 import com.mycoaching.mycoaching.Api.ApiResults;
 import com.mycoaching.mycoaching.Api.ServiceResultListener;
@@ -25,6 +23,7 @@ import com.mycoaching.mycoaching.Models.Realm.UserRealm;
 import com.mycoaching.mycoaching.Models.Retrofit.UserRetrofit;
 import com.mycoaching.mycoaching.R;
 import com.mycoaching.mycoaching.Util.Singletons.OkHttpSingleton;
+import com.mycoaching.mycoaching.Views.Adapters.MessageAdapter;
 import com.mycoaching.mycoaching.Views.Fragments.CoachMenu.ListChatFragment;
 
 import org.json.JSONException;

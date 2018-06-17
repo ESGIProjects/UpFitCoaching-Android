@@ -16,8 +16,8 @@ import android.view.MenuItem;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.mycoaching.mycoaching.Models.Realm.UserRealm;
-import com.mycoaching.mycoaching.Views.Activities.Common.LoginActivity;
 import com.mycoaching.mycoaching.R;
+import com.mycoaching.mycoaching.Views.Activities.Common.LoginActivity;
 import com.mycoaching.mycoaching.Views.Fragments.CoachMenu.ListChatFragment;
 import com.mycoaching.mycoaching.Views.Fragments.Common.ChatFragment;
 import com.mycoaching.mycoaching.Views.Fragments.Common.ThreadFragment;

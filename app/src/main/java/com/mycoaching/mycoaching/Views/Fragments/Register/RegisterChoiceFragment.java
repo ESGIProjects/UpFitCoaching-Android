@@ -6,8 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.mycoaching.mycoaching.Views.Activities.Common.RegisterActivity;
 import com.mycoaching.mycoaching.R;
+import com.mycoaching.mycoaching.Views.Activities.Common.RegisterActivity;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;

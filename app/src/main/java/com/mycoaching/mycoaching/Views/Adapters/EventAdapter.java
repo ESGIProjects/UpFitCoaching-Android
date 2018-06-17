@@ -1,7 +1,6 @@
 package com.mycoaching.mycoaching.Views.Adapters;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mycoaching.mycoaching.Models.Event;
-import com.mycoaching.mycoaching.Models.Session;
 import com.mycoaching.mycoaching.R;
 
 import java.util.List;
@@ -24,6 +22,11 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder
     private Context c;
     private Boolean isCoach;
     private String id;
+    private OnClick onClick;
+
+    public interface OnClick {
+        void onItemClick(int position);
+    }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public ImageView iv;
@@ -53,8 +56,14 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(MyViewHolder holder, final int position) {
         Event event = listEvents.get(position);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClick.onItemClick(position);
+            }
+        });
         if(event.getType().equals("0")){
             holder.iv.setImageResource(R.drawable.ic_trending_up_black_24dp);
         }
@@ -87,6 +96,10 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder
                         event.getSecondUser().getCoach().getCity()));
             }
         }
+    }
+
+    public void setOnClick(OnClick oc) {
+        this.onClick = oc;
     }
 
     @Override

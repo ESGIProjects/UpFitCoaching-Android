@@ -13,13 +13,13 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.mycoaching.mycoaching.Views.Activities.Common.LoginActivity;
 import com.mycoaching.mycoaching.R;
-import com.mycoaching.mycoaching.Views.Fragments.UserMenu.CalendarFragment;
+import com.mycoaching.mycoaching.Views.Activities.Common.LoginActivity;
 import com.mycoaching.mycoaching.Views.Fragments.Common.ChatFragment;
-import com.mycoaching.mycoaching.Views.Fragments.UserMenu.FollowUpFragment;
 import com.mycoaching.mycoaching.Views.Fragments.Common.ThreadFragment;
+import com.mycoaching.mycoaching.Views.Fragments.UserMenu.CalendarFragment;
 import com.mycoaching.mycoaching.Views.Fragments.UserMenu.EventFragment;
+import com.mycoaching.mycoaching.Views.Fragments.UserMenu.FollowUpFragment;
 
 import java.io.IOException;
 

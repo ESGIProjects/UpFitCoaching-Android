@@ -7,7 +7,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +19,6 @@ import com.mycoaching.mycoaching.Models.Post;
 import com.mycoaching.mycoaching.Models.Realm.UserRealm;
 import com.mycoaching.mycoaching.R;
 import com.mycoaching.mycoaching.Views.Adapters.PostAdapter;
-import com.mycoaching.mycoaching.Views.Adapters.ThreadAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

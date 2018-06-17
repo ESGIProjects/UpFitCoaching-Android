@@ -4,8 +4,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.mycoaching.mycoaching.Models.Retrofit.UserRetrofit;
 
-import java.util.Date;
-
 /**
  * Created by kevin on 16/05/2018.
  */

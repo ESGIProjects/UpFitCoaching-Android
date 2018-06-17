@@ -7,8 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.mycoaching.mycoaching.R;
 
-import io.realm.Realm;
-
 /**
  * Created by tensa on 06/03/2018.
  */

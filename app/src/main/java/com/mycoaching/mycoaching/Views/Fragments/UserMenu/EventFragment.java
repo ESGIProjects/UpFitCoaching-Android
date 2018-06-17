@@ -1,10 +1,12 @@
 package com.mycoaching.mycoaching.Views.Fragments.UserMenu;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,7 +14,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.TextView;
 
 import com.mycoaching.mycoaching.Api.ApiCall;
@@ -22,6 +23,7 @@ import com.mycoaching.mycoaching.Models.Event;
 import com.mycoaching.mycoaching.Models.Realm.UserRealm;
 import com.mycoaching.mycoaching.R;
 import com.mycoaching.mycoaching.Util.EventDecorator;
+import com.mycoaching.mycoaching.Views.Activities.Common.EditEventActivity;
 import com.mycoaching.mycoaching.Views.Adapters.EventAdapter;
 import com.mycoaching.mycoaching.Views.Dialogs.AddEvent;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
@@ -42,7 +44,7 @@ import io.realm.Realm;
  * Created by kevin on 28/04/2018.
  */
 
-public class EventFragment extends Fragment {
+public class EventFragment extends Fragment implements EventAdapter.OnClick{
 
     private View v;
     private List<Event> listEvents = new ArrayList<>();
@@ -56,6 +58,7 @@ public class EventFragment extends Fragment {
     private EventAdapter ea;
     private boolean isCoach = false;
     private Bundle b;
+    FragmentManager fm;
 
     @BindView(R.id.calendar)
     MaterialCalendarView mcv;
@@ -88,6 +91,8 @@ public class EventFragment extends Fragment {
         v = inflater.inflate(R.layout.fragment_event, container, false);
         ButterKnife.bind(this, v);
 
+        fm = getActivity().getSupportFragmentManager();
+
         b = getArguments();
         isCoach = b.getBoolean("isCoach");
 
@@ -104,6 +109,7 @@ public class EventFragment extends Fragment {
         rv.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         rv.setAdapter(ea);
 
+        ea.setOnClick(this);
         prepareData();
 
         return v;
@@ -144,6 +150,19 @@ public class EventFragment extends Fragment {
                 }
             }
         });
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        int id = Integer.valueOf(listEvents.get(position).getId());
+        Intent intent = new Intent(getContext(), EditEventActivity.class);
+        intent.putExtra("eventID", "45 rue des saints pères");
+        performTransition(intent, R.animator.slide_from_right, R.animator.slide_to_left);
+    }
+
+    public void performTransition(Intent i, int from, int to) {
+        startActivity(i);
+        getActivity().overridePendingTransition(from, to);
     }
 
     private void sortElements(){
