@@ -1,9 +1,11 @@
 package com.mycoaching.mycoaching.Models;
 
+import io.realm.RealmObject;
+
 /**
  * Created by kevin on 20/05/2018.
  */
-public class Contact {
+public class Contact extends RealmObject{
 
     private String firstName, lastName, lastMessage, id;
 
@@ -12,6 +14,10 @@ public class Contact {
         this.lastName = lastName;
         this.lastMessage = lastMessage;
         this.id = id;
+    }
+
+    public Contact(){
+
     }
 
     public String getFirstName() {

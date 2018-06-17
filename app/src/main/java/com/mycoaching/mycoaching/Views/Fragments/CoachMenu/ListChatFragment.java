@@ -126,6 +126,14 @@ public class ListChatFragment extends Fragment implements ContactAdapter.OnClick
                 lc.add(c);
             }
         }
+        r.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmList<Contact> contacts = new RealmList<>();
+                contacts.addAll(lc);
+                r.insert(contacts);
+            }
+        });
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
