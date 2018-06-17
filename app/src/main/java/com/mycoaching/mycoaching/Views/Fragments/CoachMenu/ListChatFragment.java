@@ -30,6 +30,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import io.realm.Realm;
 import io.realm.RealmList;
@@ -117,11 +119,11 @@ public class ListChatFragment extends Fragment implements ContactAdapter.OnClick
     public void updateContacts() {
         for (Message m : lm) {
             if (!ids.contains(Integer.valueOf(m.getSender().getId()))) {
-                c = new Contact(m.getSender().getFirstName(), m.getSender().getLastName(), m.getContent(), m.getSender().getId());
+                c = new Contact(m.getSender().getFirstName(), m.getSender().getLastName(), m.getContent(), m.getSender().getId(), m.getSender().getMail());
                 ids.add(Integer.valueOf(m.getSender().getId()));
                 lc.add(c);
             } else if (!ids.contains(Integer.valueOf(m.getReceiver().getId()))) {
-                c = new Contact(m.getReceiver().getFirstName(), m.getReceiver().getLastName(), m.getContent(), m.getReceiver().getId());
+                c = new Contact(m.getReceiver().getFirstName(), m.getReceiver().getLastName(), m.getContent(), m.getReceiver().getId(), m.getReceiver().getMail());
                 ids.add(Integer.valueOf(m.getReceiver().getId()));
                 lc.add(c);
             }

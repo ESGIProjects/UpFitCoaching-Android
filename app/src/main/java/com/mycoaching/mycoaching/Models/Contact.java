@@ -7,13 +7,14 @@ import io.realm.RealmObject;
  */
 public class Contact extends RealmObject{
 
-    private String firstName, lastName, lastMessage, id;
+    private String firstName, lastName, lastMessage, id, mail;
 
-    public Contact(String firstName, String lastName, String lastMessage, String id) {
+    public Contact(String firstName, String lastName, String lastMessage, String id, String mail) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.lastMessage = lastMessage;
         this.id = id;
+        this.mail = mail;
     }
 
     public Contact(){
@@ -50,5 +51,13 @@ public class Contact extends RealmObject{
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
     }
 }

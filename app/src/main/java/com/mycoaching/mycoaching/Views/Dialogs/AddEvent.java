@@ -6,11 +6,16 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.DialogFragment;
+import android.view.View;
 import android.view.Window;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -18,14 +23,20 @@ import android.widget.Toast;
 import com.mycoaching.mycoaching.Api.ApiCall;
 import com.mycoaching.mycoaching.Api.ApiResults;
 import com.mycoaching.mycoaching.Api.ServiceResultListener;
+import com.mycoaching.mycoaching.Models.Contact;
 import com.mycoaching.mycoaching.Models.Realm.UserRealm;
 import com.mycoaching.mycoaching.R;
+import com.mycoaching.mycoaching.Views.Adapters.ContactAdapter;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,6 +63,10 @@ public class AddEvent extends Dialog{
 
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
     SimpleDateFormat formatter2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+    AutoCompleteTextView listUser;
+    List<String> list;
+    String idSecondUser;
 
     @BindView(R.id.event_title)
     EditText eventTitle;
@@ -115,6 +130,16 @@ public class AddEvent extends Dialog{
             else{
                 type = 1;
             }
+            if(isCoach){
+                if(!checkFields(listUser.getText().toString())){
+                    Toast.makeText(getContext(),"Vous n'avez pas précisé le nom de l'utilisateur",Toast.LENGTH_LONG).show();
+                    pd.dismiss();
+                }
+                else if(!list.contains(listUser.getText().toString())){
+                    Toast.makeText(getContext(),"Ce client n'existe pas",Toast.LENGTH_LONG).show();
+                    pd.dismiss();
+                }
+            }
             try{
                 if(formatter2.parse(event_start_date.getText().toString() + " " + event_start_time.getText().toString())
                         .compareTo(formatter2.parse(event_end_date.getText().toString() + " " + event_end_time.getText().toString())) > 0){
@@ -122,8 +147,17 @@ public class AddEvent extends Dialog{
                     pd.dismiss();
                 }
                 else{
-                    ApiCall.addEvent(eventTitle.getText().toString(), String.valueOf(type)
-                            , ur.getId(), "15", event_start_date.getText().toString() + " " +
+                    if(isCoach){
+                        Matcher m = Pattern.compile("\\(([^)]+)\\)").matcher(listUser.getText().toString());
+                        while(m.find()) {
+                            idSecondUser = r.where(Contact.class).equalTo("mail",m.group(1)).findFirst().getId();
+                        }
+                    }
+                    else{
+                        idSecondUser = "15";
+                    }
+                            ApiCall.addEvent(eventTitle.getText().toString(), String.valueOf(type)
+                            , ur.getId(), idSecondUser, event_start_date.getText().toString() + " " +
                                     event_start_time.getText().toString(), event_end_date.getText().toString()
                                     + " " + event_end_time.getText().toString(), event_start_date.getText().toString()
                                     + " " + event_start_time.getText().toString(), ur.getId(), new ServiceResultListener() {
@@ -167,6 +201,21 @@ public class AddEvent extends Dialog{
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_event);
+
+        if(isCoach){
+            TextInputLayout til = this.findViewById(R.id.til);
+            til.setVisibility(View.VISIBLE);
+            listUser = this.findViewById(R.id.user_list);
+            list = new ArrayList<>();
+            for(Contact c : r.where(Contact.class).findAll()){
+                list.add(c.getFirstName() + " " + c.getLastName() + " (" + c.getMail() + ")");
+            }
+            ArrayAdapter<String> adapter = new ArrayAdapter<>
+                    (getContext(), R.layout.dropdown, list);
+            listUser.setAdapter(adapter);
+            listUser.setThreshold(1);
+        }
+
         ButterKnife.bind(this);
     }
 
