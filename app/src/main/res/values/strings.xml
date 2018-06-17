@@ -52,6 +52,16 @@
     <string name="duration">De %1$s à %2$s</string>
     <string name="event_location">Adresse : %1$s - %2$s</string>
     <string name="no_data_available">Pas d\'évènement pour le moment ! </string>
+    <string name="create_event">Création d\'un évènement</string>
+    <string name="event_title">Nom de l\'évènement</string>
+    <string name="start_date">Début : </string>
+    <string name="end_date">Fin : </string>
+    <string name="event_type_label">Type :</string>
+    <string-array name="event_type">
+        <item>Bilan</item>
+        <item>Session</item>
+    </string-array>
+
 
     <string name="weight">Poids</string>
     <string name="index">Indices corporels</string>

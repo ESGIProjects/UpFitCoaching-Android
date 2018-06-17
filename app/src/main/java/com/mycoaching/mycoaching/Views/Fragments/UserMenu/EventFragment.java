@@ -1,6 +1,8 @@
 package com.mycoaching.mycoaching.Views.Fragments.UserMenu;
 
+import android.content.DialogInterface;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -10,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.TextView;
 
 import com.mycoaching.mycoaching.Api.ApiCall;
@@ -20,6 +23,7 @@ import com.mycoaching.mycoaching.Models.Realm.UserRealm;
 import com.mycoaching.mycoaching.R;
 import com.mycoaching.mycoaching.Util.EventDecorator;
 import com.mycoaching.mycoaching.Views.Adapters.EventAdapter;
+import com.mycoaching.mycoaching.Views.Dialogs.AddEvent;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 
@@ -61,6 +65,21 @@ public class EventFragment extends Fragment {
 
     @OnClick(R.id.buttonEvents)
     void action() {
+        final AddEvent ae = new AddEvent(getActivity(),isCoach);
+        ae.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ae.show();
+        ae.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                if(ae.getIsOK()){
+                    listEvents.clear();
+                    listDaysAppointment.clear();
+                    listDaysSession.clear();
+                    listDaysCombined.clear();
+                    prepareData();
+                }
+            }
+        });
     }
 
     @Override
