@@ -23,9 +23,9 @@ import com.mycoaching.mycoaching.Models.Event;
 import com.mycoaching.mycoaching.Models.Realm.UserRealm;
 import com.mycoaching.mycoaching.R;
 import com.mycoaching.mycoaching.Util.EventDecorator;
-import com.mycoaching.mycoaching.Views.Activities.Common.EditEventActivity;
 import com.mycoaching.mycoaching.Views.Adapters.EventAdapter;
 import com.mycoaching.mycoaching.Views.Dialogs.AddEvent;
+import com.mycoaching.mycoaching.Views.Dialogs.EditEvent;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 
@@ -154,10 +154,24 @@ public class EventFragment extends Fragment implements EventAdapter.OnClick{
 
     @Override
     public void onItemClick(int position) {
-        int id = Integer.valueOf(listEvents.get(position).getId());
-        Intent intent = new Intent(getContext(), EditEventActivity.class);
-        intent.putExtra("eventID", "45 rue des saints pères");
-        performTransition(intent, R.animator.slide_from_right, R.animator.slide_to_left);
+        Event e = listEvents.get(position);
+        final EditEvent ee = new EditEvent(getActivity(),isCoach,e.getId(),e.getName(),e.getType(),e.getStart()
+                ,e.getEnd(),ur.getId());
+        ee.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ee.show();
+        ee.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                if(ee.getIsOK()){
+                    listEvents.clear();
+                    listDaysAppointment.clear();
+                    listDaysSession.clear();
+                    listDaysCombined.clear();
+                    prepareData();
+                }
+            }
+        });
+
     }
 
     public void performTransition(Intent i, int from, int to) {

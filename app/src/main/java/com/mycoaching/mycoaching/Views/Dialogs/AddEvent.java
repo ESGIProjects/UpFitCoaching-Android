@@ -40,10 +40,12 @@ import butterknife.OnClick;
 import io.realm.Realm;
 
 import static com.mycoaching.mycoaching.Util.CommonMethods.checkFields;
+import static com.mycoaching.mycoaching.Util.CommonMethods.getDate;
 
 /**
  * Created by kevin on 16/06/2018.
  */
+
 public class AddEvent extends Dialog{
 
     Realm r;
@@ -84,7 +86,7 @@ public class AddEvent extends Dialog{
 
 
     @OnClick({R.id.event_start_date,R.id.event_end_date})
-    public void addStartDate(final Button b){
+    public void addDate(final Button b){
         DatePickerDialog dialog = new DatePickerDialog(getContext(),R.style.customPicker, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
@@ -101,7 +103,7 @@ public class AddEvent extends Dialog{
     }
 
     @OnClick({R.id.event_start_time,R.id.event_end_time})
-    void addStartTime(final Button b){
+    void addTime(final Button b){
         TimePickerDialog dialog = new TimePickerDialog(getContext(), R.style.customPicker, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int hour, int minute) {
@@ -112,7 +114,7 @@ public class AddEvent extends Dialog{
     }
 
     @OnClick(R.id.confirm_event)
-    void createNews() {
+    void createEvent() {
         pd = new ProgressDialog(getContext(), R.style.AppCompatAlertDialogStyle);
         pd.setMessage("Création de l'évènement en cours...");
         pd.show();
@@ -155,8 +157,7 @@ public class AddEvent extends Dialog{
                             ApiCall.addEvent(eventTitle.getText().toString(), String.valueOf(type)
                             , ur.getId(), idSecondUser, event_start_date.getText().toString() + " " +
                                     event_start_time.getText().toString(), event_end_date.getText().toString()
-                                    + " " + event_end_time.getText().toString(), event_start_date.getText().toString()
-                                    + " " + event_start_time.getText().toString(), ur.getId(), new ServiceResultListener() {
+                                    + " " + event_end_time.getText().toString(), getDate(), ur.getId(), new ServiceResultListener() {
                                 @Override
                                 public void onResult(ApiResults ar) {
                                     if (ar.getResponseCode() == 201) {
