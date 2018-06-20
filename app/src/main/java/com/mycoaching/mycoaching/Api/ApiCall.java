@@ -1,5 +1,7 @@
 package com.mycoaching.mycoaching.Api;
 
+import android.util.Log;
+
 import com.mycoaching.mycoaching.Models.Event;
 import com.mycoaching.mycoaching.Models.Message;
 import com.mycoaching.mycoaching.Models.Post;
@@ -238,6 +240,25 @@ public class ApiCall {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 ApiResults sir = new ApiResults();
+                sir.setResponseCode(response.code());
+                srl.onResult(sir);
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                ApiResults sir = new ApiResults();
+                sir.setException(t);
+                srl.onResult(sir);
+            }
+        });
+    }
+
+    public static void deleteEvent(String eventId, String userId, final ServiceResultListener srl) {
+        ApiUtils.getApiInstance().deleteEvent(eventId, userId).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                ApiResults sir = new ApiResults();
+                Log.i("REQUEST : ",response.headers().toString());
                 sir.setResponseCode(response.code());
                 srl.onResult(sir);
             }

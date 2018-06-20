@@ -211,6 +211,7 @@ public class AddEvent extends Dialog{
                     (getContext(), R.layout.dropdown, list);
             listUser.setAdapter(adapter);
             listUser.setThreshold(1);
+
         }
 
         ButterKnife.bind(this);

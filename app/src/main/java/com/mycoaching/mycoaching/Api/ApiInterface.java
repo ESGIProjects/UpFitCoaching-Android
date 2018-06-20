@@ -11,9 +11,12 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import retrofit2.Call;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.HTTP;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Query;
@@ -88,6 +91,10 @@ public interface ApiInterface {
     @FormUrlEncoded
     Call<Void> updateEvent(@Field("eventId") String eventId, @Field("name") String name, @Field("start") String start,
                            @Field("end") String end, @Field("updated") String updated, @Field("updateBy") String updateBy);
+
+
+    @DELETE("events/")
+    Call<Void> deleteEvent(@Query("eventId") String eventId, @Query("userId") String userId);
 
     /**
      * Endpoint for firebase token

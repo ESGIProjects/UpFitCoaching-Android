@@ -155,7 +155,7 @@ public class EventFragment extends Fragment implements EventAdapter.OnClick{
     @Override
     public void onItemClick(int position) {
         Event e = listEvents.get(position);
-        final EditEvent ee = new EditEvent(getActivity(),isCoach,e.getId(),e.getName(),e.getType(),e.getStart()
+        final EditEvent ee = new EditEvent(getActivity(),e.getId(),e.getName(),e.getType(),e.getStart()
                 ,e.getEnd(),ur.getId());
         ee.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         ee.show();
