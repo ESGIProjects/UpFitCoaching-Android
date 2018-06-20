@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import com.mycoaching.mycoaching.R;
+import com.mycoaching.mycoaching.Views.Fragments.Register.CredentialsFragment;
 import com.mycoaching.mycoaching.Views.Fragments.Register.RegisterChoiceFragment;
 
 /**
@@ -17,13 +18,17 @@ import com.mycoaching.mycoaching.Views.Fragments.Register.RegisterChoiceFragment
 public class RegisterActivity extends AppCompatActivity {
 
     FragmentTransaction ft;
-    RegisterChoiceFragment cf = new RegisterChoiceFragment();
+    Bundle b = new Bundle();
+    CredentialsFragment cf = new CredentialsFragment();
+    //RegisterChoiceFragment rcf = new RegisterChoiceFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         getSupportActionBar().hide();
+        b.putString("type", "0");
+        cf.setArguments(b);
         ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.container, cf);
         ft.commit();
