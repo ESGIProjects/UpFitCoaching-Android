@@ -118,7 +118,6 @@ public class AddEvent extends Dialog{
         pd = new ProgressDialog(getContext(), R.style.AppCompatAlertDialogStyle);
         pd.setMessage("Création de l'évènement en cours...");
         pd.show();
-        isOK = true;
         if(checkFields(eventTitle.getText().toString(), event_start_date.getText().toString()
                 ,event_end_date.getText().toString(),event_start_time.getText().toString()
                 , event_end_time.getText().toString(),typeSpinner.getSelectedItem().toString())) {
@@ -154,7 +153,7 @@ public class AddEvent extends Dialog{
                     else{
                         idSecondUser = "15";
                     }
-                            ApiCall.addEvent(eventTitle.getText().toString(), String.valueOf(type)
+                    ApiCall.addEvent(eventTitle.getText().toString(), String.valueOf(type)
                             , ur.getId(), idSecondUser, event_start_date.getText().toString() + " " +
                                     event_start_time.getText().toString(), event_end_date.getText().toString()
                                     + " " + event_end_time.getText().toString(), getDate(), ur.getId(), new ServiceResultListener() {

@@ -233,9 +233,9 @@ public class ApiCall {
         });
     }
 
-    public static void updateEvent(String eventId, String name, String start, String end,
+    public static void updateEvent(String eventId, String name, String type, String start, String end,
             String updated, String updatedBy, final ServiceResultListener srl) {
-        ApiUtils.getApiInstance().updateEvent(eventId,name,start,end,updated,
+        ApiUtils.getApiInstance().updateEvent(eventId,name,type,start,end,updated,
                 updatedBy).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {

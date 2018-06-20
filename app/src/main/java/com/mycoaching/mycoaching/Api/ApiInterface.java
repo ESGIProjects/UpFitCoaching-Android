@@ -89,8 +89,8 @@ public interface ApiInterface {
 
     @PUT("events/")
     @FormUrlEncoded
-    Call<Void> updateEvent(@Field("eventId") String eventId, @Field("name") String name, @Field("start") String start,
-                           @Field("end") String end, @Field("updated") String updated, @Field("updateBy") String updateBy);
+    Call<Void> updateEvent(@Field("eventId") String eventId, @Field("name") String name, @Field("type") String type,
+                           @Field("start") String start, @Field("end") String end, @Field("updated") String updated, @Field("updateBy") String updateBy);
 
 
     @DELETE("events/")

@@ -13,12 +13,14 @@ import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.mycoaching.mycoaching.Api.ApiCall;
 import com.mycoaching.mycoaching.Api.ApiResults;
 import com.mycoaching.mycoaching.Api.ServiceResultListener;
 import com.mycoaching.mycoaching.R;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -26,6 +28,9 @@ import java.util.Date;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.mycoaching.mycoaching.Util.CommonMethods.checkFields;
+import static com.mycoaching.mycoaching.Util.CommonMethods.getDate;
 
 /**
  * Created by kevin on 18/06/2018.
@@ -35,6 +40,7 @@ public class EditEvent extends Dialog{
     Activity activity;
     boolean isOK = false;
     String eventID, name, type, start, end, updatedBy;
+    int typeEvent;
 
     ProgressDialog pd;
 
@@ -117,7 +123,48 @@ public class EditEvent extends Dialog{
 
     @OnClick(R.id.confirm_edit)
     void editEvent(){
-        //TODO
+        pd = new ProgressDialog(getContext(), R.style.AppCompatAlertDialogStyle);
+        pd.setMessage("Mise à jour de l'évènement en cours...");
+        pd.show();
+        if(checkFields(title.getText().toString(), event_start_date.getText().toString()
+                ,event_end_date.getText().toString(),event_start_time.getText().toString()
+                , event_end_time.getText().toString(),typeSpinner.getSelectedItem().toString())) {
+            if(typeSpinner.getSelectedItem().equals("Bilan")){
+                type = "0";
+            }
+            else{
+                type = "1";
+            }
+            try {
+                if (formatter2.parse(event_start_date.getText().toString() + " " + event_start_time.getText().toString())
+                        .compareTo(formatter2.parse(event_end_date.getText().toString() + " " + event_end_time.getText().toString())) > 0) {
+                    Toast.makeText(getContext(), "La date de fin est antérieure à la date de départ", Toast.LENGTH_LONG).show();
+                    pd.dismiss();
+                }
+                else{
+                    ApiCall.updateEvent(eventID, title.getText().toString(), type, event_start_date.getText().toString() + " " +
+                            event_start_time.getText().toString(), event_end_date.getText().toString() + " " +
+                            event_end_time.getText().toString(), getDate(), updatedBy, new ServiceResultListener() {
+                        @Override
+                        public void onResult(ApiResults ar) {
+                            if(ar.getResponseCode() == 200){
+                                pd.dismiss();
+                                isOK = true;
+                                Toast.makeText(getContext(),"L'évènement a été mis à jour",Toast.LENGTH_LONG).show();
+                                dismiss();
+                            }
+                        }
+                    });
+                }
+            }
+            catch (ParseException pe){
+                pe.printStackTrace();
+            }
+        }
+        else{
+            pd.dismiss();
+            Toast.makeText(getContext(),"Certains champs sont manquants !", Toast.LENGTH_LONG).show();
+        }
     }
 
     @OnClick(R.id.cancel_event)
@@ -125,13 +172,13 @@ public class EditEvent extends Dialog{
         pd = new ProgressDialog(getContext(), R.style.AppCompatAlertDialogStyle);
         pd.setMessage("Annulation de l'évènement en cours...");
         pd.show();
-        isOK = true;
         ApiCall.deleteEvent(eventID, updatedBy, new ServiceResultListener() {
             @Override
             public void onResult(ApiResults ar) {
                 if(ar.getResponseCode() == 200){
                     pd.dismiss();
                     isOK = true;
+                    Toast.makeText(getContext(),"L'évènement a été annulé",Toast.LENGTH_LONG).show();
                     dismiss();
                 }
             }
