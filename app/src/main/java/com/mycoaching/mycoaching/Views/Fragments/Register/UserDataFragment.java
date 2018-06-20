@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -31,6 +32,7 @@ public class UserDataFragment extends Fragment {
     ProgressDialog pd = null;
     Intent i;
     Realm realm = null;
+    String sex;
 
     @BindView(R.id.firstName)
     EditText firstName;
@@ -47,15 +49,36 @@ public class UserDataFragment extends Fragment {
     @BindView(R.id.phoneNumber)
     EditText phoneNumber;
 
+    @BindView(R.id.woman)
+    CheckBox woman;
+
+    @BindView(R.id.man)
+    CheckBox man;
+
+    @OnClick(R.id.woman)
+    void setWoman(){
+        woman.setChecked(true);
+        man.setChecked(false);
+        sex = "0";
+    }
+
+    @OnClick(R.id.man)
+    void setMan(){
+        man.setChecked(true);
+        woman.setChecked(false);
+        sex = "1";
+    }
+
     @OnClick(R.id.account_creation)
     void createAccount() {
         if (checkFields(firstName.getText().toString(), lastName.getText().toString(),
-                birthDate.getText().toString(), city.getText().toString(), phoneNumber.getText().toString())) {
+                birthDate.getText().toString(), city.getText().toString(), phoneNumber.getText().toString()) &&
+                sex != null){
             pd = new ProgressDialog(getContext(), R.style.StyledDialog);
             pd.setMessage("Création du compte en cours...");
             pd.show();
             ApiCall.signUp(b.getString("type"), b.getString("mail"),
-                    b.getString("password"), firstName.getText().toString(), lastName.getText().toString(),
+                    b.getString("password"), firstName.getText().toString(), lastName.getText().toString(), sex,
                     birthDate.getText().toString(), city.getText().toString(), null, phoneNumber.getText().toString(),
                     new ServiceResultListener() {
                         @Override
@@ -73,6 +96,7 @@ public class UserDataFragment extends Fragment {
                         }
                     });
         }
+        Toast.makeText(getContext(), "Il manque un champs !", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -97,6 +121,7 @@ public class UserDataFragment extends Fragment {
                 ur.setCity(city.getText().toString());
                 ur.setFirstName(firstName.getText().toString());
                 ur.setLastName(lastName.getText().toString());
+                ur.setSex(sex);
                 ur.setBirthDate(birthDate.getText().toString());
                 ur.setMail(b.getString("mail"));
                 ur.setPhoneNumber(phoneNumber.getText().toString());

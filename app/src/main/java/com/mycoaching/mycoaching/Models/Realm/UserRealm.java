@@ -12,7 +12,7 @@ public class UserRealm extends RealmObject {
     @PrimaryKey
     String id;
 
-    private String mail, firstName, lastName, birthDate, address, city, phoneNumber;
+    private String mail, firstName, lastName, sex, birthDate, address, city, phoneNumber;
 
     private String idCoach, mailCoach, firstNameCoach, lastNameCoach, addressCoach,
             cityCoach, phoneNumberCoach;
@@ -45,6 +45,14 @@ public class UserRealm extends RealmObject {
 
     public String getLastName() {
         return lastName;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public String getSex() {
+        return sex;
     }
 
     public void setLastName(String lastName) {

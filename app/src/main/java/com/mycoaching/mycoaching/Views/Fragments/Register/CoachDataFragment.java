@@ -54,7 +54,7 @@ public class CoachDataFragment extends Fragment {
             pd = new ProgressDialog(getContext(), R.style.StyledDialog);
             pd.setMessage("Création du compte en cours...");
             pd.show();
-            ApiCall.signUp(b.getString("type"), b.getString("mail"),
+            /*ApiCall.signUp(b.getString("type"), b.getString("mail"),
                     b.getString("password"), firstName.getText().toString(), lastName.getText().toString(),
                     null, city.getText().toString(), address.getText().toString(), phoneNumber.getText().toString(),
                     new ServiceResultListener() {
@@ -72,7 +72,7 @@ public class CoachDataFragment extends Fragment {
                                 Toast.makeText(getContext(), R.string.error, Toast.LENGTH_LONG).show();
                             }
                         }
-                    });
+                    });*/
         }
     }
 

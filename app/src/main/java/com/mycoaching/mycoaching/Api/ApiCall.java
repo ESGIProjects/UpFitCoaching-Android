@@ -47,8 +47,9 @@ public class ApiCall {
     }
 
     public static void signUp(String type, String mail, String password, String firstName, String lastName,
-                              String birthDate, String city, String address, String phoneNumber, final ServiceResultListener srl) {
-        ApiUtils.getApiInstance().signUp(type, mail, password, firstName, lastName, birthDate, city, address, phoneNumber)
+                              String sex, String birthDate, String city, String address, String phoneNumber,
+                              final ServiceResultListener srl) {
+        ApiUtils.getApiInstance().signUp(type, mail, password, firstName, lastName, sex, birthDate, city, address, phoneNumber)
                 .enqueue(new Callback<UserRetrofit>() {
                     @Override
                     public void onResponse(Call<UserRetrofit> call, Response<UserRetrofit> response) {

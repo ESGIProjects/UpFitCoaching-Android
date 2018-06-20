@@ -39,7 +39,8 @@ public interface ApiInterface {
     @FormUrlEncoded
     Call<UserRetrofit> signUp(@Field("type") String type, @Field("mail") String mail, @Field("password") String password,
                               @Field("firstName") String firstName, @Field("lastName") String lastName,
-                              @Field("birthDate") String birthDate, @Field("city") String city, @Field("address") String address,
+                              @Field("sex") String sex, @Field("birthDate") String birthDate,
+                              @Field("city") String city, @Field("address") String address,
                               @Field("phoneNumber") String phoneNumber);
 
     @POST("checkmail/")
