@@ -1,5 +1,6 @@
 package com.mycoaching.mycoaching.Views.Fragments.Register;
 
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,7 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mycoaching.mycoaching.Api.ApiCall;
@@ -18,12 +21,20 @@ import com.mycoaching.mycoaching.Models.Realm.UserRealm;
 import com.mycoaching.mycoaching.R;
 import com.mycoaching.mycoaching.Views.Activities.UserActivity.UserMainActivity;
 
+import org.w3c.dom.Text;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
 
 import static com.mycoaching.mycoaching.Util.CommonMethods.checkFields;
+import static com.mycoaching.mycoaching.Util.CommonMethods.getDate;
 
 public class UserDataFragment extends Fragment {
 
@@ -34,6 +45,8 @@ public class UserDataFragment extends Fragment {
     Realm realm = null;
     String sex;
 
+    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+
     @BindView(R.id.firstName)
     EditText firstName;
 
@@ -41,7 +54,24 @@ public class UserDataFragment extends Fragment {
     EditText lastName;
 
     @BindView(R.id.birthDate)
-    EditText birthDate;
+    TextView birthDate;
+
+    @OnClick(R.id.birthDate)
+    void setDate(final TextView tv){
+        DatePickerDialog dialog = new DatePickerDialog(getContext(),R.style.customPicker, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                Calendar cal = Calendar.getInstance();
+                cal.set(Calendar.YEAR, year);
+                cal.set(Calendar.MONTH, month);
+                cal.set(Calendar.DAY_OF_MONTH, day);
+                Date date = cal.getTime();
+                tv.setText(formatter.format(date));
+            }
+        },Calendar.getInstance().get(Calendar.YEAR),Calendar.getInstance().get(Calendar.MONTH)
+                ,Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+        dialog.show();
+    }
 
     @BindView(R.id.city)
     EditText city;
@@ -77,26 +107,39 @@ public class UserDataFragment extends Fragment {
             pd = new ProgressDialog(getContext(), R.style.StyledDialog);
             pd.setMessage("Création du compte en cours...");
             pd.show();
-            ApiCall.signUp(b.getString("type"), b.getString("mail"),
-                    b.getString("password"), firstName.getText().toString(), lastName.getText().toString(), sex,
-                    birthDate.getText().toString(), city.getText().toString(), null, phoneNumber.getText().toString(),
-                    new ServiceResultListener() {
-                        @Override
-                        public void onResult(ApiResults ar) {
-                            pd.dismiss();
-                            if (ar.getResponseCode() == 201) {
-                                realm = Realm.getDefaultInstance();
-                                executeTransaction(realm, ar);
-                                i = new Intent(getContext(), UserMainActivity.class);
-                                performTransition(i, R.animator.slide_from_left, R.animator.slide_to_right);
-                                Toast.makeText(getContext(), "Compte créé !", Toast.LENGTH_LONG).show();
-                            } else {
-                                Toast.makeText(getContext(), R.string.error, Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    });
+            try{
+                if(formatter.parse(birthDate.getText().toString()).compareTo(formatter.parse(getDate())) > 0){
+                    Toast.makeText(getContext(),"Votre date de naissance est supérieure à la date actuelle...",Toast.LENGTH_LONG).show();
+                    pd.dismiss();
+                }
+                else{
+                    ApiCall.signUp(b.getString("type"), b.getString("mail"),
+                            b.getString("password"), firstName.getText().toString(), lastName.getText().toString(), sex,
+                            birthDate.getText().toString(), city.getText().toString(), null, phoneNumber.getText().toString(),
+                            new ServiceResultListener() {
+                                @Override
+                                public void onResult(ApiResults ar) {
+                                    pd.dismiss();
+                                    if (ar.getResponseCode() == 201) {
+                                        realm = Realm.getDefaultInstance();
+                                        executeTransaction(realm, ar);
+                                        i = new Intent(getContext(), UserMainActivity.class);
+                                        performTransition(i, R.animator.slide_from_left, R.animator.slide_to_right);
+                                        Toast.makeText(getContext(), "Compte créé !", Toast.LENGTH_LONG).show();
+                                    } else {
+                                        Toast.makeText(getContext(), R.string.error, Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                            });
+                }
+            }
+            catch (ParseException pe){
+                pe.printStackTrace();
+            }
         }
-        Toast.makeText(getContext(), "Il manque un champs !", Toast.LENGTH_LONG).show();
+        else{
+            Toast.makeText(getContext(), "Il manque un champs !", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override

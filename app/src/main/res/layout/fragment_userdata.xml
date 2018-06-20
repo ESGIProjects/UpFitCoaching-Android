@@ -42,6 +42,8 @@
     </android.support.design.widget.TextInputLayout>
 
     <LinearLayout
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -58,7 +60,8 @@
             android:theme="@style/AppThemeCustom"
             android:id="@+id/woman"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:nextFocusDown="@id/birthDate"/>
 
         <TextView
             android:layout_marginLeft="20dp"
@@ -72,26 +75,20 @@
             android:theme="@style/AppThemeCustom"
             android:id="@+id/man"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:nextFocusDown="@id/birthDate"/>
 
     </LinearLayout>
 
-    <android.support.design.widget.TextInputLayout
-        android:theme="@style/AppThemeCustom"
+    <TextView
+        android:id="@+id/birthDate"
+        android:hint="@string/birthDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColorHint="@color/colorWhite"
+        android:textColor="@color/colorWhite"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp">
-        <EditText
-            android:id="@+id/birthDate"
-            android:focusableInTouchMode="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/birthDate"
-            android:textColor="@color/colorWhite"
-            android:singleLine="true"
-            android:nextFocusDown="@id/city"/>
-    </android.support.design.widget.TextInputLayout>
+        android:layout_marginBottom="8dp"/>
 
     <android.support.design.widget.TextInputLayout
         android:theme="@style/AppThemeCustom"
