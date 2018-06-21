@@ -15,14 +15,13 @@ import java.util.List;
 
 public class ApiResults {
 
-    String body;
-    List<Message> listMessage;
-    List<Thread> listThread;
-    List<Post> listPost;
-    List<Event> listEvent;
-    int responseCode;
-    Throwable exception;
-    UserRetrofit ur;
+    private List<Message> listMessage;
+    private List<Thread> listThread;
+    private List<Post> listPost;
+    private List<Event> listEvent;
+    private int responseCode;
+    private UserRetrofit ur;
+    private Throwable exception;
 
     public List<Message> getListMessage() {
         return listMessage;
@@ -70,14 +69,6 @@ public class ApiResults {
 
     public void setException(Throwable e) {
         this.exception = e;
-    }
-
-    public String getBody() {
-        return body;
-    }
-
-    public void setBody(String body) {
-        this.body = body;
     }
 
     public UserRetrofit getUr() {
