@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.mycoaching.mycoaching.Models.Contact;
+import com.mycoaching.mycoaching.Models.Realm.Contact;
 import com.mycoaching.mycoaching.R;
 
 import java.util.List;

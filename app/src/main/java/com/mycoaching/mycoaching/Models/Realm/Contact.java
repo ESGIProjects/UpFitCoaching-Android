@@ -1,4 +1,4 @@
-package com.mycoaching.mycoaching.Models;
+package com.mycoaching.mycoaching.Models.Realm;
 
 import io.realm.RealmObject;
 
