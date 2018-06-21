@@ -145,14 +145,14 @@ public class LoginActivity extends AppCompatActivity {
             public void execute(Realm realm) {
                 UserRealm ur = realm.createObject(UserRealm.class, ar.getUr().getId());
                 ur.setMail(ar.getUr().getMail());
+                ur.setSex(ar.getUr().getSex());
                 ur.setFirstName(ar.getUr().getFirstName());
                 ur.setLastName(ar.getUr().getLastName());
                 ur.setCity(ar.getUr().getCity());
                 ur.setPhoneNumber(ar.getUr().getPhoneNumber());
                 ur.setType(ar.getUr().getType());
-                if (ar.getUr().getCoach() == null) {
+                if (ar.getUr().getCoach() != null) {
                     ur.setBirthDate(ar.getUr().getBirthDate());
-                } else {
                     ur.setAddress(ar.getUr().getAddress());
                     ur.setIdCoach(ar.getUr().getCoach().getId());
                     ur.setMailCoach(ar.getUr().getCoach().getMail());
@@ -162,6 +162,9 @@ public class LoginActivity extends AppCompatActivity {
                     ur.setPhoneNumberCoach(ar.getUr().getCoach().getPhoneNumber());
                     ur.setTypeCoach(ar.getUr().getCoach().getType());
                     ur.setAddressCoach(ar.getUr().getCoach().getAddress());
+                }
+                else{
+                    ur.setAddress(ar.getUr().getAddress());
                 }
             }
         });

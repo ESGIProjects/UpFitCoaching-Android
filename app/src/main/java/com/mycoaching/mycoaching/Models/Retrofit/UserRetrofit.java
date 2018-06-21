@@ -54,8 +54,12 @@ public class UserRetrofit extends RealmObject implements Parcelable {
     @Expose
     private UserRetrofit coach;
 
+    @SerializedName("sex")
+    @Expose
+    private String sex;
+
     public UserRetrofit(String id, Integer type, String mail, String firstName, String lastName, String birthDate,
-                        String address, String city, String phoneNumber, UserRetrofit coach) {
+                        String address, String city, String phoneNumber, UserRetrofit coach, String sex) {
         this.id = id;
         this.type = type;
         this.mail = mail;
@@ -66,6 +70,7 @@ public class UserRetrofit extends RealmObject implements Parcelable {
         this.city = city;
         this.phoneNumber = phoneNumber;
         this.coach = coach;
+        this.sex = sex;
     }
 
     public UserRetrofit(Parcel in) {
@@ -163,6 +168,14 @@ public class UserRetrofit extends RealmObject implements Parcelable {
 
     public void setCoach(UserRetrofit coach) {
         this.coach = coach;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 
     @Override

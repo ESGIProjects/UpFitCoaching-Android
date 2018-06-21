@@ -208,9 +208,9 @@ public class ChatFragment extends Fragment {
     public void addMessageToList(String senderID, String receiverID, String firstNameS, String lastNameS,
                                  String firstNameR, String lastNameR, String content) {
         UserRetrofit sender = new UserRetrofit(senderID, null, null, firstNameS,
-                lastNameS, null, null, null, null, null);
+                lastNameS, null, null, null, null, null, null);
         UserRetrofit receiver = new UserRetrofit(receiverID, null, null, firstNameR, lastNameR,
-                null, null, null, null, null);
+                null, null, null, null, null, null);
         Message m = new Message(null, sender, receiver, getDate(), content);
         lm.add(0, m);
         getActivity().runOnUiThread(new Runnable() {

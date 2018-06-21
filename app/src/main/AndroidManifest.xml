@@ -40,10 +40,7 @@
             android:name=".Views.Activities.UserActivity.SettingsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeNAB" />
-        <activity
-            android:name=".Views.Activities.Common.EditEventActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppThemeNAB" />
+
         <service
             android:name=".Services.MyFirebaseMessagingService">
             <intent-filter>
