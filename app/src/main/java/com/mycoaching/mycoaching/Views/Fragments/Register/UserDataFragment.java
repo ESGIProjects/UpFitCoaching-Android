@@ -35,6 +35,7 @@ import io.realm.Realm;
 
 import static com.mycoaching.mycoaching.Util.CommonMethods.checkFields;
 import static com.mycoaching.mycoaching.Util.CommonMethods.getDate;
+import static com.mycoaching.mycoaching.Util.CommonMethods.performTransition;
 
 public class UserDataFragment extends Fragment {
 
@@ -124,7 +125,7 @@ public class UserDataFragment extends Fragment {
                                         realm = Realm.getDefaultInstance();
                                         executeTransaction(realm, ar);
                                         i = new Intent(getContext(), UserMainActivity.class);
-                                        performTransition(i, R.animator.slide_from_left, R.animator.slide_to_right);
+                                        performTransition(getActivity(),i, R.animator.slide_from_left, R.animator.slide_to_right);
                                         Toast.makeText(getContext(), "Compte créé !", Toast.LENGTH_LONG).show();
                                     } else {
                                         Toast.makeText(getContext(), R.string.error, Toast.LENGTH_LONG).show();
@@ -149,11 +150,6 @@ public class UserDataFragment extends Fragment {
         ButterKnife.bind(this, v);
         b = getArguments();
         return v;
-    }
-
-    public void performTransition(Intent i, int from, int to) {
-        startActivity(i);
-        getActivity().overridePendingTransition(from, to);
     }
 
     public void executeTransaction(Realm r, final ApiResults ar) {

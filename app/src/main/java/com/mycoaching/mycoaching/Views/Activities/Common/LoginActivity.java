@@ -1,6 +1,8 @@
 package com.mycoaching.mycoaching.Views.Activities.Common;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -28,6 +30,7 @@ import static com.mycoaching.mycoaching.Util.CommonMethods.checkPassword;
 import static com.mycoaching.mycoaching.Util.CommonMethods.clearFields;
 import static com.mycoaching.mycoaching.Util.CommonMethods.getSHAPassword;
 import static com.mycoaching.mycoaching.Util.CommonMethods.isNetworkAvailable;
+import static com.mycoaching.mycoaching.Util.CommonMethods.performTransition;
 
 /**
  * Created by kevin on 01/03/2018.
@@ -80,10 +83,10 @@ public class LoginActivity extends AppCompatActivity {
                             //we check if the user is a coach or a regular
                             if (ar.getUr().getType() == 2) {
                                 i = new Intent(LoginActivity.this, CoachMainActivity.class);
-                                performTransition(i, R.animator.slide_from_right, R.animator.slide_to_left);
+                                performTransition(LoginActivity.this,i, R.animator.slide_from_right, R.animator.slide_to_left);
                             } else {
                                 i = new Intent(LoginActivity.this, UserMainActivity.class);
-                                performTransition(i, R.animator.slide_from_right, R.animator.slide_to_left);
+                                performTransition(LoginActivity.this,i, R.animator.slide_from_right, R.animator.slide_to_left);
                             }
                             Toast.makeText(getApplicationContext(), "Connexion réussie !", Toast.LENGTH_SHORT).show();
                         } else {
@@ -109,13 +112,13 @@ public class LoginActivity extends AppCompatActivity {
     @OnClick(R.id.signup)
     void signUp() {
         i = new Intent(this, RegisterActivity.class);
-        performTransition(i, R.animator.slide_from_right, R.animator.slide_to_left);
+        performTransition(this,i, R.animator.slide_from_right, R.animator.slide_to_left);
     }
 
     @OnClick(R.id.forgot)
     void forgot() {
         i = new Intent(LoginActivity.this, UserMainActivity.class);
-        performTransition(i, R.animator.slide_from_right, R.animator.slide_to_left);
+        performTransition(this,i, R.animator.slide_from_right, R.animator.slide_to_left);
     }
 
     @Override
@@ -127,11 +130,6 @@ public class LoginActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         realm = Realm.getDefaultInstance();
-    }
-
-    public void performTransition(Intent i, int from, int to) {
-        startActivity(i);
-        overridePendingTransition(from, to);
     }
 
     //if the back button is pressed, we kill the application

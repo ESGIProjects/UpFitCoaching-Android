@@ -19,8 +19,8 @@ public class SplashScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splashscreen);
         getSupportActionBar().hide();
-        // we start the transition to LoginActivity when the time is up
 
+        // we start the transition to LoginActivity when the time is up
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

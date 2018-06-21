@@ -65,7 +65,7 @@ public class CoachDataFragment extends Fragment {
                                 realm = Realm.getDefaultInstance();
                                 executeTransaction(realm, ar);
                                 i = new Intent(getContext(), CoachMainActivity.class);
-                                performTransition(i, R.animator.slide_from_left, R.animator.slide_to_right);
+                                performTransition(getActivity(),i, R.animator.slide_from_left, R.animator.slide_to_right);
                                 Toast.makeText(getContext(), "Compte créé !", Toast.LENGTH_LONG).show();
 
                             } else {
@@ -83,11 +83,6 @@ public class CoachDataFragment extends Fragment {
         ButterKnife.bind(this, v);
         b = getArguments();
         return v;
-    }
-
-    public void performTransition(Intent i, int from, int to) {
-        startActivity(i);
-        getActivity().overridePendingTransition(from, to);
     }
 
     public void executeTransaction(Realm r, final ApiResults ar) {

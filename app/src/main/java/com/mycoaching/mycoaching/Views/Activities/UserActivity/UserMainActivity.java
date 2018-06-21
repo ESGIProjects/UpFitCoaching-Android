@@ -28,6 +28,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
 
+import static com.mycoaching.mycoaching.Util.CommonMethods.performTransition;
+
 /**
  * Created by kevin on 07/03/2018.
  */
@@ -46,7 +48,7 @@ public class UserMainActivity extends AppCompatActivity {
     @OnClick(R.id.option)
     void settings() {
         intent = new Intent(this, SettingsActivity.class);
-        performTransition(intent, R.animator.slide_from_right, R.animator.slide_to_left);
+        performTransition(this,intent, R.animator.slide_from_right, R.animator.slide_to_left);
     }
 
     FollowUpFragment fuf = new FollowUpFragment();
@@ -164,7 +166,7 @@ public class UserMainActivity extends AppCompatActivity {
                                     }
                                 }
                             }).start();
-                            performTransition(intent, R.animator.slide_from_left, R.animator.slide_to_right);
+                            performTransition(UserMainActivity.this,intent, R.animator.slide_from_left, R.animator.slide_to_right);
                             finish();
                         }
                     })
@@ -199,10 +201,5 @@ public class UserMainActivity extends AppCompatActivity {
         if(getSupportFragmentManager().findFragmentByTag("POSTS") != null){
             ft.hide(getSupportFragmentManager().findFragmentByTag("POSTS"));
         }
-    }
-
-    public void performTransition(Intent i, int from, int to) {
-        startActivity(i);
-        overridePendingTransition(from, to);
     }
 }

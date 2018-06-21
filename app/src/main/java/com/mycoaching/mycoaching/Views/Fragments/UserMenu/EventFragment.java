@@ -174,11 +174,6 @@ public class EventFragment extends Fragment implements EventAdapter.OnClick{
 
     }
 
-    public void performTransition(Intent i, int from, int to) {
-        startActivity(i);
-        getActivity().overridePendingTransition(from, to);
-    }
-
     private void sortElements(){
         for(Event e : listEvents){
             try{

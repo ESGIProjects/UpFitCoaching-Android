@@ -27,6 +27,8 @@ import java.io.IOException;
 
 import io.realm.Realm;
 
+import static com.mycoaching.mycoaching.Util.CommonMethods.performTransition;
+
 public class CoachMainActivity extends AppCompatActivity {
 
     Realm realm = null;
@@ -154,7 +156,7 @@ public class CoachMainActivity extends AppCompatActivity {
                                 }
                             }
                         }).start();
-                        performTransition(intent, R.animator.slide_from_left, R.animator.slide_to_right);
+                        performTransition(CoachMainActivity.this,intent, R.animator.slide_from_left, R.animator.slide_to_right);
                         finish();
                     }
                 })
@@ -188,10 +190,5 @@ public class CoachMainActivity extends AppCompatActivity {
         if(getSupportFragmentManager().findFragmentByTag("POSTS") != null){
             ft.hide(getSupportFragmentManager().findFragmentByTag("POSTS"));
         }
-    }
-
-    public void performTransition(Intent i, int from, int to) {
-        startActivity(i);
-        overridePendingTransition(from, to);
     }
 }

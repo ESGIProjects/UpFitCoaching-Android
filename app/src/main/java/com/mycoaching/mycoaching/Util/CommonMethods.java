@@ -1,6 +1,8 @@
 package com.mycoaching.mycoaching.Util;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.widget.EditText;
@@ -116,5 +118,18 @@ public class CommonMethods {
      */
     public static JSONObject getJSONFromString(String s) throws Exception {
         return new JSONObject(s);
+    }
+
+
+    /**
+     * @param a the calling activity
+     * @param i the intent to perform
+     * @param from the starting point
+     * @param to the destination
+     *
+     */
+    public static void performTransition(Activity a, Intent i, int from, int to) {
+        a.startActivity(i);
+        a.overridePendingTransition(from, to);
     }
 }
