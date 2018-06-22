@@ -44,6 +44,8 @@ import okhttp3.WebSocketListener;
 
 import static com.mycoaching.mycoaching.Util.CommonMethods.getDate;
 import static com.mycoaching.mycoaching.Util.CommonMethods.getJSONFromString;
+import static com.mycoaching.mycoaching.Util.Constants.WEB_SOCKET_ENDPOINT;
+import static com.mycoaching.mycoaching.Util.Constants.WEB_SOCKET_TIMER;
 
 /**
  * Created by kevin on 28/04/2018.
@@ -51,17 +53,16 @@ import static com.mycoaching.mycoaching.Util.CommonMethods.getJSONFromString;
 
 public class ChatFragment extends Fragment {
 
+    private MessageAdapter ma;
+    private List<Message> lm = new ArrayList<>();
+    private Realm r;
+    private UserRealm ur;
+    private WebSocket ws = null;
+    private Request request;
+    private boolean isCoach = false;
+    static boolean isActive = false;
     View v;
     RecyclerView rv;
-    MessageAdapter ma;
-    List<Message> lm = new ArrayList<>();
-    Realm r;
-    UserRealm ur;
-    WebSocket ws = null;
-    Request request;
-    boolean isCoach = false;
-    public static boolean isActive = false;
-    int TIMER = 1000;
     ProgressDialog pd;
 
     @BindView(R.id.input)
@@ -156,7 +157,7 @@ public class ChatFragment extends Fragment {
             });
             isCoach = true;
         } else {
-            request = new Request.Builder().url("ws://212.47.234.147/ws?id=" + ur.getId()).build();
+            request = new Request.Builder().url(WEB_SOCKET_ENDPOINT + ur.getId()).build();
             ws = OkHttpSingleton.getInstance().newWebSocket(request, new CustomWSListener());
             getConversation();
             ma = new MessageAdapter(lm);
@@ -259,7 +260,7 @@ public class ChatFragment extends Fragment {
                 public void run() {
                     ws = OkHttpSingleton.getInstance().newWebSocket(request, new CustomWSListener());
                 }
-            },TIMER);
+            },WEB_SOCKET_TIMER);
             t.printStackTrace();
         }
     }

@@ -40,28 +40,27 @@ import okhttp3.WebSocketListener;
 
 import static com.mycoaching.mycoaching.Util.CommonMethods.getDate;
 import static com.mycoaching.mycoaching.Util.CommonMethods.getJSONFromString;
+import static com.mycoaching.mycoaching.Util.Constants.WEB_SOCKET_ENDPOINT;
+import static com.mycoaching.mycoaching.Util.Constants.WEB_SOCKET_TIMER;
 
 /**
  * Created by kevin on 17/05/2018.
  */
+
 public class ListChatFragment extends Fragment implements ContactAdapter.OnClick {
 
+    private ContactAdapter ca;
+    private List<Contact> lc = new ArrayList<>();
+    private ArrayList<Message> lm = new ArrayList<>();
+    private List<Integer> ids = new ArrayList<>();
+    public static boolean isActive = false;
+    private Realm r;
+    private UserRealm ur;
+    private WebSocket ws;
+    private Request request;
     View v;
     RecyclerView rv;
-    ContactAdapter ca;
-    List<Contact> lc = new ArrayList<>();
-    ArrayList<Message> lm = new ArrayList<>();
-    List<Integer> ids = new ArrayList();
-    public static boolean isActive = false;
-    Realm r;
-    UserRealm ur;
     Contact c;
-
-    WebSocket ws;
-
-    int TIMER = 1000;
-    Request request;
-
     FragmentManager fm;
 
     @Override
@@ -80,7 +79,7 @@ public class ListChatFragment extends Fragment implements ContactAdapter.OnClick
         rv.setItemAnimator(new DefaultItemAnimator());
         rv.setAdapter(ca);
 
-        request = new Request.Builder().url("ws://212.47.234.147/ws?id=" + ur.getId()).build();
+        request = new Request.Builder().url(WEB_SOCKET_ENDPOINT + ur.getId()).build();
         ws = OkHttpSingleton.getInstance().newWebSocket(request, new CustomWebSocketListener());
 
         getContacts();
@@ -206,7 +205,7 @@ public class ListChatFragment extends Fragment implements ContactAdapter.OnClick
                 public void run() {
                     ws = OkHttpSingleton.getInstance().newWebSocket(request, new CustomWebSocketListener());
                 }
-            },TIMER);
+            },WEB_SOCKET_TIMER);
             t.printStackTrace();
         }
     }

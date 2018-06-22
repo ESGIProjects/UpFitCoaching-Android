@@ -23,8 +23,6 @@ public class CommonMethods {
     private CommonMethods() {
 
     }
-
-
     /**
      * @param context The context attached to the current environment
      * @return true if there is network is available and false if it's unavailable
