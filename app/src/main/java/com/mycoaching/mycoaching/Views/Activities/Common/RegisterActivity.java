@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.mycoaching.mycoaching.R;
 import com.mycoaching.mycoaching.Views.Fragments.Register.CredentialsFragment;
-import com.mycoaching.mycoaching.Views.Fragments.Register.RegisterChoiceFragment;
 
 /**
  * Created by kevin on 06/03/2018.

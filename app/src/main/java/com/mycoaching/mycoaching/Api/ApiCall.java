@@ -3,8 +3,8 @@ package com.mycoaching.mycoaching.Api;
 import android.util.Log;
 
 import com.mycoaching.mycoaching.Models.Event;
-import com.mycoaching.mycoaching.Models.Realm.Message;
 import com.mycoaching.mycoaching.Models.Post;
+import com.mycoaching.mycoaching.Models.Realm.Message;
 import com.mycoaching.mycoaching.Models.Retrofit.UserRetrofit;
 import com.mycoaching.mycoaching.Models.Thread;
 
@@ -289,6 +289,32 @@ public class ApiCall {
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
+                ApiResults sir = new ApiResults();
+                sir.setException(t);
+                srl.onResult(sir);
+            }
+        });
+    }
+
+    /**
+     * Endpoint for firebase token
+     */
+
+    public static void updateUser(String userId, String mail, String password, String firstName,
+                                  String lastName, String city, String phoneNumber, String address,
+                                  final ServiceResultListener srl){
+        ApiUtils.getApiInstance().updateUser(userId,mail,password,firstName,lastName,city,phoneNumber,
+                address).enqueue(new Callback<UserRetrofit>() {
+            @Override
+            public void onResponse(Call<UserRetrofit> call, Response<UserRetrofit> response) {
+                ApiResults sir = new ApiResults();
+                sir.setResponseCode(response.code());
+                sir.setUr(response.body());
+                srl.onResult(sir);
+            }
+
+            @Override
+            public void onFailure(Call<UserRetrofit> call, Throwable t) {
                 ApiResults sir = new ApiResults();
                 sir.setException(t);
                 srl.onResult(sir);

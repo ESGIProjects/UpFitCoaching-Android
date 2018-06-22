@@ -1,8 +1,8 @@
 package com.mycoaching.mycoaching.Api;
 
 import com.mycoaching.mycoaching.Models.Event;
-import com.mycoaching.mycoaching.Models.Realm.Message;
 import com.mycoaching.mycoaching.Models.Post;
+import com.mycoaching.mycoaching.Models.Realm.Message;
 import com.mycoaching.mycoaching.Models.Retrofit.UserRetrofit;
 import com.mycoaching.mycoaching.Models.Thread;
 
@@ -103,4 +103,16 @@ public interface ApiInterface {
     @FormUrlEncoded
     Call<Void> putToken(@Field("userId") String userId,@Field("token") String token,
                            @Nullable @Field("oldToken") String oldToken);
+
+    /**
+     * Endpoint for profile
+     */
+
+    @PUT("users/")
+    @FormUrlEncoded
+    Call<UserRetrofit> updateUser(@Field("userId") String userId, @Field("mail") String mail,
+                                  @Field("password") String password, @Field("firstName") String firstName,
+                                  @Field("lastName") String lastName, @Field("city") String city,
+                                  @Field("phoneNumber") String phoneNumber, @Field("address") String address);
+
 }

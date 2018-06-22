@@ -17,8 +17,8 @@ import com.mycoaching.mycoaching.R;
 import com.mycoaching.mycoaching.Views.Activities.Common.LoginActivity;
 import com.mycoaching.mycoaching.Views.Activities.Common.SettingsActivity;
 import com.mycoaching.mycoaching.Views.Fragments.Common.ChatFragment;
-import com.mycoaching.mycoaching.Views.Fragments.Common.ThreadFragment;
 import com.mycoaching.mycoaching.Views.Fragments.Common.EventFragment;
+import com.mycoaching.mycoaching.Views.Fragments.Common.ThreadFragment;
 import com.mycoaching.mycoaching.Views.Fragments.UserMenu.FollowUpFragment;
 import com.mycoaching.mycoaching.Views.Fragments.UserMenu.TipsFragment;
 
