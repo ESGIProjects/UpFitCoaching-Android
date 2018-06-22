@@ -28,16 +28,21 @@ import com.mycoaching.mycoaching.Views.Dialogs.EditEvent;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
+
+import static com.mycoaching.mycoaching.Util.Constants.DATE_FORMATTER;
 
 /**
  * Created by kevin on 28/04/2018.
@@ -45,18 +50,18 @@ import io.realm.Realm;
 
 public class EventFragment extends Fragment implements EventAdapter.OnClick{
 
-    private View v;
     private List<Event> listEvents = new ArrayList<>();
     private List<CalendarDay> listDaysSession = new ArrayList<>();
     private List<CalendarDay> listDaysAppointment = new ArrayList<>();
     private List<CalendarDay> listDaysCombined = new ArrayList<>();
-    private SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+    private SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMATTER, Locale.getDefault());
     private RecyclerView rv;
-    private Realm r;
     private UserRealm ur;
     private EventAdapter ea;
     private boolean isCoach = false;
-    private Bundle b;
+    View v;
+    Realm r;
+    Bundle b;
     FragmentManager fm;
 
     @BindView(R.id.calendar)
@@ -68,6 +73,7 @@ public class EventFragment extends Fragment implements EventAdapter.OnClick{
     @OnClick(R.id.buttonEvents)
     void action() {
         final AddEvent ae = new AddEvent(getActivity(),isCoach);
+        assert ae.getWindow() != null;
         ae.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         ae.show();
         ae.setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -156,6 +162,7 @@ public class EventFragment extends Fragment implements EventAdapter.OnClick{
         Event e = listEvents.get(position);
         final EditEvent ee = new EditEvent(getActivity(),e.getId(),e.getName(),e.getType(),e.getStart()
                 ,e.getEnd(),ur.getId());
+        assert ee.getWindow() != null;
         ee.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         ee.show();
         ee.setOnDismissListener(new DialogInterface.OnDismissListener() {

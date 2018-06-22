@@ -24,6 +24,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,21 +32,19 @@ import butterknife.OnClick;
 
 import static com.mycoaching.mycoaching.Util.CommonMethods.checkFields;
 import static com.mycoaching.mycoaching.Util.CommonMethods.getDate;
+import static com.mycoaching.mycoaching.Util.Constants.DATE_FORMATTER;
+import static com.mycoaching.mycoaching.Util.Constants.DATE_TIME_FORMATTER;
 
 /**
  * Created by kevin on 18/06/2018.
  */
 public class EditEvent extends Dialog{
 
-    Activity activity;
-    boolean isOK = false;
-    String eventID, name, type, start, end, updatedBy;
-    int typeEvent;
-
-    ProgressDialog pd;
-
-    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-    SimpleDateFormat formatter2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private boolean isOK = false;
+    private String eventID, name, type, start, end, updatedBy;
+    private ProgressDialog pd;
+    private SimpleDateFormat formatterDate = new SimpleDateFormat(DATE_FORMATTER, Locale.getDefault());
+    private SimpleDateFormat formatterDateTime = new SimpleDateFormat(DATE_TIME_FORMATTER, Locale.getDefault());
 
     @BindView(R.id.event_title)
     TextView title;
@@ -75,7 +74,7 @@ public class EditEvent extends Dialog{
                 cal.set(Calendar.MONTH, month);
                 cal.set(Calendar.DAY_OF_MONTH, day);
                 Date date = cal.getTime();
-                b.setText(formatter.format(date));
+                b.setText(formatterDate.format(date));
             }
         },Integer.valueOf(start.split(" ")[0].split("-")[0]),Integer.valueOf(start.split(" ")[0].split("-")[1])-1
                 ,Integer.valueOf(start.split(" ")[0].split("-")[2]));
@@ -92,7 +91,7 @@ public class EditEvent extends Dialog{
                 cal.set(Calendar.MONTH, month);
                 cal.set(Calendar.DAY_OF_MONTH, day);
                 Date date = cal.getTime();
-                b.setText(formatter.format(date));
+                b.setText(formatterDate.format(date));
             }
         },Integer.valueOf(end.split(" ")[0].split("-")[0]),Integer.valueOf(end.split(" ")[0].split("-")[1])-1
                 ,Integer.valueOf(end.split(" ")[0].split("-")[2]));
@@ -136,8 +135,8 @@ public class EditEvent extends Dialog{
                 type = "1";
             }
             try {
-                if (formatter2.parse(event_start_date.getText().toString() + " " + event_start_time.getText().toString())
-                        .compareTo(formatter2.parse(event_end_date.getText().toString() + " " + event_end_time.getText().toString())) > 0) {
+                if (formatterDateTime.parse(event_start_date.getText().toString() + " " + event_start_time.getText().toString())
+                        .compareTo(formatterDateTime.parse(event_end_date.getText().toString() + " " + event_end_time.getText().toString())) > 0) {
                     Toast.makeText(getContext(), "La date de fin est antérieure à la date de départ", Toast.LENGTH_LONG).show();
                     pd.dismiss();
                 }
@@ -188,7 +187,6 @@ public class EditEvent extends Dialog{
     public EditEvent(Activity a, String eventID, String name, String type, String start
             ,String end, String updatedBy) {
         super(a);
-        this.activity = a;
         this.eventID = eventID;
         this.name = name;
         this.type = type;

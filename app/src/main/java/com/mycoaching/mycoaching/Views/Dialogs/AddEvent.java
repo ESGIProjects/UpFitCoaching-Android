@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -41,6 +42,8 @@ import io.realm.Realm;
 
 import static com.mycoaching.mycoaching.Util.CommonMethods.checkFields;
 import static com.mycoaching.mycoaching.Util.CommonMethods.getDate;
+import static com.mycoaching.mycoaching.Util.Constants.DATE_FORMATTER;
+import static com.mycoaching.mycoaching.Util.Constants.DATE_TIME_FORMATTER;
 
 /**
  * Created by kevin on 16/06/2018.
@@ -48,23 +51,18 @@ import static com.mycoaching.mycoaching.Util.CommonMethods.getDate;
 
 public class AddEvent extends Dialog{
 
-    Realm r;
-    UserRealm ur;
+    private Realm r;
+    private UserRealm ur;
+    private boolean isCoach;
+    private ProgressDialog pd;
+    private boolean isOK = false;
+    private SimpleDateFormat formatterDate = new SimpleDateFormat(DATE_FORMATTER, Locale.getDefault());
+    private SimpleDateFormat formatterDateTime = new SimpleDateFormat(DATE_TIME_FORMATTER, Locale.getDefault());
+    private AutoCompleteTextView listUser;
+    private List<String> list;
+    private String idSecondUser;
 
-    boolean isCoach = false;
-
-    Activity activity;
-    ProgressDialog pd;
-    int type;
-
-    boolean isOK = false;
-
-    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-    SimpleDateFormat formatter2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-    AutoCompleteTextView listUser;
-    List<String> list;
-    String idSecondUser;
+    public int type;
 
     @BindView(R.id.event_title)
     EditText eventTitle;
@@ -95,7 +93,7 @@ public class AddEvent extends Dialog{
                 cal.set(Calendar.MONTH, month);
                 cal.set(Calendar.DAY_OF_MONTH, day);
                 Date date = cal.getTime();
-                b.setText(formatter.format(date));
+                b.setText(formatterDate.format(date));
             }
         },Calendar.getInstance().get(Calendar.YEAR),Calendar.getInstance().get(Calendar.MONTH)
                 ,Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
@@ -138,8 +136,8 @@ public class AddEvent extends Dialog{
                 }
             }
             try{
-                if(formatter2.parse(event_start_date.getText().toString() + " " + event_start_time.getText().toString())
-                        .compareTo(formatter2.parse(event_end_date.getText().toString() + " " + event_end_time.getText().toString())) > 0){
+                if(formatterDateTime.parse(event_start_date.getText().toString() + " " + event_start_time.getText().toString())
+                        .compareTo(formatterDateTime.parse(event_end_date.getText().toString() + " " + event_end_time.getText().toString())) > 0){
                     Toast.makeText(getContext(),"La date de fin est antérieure à la date de départ",Toast.LENGTH_LONG).show();
                     pd.dismiss();
                 }
@@ -184,7 +182,6 @@ public class AddEvent extends Dialog{
 
     public AddEvent(Activity a, boolean isCoach) {
         super(a);
-        this.activity = a;
         this.isCoach = isCoach;
     }
 
@@ -210,9 +207,7 @@ public class AddEvent extends Dialog{
                     (getContext(), R.layout.dropdown, list);
             listUser.setAdapter(adapter);
             listUser.setThreshold(1);
-
         }
-
         ButterKnife.bind(this);
     }
 

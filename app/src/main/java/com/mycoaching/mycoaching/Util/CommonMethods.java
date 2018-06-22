@@ -13,6 +13,9 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
+
+import static com.mycoaching.mycoaching.Util.Constants.DATE_TIME_FORMATTER;
 
 /**
  * Created by kevin on 17/03/2018.
@@ -84,7 +87,7 @@ public class CommonMethods {
      * @return the current date with a specific format (yyyy-MM-dd HH:mm:ss)
      */
     public static String getDate() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_TIME_FORMATTER, Locale.getDefault());
         Date date = new Date();
         return sdf.format(date);
     }
@@ -124,7 +127,6 @@ public class CommonMethods {
      * @param i the intent to perform
      * @param from the starting point
      * @param to the destination
-     *
      */
     public static void performTransition(Activity a, Intent i, int from, int to) {
         a.startActivity(i);
