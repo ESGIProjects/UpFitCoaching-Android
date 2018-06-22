@@ -29,8 +29,8 @@ import static com.mycoaching.mycoaching.Util.CommonMethods.isSame;
 public class CredentialsFragment extends Fragment {
 
     View v;
-    Bundle b;
-    ProgressDialog pd = null;
+    private Bundle b;
+    private ProgressDialog pd;
 
     @BindView(R.id.mail)
     EditText mail;

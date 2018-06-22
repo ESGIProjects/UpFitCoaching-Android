@@ -60,7 +60,7 @@ public class ChatFragment extends Fragment {
     private WebSocket ws = null;
     private Request request;
     private boolean isCoach = false;
-    static boolean isActive = false;
+    public static boolean isActive = false;
     View v;
     RecyclerView rv;
     ProgressDialog pd;

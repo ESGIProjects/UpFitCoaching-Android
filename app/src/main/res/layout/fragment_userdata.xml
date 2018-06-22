@@ -87,6 +87,7 @@
         android:layout_height="wrap_content"
         android:textColorHint="@color/colorWhite"
         android:textColor="@color/colorWhite"
+        android:textSize="18sp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"/>
 
@@ -120,6 +121,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/phoneNumber"
+            android:inputType="phone"
             android:singleLine="true"
             android:nextFocusDown="@id/account_creation" />
     </android.support.design.widget.TextInputLayout>

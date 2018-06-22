@@ -27,6 +27,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,17 +37,18 @@ import io.realm.Realm;
 import static com.mycoaching.mycoaching.Util.CommonMethods.checkFields;
 import static com.mycoaching.mycoaching.Util.CommonMethods.getDate;
 import static com.mycoaching.mycoaching.Util.CommonMethods.performTransition;
+import static com.mycoaching.mycoaching.Util.Constants.DATE_FORMATTER;
 
 public class UserDataFragment extends Fragment {
 
-    View v;
-    Bundle b;
-    ProgressDialog pd = null;
-    Intent i;
-    Realm realm = null;
-    String sex;
+    private Bundle b;
+    private ProgressDialog pd;
+    private Intent i;
+    private Realm realm;
+    private String sex;
+    private SimpleDateFormat formatterDate = new SimpleDateFormat(DATE_FORMATTER, Locale.getDefault());
 
-    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+    View v;
 
     @BindView(R.id.firstName)
     EditText firstName;
@@ -67,7 +69,7 @@ public class UserDataFragment extends Fragment {
                 cal.set(Calendar.MONTH, month);
                 cal.set(Calendar.DAY_OF_MONTH, day);
                 Date date = cal.getTime();
-                tv.setText(formatter.format(date));
+                tv.setText(formatterDate.format(date));
             }
         },Calendar.getInstance().get(Calendar.YEAR),Calendar.getInstance().get(Calendar.MONTH)
                 ,Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
@@ -109,7 +111,7 @@ public class UserDataFragment extends Fragment {
             pd.setMessage("Création du compte en cours...");
             pd.show();
             try{
-                if(formatter.parse(birthDate.getText().toString()).compareTo(formatter.parse(getDate())) > 0){
+                if(formatterDate.parse(birthDate.getText().toString()).compareTo(formatterDate.parse(getDate())) > 0){
                     Toast.makeText(getContext(),"Votre date de naissance est supérieure à la date actuelle...",Toast.LENGTH_LONG).show();
                     pd.dismiss();
                 }
