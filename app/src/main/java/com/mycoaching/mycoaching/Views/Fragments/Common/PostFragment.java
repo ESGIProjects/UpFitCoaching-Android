@@ -35,15 +35,14 @@ import static com.mycoaching.mycoaching.Util.CommonMethods.getDate;
  */
 public class PostFragment extends Fragment {
 
-    View v;
-    Bundle bundle;
-    List<Post> lp = new ArrayList<>();
-    PostAdapter pa;
+    private Bundle bundle;
+    private List<Post> lp = new ArrayList<>();
+    private PostAdapter pa;
+    private UserRealm ur;
     RecyclerView rv;
     ProgressDialog pd;
-
+    View v;
     Realm r;
-    UserRealm ur;
 
     @BindView(R.id.inputPost)
     EditText et;

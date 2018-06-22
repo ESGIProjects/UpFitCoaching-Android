@@ -29,9 +29,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.mycoaching.mycoaching.Util.Constants.DATE_FORMATTER;
 
 /**
  * Created by kevin on 28/04/2018.
@@ -40,16 +43,17 @@ import butterknife.OnClick;
 
 public class ThreadFragment extends Fragment implements ThreadAdapter.OnClick {
 
+    private List<Thread> lt = new ArrayList<>();
+    private SimpleDateFormat formatterDate = new SimpleDateFormat(DATE_FORMATTER, Locale.getDefault());
+    private ThreadAdapter ta;
+    private PostFragment pf;
     View v;
-    List<Thread> lt = new ArrayList<>();
-    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     RecyclerView rv;
-    ThreadAdapter ta;
     FragmentManager fm;
-    PostFragment pf;
 
     @OnClick(R.id.buttonThread) void openDialog(){
         final AddThread at = new AddThread(getActivity());
+        assert at.getWindow() != null;
         at.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         at.show();
         at.setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -96,7 +100,7 @@ public class ThreadFragment extends Fragment implements ThreadAdapter.OnClick {
                         public int compare(Thread t1, Thread t2) {
                             int comp = 0;
                             try{
-                                comp = formatter.parse(t1.getLastUpdated()).compareTo(formatter.parse(t2.getLastUpdated()));
+                                comp = formatterDate.parse(t1.getLastUpdated()).compareTo(formatterDate.parse(t2.getLastUpdated()));
                             }
                             catch (ParseException pe){
                                 pe.printStackTrace();
