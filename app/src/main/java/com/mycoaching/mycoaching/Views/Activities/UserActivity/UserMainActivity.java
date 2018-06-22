@@ -15,11 +15,12 @@ import android.widget.TextView;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.mycoaching.mycoaching.R;
 import com.mycoaching.mycoaching.Views.Activities.Common.LoginActivity;
+import com.mycoaching.mycoaching.Views.Activities.Common.SettingsActivity;
 import com.mycoaching.mycoaching.Views.Fragments.Common.ChatFragment;
 import com.mycoaching.mycoaching.Views.Fragments.Common.ThreadFragment;
-import com.mycoaching.mycoaching.Views.Fragments.UserMenu.CalendarFragment;
-import com.mycoaching.mycoaching.Views.Fragments.UserMenu.EventFragment;
+import com.mycoaching.mycoaching.Views.Fragments.Common.EventFragment;
 import com.mycoaching.mycoaching.Views.Fragments.UserMenu.FollowUpFragment;
+import com.mycoaching.mycoaching.Views.Fragments.UserMenu.TipsFragment;
 
 import java.io.IOException;
 
@@ -53,7 +54,7 @@ public class UserMainActivity extends AppCompatActivity {
 
     FollowUpFragment fuf = new FollowUpFragment();
     EventFragment ef = new EventFragment();
-    CalendarFragment cf = new CalendarFragment();
+    TipsFragment tif = new TipsFragment();
     ChatFragment chf = new ChatFragment();
     ThreadFragment tf = new ThreadFragment();
     FragmentTransaction ft;
@@ -74,18 +75,18 @@ public class UserMainActivity extends AppCompatActivity {
                     ft.show(fuf);
                     ft.commit();
                     return true;
-                case R.id.navigation_session:
+                case R.id.navigation_tips:
                     ft = getSupportFragmentManager().beginTransaction();
                     hideFragments();
                     hideTF();
-                    ft.show(ef);
+                    ft.show(tif);
                     ft.commit();
                     return true;
                 case R.id.navigation_calendar:
                     ft = getSupportFragmentManager().beginTransaction();
                     hideFragments();
                     hideTF();
-                    ft.show(cf);
+                    ft.show(ef);
                     ft.commit();
                     return true;
                 case R.id.navigation_chat:
@@ -126,7 +127,7 @@ public class UserMainActivity extends AppCompatActivity {
         ft = getSupportFragmentManager().beginTransaction();
         addFragments();
         hideFragments();
-        ft.show(cf);
+        ft.show(ef);
         ft.commit();
         realm = Realm.getDefaultInstance();
         ButterKnife.bind(this);
@@ -183,7 +184,7 @@ public class UserMainActivity extends AppCompatActivity {
     public void addFragments() {
         ft.add(R.id.container, fuf);
         ft.add(R.id.container, ef);
-        ft.add(R.id.container, cf);
+        ft.add(R.id.container, tif);
         ft.add(R.id.container, chf);
         ft.add(R.id.container, tf,"TF");
     }
@@ -192,7 +193,7 @@ public class UserMainActivity extends AppCompatActivity {
         ChatFragment.isActive = false;
         ft.hide(fuf);
         ft.hide(ef);
-        ft.hide(cf);
+        ft.hide(tif);
         ft.hide(chf);
         ft.hide(tf);
     }

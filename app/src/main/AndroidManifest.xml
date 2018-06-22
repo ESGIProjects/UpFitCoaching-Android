@@ -37,7 +37,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeNAB" />
         <activity
-            android:name=".Views.Activities.UserActivity.SettingsActivity"
+            android:name=".Views.Activities.Common.SettingsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeNAB" />
 

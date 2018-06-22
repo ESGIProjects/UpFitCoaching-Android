@@ -1,4 +1,4 @@
-package com.mycoaching.mycoaching.Util;
+package com.mycoaching.mycoaching.Util.Miscellaneous;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.DayViewDecorator;

@@ -1,4 +1,4 @@
-package com.mycoaching.mycoaching.Util;
+package com.mycoaching.mycoaching.Util.Miscellaneous;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;

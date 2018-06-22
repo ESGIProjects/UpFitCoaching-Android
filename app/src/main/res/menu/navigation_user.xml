@@ -7,9 +7,9 @@
         android:title="@string/title_followUp" />
 
     <item
-        android:id="@+id/navigation_session"
-        android:icon="@drawable/ic_fitness_center_black_24dp"
-        android:title="@string/title_session" />
+        android:id="@+id/navigation_tips"
+        android:icon="@drawable/baseline_wb_incandescent_black_24"
+        android:title="@string/title_tips" />
 
     <item
         android:id="@+id/navigation_calendar"

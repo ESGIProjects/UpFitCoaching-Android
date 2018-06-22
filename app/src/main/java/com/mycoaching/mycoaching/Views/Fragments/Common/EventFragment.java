@@ -1,7 +1,6 @@
-package com.mycoaching.mycoaching.Views.Fragments.UserMenu;
+package com.mycoaching.mycoaching.Views.Fragments.Common;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -22,7 +21,7 @@ import com.mycoaching.mycoaching.Api.ServiceResultListener;
 import com.mycoaching.mycoaching.Models.Event;
 import com.mycoaching.mycoaching.Models.Realm.UserRealm;
 import com.mycoaching.mycoaching.R;
-import com.mycoaching.mycoaching.Util.EventDecorator;
+import com.mycoaching.mycoaching.Util.Miscellaneous.EventDecorator;
 import com.mycoaching.mycoaching.Views.Adapters.EventAdapter;
 import com.mycoaching.mycoaching.Views.Dialogs.AddEvent;
 import com.mycoaching.mycoaching.Views.Dialogs.EditEvent;

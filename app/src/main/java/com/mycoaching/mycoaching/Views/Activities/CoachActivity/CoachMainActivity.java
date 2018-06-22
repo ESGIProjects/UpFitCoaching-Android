@@ -21,7 +21,7 @@ import com.mycoaching.mycoaching.Views.Activities.Common.LoginActivity;
 import com.mycoaching.mycoaching.Views.Fragments.CoachMenu.ListChatFragment;
 import com.mycoaching.mycoaching.Views.Fragments.Common.ChatFragment;
 import com.mycoaching.mycoaching.Views.Fragments.Common.ThreadFragment;
-import com.mycoaching.mycoaching.Views.Fragments.UserMenu.EventFragment;
+import com.mycoaching.mycoaching.Views.Fragments.Common.EventFragment;
 
 import java.io.IOException;
 
