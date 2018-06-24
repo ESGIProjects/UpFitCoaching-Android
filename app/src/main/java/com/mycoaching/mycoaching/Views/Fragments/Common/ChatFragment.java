@@ -193,6 +193,12 @@ public class ChatFragment extends Fragment {
                     r.executeTransaction(new Realm.Transaction() {
                         @Override
                         public void execute(Realm realm) {
+                            ur.setMailCoach(lm.get(lm.size()-1).getReceiver().getMail());
+                            ur.setFirstNameCoach(lm.get(lm.size()-1).getReceiver().getFirstName());
+                            ur.setLastNameCoach(lm.get(lm.size()-1).getReceiver().getLastName());
+                            ur.setCityCoach(lm.get(lm.size()-1).getReceiver().getCity());
+                            ur.setAddressCoach(lm.get(lm.size()-1).getReceiver().getAddress());
+                            ur.setPhoneNumberCoach(lm.get(lm.size()-1).getReceiver().getPhoneNumber());
                             RealmList<Message> messages = new RealmList<>();
                             messages.addAll(lm);
                             r.insert(messages);
