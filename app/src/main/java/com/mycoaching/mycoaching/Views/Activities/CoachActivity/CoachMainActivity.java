@@ -22,6 +22,7 @@ import com.mycoaching.mycoaching.Models.Realm.UserRealm;
 import com.mycoaching.mycoaching.R;
 import com.mycoaching.mycoaching.Views.Activities.Common.LoginActivity;
 import com.mycoaching.mycoaching.Views.Activities.Common.SettingsActivity;
+import com.mycoaching.mycoaching.Views.Fragments.CoachMenu.ClientsFragment;
 import com.mycoaching.mycoaching.Views.Fragments.CoachMenu.ListChatFragment;
 import com.mycoaching.mycoaching.Views.Fragments.Common.ChatFragment;
 import com.mycoaching.mycoaching.Views.Fragments.Common.EventFragment;
@@ -43,6 +44,7 @@ public class CoachMainActivity extends AppCompatActivity {
 
     BottomNavigationView navigation;
 
+    ClientsFragment cf = new ClientsFragment();
     ListChatFragment lcf = new ListChatFragment();
     ThreadFragment tf = new ThreadFragment();
     EventFragment ef = new EventFragment();
@@ -60,6 +62,13 @@ public class CoachMainActivity extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
+                case R.id.navigation_users:
+                    ft = getSupportFragmentManager().beginTransaction();
+                    hideFragments();
+                    hideSpecificFragments();
+                    ft.show(cf);
+                    ft.commit();
+                    return true;
                 case R.id.navigation_calendar:
                     ft = getSupportFragmentManager().beginTransaction();
                     hideFragments();
@@ -209,6 +218,7 @@ public class CoachMainActivity extends AppCompatActivity {
     }
 
     public void addFragments() {
+        ft.add(R.id.container, cf);
         ft.add(R.id.container, ef);
         ft.add(R.id.container, lcf,"LCF");
         ft.add(R.id.container, tf,"TF");
@@ -217,6 +227,7 @@ public class CoachMainActivity extends AppCompatActivity {
     public void hideFragments() {
         ListChatFragment.isActive = false;
         ChatFragment.isActive = false;
+        ft.hide(cf);
         ft.hide(ef);
         ft.hide(lcf);
         ft.hide(tf);
