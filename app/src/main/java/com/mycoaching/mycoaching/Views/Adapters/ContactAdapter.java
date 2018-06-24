@@ -61,7 +61,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
                 onClick.onItemClick(position);
             }
         });
-        holder.letter.setText(c.getFirstName().substring(0, 1));
+        holder.letter.setText(c.getFirstName().substring(0, 1).toUpperCase());
         holder.firstName.setText(c.getFirstName());
         holder.lastName.setText(c.getLastName());
         holder.lastMessage.setText(c.getLastMessage());
