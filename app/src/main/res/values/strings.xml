@@ -2,6 +2,7 @@
     <string name="app_name">UpFit Coaching</string>
     <string name="mail_label">Email</string>
     <string name="passwd_label">Mot de passe</string>
+    <string name="passwd_label_opt">Mot de passe (optionnel)</string>
     <string name="passwd_confirmation">Confirmation du mot de passe</string>
     <string name="sign_in">Connexion</string>
     <string name="sign_up">Inscription</string>
@@ -72,6 +73,28 @@
     <string name="index">Indices corporels</string>
     <string name="bmi">IMC actuel</string>
     <string name="bfp">IMG actuel</string>
+
+    <string name="edit_profile">Mettre à jour le profil</string>
+    <string name="check_coach">Voir le profil du coach</string>
+    <string name="coach_profile">Profil du Coach</string>
+    <string name="librairies">Librairies utilisées</string>
+    <string name="settings">Réglages</string>
+
+    <string name="coach_firstName">Prénom : %1$s</string>
+    <string name="coach_lastName">Nom : %1$s</string>
+    <string name="coach_mail">Mail : %1$s</string>
+    <string name="coach_tel">Tel : %1$s</string>
+
+    <string name="butterknife_label">Butterknife</string>
+    <string name="butterknife_url">https://github.com/JakeWharton/butterknife</string>
+    <string name="material_label">Material-calendarview</string>
+    <string name="material_url">https://github.com/prolificinteractive/material-calendarview</string>
+    <string name="mockito_label">Mockito</string>
+    <string name="mockito_url">https://github.com/mockito/mockito</string>
+    <string name="mp_label">MPAndroidChart</string>
+    <string name="mp_url">https://github.com/PhilJay/MPAndroidChart</string>
+    <string name="retrofit_label">Retrofit</string>
+    <string name="retrofit_url">https://github.com/square/retrofit</string>
 
     <string-array name="user_type">
         <item>Gratuit</item>

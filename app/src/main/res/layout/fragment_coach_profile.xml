@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:paddingStart="30dp"
+    android:paddingEnd="30dp"
+    android:clickable="true"
+    android:focusable="true">
+
+    <TextView
+        android:id="@+id/title"
+        android:paddingTop="50dp"
+        android:textColor="@color/colorWhite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/coach_profile"
+        android:textSize="35sp"
+        android:textStyle="bold" />
+    
+    <TextView
+        android:id="@+id/firstName"
+        android:layout_below="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorWhite"
+        android:layout_marginTop="30dp"
+        android:textSize="22sp" />
+
+    <TextView
+        android:id="@+id/lastName"
+        android:layout_below="@+id/firstName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorWhite"
+        android:layout_marginTop="15dp"
+        android:textSize="22sp" />
+
+    <TextView
+        android:id="@+id/mail"
+        android:layout_below="@+id/lastName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorWhite"
+        android:layout_marginTop="15dp"
+        android:textSize="22sp" />
+
+    <TextView
+        android:id="@+id/phoneNumber"
+        android:layout_below="@+id/mail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorWhite"
+        android:layout_marginTop="15dp"
+        android:textSize="22sp" />
+
+    <TextView
+        android:id="@+id/address"
+        android:layout_below="@+id/phoneNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorWhite"
+        android:layout_marginTop="15dp"
+        android:textSize="22sp"
+        android:textStyle="italic|bold"/>
+
+</RelativeLayout>

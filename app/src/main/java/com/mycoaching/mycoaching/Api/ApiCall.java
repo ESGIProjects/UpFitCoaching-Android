@@ -297,7 +297,7 @@ public class ApiCall {
     }
 
     /**
-     * Endpoint for firebase token
+     * Endpoint for profile
      */
 
     public static void updateUser(String userId, String mail, String password, String firstName,

@@ -8,16 +8,20 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.mycoaching.mycoaching.Models.Realm.UserRealm;
 import com.mycoaching.mycoaching.R;
 import com.mycoaching.mycoaching.Views.Activities.Common.LoginActivity;
+import com.mycoaching.mycoaching.Views.Activities.Common.SettingsActivity;
 import com.mycoaching.mycoaching.Views.Fragments.CoachMenu.ListChatFragment;
 import com.mycoaching.mycoaching.Views.Fragments.Common.ChatFragment;
 import com.mycoaching.mycoaching.Views.Fragments.Common.EventFragment;
@@ -25,6 +29,8 @@ import com.mycoaching.mycoaching.Views.Fragments.Common.ThreadFragment;
 
 import java.io.IOException;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.realm.Realm;
 
 import static com.mycoaching.mycoaching.Util.CommonMethods.performTransition;
@@ -42,6 +48,11 @@ public class CoachMainActivity extends AppCompatActivity {
     EventFragment ef = new EventFragment();
     Bundle b = new Bundle();
     FragmentTransaction ft;
+
+    boolean doubleTapToExit = false;
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -109,6 +120,58 @@ public class CoachMainActivity extends AppCompatActivity {
         hideFragments();
         ft.show(lcf);
         ft.commit();
+        ButterKnife.bind(this);
+
+        toolbar.inflateMenu(R.menu.overflow);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.settings:
+                        intent = new Intent(CoachMainActivity.this, SettingsActivity.class);
+                        intent.putExtra("isCoach",true);
+                        performTransition(CoachMainActivity.this,intent, R.animator.slide_from_right, R.animator.slide_to_left);
+                        return true;
+                    case R.id.disconnect:
+                        AlertDialog.Builder builder = new AlertDialog.Builder(CoachMainActivity.this, R.style.AlertDialogCustom);
+                        builder.setTitle(R.string.exit).setMessage(R.string.exit_application)
+                                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                        realm.beginTransaction();
+                                        realm.deleteAll();
+                                        realm.commitTransaction();
+                                        realm.close();
+                                        lcf.getWs().close(1000,null);
+                                        new Thread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                try {
+                                                    FirebaseInstanceId.getInstance().deleteInstanceId();
+                                                } catch (IOException e) {
+                                                    e.printStackTrace();
+                                                }
+                                            }
+                                        }).start();
+                                        performTransition(CoachMainActivity.this,intent, R.animator.slide_from_left, R.animator.slide_to_right);
+                                        finish();
+                                    }
+                                })
+                                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                    }
+                                })
+                                .setIcon(R.drawable.logo)
+                                .show();
+                        return true;
+                    default:
+                        System.out.println("");
+                        return true;
+                }
+            }
+        });
     }
 
     @Override
@@ -130,43 +193,19 @@ public class CoachMainActivity extends AppCompatActivity {
             ft.commit();
         }
         else{
-            displayAlert();
+            if(doubleTapToExit) {
+                finishAffinity();
+                lcf.getWs().close(1000,null);
+            }
+            this.doubleTapToExit = true;
+            Toast.makeText(this, "Veuillez appuyer une seconde fois pour quitter.", Toast.LENGTH_SHORT).show();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    doubleTapToExit=false;
+                }
+            }, 2000);
         }
-    }
-
-    public void displayAlert(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(CoachMainActivity.this, R.style.AlertDialogCustom);
-        builder.setTitle(R.string.exit).setMessage(R.string.exit_application)
-                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        intent = new Intent(getApplicationContext(), LoginActivity.class);
-                        realm.beginTransaction();
-                        realm.deleteAll();
-                        realm.commitTransaction();
-                        realm.close();
-                        lcf.getWs().close(1000,null);
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                try {
-                                    FirebaseInstanceId.getInstance().deleteInstanceId();
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }).start();
-                        performTransition(CoachMainActivity.this,intent, R.animator.slide_from_left, R.animator.slide_to_right);
-                        finish();
-                    }
-                })
-                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                    }
-                })
-                .setIcon(R.drawable.logo)
-                .show();
     }
 
     public void addFragments() {
