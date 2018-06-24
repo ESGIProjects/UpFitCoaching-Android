@@ -67,6 +67,12 @@ public class LoginActivity extends AppCompatActivity {
                             if (realm.isEmpty()) {
                                 executeTransaction(realm, ar);
                             }
+                            else{
+                                realm.beginTransaction();
+                                realm.deleteAll();
+                                realm.commitTransaction();
+                                executeTransaction(realm, ar);
+                            }
                             sp = getApplicationContext().getSharedPreferences("user_prefs",MODE_PRIVATE);
                             if((sp.getString("firebase_token", null) == null) || (!sp.getString("firebase_token", null).equals(FirebaseInstanceId.getInstance().getToken()))){
                                 ApiCall.putToken(ar.getUr().getId(), FirebaseInstanceId.getInstance().getToken(), null, new ServiceResultListener() {
@@ -123,7 +129,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        Realm.init(getApplicationContext());
         getSupportActionBar().hide();
         ButterKnife.bind(this);
 
