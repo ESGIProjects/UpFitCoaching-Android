@@ -5,6 +5,7 @@ package com.mycoaching.mycoaching.Views.Activities.CoachActivity;
  */
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -117,7 +118,7 @@ public class CoachMainActivity extends AppCompatActivity {
 
         navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        navigation.getMenu().getItem(1).setChecked(true);
+        navigation.getMenu().getItem(2).setChecked(true);
 
         ft = getSupportFragmentManager().beginTransaction();
 
@@ -185,7 +186,7 @@ public class CoachMainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if(getSupportFragmentManager().findFragmentByTag("POSTS") != null && navigation.getMenu().getItem(2).isChecked()){
+        if(getSupportFragmentManager().findFragmentByTag("POSTS") != null && navigation.getMenu().getItem(3).isChecked()){
             ft = getSupportFragmentManager().beginTransaction();
             ft.remove(getSupportFragmentManager().findFragmentByTag("POSTS"));
             tf.getLt().clear();
@@ -193,7 +194,7 @@ public class CoachMainActivity extends AppCompatActivity {
             ft.show(getSupportFragmentManager().findFragmentByTag("TF"));
             ft.commit();
         }
-        else if(getSupportFragmentManager().findFragmentByTag("MESSAGES") != null && navigation.getMenu().getItem(1).isChecked()){
+        else if(getSupportFragmentManager().findFragmentByTag("MESSAGES") != null && navigation.getMenu().getItem(2).isChecked()){
             ft = getSupportFragmentManager().beginTransaction();
             ft.remove(getSupportFragmentManager().findFragmentByTag("MESSAGES"));
             tf.getLt().clear();

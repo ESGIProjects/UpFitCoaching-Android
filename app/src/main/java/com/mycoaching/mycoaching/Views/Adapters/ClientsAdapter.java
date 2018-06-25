@@ -16,7 +16,7 @@ import io.realm.Realm;
 /**
  * Created by kevin on 20/05/2018.
  */
-public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHolder> {
+public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.MyViewHolder> {
 
     Realm r;
 
@@ -29,25 +29,25 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView letter, firstName, lastName, lastMessage;
+        public TextView letter, firstName, lastName, mail;
 
         public MyViewHolder(View view) {
             super(view);
-            letter = view.findViewById(R.id.contact_letter);
-            firstName = view.findViewById(R.id.contact_firstName);
-            lastName = view.findViewById(R.id.contact_lastName);
-            lastMessage = view.findViewById(R.id.contact_message);
+            letter = view.findViewById(R.id.client_letter);
+            firstName = view.findViewById(R.id.client_firstName);
+            lastName = view.findViewById(R.id.client_lastName);
+            mail = view.findViewById(R.id.client_mail);
         }
     }
 
-    public ContactAdapter(List<Contact> listContacts) {
+    public ClientsAdapter(List<Contact> listContacts) {
         this.listContacts = listContacts;
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.contact_row, parent, false);
+                .inflate(R.layout.clients_row, parent, false);
 
         return new MyViewHolder(itemView);
     }
@@ -64,7 +64,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
         holder.letter.setText(c.getFirstName().substring(0, 1).toUpperCase());
         holder.firstName.setText(c.getFirstName());
         holder.lastName.setText(c.getLastName());
-        holder.lastMessage.setText(c.getLastMessage());
+        holder.mail.setText(c.getMail());
     }
 
     @Override
