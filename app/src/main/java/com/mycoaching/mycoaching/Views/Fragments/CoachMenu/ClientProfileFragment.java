@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.mycoaching.mycoaching.R;
+
 /**
  * Created by kevin on 25/06/2018.
  */
@@ -15,6 +17,8 @@ public class ClientProfileFragment extends Fragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        v = inflater.inflate(R.layout.fragment_user_profile, container, false);
         return v;
     }
 

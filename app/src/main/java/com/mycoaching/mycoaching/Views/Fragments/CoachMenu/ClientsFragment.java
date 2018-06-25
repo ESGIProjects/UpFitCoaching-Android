@@ -2,6 +2,8 @@ package com.mycoaching.mycoaching.Views.Fragments.CoachMenu;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -30,6 +32,7 @@ public class ClientsFragment extends Fragment implements ClientsAdapter.OnClick{
     RecyclerView rv;
     ClientsAdapter ca;
     List<Contact> lc = new ArrayList<>();
+    FragmentManager fm;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -57,8 +60,6 @@ public class ClientsFragment extends Fragment implements ClientsAdapter.OnClick{
     public void getClients(){
         RealmResults<Contact> rc = r.where(Contact.class).findAll();
         lc.addAll(r.copyFromRealm(rc));
-        System.out.println("SIZE : " + lc.size());
-        System.out.println(lc.get(0).getFirstName());
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -69,6 +70,11 @@ public class ClientsFragment extends Fragment implements ClientsAdapter.OnClick{
 
     @Override
     public void onItemClick(int position) {
-
+        fm = getActivity().getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ClientProfileFragment cpf = new ClientProfileFragment();
+        ft.hide(getFragmentManager().findFragmentByTag("CPF"));
+        ft.add(R.id.container, cpf,"PROFILE");
+        ft.commit();
     }
 }

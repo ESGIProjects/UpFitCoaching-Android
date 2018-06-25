@@ -67,7 +67,12 @@ public class CoachMainActivity extends AppCompatActivity {
                     ft = getSupportFragmentManager().beginTransaction();
                     hideFragments();
                     hideSpecificFragments();
-                    ft.show(cf);
+                    if(getSupportFragmentManager().findFragmentByTag("PROFILE") != null){
+                        ft.show(getSupportFragmentManager().findFragmentByTag("PROFILE"));
+                    }
+                    else{
+                        ft.show(cf);
+                    }
                     ft.commit();
                     return true;
                 case R.id.navigation_calendar:
@@ -197,9 +202,13 @@ public class CoachMainActivity extends AppCompatActivity {
         else if(getSupportFragmentManager().findFragmentByTag("MESSAGES") != null && navigation.getMenu().getItem(2).isChecked()){
             ft = getSupportFragmentManager().beginTransaction();
             ft.remove(getSupportFragmentManager().findFragmentByTag("MESSAGES"));
-            tf.getLt().clear();
-            tf.prepareData();
             ft.show(getSupportFragmentManager().findFragmentByTag("LCF"));
+            ft.commit();
+        }
+        else if(getSupportFragmentManager().findFragmentByTag("PROFILE") != null && navigation.getMenu().getItem(0).isChecked()){
+            ft = getSupportFragmentManager().beginTransaction();
+            ft.remove(getSupportFragmentManager().findFragmentByTag("PROFILE"));
+            ft.show(getSupportFragmentManager().findFragmentByTag("CPF"));
             ft.commit();
         }
         else{
@@ -219,7 +228,7 @@ public class CoachMainActivity extends AppCompatActivity {
     }
 
     public void addFragments() {
-        ft.add(R.id.container, cf);
+        ft.add(R.id.container, cf, "CPF");
         ft.add(R.id.container, ef);
         ft.add(R.id.container, lcf,"LCF");
         ft.add(R.id.container, tf,"TF");
@@ -240,6 +249,9 @@ public class CoachMainActivity extends AppCompatActivity {
         }
         if(getSupportFragmentManager().findFragmentByTag("POSTS") != null){
             ft.hide(getSupportFragmentManager().findFragmentByTag("POSTS"));
+        }
+        if(getSupportFragmentManager().findFragmentByTag("PROFILE") != null){
+            ft.hide(getSupportFragmentManager().findFragmentByTag("PROFILE"));
         }
     }
 }
