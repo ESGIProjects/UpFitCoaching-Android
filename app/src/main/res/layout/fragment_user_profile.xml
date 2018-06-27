@@ -9,19 +9,18 @@
     android:focusable="true">
 
     <TextView
-        android:id="@+id/firstName"
+        android:id="@+id/title"
         android:paddingTop="30dp"
         android:textColor="@color/colorWhite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Kévin Le (23 ans)"
         android:textSize="24sp"
         android:textStyle="bold" />
 
     <TextView
         android:layout_marginTop="8dp"
         android:id="@+id/sex"
-        android:layout_below="@id/firstName"
+        android:layout_below="@id/title"
         android:textColor="@color/colorWhite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

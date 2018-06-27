@@ -79,5 +79,16 @@
         android:textStyle="bold|italic"
         android:text="@string/retrofit_label"/>
 
+    <TextView
+        android:layout_marginTop="25dp"
+        android:textColor="@color/colorWhite"
+        android:layout_below="@+id/retrofit_label"
+        android:id="@+id/joda_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:textStyle="bold|italic"
+        android:text="@string/joda_label"/>
+
 
 </RelativeLayout>

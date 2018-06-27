@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mycoaching.mycoaching.Models.Realm.Contact;
+import com.mycoaching.mycoaching.Models.Realm.UserRealm;
 import com.mycoaching.mycoaching.R;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.MyViewHo
 
     Realm r;
 
-    private List<Contact> listContacts;
+    private List<UserRealm> listUsers;
 
     private OnClick onClick;
 
@@ -40,8 +41,8 @@ public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.MyViewHo
         }
     }
 
-    public ClientsAdapter(List<Contact> listContacts) {
-        this.listContacts = listContacts;
+    public ClientsAdapter(List<UserRealm> listUsers) {
+        this.listUsers = listUsers;
     }
 
     @Override
@@ -54,22 +55,22 @@ public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.MyViewHo
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
-        Contact c = listContacts.get(position);
+        UserRealm u = listUsers.get(position);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onClick.onItemClick(position);
             }
         });
-        holder.letter.setText(c.getFirstName().substring(0, 1).toUpperCase());
-        holder.firstName.setText(c.getFirstName());
-        holder.lastName.setText(c.getLastName());
-        holder.mail.setText(c.getMail());
+        holder.letter.setText(u.getFirstName().substring(0, 1).toUpperCase());
+        holder.firstName.setText(u.getFirstName());
+        holder.lastName.setText(u.getLastName());
+        holder.mail.setText(u.getMail());
     }
 
     @Override
     public int getItemCount() {
-        return listContacts.size();
+        return listUsers.size();
     }
 
     public void setOnClick(OnClick oc) {

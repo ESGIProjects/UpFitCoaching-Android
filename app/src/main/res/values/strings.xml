@@ -96,6 +96,8 @@
     <string name="mp_url">https://github.com/PhilJay/MPAndroidChart</string>
     <string name="retrofit_label">Retrofit</string>
     <string name="retrofit_url">https://github.com/square/retrofit</string>
+    <string name="joda_label">Joda time android</string>
+    <string name="joda_url">https://github.com/dlew/joda-time-android</string>
 
     <string-array name="user_type">
         <item>Gratuit</item>

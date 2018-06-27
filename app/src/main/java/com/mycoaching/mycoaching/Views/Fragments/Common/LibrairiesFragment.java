@@ -52,6 +52,12 @@ public class LibrairiesFragment extends Fragment{
         startActivity(browserIntent);
     }
 
+    @OnClick(R.id.joda_label)
+    public void openJoda(){
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getResources().getString(R.string.joda_url)));
+        startActivity(browserIntent);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_librairies, container, false);

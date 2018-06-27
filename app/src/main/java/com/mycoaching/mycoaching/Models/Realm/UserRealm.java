@@ -12,6 +12,22 @@ public class UserRealm extends RealmObject {
     @PrimaryKey
     String id;
 
+    public UserRealm(){
+
+    }
+
+    public UserRealm(String id, String mail, String firstName, String lastName, String sex, String birthDate,
+                     String city, String phoneNumber){
+        this.id = id;
+        this.mail = mail;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.sex = sex;
+        this.birthDate = birthDate;
+        this.city = city;
+        this.phoneNumber = phoneNumber;
+    }
+
     private String mail, firstName, lastName, sex, birthDate, address, city, phoneNumber;
 
     private String idCoach, mailCoach, firstNameCoach, lastNameCoach, addressCoach,
