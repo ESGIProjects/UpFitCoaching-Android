@@ -5,6 +5,7 @@ import android.util.Log;
 import com.mycoaching.mycoaching.Models.Event;
 import com.mycoaching.mycoaching.Models.Post;
 import com.mycoaching.mycoaching.Models.Realm.Message;
+import com.mycoaching.mycoaching.Models.Retrofit.Appraisal;
 import com.mycoaching.mycoaching.Models.Retrofit.UserRetrofit;
 import com.mycoaching.mycoaching.Models.Thread;
 
@@ -322,4 +323,26 @@ public class ApiCall {
         });
     }
 
+    /**
+     * Endpoints for followUp
+     */
+
+    public static void getLastAppraisal(int id, final ServiceResultListener srl) {
+        ApiUtils.getApiInstance().getLastAppraisal(id).enqueue(new Callback<Appraisal>() {
+            @Override
+            public void onResponse(Call<Appraisal> call, Response<Appraisal> response) {
+                ApiResults sir = new ApiResults();
+                sir.setResponseCode(response.code());
+                sir.setLastAppraisal(response.body());
+                srl.onResult(sir);
+            }
+
+            @Override
+            public void onFailure(Call<Appraisal> call, Throwable t) {
+                ApiResults sir = new ApiResults();
+                sir.setException(t);
+                srl.onResult(sir);
+            }
+        });
+    }
 }

@@ -7,8 +7,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.mycoaching.mycoaching.Api.ApiCall;
+import com.mycoaching.mycoaching.Api.ApiResults;
+import com.mycoaching.mycoaching.Api.ServiceResultListener;
+import com.mycoaching.mycoaching.Models.Retrofit.Appraisal;
 import com.mycoaching.mycoaching.R;
 
 import org.joda.time.LocalDate;
@@ -27,6 +32,7 @@ public class ClientProfileFragment extends Fragment{
 
     View v;
     Bundle b;
+    Appraisal a;
 
     @BindView(R.id.title)
     TextView titleLabel;
@@ -39,6 +45,21 @@ public class ClientProfileFragment extends Fragment{
 
     @BindView(R.id.location)
     TextView location;
+
+    @BindView(R.id.appraisalLabel)
+    TextView appraisal;
+
+    @BindView(R.id.goal)
+    TextView goal;
+
+    @BindView(R.id.rep)
+    TextView rep;
+
+    @BindView(R.id.follow)
+    Button follow;
+
+    @BindView(R.id.consult)
+    Button consult;
 
     @OnClick(R.id.call)
     public void call(){
@@ -81,7 +102,27 @@ public class ClientProfileFragment extends Fragment{
             birthDate.setText("Né(e) le " + b.getString("birthDate").split(" ")[0]);
             location.setText("Habite à " + b.get("city"));
         }
+        getLastAppraisal();
         return v;
     }
 
+    public void getLastAppraisal(){
+        ApiCall.getLastAppraisal(Integer.valueOf(b.getString("id")), new ServiceResultListener() {
+            @Override
+            public void onResult(ApiResults ar) {
+                if(ar.getResponseCode() == 200){
+                    a = ar.getLastAppraisal();
+                    appraisal.setVisibility(View.VISIBLE);
+                    goal.setVisibility(View.VISIBLE);
+                    rep.setVisibility(View.VISIBLE);
+                    consult.setVisibility(View.VISIBLE);
+
+                    follow.setText(getResources().getString(R.string.display_appraisal));
+                    goal.setText(getResources().getString(R.string.goal,a.getGoal()));
+                    rep.setText(getResources().getString(R.string.rep,a.getSessionsByWeek()));
+
+                }
+            }
+        });
+    }
 }

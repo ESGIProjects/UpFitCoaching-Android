@@ -3,6 +3,7 @@ package com.mycoaching.mycoaching.Api;
 import com.mycoaching.mycoaching.Models.Event;
 import com.mycoaching.mycoaching.Models.Post;
 import com.mycoaching.mycoaching.Models.Realm.Message;
+import com.mycoaching.mycoaching.Models.Retrofit.Appraisal;
 import com.mycoaching.mycoaching.Models.Retrofit.UserRetrofit;
 import com.mycoaching.mycoaching.Models.Thread;
 
@@ -115,4 +116,10 @@ public interface ApiInterface {
                                   @Field("lastName") String lastName, @Field("city") String city,
                                   @Field("phoneNumber") String phoneNumber, @Field("address") String address);
 
+    /**
+     * Endpoint for followUp
+     */
+
+    @GET("appraisals/")
+    Call<Appraisal> getLastAppraisal(@Query("userId") int id);
 }

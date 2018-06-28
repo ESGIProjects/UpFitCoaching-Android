@@ -3,6 +3,7 @@ package com.mycoaching.mycoaching.Api;
 import com.mycoaching.mycoaching.Models.Event;
 import com.mycoaching.mycoaching.Models.Post;
 import com.mycoaching.mycoaching.Models.Realm.Message;
+import com.mycoaching.mycoaching.Models.Retrofit.Appraisal;
 import com.mycoaching.mycoaching.Models.Retrofit.UserRetrofit;
 import com.mycoaching.mycoaching.Models.Thread;
 
@@ -19,6 +20,7 @@ public class ApiResults {
     private List<Thread> listThread;
     private List<Post> listPost;
     private List<Event> listEvent;
+    private Appraisal lastAppraisal;
     private int responseCode;
     private UserRetrofit ur;
     private Throwable exception;
@@ -77,6 +79,14 @@ public class ApiResults {
 
     public void setUr(UserRetrofit ur) {
         this.ur = ur;
+    }
+
+    public Appraisal getLastAppraisal() {
+        return lastAppraisal;
+    }
+
+    public void setLastAppraisal(Appraisal lastAppraisal) {
+        this.lastAppraisal = lastAppraisal;
     }
 }
 

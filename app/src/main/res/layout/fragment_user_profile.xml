@@ -90,6 +90,7 @@
         android:layout_height="wrap_content"
         android:textSize="24sp"
         android:textStyle="bold"
+        android:text="@string/appraisal"
         android:textColor="@color/colorWhite" />
 
     <TextView
@@ -114,7 +115,8 @@
 
     <Button
         android:layout_below="@id/rep"
-        android:id="@+id/newFollow"
+        android:id="@+id/follow"
+        android:text="@string/new_appraisal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/colorWhite"
@@ -124,8 +126,9 @@
 
     <Button
         android:visibility="gone"
-        android:layout_below="@id/newFollow"
-        android:id="@+id/follow"
+        android:text="@string/display_followUp"
+        android:layout_below="@id/follow"
+        android:id="@+id/consult"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/colorWhite"

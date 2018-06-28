@@ -90,7 +90,7 @@
     <string name="mail">Mail</string>
     <string name="appraisal">Bilan</string>
     <string name="goal">Objectif : %1$s</string>
-    <string name="rep">%1$d séances par semaine</string>
+    <string name="rep">%1$s séance(s) par semaine</string>
     <string name="new_appraisal">Nouvelle fiche bilan</string>
     <string name="display_appraisal">Consulter la fiche bilan</string>
     <string name="display_followUp">Consulter le suivi</string>
