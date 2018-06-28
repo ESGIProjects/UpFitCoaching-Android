@@ -10,7 +10,7 @@
 
     <TextView
         android:id="@+id/title"
-        android:paddingTop="30dp"
+        android:paddingTop="20dp"
         android:textColor="@color/colorWhite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,7 +24,6 @@
         android:textColor="@color/colorWhite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Homme"
         android:textSize="18sp"/>
 
     <TextView
@@ -33,7 +32,6 @@
         android:textColor="@color/colorWhite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Né le 29-12-1994"
         android:textSize="18sp"/>
 
     <TextView
@@ -42,7 +40,6 @@
         android:textColor="@color/colorWhite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Habite à Ermont"
         android:textSize="18sp"/>
 
     <LinearLayout
@@ -62,7 +59,7 @@
             android:textColor="@color/colorWhite"
             android:background="@color/colorPrimaryDark"
             android:textStyle="bold"
-            android:text="Appeler"
+            android:text="@string/call"
             android:layout_marginTop="10dp"/>
 
         <View
@@ -79,53 +76,61 @@
             android:textColor="@color/colorWhite"
             android:background="@color/colorPrimaryDark"
             android:textStyle="bold"
-            android:text="Mail"
+            android:text="@string/mail"
             android:layout_marginTop="10dp"/>
 
     </LinearLayout>
 
+    <TextView
+        android:visibility="gone"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/half_layout"
+        android:id="@+id/appraisalLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/colorWhite" />
+
+    <TextView
+        android:visibility="gone"
+        android:layout_marginTop="8sp"
+        android:layout_below="@+id/appraisalLabel"
+        android:id="@+id/goal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="@color/colorWhite" />
+
+    <TextView
+        android:visibility="gone"
+        android:layout_marginTop="8sp"
+        android:layout_below="@+id/goal"
+        android:id="@+id/rep"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="@color/colorWhite" />
+
     <Button
-        android:layout_below="@id/half_layout"
+        android:layout_below="@id/rep"
+        android:id="@+id/newFollow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorWhite"
+        android:background="@color/colorPrimaryDark"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"/>
+
+    <Button
+        android:visibility="gone"
+        android:layout_below="@id/newFollow"
         android:id="@+id/follow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/colorWhite"
         android:background="@color/colorPrimaryDark"
         android:textStyle="bold"
-        android:text="Afficher le suivi"
-        android:layout_marginTop="30dp"/>
-
-    <Button
-        android:layout_below="@id/follow"
-        android:id="@+id/results"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorWhite"
-        android:background="@color/colorPrimaryDark"
-        android:textStyle="bold"
-        android:text="Consulter la fiche bilan"
-        android:layout_marginTop="30dp"/>
-
-    <Button
-        android:layout_marginTop="15dp"
-        android:layout_below="@id/results"
-        android:id="@+id/update"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorWhite"
-        android:background="@color/colorPrimaryDark"
-        android:textStyle="bold"
-        android:text="Mettre à jour les mensurations" />
-
-    <Button
-        android:layout_marginTop="15dp"
-        android:layout_below="@id/update"
-        android:id="@+id/test"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorWhite"
-        android:background="@color/colorPrimaryDark"
-        android:textStyle="bold"
-        android:text="Effectuer un test" />
+        android:layout_marginTop="20dp"/>
 
 </RelativeLayout>

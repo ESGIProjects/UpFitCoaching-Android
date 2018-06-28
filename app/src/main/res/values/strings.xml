@@ -86,6 +86,15 @@
     <string name="coach_mail">Mail : %1$s</string>
     <string name="coach_tel">Tel : %1$s</string>
 
+    <string name="call">Appeler</string>
+    <string name="mail">Mail</string>
+    <string name="appraisal">Bilan</string>
+    <string name="goal">Objectif : %1$s</string>
+    <string name="rep">%1$d séances par semaine</string>
+    <string name="new_appraisal">Nouvelle fiche bilan</string>
+    <string name="display_appraisal">Consulter la fiche bilan</string>
+    <string name="display_followUp">Consulter le suivi</string>
+
     <string name="butterknife_label">Butterknife</string>
     <string name="butterknife_url">https://github.com/JakeWharton/butterknife</string>
     <string name="material_label">Material-calendarview</string>
