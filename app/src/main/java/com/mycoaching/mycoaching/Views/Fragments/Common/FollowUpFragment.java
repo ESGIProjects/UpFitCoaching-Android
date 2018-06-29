@@ -1,4 +1,4 @@
-package com.mycoaching.mycoaching.Views.Fragments.UserMenu;
+package com.mycoaching.mycoaching.Views.Fragments.Common;
 
 
 import android.os.Bundle;

@@ -21,7 +21,7 @@ import com.mycoaching.mycoaching.Views.Activities.Common.SettingsActivity;
 import com.mycoaching.mycoaching.Views.Fragments.Common.ChatFragment;
 import com.mycoaching.mycoaching.Views.Fragments.Common.EventFragment;
 import com.mycoaching.mycoaching.Views.Fragments.Common.ThreadFragment;
-import com.mycoaching.mycoaching.Views.Fragments.UserMenu.FollowUpFragment;
+import com.mycoaching.mycoaching.Views.Fragments.Common.FollowUpFragment;
 
 import java.io.IOException;
 
@@ -174,7 +174,7 @@ public class UserMainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if(getSupportFragmentManager().findFragmentByTag("POSTS") != null && navigation.getMenu().getItem(4).isChecked()){
+        if(getSupportFragmentManager().findFragmentByTag("POSTS") != null && navigation.getMenu().getItem(3).isChecked()){
             if(getSupportFragmentManager().findFragmentByTag("TF").isHidden()){
                 ft = getSupportFragmentManager().beginTransaction();
                 ft.remove(getSupportFragmentManager().findFragmentByTag("POSTS"));

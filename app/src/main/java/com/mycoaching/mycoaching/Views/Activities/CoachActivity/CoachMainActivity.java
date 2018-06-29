@@ -68,7 +68,12 @@ public class CoachMainActivity extends AppCompatActivity {
                     hideFragments();
                     hideSpecificFragments();
                     if(getSupportFragmentManager().findFragmentByTag("PROFILE") != null){
-                        ft.show(getSupportFragmentManager().findFragmentByTag("PROFILE"));
+                        if(getSupportFragmentManager().findFragmentByTag("FOLLOW") != null){
+                            ft.show(getSupportFragmentManager().findFragmentByTag("FOLLOW"));
+                        }
+                        else{
+                            ft.show(getSupportFragmentManager().findFragmentByTag("PROFILE"));
+                        }
                     }
                     else{
                         ft.show(cf);
@@ -206,10 +211,18 @@ public class CoachMainActivity extends AppCompatActivity {
             ft.commit();
         }
         else if(getSupportFragmentManager().findFragmentByTag("PROFILE") != null && navigation.getMenu().getItem(0).isChecked()){
-            ft = getSupportFragmentManager().beginTransaction();
-            ft.remove(getSupportFragmentManager().findFragmentByTag("PROFILE"));
-            ft.show(getSupportFragmentManager().findFragmentByTag("CPF"));
-            ft.commit();
+            if(getSupportFragmentManager().findFragmentByTag("FOLLOW") != null && navigation.getMenu().getItem(0).isChecked()){
+                ft = getSupportFragmentManager().beginTransaction();
+                ft.remove(getSupportFragmentManager().findFragmentByTag("FOLLOW"));
+                ft.show(getSupportFragmentManager().findFragmentByTag("PROFILE"));
+                ft.commit();
+            }
+            else{
+                ft = getSupportFragmentManager().beginTransaction();
+                ft.remove(getSupportFragmentManager().findFragmentByTag("PROFILE"));
+                ft.show(getSupportFragmentManager().findFragmentByTag("CPF"));
+                ft.commit();
+            }
         }
         else{
             if(doubleTapToExit) {
@@ -252,6 +265,9 @@ public class CoachMainActivity extends AppCompatActivity {
         }
         if(getSupportFragmentManager().findFragmentByTag("PROFILE") != null){
             ft.hide(getSupportFragmentManager().findFragmentByTag("PROFILE"));
+        }
+        if(getSupportFragmentManager().findFragmentByTag("FOLLOW") != null){
+            ft.hide(getSupportFragmentManager().findFragmentByTag("FOLLOW"));
         }
     }
 }

@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +17,10 @@ import com.mycoaching.mycoaching.Api.ApiResults;
 import com.mycoaching.mycoaching.Api.ServiceResultListener;
 import com.mycoaching.mycoaching.Models.Retrofit.Appraisal;
 import com.mycoaching.mycoaching.R;
+import com.mycoaching.mycoaching.Views.Fragments.Common.FollowUpFragment;
 
 import org.joda.time.LocalDate;
 import org.joda.time.Years;
-
-import java.time.Year;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,6 +34,7 @@ public class ClientProfileFragment extends Fragment{
     View v;
     Bundle b;
     Appraisal a;
+    FragmentManager fm;
 
     @BindView(R.id.title)
     TextView titleLabel;
@@ -78,6 +80,19 @@ public class ClientProfileFragment extends Fragment{
         startActivity(Intent.createChooser(emailIntent, "UpFit Coaching"));
     }
 
+    @OnClick(R.id.consult)
+    public void consult(){
+        fm = getActivity().getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        Bundle b = new Bundle();
+        b.putString("id",a.getId());
+        FollowUpFragment fuf = new FollowUpFragment();
+        fuf.setArguments(b);
+        ft.hide(getFragmentManager().findFragmentByTag("PROFILE"));
+        ft.add(R.id.container, fuf,"FOLLOW");
+        ft.commit();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_user_profile, container, false);
@@ -120,7 +135,6 @@ public class ClientProfileFragment extends Fragment{
                     follow.setText(getResources().getString(R.string.display_appraisal));
                     goal.setText(getResources().getString(R.string.goal,a.getGoal()));
                     rep.setText(getResources().getString(R.string.rep,a.getSessionsByWeek()));
-
                 }
             }
         });
