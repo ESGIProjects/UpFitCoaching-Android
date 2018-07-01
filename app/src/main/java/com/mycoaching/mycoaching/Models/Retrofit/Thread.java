@@ -1,8 +1,7 @@
-package com.mycoaching.mycoaching.Models;
+package com.mycoaching.mycoaching.Models.Retrofit;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.mycoaching.mycoaching.Models.Retrofit.UserRetrofit;
 
 /**
  * Created by kevin on 16/05/2018.

@@ -71,6 +71,9 @@ public class CoachMainActivity extends AppCompatActivity {
                         if(getSupportFragmentManager().findFragmentByTag("FOLLOW") != null){
                             ft.show(getSupportFragmentManager().findFragmentByTag("FOLLOW"));
                         }
+                        else if(getSupportFragmentManager().findFragmentByTag("APPRAISAL") != null){
+                            ft.show(getSupportFragmentManager().findFragmentByTag("APPRAISAL"));
+                        }
                         else{
                             ft.show(getSupportFragmentManager().findFragmentByTag("PROFILE"));
                         }
@@ -217,6 +220,12 @@ public class CoachMainActivity extends AppCompatActivity {
                 ft.show(getSupportFragmentManager().findFragmentByTag("PROFILE"));
                 ft.commit();
             }
+            else if (getSupportFragmentManager().findFragmentByTag("APPRAISAL") != null && navigation.getMenu().getItem(0).isChecked()){
+                ft = getSupportFragmentManager().beginTransaction();
+                ft.remove(getSupportFragmentManager().findFragmentByTag("APPRAISAL"));
+                ft.show(getSupportFragmentManager().findFragmentByTag("PROFILE"));
+                ft.commit();
+            }
             else{
                 ft = getSupportFragmentManager().beginTransaction();
                 ft.remove(getSupportFragmentManager().findFragmentByTag("PROFILE"));
@@ -268,6 +277,9 @@ public class CoachMainActivity extends AppCompatActivity {
         }
         if(getSupportFragmentManager().findFragmentByTag("FOLLOW") != null){
             ft.hide(getSupportFragmentManager().findFragmentByTag("FOLLOW"));
+        }
+        if(getSupportFragmentManager().findFragmentByTag("APPRAISAL") != null){
+            ft.hide(getSupportFragmentManager().findFragmentByTag("APPRAISAL"));
         }
     }
 }

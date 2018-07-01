@@ -1,11 +1,11 @@
 package com.mycoaching.mycoaching.Api;
 
-import com.mycoaching.mycoaching.Models.Event;
-import com.mycoaching.mycoaching.Models.Post;
+import com.mycoaching.mycoaching.Models.Retrofit.Event;
+import com.mycoaching.mycoaching.Models.Retrofit.Post;
 import com.mycoaching.mycoaching.Models.Realm.Message;
 import com.mycoaching.mycoaching.Models.Retrofit.Appraisal;
 import com.mycoaching.mycoaching.Models.Retrofit.UserRetrofit;
-import com.mycoaching.mycoaching.Models.Thread;
+import com.mycoaching.mycoaching.Models.Retrofit.Thread;
 
 import java.util.List;
 

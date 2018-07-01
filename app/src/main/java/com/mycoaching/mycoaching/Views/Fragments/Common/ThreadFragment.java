@@ -18,7 +18,7 @@ import android.view.ViewGroup;
 import com.mycoaching.mycoaching.Api.ApiCall;
 import com.mycoaching.mycoaching.Api.ApiResults;
 import com.mycoaching.mycoaching.Api.ServiceResultListener;
-import com.mycoaching.mycoaching.Models.Thread;
+import com.mycoaching.mycoaching.Models.Retrofit.Thread;
 import com.mycoaching.mycoaching.R;
 import com.mycoaching.mycoaching.Views.Adapters.ThreadAdapter;
 import com.mycoaching.mycoaching.Views.Dialogs.AddThread;

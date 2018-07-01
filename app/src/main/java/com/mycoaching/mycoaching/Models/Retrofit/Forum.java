@@ -1,4 +1,4 @@
-package com.mycoaching.mycoaching.Models;
+package com.mycoaching.mycoaching.Models.Retrofit;
 
 /**
  * Created by kevin on 16/05/2018.

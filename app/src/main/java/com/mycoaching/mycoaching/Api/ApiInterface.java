@@ -1,11 +1,11 @@
 package com.mycoaching.mycoaching.Api;
 
-import com.mycoaching.mycoaching.Models.Event;
-import com.mycoaching.mycoaching.Models.Post;
+import com.mycoaching.mycoaching.Models.Retrofit.Event;
+import com.mycoaching.mycoaching.Models.Retrofit.Post;
 import com.mycoaching.mycoaching.Models.Realm.Message;
 import com.mycoaching.mycoaching.Models.Retrofit.Appraisal;
 import com.mycoaching.mycoaching.Models.Retrofit.UserRetrofit;
-import com.mycoaching.mycoaching.Models.Thread;
+import com.mycoaching.mycoaching.Models.Retrofit.Thread;
 
 import java.util.List;
 
@@ -103,7 +103,7 @@ public interface ApiInterface {
     @PUT("token/")
     @FormUrlEncoded
     Call<Void> putToken(@Field("userId") String userId,@Field("token") String token,
-                           @Nullable @Field("oldToken") String oldToken);
+                        @Nullable @Field("oldToken") String oldToken);
 
     /**
      * Endpoint for profile
@@ -122,4 +122,13 @@ public interface ApiInterface {
 
     @GET("appraisals/")
     Call<Appraisal> getLastAppraisal(@Query("userId") int id);
+
+    @POST("appraisals/")
+    @FormUrlEncoded
+    Call<Void> postAppraisal(@Field("userId") String userId, @Field("date") String date,
+                                     @Field("goal") String goal, @Field("sessionsByWeek") String sessionsByWeek,
+                                     @Field("contraindication") String contraindication,
+                                     @Field("sportAntecedents") String sportAntecedents,
+                                     @Field("helpNeeded") String helpNeeded,
+                                     @Field("hasNutritionist") String hasNutritionist, @Field("comments") String comments);
 }

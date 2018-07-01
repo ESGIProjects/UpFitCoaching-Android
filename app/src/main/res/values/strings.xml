@@ -92,8 +92,16 @@
     <string name="goal">Objectif : %1$s</string>
     <string name="rep">%1$s séance(s) par semaine</string>
     <string name="new_appraisal">Nouvelle fiche bilan</string>
-    <string name="display_appraisal">Consulter la fiche bilan</string>
+    <string name="display_appraisal">Mettre à jour la fiche bilan</string>
     <string name="display_followUp">Consulter le suivi</string>
+
+    <string name="goal_input">Objectif</string>
+    <string name="rep_input">Nombre de séances par semaine</string>
+    <string name="contraindication_input">Contre-indication (optionnel)</string>
+    <string name="sportAntecedent_input">Antécédents sportifs (optionnel)</string>
+    <string name="help_input">Aide nécessaire ?</string>
+    <string name="nutritionist_input">Suivi nutritionnel ?</string>
+    <string name="comment_input">Commentaires (optionnel)</string>
 
     <string name="butterknife_label">Butterknife</string>
     <string name="butterknife_url">https://github.com/JakeWharton/butterknife</string>

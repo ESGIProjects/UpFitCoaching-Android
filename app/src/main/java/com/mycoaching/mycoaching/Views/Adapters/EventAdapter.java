@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.mycoaching.mycoaching.Models.Event;
+import com.mycoaching.mycoaching.Models.Retrofit.Event;
 import com.mycoaching.mycoaching.R;
 
 import java.util.List;
