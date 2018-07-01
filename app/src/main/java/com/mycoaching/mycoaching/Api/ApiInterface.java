@@ -4,6 +4,7 @@ import com.mycoaching.mycoaching.Models.Retrofit.Event;
 import com.mycoaching.mycoaching.Models.Retrofit.Post;
 import com.mycoaching.mycoaching.Models.Realm.Message;
 import com.mycoaching.mycoaching.Models.Retrofit.Appraisal;
+import com.mycoaching.mycoaching.Models.Retrofit.Test;
 import com.mycoaching.mycoaching.Models.Retrofit.UserRetrofit;
 import com.mycoaching.mycoaching.Models.Retrofit.Thread;
 
@@ -131,4 +132,17 @@ public interface ApiInterface {
                                      @Field("sportAntecedents") String sportAntecedents,
                                      @Field("helpNeeded") String helpNeeded,
                                      @Field("hasNutritionist") String hasNutritionist, @Field("comments") String comments);
+
+    @GET("tests/")
+    Call<List<Test>> getTests(@Query("userId") int id);
+
+    @POST("tests/")
+    @FormUrlEncoded
+    Call<Void> postTest(@Field("userId") String userId,@Field("date") String date,
+                        @Field("warmUp") String warmUp,@Field("startSpeed") String startSpeed,
+                        @Field("increase") String increase,@Field("frequency") String frequency,
+                        @Field("kneeFlexibility") String kneeFlexibility,@Field("shinFlexibility") String shinFlexibility,
+                        @Field("hitFootFlexibility") String hitFootFlexibility,@Field("closedFistGroundFlexibility") String closedFistGroundFlexibility,
+                        @Field("handFlatGroundFlexibility") String handFlatGroundFlexibility);
+
 }

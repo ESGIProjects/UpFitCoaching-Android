@@ -17,11 +17,16 @@ import com.mycoaching.mycoaching.Api.ApiCall;
 import com.mycoaching.mycoaching.Api.ApiResults;
 import com.mycoaching.mycoaching.Api.ServiceResultListener;
 import com.mycoaching.mycoaching.Models.Retrofit.Appraisal;
+import com.mycoaching.mycoaching.Models.Retrofit.Test;
 import com.mycoaching.mycoaching.R;
 import com.mycoaching.mycoaching.Views.Fragments.Common.FollowUpFragment;
+import com.mycoaching.mycoaching.Views.Fragments.TestFragment;
 
 import org.joda.time.LocalDate;
 import org.joda.time.Years;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,6 +40,7 @@ public class ClientProfileFragment extends Fragment{
     View v;
     Bundle b;
     Appraisal a;
+    List<Test> lt = new ArrayList<>();
     FragmentManager fm;
 
     ProgressDialog pd;
@@ -65,6 +71,18 @@ public class ClientProfileFragment extends Fragment{
 
     @BindView(R.id.consult)
     Button consult;
+
+    @BindView(R.id.test)
+    TextView test;
+
+    @BindView(R.id.speed)
+    TextView speed;
+
+    @BindView(R.id.freq)
+    TextView freq;
+
+    @BindView(R.id.add_test)
+    Button add_test;
 
     @OnClick(R.id.call)
     public void call(){
@@ -112,9 +130,33 @@ public class ClientProfileFragment extends Fragment{
         Bundle bundle = new Bundle();
         bundle.putString("id",b.getString("id"));
         FollowUpFragment fuf = new FollowUpFragment();
-        fuf.setArguments(b);
+        fuf.setArguments(bundle);
         ft.hide(getFragmentManager().findFragmentByTag("PROFILE"));
         ft.add(R.id.container, fuf,"FOLLOW");
+        ft.commit();
+    }
+
+    @OnClick(R.id.add_test)
+    public void test(){
+        fm = getActivity().getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        Bundle bundle = new Bundle();
+        bundle.putString("id",b.getString("id"));
+        if(!lt.isEmpty()){
+            bundle.putString("warming",lt.get(lt.size()-1).getWarmUp());
+            bundle.putString("start_speed",lt.get(lt.size()-1).getStartSpeed());
+            bundle.putString("increase",lt.get(lt.size()-1).getIncrease());
+            bundle.putString("freq",lt.get(lt.size()-1).getFrequency());
+            bundle.putString("knee",lt.get(lt.size()-1).getKneeFlexibility());
+            bundle.putString("shin",lt.get(lt.size()-1).getShinFlexibility());
+            bundle.putString("kick",lt.get(lt.size()-1).getHitFootFlexibility());
+            bundle.putString("closedFist",lt.get(lt.size()-1).getClosedFistGroundFlexibility());
+            bundle.putString("handFlat",lt.get(lt.size()-1).getHandFlatGroundFlexibility());
+        }
+        TestFragment tf = new TestFragment();
+        tf.setArguments(bundle);
+        ft.hide(getFragmentManager().findFragmentByTag("PROFILE"));
+        ft.add(R.id.container, tf,"TEST");
         ft.commit();
     }
 
@@ -154,7 +196,24 @@ public class ClientProfileFragment extends Fragment{
             @Override
             public void onResult(ApiResults ar) {
                 if(ar.getResponseCode() == 200){
-                    pd.dismiss();
+                    ApiCall.getTests(Integer.valueOf(b.getString("id")), new ServiceResultListener() {
+                        @Override
+                        public void onResult(ApiResults ar) {
+                            if(ar.getResponseCode() == 200){
+                                if(!ar.getListTest().isEmpty()){
+                                    lt.addAll(ar.getListTest());
+                                    test.setVisibility(View.VISIBLE);
+                                    speed.setVisibility(View.VISIBLE);
+                                    freq.setVisibility(View.VISIBLE);
+
+                                    speed.setText(getResources().getString(R.string.test_speed,lt.get(lt.size()-1).getStartSpeed()));
+                                    freq.setText(getResources().getString(R.string.test_freq,lt.get(lt.size()-1).getFrequency()));
+                                }
+                                add_test.setVisibility(View.VISIBLE);
+                            }
+                            pd.dismiss();
+                        }
+                    });
                     a = ar.getLastAppraisal();
                     appraisal.setVisibility(View.VISIBLE);
                     goal.setVisibility(View.VISIBLE);

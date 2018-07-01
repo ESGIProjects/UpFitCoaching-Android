@@ -1,7 +1,5 @@
 package com.mycoaching.mycoaching.Models.Retrofit;
 
-import android.support.v7.app.AppCompatActivity;
-
 /**
  * Created by kevin on 28/06/2018.
  */

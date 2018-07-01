@@ -4,6 +4,7 @@ import com.mycoaching.mycoaching.Models.Retrofit.Event;
 import com.mycoaching.mycoaching.Models.Retrofit.Post;
 import com.mycoaching.mycoaching.Models.Realm.Message;
 import com.mycoaching.mycoaching.Models.Retrofit.Appraisal;
+import com.mycoaching.mycoaching.Models.Retrofit.Test;
 import com.mycoaching.mycoaching.Models.Retrofit.UserRetrofit;
 import com.mycoaching.mycoaching.Models.Retrofit.Thread;
 
@@ -21,6 +22,7 @@ public class ApiResults {
     private List<Post> listPost;
     private List<Event> listEvent;
     private Appraisal lastAppraisal;
+    private List<Test> listTest;
     private int responseCode;
     private UserRetrofit ur;
     private Throwable exception;
@@ -87,6 +89,14 @@ public class ApiResults {
 
     public void setLastAppraisal(Appraisal lastAppraisal) {
         this.lastAppraisal = lastAppraisal;
+    }
+
+    public List<Test> getListTest() {
+        return listTest;
+    }
+
+    public void setListTest(List<Test> listTest) {
+        this.listTest = listTest;
     }
 }
 

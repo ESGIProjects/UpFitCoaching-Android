@@ -6,6 +6,7 @@ import com.mycoaching.mycoaching.Models.Retrofit.Event;
 import com.mycoaching.mycoaching.Models.Retrofit.Post;
 import com.mycoaching.mycoaching.Models.Realm.Message;
 import com.mycoaching.mycoaching.Models.Retrofit.Appraisal;
+import com.mycoaching.mycoaching.Models.Retrofit.Test;
 import com.mycoaching.mycoaching.Models.Retrofit.UserRetrofit;
 import com.mycoaching.mycoaching.Models.Retrofit.Thread;
 
@@ -367,4 +368,47 @@ public class ApiCall {
             }
         });
     }
+
+    public static void getTests(int id, final ServiceResultListener srl) {
+        ApiUtils.getApiInstance().getTests(id).enqueue(new Callback<List<Test>>() {
+            @Override
+            public void onResponse(Call<List<Test>> call, Response<List<Test>> response) {
+                ApiResults sir = new ApiResults();
+                sir.setResponseCode(response.code());
+                sir.setListTest(response.body());
+                srl.onResult(sir);
+            }
+
+            @Override
+            public void onFailure(Call<List<Test>> call, Throwable t) {
+                ApiResults sir = new ApiResults();
+                sir.setException(t);
+                srl.onResult(sir);
+            }
+        });
+    }
+
+    public static void postTest(String userId, String date, String warmUp, String startSpeed,
+                                String increase, String frequency, String kneeFlexibility,
+                                String shinFlexibility, String hitFootFlexibility, String closedFistGroundFlexibility,
+                                String handFlatGroundFlexibility, final ServiceResultListener srl) {
+        ApiUtils.getApiInstance().postTest(userId,date,warmUp,startSpeed,increase,frequency,kneeFlexibility,
+                shinFlexibility,hitFootFlexibility,closedFistGroundFlexibility,handFlatGroundFlexibility)
+                .enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                ApiResults sir = new ApiResults();
+                sir.setResponseCode(response.code());
+                srl.onResult(sir);
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                ApiResults sir = new ApiResults();
+                sir.setException(t);
+                srl.onResult(sir);
+            }
+        });
+    }
+
 }
