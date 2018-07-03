@@ -149,7 +149,7 @@ public interface ApiInterface {
     @GET("measurements/")
     Call<List<Measurements>> getMeasurements(@Query("userId") int id);
 
-    @POST
+    @POST("measurements/")
     @FormUrlEncoded
     Call<Void> postMeasurements(@Field("userId") String userId,@Field("date") String date,
                                 @Field("weight") String weight,@Field("height") String height,
