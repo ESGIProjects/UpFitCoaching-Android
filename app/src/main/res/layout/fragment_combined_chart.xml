@@ -4,41 +4,94 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-        <TextView
-            android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/weight"
-            android:textSize="22sp"/>
-
-        <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/chartWeight"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="4"/>
+            android:layout_height="match_parent">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/index"
-            android:textSize="22sp"/>
+                        <LinearLayout
+                            android:layout_marginTop="15dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:weightSum="6"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:orientation="horizontal">
 
-        <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/charts"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="4"/>
+                                <Button
+                                    android:layout_weight="2"
+                                    android:id="@+id/global"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/colorWhite"
+                                    android:background="@color/colorPrimary"
+                                    android:textStyle="bold"
+                                    android:text="@string/global"
+                                    android:layout_marginTop="10dp"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/index"
-            android:textSize="22sp"/>
+                                <Button
+                                    android:layout_weight="2"
+                                    android:id="@+id/year"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/colorWhite"
+                                    android:background="@color/colorPrimary"
+                                    android:textStyle="bold"
+                                    android:text="@string/year"
+                                    android:layout_marginTop="10dp"/>
 
-        <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/measurements"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="4"/>
+                                <Button
+                                    android:layout_weight="2"
+                                    android:id="@+id/month"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/colorWhite"
+                                    android:background="@color/colorPrimary"
+                                    android:textStyle="bold"
+                                    android:text="@string/month"
+                                    android:layout_marginTop="10dp"/>
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_marginTop="15dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/weight"
+                            android:textSize="22sp"/>
+
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/chartWeight"
+                            android:layout_width="match_parent"
+                            android:layout_height="250dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/index"
+                            android:textSize="22sp"/>
+
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/charts"
+                            android:layout_width="match_parent"
+                            android:layout_height="250dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/index"
+                            android:textSize="22sp"/>
+
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/measurements"
+                            android:layout_width="match_parent"
+                            android:layout_height="250dp"  />
+
+                </LinearLayout>
+
+        </ScrollView>
 
 </LinearLayout>

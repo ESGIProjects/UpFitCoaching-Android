@@ -1,4 +1,4 @@
-package com.mycoaching.mycoaching.Views.Fragments;
+package com.mycoaching.mycoaching.Views.Fragments.CoachMenu;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;

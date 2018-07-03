@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -17,7 +18,9 @@ import com.mycoaching.mycoaching.R;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by kevin on 28/04/2018.
@@ -31,11 +34,45 @@ public class FollowUpFragment extends Fragment {
     LineData weightData;
     LineChart lcBody;
     LineData bodyData;
+    LineChart lcMeasure;
+    LineData measureData;
+
+    @BindView(R.id.global)
+    Button global;
+
+    @BindView(R.id.year)
+    Button year;
+
+    @BindView(R.id.month)
+    Button month;
+
+    @OnClick(R.id.global)
+    public void global(){
+        global.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+        year.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        month.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+    }
+
+    @OnClick(R.id.year)
+    public void year(){
+        global.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        year.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+        month.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+    }
+
+    @OnClick(R.id.month)
+    public void month(){
+        global.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        year.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        month.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         v = inflater.inflate(R.layout.fragment_combined_chart, container, false);
+        ButterKnife.bind(this, v);
+        month.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
 
         lcWeight = v.findViewById(R.id.chartWeight);
         lcWeight.getDescription().setEnabled(false);
@@ -69,8 +106,6 @@ public class FollowUpFragment extends Fragment {
 
         lcWeight.invalidate();
         lcBody.invalidate();
-
-        ButterKnife.bind(this, v);
         return v;
     }
 

@@ -70,8 +70,13 @@
     <string name="cancel_event">Annuler l\'évènement</string>
 
 
+    <string name="global">Tout</string>
+    <string name="year">Année</string>
+    <string name="month">Mois</string>
+
     <string name="weight">Poids</string>
     <string name="index">Indices corporels</string>
+    <string name="measures">Mensurations</string>
     <string name="bmi">IMC actuel</string>
     <string name="bfp">IMG actuel</string>
 
