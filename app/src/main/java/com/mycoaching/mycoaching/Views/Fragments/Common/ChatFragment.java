@@ -80,6 +80,7 @@ public class ChatFragment extends Fragment {
                 sender.put("mail", ur.getMail());
                 sender.put("firstName", ur.getFirstName());
                 sender.put("lastName", ur.getLastName());
+                sender.put("sex", Integer.valueOf(ur.getSex()));
                 sender.put("city", ur.getCity());
                 sender.put("phoneNumber", ur.getPhoneNumber());
                 if (!isCoach) {
@@ -97,6 +98,7 @@ public class ChatFragment extends Fragment {
                     receiver.put("mail", ur.getMailCoach());
                     receiver.put("firstName", ur.getFirstNameCoach());
                     receiver.put("lastName", ur.getLastNameCoach());
+                    receiver.put("sex",Integer.valueOf(ur.getSexCoach()));
                     receiver.put("city", ur.getCityCoach());
                     receiver.put("phoneNumber", ur.getPhoneNumberCoach());
                     receiver.put("address", ur.getAddressCoach());
@@ -106,6 +108,7 @@ public class ChatFragment extends Fragment {
                     receiver.put("mail", lm.get(lm.size() - 1).getSender().getMail());
                     receiver.put("firstName", lm.get(lm.size() - 1).getSender().getFirstName());
                     receiver.put("lastName", lm.get(lm.size() - 1).getSender().getLastName());
+                    receiver.put("sex", Integer.valueOf(lm.get(lm.size() - 1).getSender().getSex()));
                     receiver.put("city", lm.get(lm.size() - 1).getSender().getCity());
                     receiver.put("phoneNumber", lm.get(lm.size() - 1).getSender().getPhoneNumber());
                     receiver.put("birthDate", lm.get(lm.size() - 1).getSender().getBirthDate());
@@ -120,15 +123,18 @@ public class ChatFragment extends Fragment {
                 lcf.getWs().send(object.toString());
                 lcf.addMessageToList(ur.getId(), lm.get(lm.size() - 1).getSender().getId(), ur.getFirstName(),
                         ur.getLastName(), lm.get(lm.size() - 1).getSender().getFirstName(),
-                        lm.get(lm.size() - 1).getSender().getLastName(), et.getText().toString());
+                        lm.get(lm.size() - 1).getSender().getLastName(), et.getText().toString(),ur.getMail(),
+                        lm.get(lm.size() - 1).getSender().getMail());
                 addMessageToList(ur.getId(), lm.get(lm.size() - 1).getSender().getId(), ur.getFirstName(),
                         ur.getLastName(), lm.get(lm.size() - 1).getSender().getFirstName(),
-                        lm.get(lm.size() - 1).getSender().getLastName(), et.getText().toString());
+                        lm.get(lm.size() - 1).getSender().getLastName(), et.getText().toString(),ur.getMail(),
+                        lm.get(lm.size() - 1).getSender().getMail());
             } else {
                 ws.send(object.toString());
                 Log.i("WS TEST : ",object.toString());
                 addMessageToList(ur.getId(), ur.getIdCoach(), ur.getFirstName(), ur.getLastName(),
-                        ur.getFirstNameCoach(), ur.getLastNameCoach(), et.getText().toString());
+                        ur.getFirstNameCoach(), ur.getLastNameCoach(), et.getText().toString(),ur.getMail(),
+                        ur.getMailCoach());
             }
             et.getText().clear();
         }
@@ -213,10 +219,11 @@ public class ChatFragment extends Fragment {
     }
 
     public void addMessageToList(String senderID, String receiverID, String firstNameS, String lastNameS,
-                                 String firstNameR, String lastNameR, String content) {
-        UserRetrofit sender = new UserRetrofit(senderID, null, null, firstNameS,
+                                 String firstNameR, String lastNameR, String content, String emailSender,
+                                 String emailReceiver) {
+        UserRetrofit sender = new UserRetrofit(senderID, null, emailSender, firstNameS,
                 lastNameS, null, null, null, null, null, null);
-        UserRetrofit receiver = new UserRetrofit(receiverID, null, null, firstNameR, lastNameR,
+        UserRetrofit receiver = new UserRetrofit(receiverID, null, emailReceiver, firstNameR, lastNameR,
                 null, null, null, null, null, null);
         Message m = new Message(null, sender, receiver, getDate(), content);
         lm.add(0, m);
@@ -227,6 +234,7 @@ public class ChatFragment extends Fragment {
             }
         });
     }
+
 
     private class CustomWSListener extends WebSocketListener {
 
@@ -246,7 +254,8 @@ public class ChatFragment extends Fragment {
                 addMessageToList(String.valueOf(sender.getInt("id")),
                         String.valueOf(receiver.getInt("id")), sender.getString("firstName"),
                         sender.getString("lastName"), receiver.getString("firstName"),
-                        receiver.getString("lastName"), content);
+                        receiver.getString("lastName"), content,sender.getString("mail"),
+                        receiver.getString("mail"));
             } catch (Exception e) {
                 e.printStackTrace();
             }

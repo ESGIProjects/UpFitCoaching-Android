@@ -25,7 +25,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public void onMessageReceived(RemoteMessage rm) {
 
         ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
-        Log.i("TEST", am.getRunningAppProcesses().get(0).getClass().getName());
 
         Intent intent = new Intent(this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -46,8 +45,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        if(!ChatFragment.isActive && !ListChatFragment.isActive){
-            notificationManager.notify(0, notificationBuilder.build());
-        }
+        notificationManager.notify(0, notificationBuilder.build());
+
     }
 }

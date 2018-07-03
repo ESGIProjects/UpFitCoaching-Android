@@ -124,6 +124,7 @@ public class ListChatFragment extends Fragment implements ContactAdapter.OnClick
                 lc.add(c);
             }
         }
+        r = Realm.getDefaultInstance();
         r.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
@@ -178,16 +179,18 @@ public class ListChatFragment extends Fragment implements ContactAdapter.OnClick
                 JSONObject sender = message.getJSONObject("sender");
                 JSONObject receiver = message.getJSONObject("receiver");
                 String content = message.getString("content");
-                addMessageToList(String.valueOf(receiver.getInt("id")),
-                        String.valueOf(sender.getInt("id")), receiver.getString("firstName"),
-                        receiver.getString("lastName"), sender.getString("firstName"),
-                        sender.getString("lastName"), content);
+                addMessageToList(String.valueOf(sender.getInt("id")),
+                        String.valueOf(receiver.getInt("id")), sender.getString("firstName"),
+                        sender.getString("lastName"), receiver.getString("firstName"),
+                        receiver.getString("lastName"), content,sender.getString("mail"),
+                        receiver.getString("mail"));
                 if (getFragmentManager().findFragmentByTag("MESSAGES") != null) {
                     ChatFragment cf = (ChatFragment) getFragmentManager().findFragmentByTag("MESSAGES");
                     cf.addMessageToList(String.valueOf(sender.getInt("id")),
                             String.valueOf(receiver.getInt("id")), sender.getString("firstName"),
                             sender.getString("lastName"), receiver.getString("firstName"),
-                            receiver.getString("lastName"), content);
+                            receiver.getString("lastName"), content,sender.getString("mail"),
+                            receiver.getString("mail"));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -214,10 +217,11 @@ public class ListChatFragment extends Fragment implements ContactAdapter.OnClick
     }
 
     public void addMessageToList(String senderID, String receiverID, String firstNameS, String lastNameS,
-                                 String firstNameR, String lastNameR, String content) {
-        UserRetrofit sender = new UserRetrofit(senderID, null, null, firstNameS,
+                                 String firstNameR, String lastNameR, String content,String emailSender,
+                                 String emailReceiver) {
+        UserRetrofit sender = new UserRetrofit(senderID, null, emailSender, firstNameS,
                 lastNameS, null, null, null, null, null, null);
-        UserRetrofit receiver = new UserRetrofit(receiverID, null, null, firstNameR, lastNameR,
+        UserRetrofit receiver = new UserRetrofit(receiverID, null, emailReceiver, firstNameR, lastNameR,
                 null, null, null, null, null, null);
         Message m = new Message(null, sender, receiver, getDate(), content);
         lm.add(0, m);

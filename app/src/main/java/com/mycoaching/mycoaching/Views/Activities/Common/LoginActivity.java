@@ -161,6 +161,7 @@ public class LoginActivity extends AppCompatActivity {
                     ur.setMailCoach(ar.getUr().getCoach().getMail());
                     ur.setFirstNameCoach(ar.getUr().getCoach().getFirstName());
                     ur.setLastNameCoach(ar.getUr().getCoach().getLastName());
+                    ur.setSexCoach(ar.getUr().getCoach().getSex());
                     ur.setCityCoach(ar.getUr().getCoach().getCity());
                     ur.setPhoneNumberCoach(ar.getUr().getCoach().getPhoneNumber());
                     ur.setTypeCoach(ar.getUr().getCoach().getType());

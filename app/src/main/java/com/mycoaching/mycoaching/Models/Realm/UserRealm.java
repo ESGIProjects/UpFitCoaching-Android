@@ -30,7 +30,7 @@ public class UserRealm extends RealmObject {
 
     private String mail, firstName, lastName, sex, birthDate, address, city, phoneNumber;
 
-    private String idCoach, mailCoach, firstNameCoach, lastNameCoach, addressCoach,
+    private String idCoach, mailCoach, firstNameCoach, lastNameCoach, sexCoach, addressCoach,
             cityCoach, phoneNumberCoach;
 
     private int type, typeCoach;
@@ -177,5 +177,13 @@ public class UserRealm extends RealmObject {
 
     public void setTypeCoach(int typeCoach) {
         this.typeCoach = typeCoach;
+    }
+
+    public String getSexCoach() {
+        return sexCoach;
+    }
+
+    public void setSexCoach(String sexCoach) {
+        this.sexCoach = sexCoach;
     }
 }
