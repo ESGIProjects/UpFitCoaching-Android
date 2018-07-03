@@ -77,8 +77,13 @@
     <string name="weight">Poids</string>
     <string name="index">Indices corporels</string>
     <string name="measures">Mensurations</string>
+    <string name="weightValue">IMC actuel</string>
     <string name="bmi">IMC actuel</string>
     <string name="bfp">IMG actuel</string>
+    <string name="hip">Tour de hanche</string>
+    <string name="waist">Tour de ventre</string>
+    <string name="thigh">Tour de cuisse</string>
+    <string name="arm">Tour de bras</string>
 
     <string name="edit_profile">Mettre à jour le profil</string>
     <string name="check_coach">Voir le profil du coach</string>

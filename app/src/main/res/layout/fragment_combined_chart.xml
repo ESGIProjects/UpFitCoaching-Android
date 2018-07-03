@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-                <LinearLayout
+
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content">
 
                         <LinearLayout
+                            android:id="@+id/bar"
                             android:layout_marginTop="15dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -57,6 +59,8 @@
                         </LinearLayout>
 
                         <TextView
+                            android:id="@+id/weightLabel"
+                            android:layout_below="@id/bar"
                             android:layout_marginTop="15dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -64,34 +68,113 @@
                             android:textSize="22sp"/>
 
                         <com.github.mikephil.charting.charts.LineChart
+                            android:layout_below="@id/weightLabel"
                             android:id="@+id/chartWeight"
                             android:layout_width="match_parent"
                             android:layout_height="250dp" />
 
                         <TextView
+                            android:layout_marginTop="15dp"
+                            android:id="@+id/weightValue"
+                            android:layout_below="@id/chartWeight"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/weight"
+                            android:textSize="16sp"/>
+
+                        <TextView
+                            android:layout_marginTop="15dp"
+                            android:id="@+id/bodyLabel"
+                            android:layout_below="@id/weightValue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/index"
                             android:textSize="22sp"/>
 
                         <com.github.mikephil.charting.charts.LineChart
-                            android:id="@+id/charts"
+                            android:layout_below="@id/bodyLabel"
+                            android:id="@+id/chartBody"
                             android:layout_width="match_parent"
                             android:layout_height="250dp" />
 
                         <TextView
+                            android:id="@+id/bmi"
+                            android:layout_below="@id/chartBody"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/bmi"
+                            android:textSize="16sp"/>
+
+                        <TextView
+                            android:id="@+id/bfp"
+                            android:layout_below="@id/bmi"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/bfp"
+                            android:textSize="16sp"/>
+
+                        <TextView
+                            android:layout_marginTop="15dp"
+                            android:id="@+id/measureLabel"
+                            android:layout_below="@id/bfp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/index"
                             android:textSize="22sp"/>
 
                         <com.github.mikephil.charting.charts.LineChart
-                            android:id="@+id/measurements"
+                            android:layout_below="@id/chartBody"
+                            android:id="@+id/chartMeasure"
                             android:layout_width="match_parent"
-                            android:layout_height="250dp"  />
+                            android:layout_height="250dp" />
 
-                </LinearLayout>
+                        <TextView
+                            android:id="@+id/hip"
+                            android:layout_below="@id/chartMeasure"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/hip"
+                            android:textSize="16sp"/>
+
+                        <TextView
+                            android:id="@+id/waist"
+                            android:layout_below="@id/hip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/waist"
+                            android:textSize="16sp"/>
+
+                        <TextView
+                            android:id="@+id/thigh"
+                            android:layout_below="@id/waist"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/thigh"
+                            android:textSize="16sp"/>
+
+                        <TextView
+                            android:id="@+id/arm"
+                            android:layout_below="@id/thigh"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/arm"
+                            android:textSize="16sp"/>
+
+                </RelativeLayout>
 
         </ScrollView>
 
-</LinearLayout>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/buttonMeasure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_plus_white_24dp"
+            app:backgroundTint="@color/colorPrimaryDark"
+            app:elevation="6dp"
+            app:rippleColor="@color/colorPrimary" />
+
+</RelativeLayout>

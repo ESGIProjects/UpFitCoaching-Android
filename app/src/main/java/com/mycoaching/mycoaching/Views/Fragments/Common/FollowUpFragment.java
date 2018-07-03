@@ -80,7 +80,7 @@ public class FollowUpFragment extends Fragment {
         lcWeight.getLegend().setEnabled(false);
         lcWeight.getXAxis().setEnabled(false);
 
-        lcBody = v.findViewById(R.id.charts);
+        lcBody = v.findViewById(R.id.chartBody);
         lcBody.getDescription().setEnabled(false);
         lcBody.setDrawGridBackground(false);
         lcBody.getLegend().setEnabled(false);
