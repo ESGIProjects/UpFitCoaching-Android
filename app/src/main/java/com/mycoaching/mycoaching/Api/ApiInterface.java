@@ -148,4 +148,11 @@ public interface ApiInterface {
 
     @GET("measurements/")
     Call<List<Measurements>> getMeasurements(@Query("userId") int id);
+
+    @POST
+    @FormUrlEncoded
+    Call<Void> postMeasurements(@Field("userId") String userId,@Field("date") String date,
+                                @Field("weight") String weight,@Field("height") String height,
+                                @Field("hipCircumference") String hipCircumference,@Field("waistCircumference") String waistCircumference,
+                                @Field("thighCircumference") String thighCircumference,@Field("armCircumference") String armCircumference);
 }

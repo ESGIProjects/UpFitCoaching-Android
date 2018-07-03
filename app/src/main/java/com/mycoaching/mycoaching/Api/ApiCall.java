@@ -430,4 +430,24 @@ public class ApiCall {
             }
         });
     }
+
+    public static void postMeasurement(String userId,String date, String weight,String height, String hipCircumference,String waistCircumference,
+                                       String thighCircumference,String armCircumference, final ServiceResultListener srl) {
+        ApiUtils.getApiInstance().postMeasurements(userId,date,weight,height,hipCircumference,waistCircumference,
+                thighCircumference,armCircumference).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                ApiResults sir = new ApiResults();
+                sir.setResponseCode(response.code());
+                srl.onResult(sir);
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                ApiResults sir = new ApiResults();
+                sir.setException(t);
+                srl.onResult(sir);
+            }
+        });
+    }
 }
