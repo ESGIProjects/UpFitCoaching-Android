@@ -1,6 +1,7 @@
 package com.mycoaching.mycoaching.Api;
 
 import com.mycoaching.mycoaching.Models.Retrofit.Event;
+import com.mycoaching.mycoaching.Models.Retrofit.Measurements;
 import com.mycoaching.mycoaching.Models.Retrofit.Post;
 import com.mycoaching.mycoaching.Models.Realm.Message;
 import com.mycoaching.mycoaching.Models.Retrofit.Appraisal;
@@ -21,6 +22,7 @@ public class ApiResults {
     private List<Thread> listThread;
     private List<Post> listPost;
     private List<Event> listEvent;
+    private List<Measurements> listMeasurement;
     private Appraisal lastAppraisal;
     private List<Test> listTest;
     private int responseCode;
@@ -97,6 +99,14 @@ public class ApiResults {
 
     public void setListTest(List<Test> listTest) {
         this.listTest = listTest;
+    }
+
+    public List<Measurements> getListMeasurement() {
+        return listMeasurement;
+    }
+
+    public void setListMeasurement(List<Measurements> listMeasurement) {
+        this.listMeasurement = listMeasurement;
     }
 }
 
