@@ -109,91 +109,110 @@
                 android:textSize="20sp"
                 android:text="@string/flexibility"/>
 
-            <android.support.design.widget.TextInputLayout
-                android:theme="@style/AppThemeCustom"
+            <LinearLayout
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp">
-                <EditText
-                    android:id="@+id/knee"
-                    android:focusableInTouchMode="true"
+                android:orientation="horizontal">
+                <TextView
+                    android:textSize="18sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/knee_input"
+                    android:textColor="@color/colorWhite"/>
+                <Spinner
+                    android:id="@+id/spinnerKnee"
+                    android:theme="@style/customSpinner"
+                    android:layout_marginEnd="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/knee_input"
-                    android:textColor="@color/colorWhite"
-                    android:inputType="number"
-                    android:maxLines="1" />
-            </android.support.design.widget.TextInputLayout>
+                    android:entries="@array/intensity" />
+            </LinearLayout>
 
-            <android.support.design.widget.TextInputLayout
-                android:theme="@style/AppThemeCustom"
+            <LinearLayout
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp">
-                <EditText
-                    android:id="@+id/shin"
-                    android:focusableInTouchMode="true"
+                android:orientation="horizontal">
+                <TextView
+                    android:textSize="18sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/shin_input"
+                    android:textColor="@color/colorWhite"/>
+                <Spinner
+                    android:id="@+id/spinnerShin"
+                    android:theme="@style/customSpinner"
+                    android:layout_marginEnd="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/shin_input"
-                    android:textColor="@color/colorWhite"
-                    android:inputType="number"
-                    android:maxLines="1" />
-            </android.support.design.widget.TextInputLayout>
+                    android:entries="@array/intensity" />
+            </LinearLayout>
 
-            <android.support.design.widget.TextInputLayout
-                android:theme="@style/AppThemeCustom"
+            <LinearLayout
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp">
-                <EditText
-                    android:id="@+id/kick"
-                    android:focusableInTouchMode="true"
+                android:orientation="horizontal">
+                <TextView
+                    android:textSize="18sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/kick_input"
+                    android:textColor="@color/colorWhite"/>
+                <Spinner
+                    android:id="@+id/spinnerKick"
+                    android:theme="@style/customSpinner"
+                    android:layout_marginEnd="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/kick_input"
-                    android:textColor="@color/colorWhite"
-                    android:inputType="number"
-                    android:maxLines="1" />
-            </android.support.design.widget.TextInputLayout>
+                    android:entries="@array/intensity" />
+            </LinearLayout>
 
-            <android.support.design.widget.TextInputLayout
-                android:theme="@style/AppThemeCustom"
+            <LinearLayout
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp">
-                <EditText
-                    android:id="@+id/closedFist"
-                    android:focusableInTouchMode="true"
+                android:orientation="horizontal">
+                <TextView
+                    android:textSize="18sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/closedFist_input"
+                    android:textColor="@color/colorWhite"/>
+                <Spinner
+                    android:id="@+id/spinnerClosedFist"
+                    android:theme="@style/customSpinner"
+                    android:layout_marginEnd="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/closedFist_input"
-                    android:inputType="number"
-                    android:textColor="@color/colorWhite"
-                    android:maxLines="1" />
-            </android.support.design.widget.TextInputLayout>
+                    android:entries="@array/intensity" />
+            </LinearLayout>
 
-            <android.support.design.widget.TextInputLayout
-                android:theme="@style/AppThemeCustom"
+            <LinearLayout
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp">
-                <EditText
-                    android:id="@+id/handFlat"
-                    android:focusableInTouchMode="true"
+                android:orientation="horizontal">
+                <TextView
+                    android:textSize="18sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/handFlat_input"
+                    android:textColor="@color/colorWhite"/>
+                <Spinner
+                    android:id="@+id/spinnerHandFlat"
+                    android:theme="@style/customSpinner"
+                    android:layout_marginEnd="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/handFlat_input"
-                    android:inputType="number"
-                    android:textColor="@color/colorWhite"
-                    android:maxLines="1" />
-            </android.support.design.widget.TextInputLayout>
-
+                    android:entries="@array/intensity" />
+            </LinearLayout>
 
             <Button
                 android:id="@+id/confirm_edit"

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,34 +45,32 @@ public class TestFragment extends Fragment {
     @BindView(R.id.freq)
     EditText freq;
 
-    @BindView(R.id.knee)
-    EditText knee;
+    @BindView(R.id.spinnerKnee)
+    Spinner knee;
 
-    @BindView(R.id.shin)
-    EditText shin;
+    @BindView(R.id.spinnerShin)
+    Spinner shin;
 
-    @BindView(R.id.kick)
-    EditText kick;
+    @BindView(R.id.spinnerKick)
+    Spinner kick;
 
-    @BindView(R.id.closedFist)
-    EditText closedFist;
+    @BindView(R.id.spinnerClosedFist)
+    Spinner closedFist;
 
-    @BindView(R.id.handFlat)
-    EditText handFlat;
+    @BindView(R.id.spinnerHandFlat)
+    Spinner handFlat;
 
     @OnClick(R.id.confirm_edit)
     public void confirm(){
         if(checkFields(warming.getText().toString(),start_speed.getText().toString(),
-                increase.getText().toString(),freq.getText().toString(),knee.getText().toString(),
-                shin.getText().toString(),kick.getText().toString(),closedFist.getText().toString(),
-                handFlat.getText().toString())){
+                increase.getText().toString(),freq.getText().toString())){
             pd = new ProgressDialog(getActivity(), R.style.StyledDialog);
             pd.setMessage("Création de la fiche bilan...");
             pd.show();
             ApiCall.postTest(b.getString("id"), getDate(), warming.getText().toString(), start_speed.getText().toString(),
-                    increase.getText().toString(), freq.getText().toString(), knee.getText().toString(),
-                    shin.getText().toString(), kick.getText().toString(), closedFist.getText().toString(),
-                    handFlat.getText().toString(), new ServiceResultListener() {
+                    increase.getText().toString(), freq.getText().toString(), String.valueOf(knee.getSelectedItemPosition()),
+                    String.valueOf(shin.getSelectedItemPosition()), String.valueOf(kick.getSelectedItemPosition()),
+                    String.valueOf(closedFist.getSelectedItemPosition()),String.valueOf(handFlat.getSelectedItemPosition()), new ServiceResultListener() {
                         @Override
                         public void onResult(ApiResults ar) {
                             if(ar.getResponseCode() == 201){
@@ -99,11 +98,20 @@ public class TestFragment extends Fragment {
             start_speed.setText(b.getString("start_speed"), TextView.BufferType.EDITABLE);
             increase.setText(b.getString("increase"), TextView.BufferType.EDITABLE);
             freq.setText(b.getString("freq"), TextView.BufferType.EDITABLE);
-            knee.setText(b.getString("knee"), TextView.BufferType.EDITABLE);
-            shin.setText(b.getString("shin"), TextView.BufferType.EDITABLE);
-            kick.setText(b.getString("kick"), TextView.BufferType.EDITABLE);
-            closedFist.setText(b.getString("closedFist"), TextView.BufferType.EDITABLE);
-            handFlat.setText(b.getString("handFlat"), TextView.BufferType.EDITABLE);
+            if(b.getString("knee") != null){
+                knee.setSelection(Integer.valueOf(b.getString("knee")));
+                shin.setSelection(Integer.valueOf(b.getString("shin")));
+                kick.setSelection(Integer.valueOf(b.getString("kick")));
+                closedFist.setSelection(Integer.valueOf(b.getString("closedFist")));
+                handFlat.setSelection(Integer.valueOf(b.getString("handFlat")));
+            }
+        }
+        else{
+            knee.setSelection(0);
+            shin.setSelection(0);
+            kick.setSelection(0);
+            closedFist.setSelection(0);
+            handFlat.setSelection(0);
         }
         return v;
     }

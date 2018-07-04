@@ -205,7 +205,7 @@ public class ClientProfileFragment extends Fragment{
                                     speed.setVisibility(View.VISIBLE);
                                     freq.setVisibility(View.VISIBLE);
 
-                                    speed.setText(getResources().getString(R.string.test_speed,lt.get(lt.size()-1).getStartSpeed()));
+                                    speed.setText(getResources().getString(R.string.test_speed,lt.get(lt.size()-1).getWarmUp()));
                                     freq.setText(getResources().getString(R.string.test_freq,lt.get(lt.size()-1).getFrequency()));
                                 }
                                 add_test.setVisibility(View.VISIBLE);

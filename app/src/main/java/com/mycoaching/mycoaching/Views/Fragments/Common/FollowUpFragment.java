@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
@@ -109,6 +110,15 @@ public class FollowUpFragment extends Fragment {
         global.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         year.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         month.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+        lDisplay.clear();
+        for(Measurements m : lm){
+
+        }
+    }
+
+    @OnClick(R.id.buttonMeasure)
+    public void addMeasurements(){
+
     }
 
     @Override
@@ -146,6 +156,10 @@ public class FollowUpFragment extends Fragment {
         lcBody.setNoDataText("Pas de données pour le moment !");
         lcMeasure.setNoDataText("Pas de données pour le moment !");
 
+        lcWeight.getDescription().setEnabled(false);
+        lcBody.getDescription().setEnabled(false);
+        lcMeasure.getDescription().setEnabled(false);
+
         lcBody.getXAxis().setDrawGridLines(false);
 
         ldWeight = new LineData();
@@ -160,9 +174,7 @@ public class FollowUpFragment extends Fragment {
             r = Realm.getDefaultInstance();
             id = r.where(UserRealm.class).findFirst().getId();
         }
-
         getMeasurements();
-
         return v;
     }
 
@@ -173,7 +185,6 @@ public class FollowUpFragment extends Fragment {
                 if(ar.getResponseCode() == 200){
                     if(ar.getListMeasurement().size() != 0){
                         lm.addAll(ar.getListMeasurement());
-
                         loadCharts();
                     }
                 }
