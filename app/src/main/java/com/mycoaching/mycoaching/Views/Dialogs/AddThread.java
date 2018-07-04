@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.Window;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.mycoaching.mycoaching.Api.ApiCall;
 import com.mycoaching.mycoaching.Api.ApiResults;
@@ -55,6 +56,10 @@ public class AddThread extends Dialog {
                     }
                 }
             });
+        }
+        else{
+            pd.dismiss();
+            Toast.makeText(getContext(),"Il manque un champs !", Toast.LENGTH_LONG).show();
         }
     }
 
