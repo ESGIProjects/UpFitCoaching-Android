@@ -141,6 +141,11 @@ public class AddEvent extends Dialog{
                     Toast.makeText(getContext(),"La date de fin est antérieure à la date de départ",Toast.LENGTH_LONG).show();
                     pd.dismiss();
                 }
+                else if(formatterDateTime.parse(event_start_date.getText().toString() + " " + event_start_time.getText().toString()).compareTo(
+                        formatterDateTime.parse(getDate()))<0){
+                    Toast.makeText(getContext(),"La date de début est antérieure à la date de départ",Toast.LENGTH_LONG).show();
+                    pd.dismiss();
+                }
                 else{
                     if(isCoach){
                         Matcher m = Pattern.compile("\\(([^)]+)\\)").matcher(listUser.getText().toString());
