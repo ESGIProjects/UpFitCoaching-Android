@@ -1,6 +1,5 @@
 package com.mycoaching.mycoaching.Models.Retrofit;
 
-import com.mycoaching.mycoaching.Models.Retrofit.UserRetrofit;
 
 /**
  * Created by kevin on 28/04/2018.

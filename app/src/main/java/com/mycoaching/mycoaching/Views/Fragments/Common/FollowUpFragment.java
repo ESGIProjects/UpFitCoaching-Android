@@ -2,6 +2,9 @@ package com.mycoaching.mycoaching.Views.Fragments.Common;
 
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -25,6 +28,7 @@ import com.mycoaching.mycoaching.Api.ServiceResultListener;
 import com.mycoaching.mycoaching.Models.Realm.UserRealm;
 import com.mycoaching.mycoaching.Models.Retrofit.Measurements;
 import com.mycoaching.mycoaching.R;
+import com.mycoaching.mycoaching.Views.Dialogs.AddMeasurement;
 
 import org.joda.time.LocalDate;
 import org.joda.time.Years;
@@ -110,15 +114,27 @@ public class FollowUpFragment extends Fragment {
         global.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         year.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         month.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-        lDisplay.clear();
         for(Measurements m : lm){
 
         }
     }
 
     @OnClick(R.id.buttonMeasure)
-    public void addMeasurements(){
-
+    void addMeasurement() {
+        final AddMeasurement am = new AddMeasurement(getActivity(), id);
+        assert am.getWindow() != null;
+        am.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        am.show();
+        am.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                if(am.getIsOK()) {
+                    lm.clear();
+                    clearCharts();
+                    getMeasurements();
+                }
+            }
+        });
     }
 
     @Override
@@ -311,5 +327,11 @@ public class FollowUpFragment extends Fragment {
         waistValue.setText(getResources().getString(R.string.waist,lm.get(lm.size()-1).getWaistCircumference()));
         thighValue.setText(getResources().getString(R.string.thigh,lm.get(lm.size()-1).getThighCircumference()));
         armValue.setText(getResources().getString(R.string.arm,lm.get(lm.size()-1).getArmCircumference()));
+    }
+
+    public void clearCharts(){
+        lcWeight.clearValues();
+        lcBody.clearValues();
+        lcMeasure.clearValues();
     }
 }

@@ -77,6 +77,7 @@
     <string name="weight">Poids</string>
     <string name="index">Indices corporels</string>
     <string name="measures">Mensurations</string>
+    <string name="create_measurement">Ajout d\'une mesure</string>
     <string name="weightValue">Poids actuel : %1$skg</string>
     <string name="bmi">IMC actuel : %1$s</string>
     <string name="bfp">IMG actuel : %1$s</string>
@@ -84,6 +85,13 @@
     <string name="waist">Tour de ventre : %1$s</string>
     <string name="thigh">Tour de cuisse : %1$s</string>
     <string name="arm">Tour de bras : %1$s</string>
+
+    <string name="weight_withoutInput">Poids (en kg)</string>
+    <string name="height_withoutInput">Taille (en cm)</string>
+    <string name="hip_withoutInput">Tour de hanche (en cm)</string>
+    <string name="waist_withoutInput">Tour de ventre (en cm)</string>
+    <string name="thigh_withoutInput">Tour de cuisse (en cm)</string>
+    <string name="arm_withoutInput">Tour de bras (en cm)</string>
 
     <string name="edit_profile">Mettre à jour le profil</string>
     <string name="check_coach">Voir le profil du coach</string>
