@@ -1,6 +1,7 @@
 package com.mycoaching.mycoaching.Views.Fragments.Common;
 
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -8,7 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
+import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -40,6 +43,8 @@ import io.realm.Realm;
 public class FollowUpFragment extends Fragment {
 
     View v;
+    ProgressDialog pd;
+
     List<Measurements> lm = new ArrayList<>();
     List<Measurements> lDisplay = new ArrayList<>();
 
@@ -54,6 +59,27 @@ public class FollowUpFragment extends Fragment {
     String id;
     Bundle b;
     Realm r;
+
+    @BindView(R.id.weightValue)
+    TextView weightValue;
+
+    @BindView(R.id.bmi)
+    TextView bmiValue;
+
+    @BindView(R.id.bfp)
+    TextView bfpValue;
+
+    @BindView(R.id.hip)
+    TextView hipValue;
+
+    @BindView(R.id.waist)
+    TextView waistValue;
+
+    @BindView(R.id.thigh)
+    TextView thighValue;
+
+    @BindView(R.id.arm)
+    TextView armValue;
 
     @BindView(R.id.global)
     Button global;
@@ -87,6 +113,10 @@ public class FollowUpFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        pd = new ProgressDialog(getActivity(), R.style.StyledDialog);
+        pd.setMessage("Récupération des informations...");
+        pd.show();
+
         super.onCreate(savedInstanceState);
         v = inflater.inflate(R.layout.fragment_combined_chart, container, false);
         ButterKnife.bind(this, v);
@@ -112,6 +142,10 @@ public class FollowUpFragment extends Fragment {
         lcBody.getAxisLeft().setDrawLabels(false);
         lcMeasure.getAxisLeft().setDrawLabels(false);
 
+        lcWeight.setNoDataText("Pas de données pour le moment !");
+        lcBody.setNoDataText("Pas de données pour le moment !");
+        lcMeasure.setNoDataText("Pas de données pour le moment !");
+
         lcBody.getXAxis().setDrawGridLines(false);
 
         ldWeight = new LineData();
@@ -120,7 +154,7 @@ public class FollowUpFragment extends Fragment {
 
         b = this.getArguments();
         if(b != null){
-            //TODO
+            id = b.getString("id");
         }
         else{
             r = Realm.getDefaultInstance();
@@ -137,9 +171,13 @@ public class FollowUpFragment extends Fragment {
             @Override
             public void onResult(ApiResults ar) {
                 if(ar.getResponseCode() == 200){
-                    lm.addAll(ar.getListMeasurement());
-                    loadCharts();
+                    if(ar.getListMeasurement().size() != 0){
+                        lm.addAll(ar.getListMeasurement());
+
+                        loadCharts();
+                    }
                 }
+                pd.dismiss();
             }
         });
     }
@@ -192,43 +230,44 @@ public class FollowUpFragment extends Fragment {
         weight.setDrawValues(false);
         weight.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
         weight.setAxisDependency(YAxis.AxisDependency.RIGHT);
-        weight.setColor(R.color.bmi);
+        weight.setColor(getResources().getColor(R.color.bmi));
+        weight.setDrawFilled(true);
 
         bmi.setCircleRadius(5f);
         bmi.setDrawValues(false);
         bmi.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
         bmi.setAxisDependency(YAxis.AxisDependency.RIGHT);
-        bmi.setColor(R.color.bmi);
+        bmi.setColor(getResources().getColor(R.color.bmi));
 
         bfp.setCircleRadius(5f);
         bfp.setDrawValues(false);
         bfp.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
         bfp.setAxisDependency(YAxis.AxisDependency.RIGHT);
-        bfp.setColor(R.color.bmi);
+        bfp.setColor(getResources().getColor(R.color.bmi));
 
         hip.setCircleRadius(5f);
         hip.setDrawValues(false);
         hip.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
         hip.setAxisDependency(YAxis.AxisDependency.RIGHT);
-        hip.setColor(R.color.bmi);
+        hip.setColor(getResources().getColor(R.color.bmi));
 
         waist.setCircleRadius(5f);
         waist.setDrawValues(false);
         waist.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
         waist.setAxisDependency(YAxis.AxisDependency.RIGHT);
-        waist.setColor(R.color.bmi);
+        waist.setColor(getResources().getColor(R.color.bmi));
 
         thigh.setCircleRadius(5f);
         thigh.setDrawValues(false);
         thigh.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
         thigh.setAxisDependency(YAxis.AxisDependency.RIGHT);
-        thigh.setColor(R.color.bmi);
+        thigh.setColor(getResources().getColor(R.color.bmi));
 
         arm.setCircleRadius(5f);
         arm.setDrawValues(false);
         arm.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
         arm.setAxisDependency(YAxis.AxisDependency.RIGHT);
-        arm.setColor(R.color.bmi);
+        arm.setColor(getResources().getColor(R.color.bmi));
 
         ldWeight.addDataSet(weight);
         ldBody.addDataSet(bmi);
@@ -241,5 +280,25 @@ public class FollowUpFragment extends Fragment {
         lcWeight.setData(ldWeight);
         lcBody.setData(ldBody);
         lcMeasure.setData(ldMeasure);
+
+        lcWeight.invalidate();
+        lcBody.invalidate();
+        lcMeasure.invalidate();
+
+        weightValue.setVisibility(View.VISIBLE);
+        bmiValue.setVisibility(View.VISIBLE);
+        bfpValue.setVisibility(View.VISIBLE);
+        hipValue.setVisibility(View.VISIBLE);
+        waistValue.setVisibility(View.VISIBLE);
+        thighValue.setVisibility(View.VISIBLE);
+        armValue.setVisibility(View.VISIBLE);
+
+        weightValue.setText(getResources().getString(R.string.weightValue,lm.get(lm.size()-1).getWeight()));
+        bmiValue.setText(getResources().getString(R.string.bmi,String.format("%.2f", bmiEntries.get(lm.size()-1).getY())));
+        bfpValue.setText(getResources().getString(R.string.bfp,String.format("%.2f", bfpEntries.get(lm.size()-1).getY())));
+        hipValue.setText(getResources().getString(R.string.hip,lm.get(lm.size()-1).getHipCircumference()));
+        waistValue.setText(getResources().getString(R.string.waist,lm.get(lm.size()-1).getWaistCircumference()));
+        thighValue.setText(getResources().getString(R.string.thigh,lm.get(lm.size()-1).getThighCircumference()));
+        armValue.setText(getResources().getString(R.string.arm,lm.get(lm.size()-1).getArmCircumference()));
     }
 }

@@ -80,6 +80,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/weight"
+                            android:visibility="gone"
                             android:textSize="16sp"/>
 
                         <TextView
@@ -98,6 +99,7 @@
                             android:layout_height="250dp" />
 
                         <TextView
+                            android:visibility="gone"
                             android:id="@+id/bmi"
                             android:layout_below="@id/chartBody"
                             android:layout_width="wrap_content"
@@ -106,6 +108,7 @@
                             android:textSize="16sp"/>
 
                         <TextView
+                            android:visibility="gone"
                             android:id="@+id/bfp"
                             android:layout_below="@id/bmi"
                             android:layout_width="wrap_content"
@@ -129,6 +132,7 @@
                             android:layout_height="250dp" />
 
                         <TextView
+                            android:visibility="gone"
                             android:id="@+id/hip"
                             android:layout_below="@id/chartMeasure"
                             android:layout_width="wrap_content"
@@ -137,6 +141,7 @@
                             android:textSize="16sp"/>
 
                         <TextView
+                            android:visibility="gone"
                             android:id="@+id/waist"
                             android:layout_below="@id/hip"
                             android:layout_width="wrap_content"
@@ -145,6 +150,7 @@
                             android:textSize="16sp"/>
 
                         <TextView
+                            android:visibility="gone"
                             android:id="@+id/thigh"
                             android:layout_below="@id/waist"
                             android:layout_width="wrap_content"
@@ -153,6 +159,7 @@
                             android:textSize="16sp"/>
 
                         <TextView
+                            android:visibility="gone"
                             android:id="@+id/arm"
                             android:layout_below="@id/thigh"
                             android:layout_width="wrap_content"
