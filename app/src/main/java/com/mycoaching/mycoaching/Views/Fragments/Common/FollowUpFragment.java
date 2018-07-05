@@ -13,20 +13,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.mycoaching.mycoaching.Api.ApiCall;
 import com.mycoaching.mycoaching.Api.ApiResults;
 import com.mycoaching.mycoaching.Api.ServiceResultListener;
 import com.mycoaching.mycoaching.Models.Realm.UserRealm;
-import com.mycoaching.mycoaching.Models.Retrofit.Measurements;
+import com.mycoaching.mycoaching.Models.Retrofit.Measurement;
 import com.mycoaching.mycoaching.R;
 import com.mycoaching.mycoaching.Views.Dialogs.AddMeasurement;
 
@@ -34,12 +33,15 @@ import org.joda.time.LocalDate;
 import org.joda.time.Years;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
+
+import static com.mycoaching.mycoaching.Util.CommonMethods.getDate;
 
 /**
  * Created by kevin on 28/04/2018.
@@ -50,8 +52,9 @@ public class FollowUpFragment extends Fragment {
     View v;
     ProgressDialog pd;
 
-    List<Measurements> lm = new ArrayList<>();
-    List<Measurements> lDisplay = new ArrayList<>();
+    List<Measurement> lm = new ArrayList<>();
+    List<Measurement> listSpecific = new ArrayList<>();
+    List<String> listDate = new ArrayList<>();
 
     LineChart lcWeight;
     LineChart lcBody;
@@ -64,6 +67,10 @@ public class FollowUpFragment extends Fragment {
     String id;
     Bundle b;
     Realm r;
+
+    boolean isMonthClicked = true;
+    boolean isYearClicked = false;
+    boolean isGlobalClicked = false;
 
     @BindView(R.id.weightValue)
     TextView weightValue;
@@ -97,25 +104,46 @@ public class FollowUpFragment extends Fragment {
 
     @OnClick(R.id.global)
     public void global(){
-        global.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-        year.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-        month.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        if(!isGlobalClicked){
+            global.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+            year.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            month.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            isMonthClicked = false;
+            isYearClicked = false;
+            isGlobalClicked = true;
+            listSpecific.clear();
+            clearCharts();
+            getGlobalMeasurements(lm);
+        }
     }
 
     @OnClick(R.id.year)
     public void year(){
-        global.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-        year.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-        month.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        if(!isYearClicked){
+            global.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            year.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+            month.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            isMonthClicked = false;
+            isYearClicked = true;
+            isGlobalClicked = false;
+            listSpecific.clear();
+            clearCharts();
+            getYearMeasurements(lm);
+        }
     }
 
     @OnClick(R.id.month)
     public void month(){
-        global.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-        year.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-        month.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-        for(Measurements m : lm){
-
+        if(!isMonthClicked){
+            global.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            year.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            month.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+            isMonthClicked = true;
+            isYearClicked = false;
+            isGlobalClicked = false;
+            listSpecific.clear();
+            clearCharts();
+            getMonthMeasurements(lm);
         }
     }
 
@@ -129,8 +157,17 @@ public class FollowUpFragment extends Fragment {
             @Override
             public void onDismiss(DialogInterface dialogInterface) {
                 if(am.getIsOK()) {
-                    lm.clear();
-                    clearCharts();
+                    if(lm.size() != 0){
+                        lm.clear();
+                        clearCharts();
+                        listSpecific.clear();
+                        isMonthClicked = true;
+                        isYearClicked = false;
+                        isGlobalClicked = false;
+                        month.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                        global.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                        year.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    }
                     getMeasurements();
                 }
             }
@@ -201,12 +238,62 @@ public class FollowUpFragment extends Fragment {
                 if(ar.getResponseCode() == 200){
                     if(ar.getListMeasurement().size() != 0){
                         lm.addAll(ar.getListMeasurement());
-                        loadCharts();
+                        getMonthMeasurements(lm);
                     }
                 }
                 pd.dismiss();
             }
         });
+    }
+
+    public void getMonthMeasurements(List<Measurement> lm){
+        Collections.reverse(lm);
+        for(Measurement m : lm){
+            String month = getDate().split(" ")[0].split("-")[1];
+            if(!month.equals(m.getDate().split(" ")[0].split("-")[1])){
+                break;
+            }
+            if(!listDate.contains(m.getDate().split(" ")[0])){
+                listDate.add(m.getDate().split(" ")[0]);
+                listSpecific.add(m);
+            }
+        }
+        listDate.clear();
+        Collections.reverse(lm);
+        Collections.reverse(listSpecific);
+        loadCharts();
+    }
+
+    public void getYearMeasurements(List<Measurement> lm){
+        Collections.reverse(lm);
+        for(Measurement m : lm){
+            String year = getDate().split(" ")[0].split("-")[0];
+            if(!year.equals(m.getDate().split(" ")[0].split("-")[0])){
+                break;
+            }
+            if(!listDate.contains(m.getDate().split(" ")[0])){
+                listDate.add(m.getDate().split(" ")[0]);
+                listSpecific.add(m);
+            }
+        }
+        listDate.clear();
+        Collections.reverse(lm);
+        Collections.reverse(listSpecific);
+        loadCharts();
+    }
+
+    public void getGlobalMeasurements(List<Measurement> lm){
+        Collections.reverse(lm);
+        for(Measurement m : lm){
+            if(!listDate.contains(m.getDate().split(" ")[0])){
+                listDate.add(m.getDate().split(" ")[0]);
+                listSpecific.add(m);
+            }
+        }
+        listDate.clear();
+        Collections.reverse(lm);
+        Collections.reverse(listSpecific);
+        loadCharts();
     }
 
     public void loadCharts(){
@@ -219,22 +306,22 @@ public class FollowUpFragment extends Fragment {
         List<Entry> thighEntries = new ArrayList<>();
         List<Entry> armEntries = new ArrayList<>();
 
-        for(int i = 0; i < lm.size(); i++){
-            String splitBirth[] = lm.get(i).getUser().getBirthDate().split(" ")[0].split("-");
+        for(int i = 0; i < listSpecific.size(); i++){
+            String splitBirth[] = listSpecific.get(i).getUser().getBirthDate().split(" ")[0].split("-");
             LocalDate birth = new LocalDate(Integer.valueOf(splitBirth[0])
                     ,Integer.valueOf(splitBirth[1]),Integer.valueOf(splitBirth[2]));
             LocalDate now = new LocalDate();
             Years age = Years.yearsBetween(birth,now);
-            double bmi = Double.valueOf(lm.get(i).getWeight())/((Double.valueOf(lm.get(i).getHeight())/100)*(Double.valueOf(lm.get(i).getHeight())/100));
-            double bfp = 1.2*bmi+0.23*(double)age.getYears()-10.8*Double.valueOf(lm.get(i).getUser().getSex())-5.4;
+            double bmi = Double.valueOf(listSpecific.get(i).getWeight())/((Double.valueOf(listSpecific.get(i).getHeight())/100)*(Double.valueOf(listSpecific.get(i).getHeight())/100));
+            double bfp = 1.2*bmi+0.23*(double)age.getYears()-10.8*Double.valueOf(listSpecific.get(i).getUser().getSex())-5.4;
 
-            Entry e = new Entry(i,Float.valueOf(lm.get(i).getWeight()));
+            Entry e = new Entry(i,Float.valueOf(listSpecific.get(i).getWeight()));
             Entry e1 = new Entry(i,(float)bmi);
             Entry e2 = new Entry(i,(float)bfp);
-            Entry e3 = new Entry(i,Float.valueOf(lm.get(i).getHipCircumference()));
-            Entry e4 = new Entry(i,Float.valueOf(lm.get(i).getWaistCircumference()));
-            Entry e5 = new Entry(i,Float.valueOf(lm.get(i).getThighCircumference()));
-            Entry e6 = new Entry(i,Float.valueOf(lm.get(i).getArmCircumference()));
+            Entry e3 = new Entry(i,Float.valueOf(listSpecific.get(i).getHipCircumference()));
+            Entry e4 = new Entry(i,Float.valueOf(listSpecific.get(i).getWaistCircumference()));
+            Entry e5 = new Entry(i,Float.valueOf(listSpecific.get(i).getThighCircumference()));
+            Entry e6 = new Entry(i,Float.valueOf(listSpecific.get(i).getArmCircumference()));
 
             weightEntries.add(e);
             bmiEntries.add(e1);
@@ -320,13 +407,13 @@ public class FollowUpFragment extends Fragment {
         thighValue.setVisibility(View.VISIBLE);
         armValue.setVisibility(View.VISIBLE);
 
-        weightValue.setText(getResources().getString(R.string.weightValue,lm.get(lm.size()-1).getWeight()));
-        bmiValue.setText(getResources().getString(R.string.bmi,String.format("%.2f", bmiEntries.get(lm.size()-1).getY())));
-        bfpValue.setText(getResources().getString(R.string.bfp,String.format("%.2f", bfpEntries.get(lm.size()-1).getY())));
-        hipValue.setText(getResources().getString(R.string.hip,lm.get(lm.size()-1).getHipCircumference()));
-        waistValue.setText(getResources().getString(R.string.waist,lm.get(lm.size()-1).getWaistCircumference()));
-        thighValue.setText(getResources().getString(R.string.thigh,lm.get(lm.size()-1).getThighCircumference()));
-        armValue.setText(getResources().getString(R.string.arm,lm.get(lm.size()-1).getArmCircumference()));
+        weightValue.setText(getResources().getString(R.string.weightValue,listSpecific.get(listSpecific.size()-1).getWeight()));
+        bmiValue.setText(getResources().getString(R.string.bmi,String.format("%.2f", bmiEntries.get(listSpecific.size()-1).getY())));
+        bfpValue.setText(getResources().getString(R.string.bfp,String.format("%.2f", bfpEntries.get(listSpecific.size()-1).getY())));
+        hipValue.setText(getResources().getString(R.string.hip,listSpecific.get(listSpecific.size()-1).getHipCircumference()));
+        waistValue.setText(getResources().getString(R.string.waist,listSpecific.get(listSpecific.size()-1).getWaistCircumference()));
+        thighValue.setText(getResources().getString(R.string.thigh,listSpecific.get(listSpecific.size()-1).getThighCircumference()));
+        armValue.setText(getResources().getString(R.string.arm,listSpecific.get(listSpecific.size()-1).getArmCircumference()));
     }
 
     public void clearCharts(){

@@ -3,13 +3,13 @@ package com.mycoaching.mycoaching.Models.Retrofit;
 /**
  * Created by kevin on 03/07/2018.
  */
-public class Measurements {
+public class Measurement {
 
     private String id, date, weight, height, hipCircumference, waistCircumference, thighCircumference,
             armCircumference;
     private UserRetrofit user;
 
-    public Measurements(String id, String date, String weight, String height, String hipCircumference, String waistCircumference, String thighCircumference, String armCircumference, UserRetrofit user) {
+    public Measurement(String id, String date, String weight, String height, String hipCircumference, String waistCircumference, String thighCircumference, String armCircumference, UserRetrofit user) {
         this.id = id;
         this.date = date;
         this.weight = weight;

@@ -1,7 +1,7 @@
 package com.mycoaching.mycoaching.Api;
 
 import com.mycoaching.mycoaching.Models.Retrofit.Event;
-import com.mycoaching.mycoaching.Models.Retrofit.Measurements;
+import com.mycoaching.mycoaching.Models.Retrofit.Measurement;
 import com.mycoaching.mycoaching.Models.Retrofit.Post;
 import com.mycoaching.mycoaching.Models.Realm.Message;
 import com.mycoaching.mycoaching.Models.Retrofit.Appraisal;
@@ -147,7 +147,7 @@ public interface ApiInterface {
                         @Field("handFlatGroundFlexibility") String handFlatGroundFlexibility);
 
     @GET("measurements/")
-    Call<List<Measurements>> getMeasurements(@Query("userId") int id);
+    Call<List<Measurement>> getMeasurements(@Query("userId") int id);
 
     @POST("measurements/")
     @FormUrlEncoded

@@ -3,7 +3,7 @@ package com.mycoaching.mycoaching.Api;
 import android.util.Log;
 
 import com.mycoaching.mycoaching.Models.Retrofit.Event;
-import com.mycoaching.mycoaching.Models.Retrofit.Measurements;
+import com.mycoaching.mycoaching.Models.Retrofit.Measurement;
 import com.mycoaching.mycoaching.Models.Retrofit.Post;
 import com.mycoaching.mycoaching.Models.Realm.Message;
 import com.mycoaching.mycoaching.Models.Retrofit.Appraisal;
@@ -413,9 +413,9 @@ public class ApiCall {
     }
 
     public static void getMeasurements(int id, final ServiceResultListener srl) {
-        ApiUtils.getApiInstance().getMeasurements(id).enqueue(new Callback<List<Measurements>>() {
+        ApiUtils.getApiInstance().getMeasurements(id).enqueue(new Callback<List<Measurement>>() {
             @Override
-            public void onResponse(Call<List<Measurements>> call, Response<List<Measurements>> response) {
+            public void onResponse(Call<List<Measurement>> call, Response<List<Measurement>> response) {
                 ApiResults sir = new ApiResults();
                 sir.setResponseCode(response.code());
                 sir.setListMeasurement(response.body());
@@ -423,7 +423,7 @@ public class ApiCall {
             }
 
             @Override
-            public void onFailure(Call<List<Measurements>> call, Throwable t) {
+            public void onFailure(Call<List<Measurement>> call, Throwable t) {
                 ApiResults sir = new ApiResults();
                 sir.setException(t);
                 srl.onResult(sir);
