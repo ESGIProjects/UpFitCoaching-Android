@@ -6,7 +6,13 @@
     <color name="colorAccent">#FFFFAA</color>
     <color name="colorBlack">#000000</color>
     <color name="colorGray">#bdbdbd</color>
+
     <color name="bmi">#F44336</color>
-    <color name="bfp">#009688</color>
+    <color name="bfp">#CA0AAA</color>
     <color name="weight">#2196F3</color>
+
+    <color name="hip">#9127F3</color>
+    <color name="waist">#91F15A</color>
+    <color name="thigh">#34AAAA</color>
+    <color name="arm">#D48000</color>
 </resources>

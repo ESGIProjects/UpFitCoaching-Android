@@ -16,11 +16,16 @@ import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.LegendEntry;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.mycoaching.mycoaching.Api.ApiCall;
 import com.mycoaching.mycoaching.Api.ApiResults;
 import com.mycoaching.mycoaching.Api.ServiceResultListener;
@@ -105,6 +110,7 @@ public class FollowUpFragment extends Fragment {
     @OnClick(R.id.global)
     public void global(){
         if(!isGlobalClicked){
+            listDate.clear();
             global.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
             year.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
             month.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
@@ -120,6 +126,7 @@ public class FollowUpFragment extends Fragment {
     @OnClick(R.id.year)
     public void year(){
         if(!isYearClicked){
+            listDate.clear();
             global.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
             year.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
             month.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
@@ -135,6 +142,7 @@ public class FollowUpFragment extends Fragment {
     @OnClick(R.id.month)
     public void month(){
         if(!isMonthClicked){
+            listDate.clear();
             global.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
             year.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
             month.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
@@ -158,6 +166,7 @@ public class FollowUpFragment extends Fragment {
             public void onDismiss(DialogInterface dialogInterface) {
                 if(am.getIsOK()) {
                     if(lm.size() != 0){
+                        listDate.clear();
                         lm.clear();
                         clearCharts();
                         listSpecific.clear();
@@ -258,9 +267,9 @@ public class FollowUpFragment extends Fragment {
                 listSpecific.add(m);
             }
         }
-        listDate.clear();
         Collections.reverse(lm);
         Collections.reverse(listSpecific);
+        Collections.reverse(listDate);
         loadCharts();
     }
 
@@ -276,9 +285,9 @@ public class FollowUpFragment extends Fragment {
                 listSpecific.add(m);
             }
         }
-        listDate.clear();
         Collections.reverse(lm);
         Collections.reverse(listSpecific);
+        Collections.reverse(listDate);
         loadCharts();
     }
 
@@ -290,9 +299,9 @@ public class FollowUpFragment extends Fragment {
                 listSpecific.add(m);
             }
         }
-        listDate.clear();
         Collections.reverse(lm);
         Collections.reverse(listSpecific);
+        Collections.reverse(listDate);
         loadCharts();
     }
 
@@ -307,6 +316,7 @@ public class FollowUpFragment extends Fragment {
         List<Entry> armEntries = new ArrayList<>();
 
         for(int i = 0; i < listSpecific.size(); i++){
+
             String splitBirth[] = listSpecific.get(i).getUser().getBirthDate().split(" ")[0].split("-");
             LocalDate birth = new LocalDate(Integer.valueOf(splitBirth[0])
                     ,Integer.valueOf(splitBirth[1]),Integer.valueOf(splitBirth[2]));
@@ -340,48 +350,55 @@ public class FollowUpFragment extends Fragment {
         LineDataSet thigh = new LineDataSet(thighEntries, "Tour de cuisse");
         LineDataSet arm = new LineDataSet(armEntries, "Tour de bras");
 
-        weight.setCircleRadius(5f);
+        weight.setCircleRadius(3f);
         weight.setDrawValues(false);
+        weight.setLineWidth(2f);
         weight.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
         weight.setAxisDependency(YAxis.AxisDependency.RIGHT);
-        weight.setColor(getResources().getColor(R.color.bmi));
+        weight.setColor(getResources().getColor(R.color.weight));
         weight.setDrawFilled(true);
 
-        bmi.setCircleRadius(5f);
+        bmi.setCircleRadius(3f);
         bmi.setDrawValues(false);
+        bmi.setLineWidth(2f);
         bmi.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
         bmi.setAxisDependency(YAxis.AxisDependency.RIGHT);
         bmi.setColor(getResources().getColor(R.color.bmi));
 
-        bfp.setCircleRadius(5f);
+        bfp.setCircleRadius(4f);
         bfp.setDrawValues(false);
+        bfp.setLineWidth(2f);
         bfp.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
         bfp.setAxisDependency(YAxis.AxisDependency.RIGHT);
-        bfp.setColor(getResources().getColor(R.color.bmi));
+        bfp.setColor(getResources().getColor(R.color.bfp));
 
-        hip.setCircleRadius(5f);
+        hip.setCircleRadius(3f);
         hip.setDrawValues(false);
+        hip.setLineWidth(2f);
         hip.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
         hip.setAxisDependency(YAxis.AxisDependency.RIGHT);
-        hip.setColor(getResources().getColor(R.color.bmi));
+        hip.setColor(getResources().getColor(R.color.hip));
 
-        waist.setCircleRadius(5f);
+        waist.setCircleRadius(3f);
         waist.setDrawValues(false);
+        waist.setLineWidth(2f);
         waist.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
         waist.setAxisDependency(YAxis.AxisDependency.RIGHT);
-        waist.setColor(getResources().getColor(R.color.bmi));
+        waist.setColor(getResources().getColor(R.color.waist));
 
-        thigh.setCircleRadius(5f);
+        thigh.setCircleRadius(3f);
         thigh.setDrawValues(false);
+        thigh.setLineWidth(2f);
         thigh.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
         thigh.setAxisDependency(YAxis.AxisDependency.RIGHT);
-        thigh.setColor(getResources().getColor(R.color.bmi));
+        thigh.setColor(getResources().getColor(R.color.thigh));
 
-        arm.setCircleRadius(5f);
+        arm.setCircleRadius(3f);
         arm.setDrawValues(false);
+        arm.setLineWidth(2f);
         arm.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
         arm.setAxisDependency(YAxis.AxisDependency.RIGHT);
-        arm.setColor(getResources().getColor(R.color.bmi));
+        arm.setColor(getResources().getColor(R.color.arm));
 
         ldWeight.addDataSet(weight);
         ldBody.addDataSet(bmi);
@@ -391,13 +408,62 @@ public class FollowUpFragment extends Fragment {
         ldMeasure.addDataSet(thigh);
         ldMeasure.addDataSet(arm);
 
+        lcWeight.getXAxis().setGranularity(1f);
+        lcWeight.getXAxis().setGranularityEnabled(true);
+        lcWeight.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+        lcWeight.getXAxis().setEnabled(true);
+        lcWeight.getXAxis().setLabelRotationAngle(45f);
+        lcWeight.getXAxis().setTextSize(1f);
+        lcWeight.getXAxis().setValueFormatter(new IAxisValueFormatter() {
+            @Override
+            public String getFormattedValue(float value, AxisBase axis) {
+                if (listDate.size() > (int)value) {
+                    return listDate.get((int)value);
+                }
+                return "";
+            }
+        });
+
+        lcBody.getXAxis().setGranularity(1f);
+        lcBody.getXAxis().setGranularityEnabled(true);
+        lcBody.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+        lcBody.getXAxis().setEnabled(true);
+        lcBody.getXAxis().setLabelRotationAngle(45f);
+        lcBody.getXAxis().setTextSize(1f);
+        lcBody.getXAxis().setValueFormatter(new IAxisValueFormatter() {
+            @Override
+            public String getFormattedValue(float value, AxisBase axis) {
+                if (listDate.size() > (int)value) {
+                    return listDate.get((int)value);
+                }
+                return "";
+            }
+        });
+
+        lcMeasure.getXAxis().setGranularity(1f);
+        lcMeasure.getXAxis().setGranularityEnabled(true);
+        lcMeasure.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+        lcMeasure.getXAxis().setEnabled(true);
+        lcMeasure.getXAxis().setLabelRotationAngle(45f);
+        lcMeasure.getXAxis().setTextSize(1f);
+        lcMeasure.getXAxis().setValueFormatter(new IAxisValueFormatter() {
+            @Override
+            public String getFormattedValue(float value, AxisBase axis) {
+                if (listDate.size() > (int)value) {
+                    return listDate.get((int)value);
+                }
+                return "";
+            }
+        });
+
+        lcBody.getLegend().setEnabled(true);
+        lcBody.getLegend().setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+        lcMeasure.getLegend().setEnabled(true);
+        lcMeasure.getLegend().setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+
         lcWeight.setData(ldWeight);
         lcBody.setData(ldBody);
         lcMeasure.setData(ldMeasure);
-
-        lcWeight.invalidate();
-        lcBody.invalidate();
-        lcMeasure.invalidate();
 
         weightValue.setVisibility(View.VISIBLE);
         bmiValue.setVisibility(View.VISIBLE);
@@ -414,6 +480,10 @@ public class FollowUpFragment extends Fragment {
         waistValue.setText(getResources().getString(R.string.waist,listSpecific.get(listSpecific.size()-1).getWaistCircumference()));
         thighValue.setText(getResources().getString(R.string.thigh,listSpecific.get(listSpecific.size()-1).getThighCircumference()));
         armValue.setText(getResources().getString(R.string.arm,listSpecific.get(listSpecific.size()-1).getArmCircumference()));
+
+        lcWeight.invalidate();
+        lcBody.invalidate();
+        lcMeasure.invalidate();
     }
 
     public void clearCharts(){
