@@ -20,6 +20,7 @@ import com.mycoaching.mycoaching.Models.Retrofit.Appraisal;
 import com.mycoaching.mycoaching.Models.Retrofit.Test;
 import com.mycoaching.mycoaching.R;
 import com.mycoaching.mycoaching.Views.Fragments.Common.FollowUpFragment;
+import com.mycoaching.mycoaching.Views.Fragments.Common.PrescriptionFragment;
 
 import org.joda.time.LocalDate;
 import org.joda.time.Years;
@@ -82,6 +83,9 @@ public class ClientProfileFragment extends Fragment{
 
     @BindView(R.id.add_test)
     Button add_test;
+
+    @BindView(R.id.add_prescription)
+    Button add_prescription;
 
     @OnClick(R.id.call)
     public void call(){
@@ -159,6 +163,16 @@ public class ClientProfileFragment extends Fragment{
         ft.commit();
     }
 
+    @OnClick(R.id.add_prescription)
+    public void prescription(){
+        fm = getActivity().getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        PrescriptionFragment pf = new PrescriptionFragment();
+        ft.hide(getFragmentManager().findFragmentByTag("PROFILE"));
+        ft.add(R.id.container, pf,"PRESCRIPTION");
+        ft.commit();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_user_profile, container, false);
@@ -209,6 +223,8 @@ public class ClientProfileFragment extends Fragment{
                                     freq.setText(getResources().getString(R.string.test_freq,lt.get(lt.size()-1).getFrequency()));
                                 }
                                 add_test.setVisibility(View.VISIBLE);
+                                add_prescription.setVisibility(View.VISIBLE);
+
                             }
                             pd.dismiss();
                         }

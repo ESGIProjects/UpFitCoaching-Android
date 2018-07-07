@@ -190,6 +190,18 @@
                 android:textStyle="bold"
                 android:layout_marginTop="20dp"/>
 
+            <Button
+                android:visibility="gone"
+                android:text="@string/new_prescription"
+                android:layout_below="@id/add_test"
+                android:id="@+id/add_prescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorWhite"
+                android:background="@color/colorPrimaryDark"
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"/>
+
         </RelativeLayout>
 
     </ScrollView>

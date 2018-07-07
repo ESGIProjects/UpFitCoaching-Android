@@ -77,6 +77,9 @@ public class CoachMainActivity extends AppCompatActivity {
                         else if(getSupportFragmentManager().findFragmentByTag("TEST") != null){
                             ft.show(getSupportFragmentManager().findFragmentByTag("TEST"));
                         }
+                        else if(getSupportFragmentManager().findFragmentByTag("PRESCRIPTION") != null){
+                            ft.show(getSupportFragmentManager().findFragmentByTag("PRESCRIPTION"));
+                        }
                         else{
                             ft.show(getSupportFragmentManager().findFragmentByTag("PROFILE"));
                         }
@@ -235,6 +238,12 @@ public class CoachMainActivity extends AppCompatActivity {
                 ft.show(getSupportFragmentManager().findFragmentByTag("PROFILE"));
                 ft.commit();
             }
+            else if (getSupportFragmentManager().findFragmentByTag("PRESCRIPTION") != null && navigation.getMenu().getItem(0).isChecked()){
+                ft = getSupportFragmentManager().beginTransaction();
+                ft.remove(getSupportFragmentManager().findFragmentByTag("PRESCRIPTION"));
+                ft.show(getSupportFragmentManager().findFragmentByTag("PROFILE"));
+                ft.commit();
+            }
             else{
                 ft = getSupportFragmentManager().beginTransaction();
                 ft.remove(getSupportFragmentManager().findFragmentByTag("PROFILE"));
@@ -290,9 +299,11 @@ public class CoachMainActivity extends AppCompatActivity {
         if(getSupportFragmentManager().findFragmentByTag("APPRAISAL") != null){
             ft.hide(getSupportFragmentManager().findFragmentByTag("APPRAISAL"));
         }
-
         if(getSupportFragmentManager().findFragmentByTag("TEST") != null){
             ft.hide(getSupportFragmentManager().findFragmentByTag("TEST"));
+        }
+        if(getSupportFragmentManager().findFragmentByTag("PRESCRIPTION") != null){
+            ft.hide(getSupportFragmentManager().findFragmentByTag("PRESCRIPTION"));
         }
     }
 }
