@@ -109,7 +109,7 @@ public class FollowUpFragment extends Fragment {
 
     @OnClick(R.id.global)
     public void global(){
-        if(!isGlobalClicked){
+        if(!isGlobalClicked && lm.size() > 0){
             listDate.clear();
             global.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
             year.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
@@ -125,7 +125,7 @@ public class FollowUpFragment extends Fragment {
 
     @OnClick(R.id.year)
     public void year(){
-        if(!isYearClicked){
+        if(!isYearClicked && lm.size() > 0){
             listDate.clear();
             global.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
             year.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
@@ -258,8 +258,8 @@ public class FollowUpFragment extends Fragment {
     public void getMonthMeasurements(List<Measurement> lm){
         Collections.reverse(lm);
         for(Measurement m : lm){
-            String month = getDate().split(" ")[0].split("-")[1];
-            if(!month.equals(m.getDate().split(" ")[0].split("-")[1])){
+            String month = getDate().split(" ")[0].split("-")[0]+getDate().split(" ")[0].split("-")[1];
+            if(!month.equals(m.getDate().split(" ")[0].split("-")[0]+getDate().split(" ")[0].split("-")[1])){
                 break;
             }
             if(!listDate.contains(m.getDate().split(" ")[0])){
@@ -417,8 +417,13 @@ public class FollowUpFragment extends Fragment {
         lcWeight.getXAxis().setValueFormatter(new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
-                if (listDate.size() > (int)value) {
-                    return listDate.get((int)value);
+                if(value >= 0){
+                    if (listDate.size() > (int)value) {
+                        return listDate.get((int)value);
+                    }
+                    else{
+                        return "";
+                    }
                 }
                 return "";
             }
@@ -433,8 +438,13 @@ public class FollowUpFragment extends Fragment {
         lcBody.getXAxis().setValueFormatter(new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
-                if (listDate.size() > (int)value) {
-                    return listDate.get((int)value);
+                if(value >= 0){
+                    if (listDate.size() > (int)value) {
+                        return listDate.get((int)value);
+                    }
+                    else{
+                        return "";
+                    }
                 }
                 return "";
             }
@@ -449,8 +459,13 @@ public class FollowUpFragment extends Fragment {
         lcMeasure.getXAxis().setValueFormatter(new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
-                if (listDate.size() > (int)value) {
-                    return listDate.get((int)value);
+                if(value >= 0){
+                    if (listDate.size() > (int)value) {
+                        return listDate.get((int)value);
+                    }
+                    else{
+                        return "";
+                    }
                 }
                 return "";
             }
