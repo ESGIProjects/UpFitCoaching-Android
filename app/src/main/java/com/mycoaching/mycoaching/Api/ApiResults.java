@@ -1,13 +1,14 @@
 package com.mycoaching.mycoaching.Api;
 
+import com.mycoaching.mycoaching.Models.Realm.Message;
+import com.mycoaching.mycoaching.Models.Retrofit.Appraisal;
 import com.mycoaching.mycoaching.Models.Retrofit.Event;
 import com.mycoaching.mycoaching.Models.Retrofit.Measurement;
 import com.mycoaching.mycoaching.Models.Retrofit.Post;
-import com.mycoaching.mycoaching.Models.Realm.Message;
-import com.mycoaching.mycoaching.Models.Retrofit.Appraisal;
+import com.mycoaching.mycoaching.Models.Retrofit.Prescription;
 import com.mycoaching.mycoaching.Models.Retrofit.Test;
-import com.mycoaching.mycoaching.Models.Retrofit.UserRetrofit;
 import com.mycoaching.mycoaching.Models.Retrofit.Thread;
+import com.mycoaching.mycoaching.Models.Retrofit.UserRetrofit;
 
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class ApiResults {
     private List<Post> listPost;
     private List<Event> listEvent;
     private List<Measurement> listMeasurement;
+    private List<Prescription> listPrescription;
     private Appraisal lastAppraisal;
     private List<Test> listTest;
     private int responseCode;
@@ -107,6 +109,14 @@ public class ApiResults {
 
     public void setListMeasurement(List<Measurement> listMeasurement) {
         this.listMeasurement = listMeasurement;
+    }
+
+    public List<Prescription> getListPrescription() {
+        return listPrescription;
+    }
+
+    public void setListPrescription(List<Prescription> listPrescription) {
+        this.listPrescription = listPrescription;
     }
 }
 

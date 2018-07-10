@@ -1,13 +1,14 @@
 package com.mycoaching.mycoaching.Api;
 
+import com.mycoaching.mycoaching.Models.Realm.Message;
+import com.mycoaching.mycoaching.Models.Retrofit.Appraisal;
 import com.mycoaching.mycoaching.Models.Retrofit.Event;
 import com.mycoaching.mycoaching.Models.Retrofit.Measurement;
 import com.mycoaching.mycoaching.Models.Retrofit.Post;
-import com.mycoaching.mycoaching.Models.Realm.Message;
-import com.mycoaching.mycoaching.Models.Retrofit.Appraisal;
+import com.mycoaching.mycoaching.Models.Retrofit.Prescription;
 import com.mycoaching.mycoaching.Models.Retrofit.Test;
-import com.mycoaching.mycoaching.Models.Retrofit.UserRetrofit;
 import com.mycoaching.mycoaching.Models.Retrofit.Thread;
+import com.mycoaching.mycoaching.Models.Retrofit.UserRetrofit;
 
 import java.util.List;
 
@@ -155,4 +156,17 @@ public interface ApiInterface {
                                 @Field("weight") String weight,@Field("height") String height,
                                 @Field("hipCircumference") String hipCircumference,@Field("waistCircumference") String waistCircumference,
                                 @Field("thighCircumference") String thighCircumference,@Field("armCircumference") String armCircumference);
+
+    /**
+     * Endpoints for prescription
+     */
+
+    @GET("prescriptions/")
+    Call<List<Prescription>> getPrescriptions(@Query("userId") int id);
+
+    @POST("prescriptions/")
+    @FormUrlEncoded
+    Call<Void> postPrescription(@Field("userId") String userId,@Field("date") String date,
+                                @Field("exercises") String exercices);
+
 }

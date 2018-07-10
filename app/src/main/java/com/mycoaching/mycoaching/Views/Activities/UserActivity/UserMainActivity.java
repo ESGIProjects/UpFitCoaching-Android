@@ -18,10 +18,11 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.mycoaching.mycoaching.R;
 import com.mycoaching.mycoaching.Views.Activities.Common.LoginActivity;
 import com.mycoaching.mycoaching.Views.Activities.Common.SettingsActivity;
+import com.mycoaching.mycoaching.Views.Fragments.CoachMenu.PrescriptionFragment;
 import com.mycoaching.mycoaching.Views.Fragments.Common.ChatFragment;
 import com.mycoaching.mycoaching.Views.Fragments.Common.EventFragment;
-import com.mycoaching.mycoaching.Views.Fragments.Common.ThreadFragment;
 import com.mycoaching.mycoaching.Views.Fragments.Common.FollowUpFragment;
+import com.mycoaching.mycoaching.Views.Fragments.Common.ThreadFragment;
 
 import java.io.IOException;
 
@@ -47,6 +48,7 @@ public class UserMainActivity extends AppCompatActivity {
     BottomNavigationView navigation;
 
     FollowUpFragment fuf = new FollowUpFragment();
+    PrescriptionFragment pf = new PrescriptionFragment();
     EventFragment ef = new EventFragment();
     ChatFragment chf = new ChatFragment();
     ThreadFragment tf = new ThreadFragment();
@@ -68,6 +70,13 @@ public class UserMainActivity extends AppCompatActivity {
                     hideFragments();
                     hideTF();
                     ft.show(fuf);
+                    ft.commit();
+                    return true;
+                case R.id.navigation_prescription:
+                    ft = getSupportFragmentManager().beginTransaction();
+                    hideFragments();
+                    hideTF();
+                    ft.show(pf);
                     ft.commit();
                     return true;
                 case R.id.navigation_calendar:
@@ -111,7 +120,7 @@ public class UserMainActivity extends AppCompatActivity {
 
         navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        navigation.getMenu().getItem(1).setChecked(true);
+        navigation.getMenu().getItem(2).setChecked(true);
         ft = getSupportFragmentManager().beginTransaction();
         addFragments();
         hideFragments();
@@ -165,7 +174,6 @@ public class UserMainActivity extends AppCompatActivity {
                                 .show();
                         return true;
                     default:
-                        System.out.println("");
                         return true;
                 }
             }
@@ -174,7 +182,7 @@ public class UserMainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if(getSupportFragmentManager().findFragmentByTag("POSTS") != null && navigation.getMenu().getItem(3).isChecked()){
+        if(getSupportFragmentManager().findFragmentByTag("POSTS") != null && navigation.getMenu().getItem(4).isChecked()){
             if(getSupportFragmentManager().findFragmentByTag("TF").isHidden()){
                 ft = getSupportFragmentManager().beginTransaction();
                 ft.remove(getSupportFragmentManager().findFragmentByTag("POSTS"));
@@ -202,6 +210,7 @@ public class UserMainActivity extends AppCompatActivity {
 
     public void addFragments() {
         ft.add(R.id.container, fuf);
+        ft.add(R.id.container, pf);
         ft.add(R.id.container, ef);
         ft.add(R.id.container, chf);
         ft.add(R.id.container, tf,"TF");
@@ -213,6 +222,7 @@ public class UserMainActivity extends AppCompatActivity {
         ft.hide(ef);
         ft.hide(chf);
         ft.hide(tf);
+        ft.hide(pf);
     }
 
     public void hideTF(){

@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import com.mycoaching.mycoaching.Api.ApiCall;
 import com.mycoaching.mycoaching.Api.ApiResults;
 import com.mycoaching.mycoaching.Api.ServiceResultListener;
-import com.mycoaching.mycoaching.Models.Realm.Contact;
 import com.mycoaching.mycoaching.Models.Realm.Message;
 import com.mycoaching.mycoaching.Models.Realm.UserRealm;
 import com.mycoaching.mycoaching.R;
@@ -27,7 +26,6 @@ import java.util.Comparator;
 import java.util.List;
 
 import io.realm.Realm;
-import io.realm.RealmResults;
 
 /**
  * Created by kevin on 24/06/2018.

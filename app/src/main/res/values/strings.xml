@@ -39,6 +39,7 @@
 
     <string name="title_activity_user_main">UserMainActivity</string>
     <string name="title_followUp">Suivi</string>
+    <string name="title_prescription">Programme</string>
     <string name="title_calendar">Calendrier</string>
     <string name="title_tips">Astuces</string>
     <string name="title_users">Clients</string>
@@ -68,7 +69,6 @@
     </string-array>
     <string name="edit_event">Modifier l\'évènement</string>
     <string name="cancel_event">Annuler l\'évènement</string>
-
 
     <string name="global">Tout</string>
     <string name="year">Année</string>
@@ -117,8 +117,22 @@
     <string name="test_freq">Fréquence : %1$ss</string>
     <string name="new_test">Nouveau test</string>
     <string name="new_prescription">Nouvelle prescription</string>
+    <string name="no_prescription">Pas de prescription pour le moment !</string>
+    <string name="confirm_prescription">Valider la prescription</string>
+    <string name="edit_exercise">Modifier l\'exercice</string>
+    <string name="remove_exercise">Supprimer l\'exercice</string>
 
+    <string name="time_exercise">Durée : %1$s</string>
+    <string name="serie_exercise">Nombre de série : %1$d</string>
+    <string name="rep_exercise">Nombre de répétitions : %1$d</string>
+    <string name="intensity_exercise">Intensité : %1$s</string>
+    <string name="intensity">Intensité : </string>
+    <string name="timer">Durée : </string>
+    <string name="default_timer">00:00:00</string>
+    <string name="serie_input">Séries</string>
+    <string name="repet_input">Répétitions</string>
 
+    <string name="create_exercise">Création d\'un exercice</string>
 
     <string name="goal_input">Objectif</string>
     <string name="rep_input">Nombre de séances par semaine</string>
@@ -167,6 +181,15 @@
         <item>Moyen</item>
         <item>Bon</item>
         <item>Très bon</item>
+    </string-array>
+
+    <string-array name="exercice">
+        <item>Abdominaux</item>
+        <item>Footing</item>
+        <item>Natation</item>
+        <item>Pompes</item>
+        <item>Squats</item>
+        <item>Vélo</item>
     </string-array>
 
     <string name="title_activity_test">TEST</string>

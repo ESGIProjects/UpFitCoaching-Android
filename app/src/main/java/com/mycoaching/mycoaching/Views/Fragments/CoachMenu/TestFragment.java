@@ -15,7 +15,6 @@ import com.mycoaching.mycoaching.Api.ApiCall;
 import com.mycoaching.mycoaching.Api.ApiResults;
 import com.mycoaching.mycoaching.Api.ServiceResultListener;
 import com.mycoaching.mycoaching.R;
-import com.mycoaching.mycoaching.Views.Fragments.CoachMenu.ClientProfileFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

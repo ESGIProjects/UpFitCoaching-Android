@@ -20,7 +20,6 @@ import com.mycoaching.mycoaching.Models.Retrofit.Appraisal;
 import com.mycoaching.mycoaching.Models.Retrofit.Test;
 import com.mycoaching.mycoaching.R;
 import com.mycoaching.mycoaching.Views.Fragments.Common.FollowUpFragment;
-import com.mycoaching.mycoaching.Views.Fragments.Common.PrescriptionFragment;
 
 import org.joda.time.LocalDate;
 import org.joda.time.Years;
@@ -168,6 +167,9 @@ public class ClientProfileFragment extends Fragment{
         fm = getActivity().getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         PrescriptionFragment pf = new PrescriptionFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("id",b.getString("id"));
+        pf.setArguments(bundle);
         ft.hide(getFragmentManager().findFragmentByTag("PROFILE"));
         ft.add(R.id.container, pf,"PRESCRIPTION");
         ft.commit();

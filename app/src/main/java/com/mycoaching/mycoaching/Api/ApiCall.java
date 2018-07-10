@@ -2,14 +2,15 @@ package com.mycoaching.mycoaching.Api;
 
 import android.util.Log;
 
+import com.mycoaching.mycoaching.Models.Realm.Message;
+import com.mycoaching.mycoaching.Models.Retrofit.Appraisal;
 import com.mycoaching.mycoaching.Models.Retrofit.Event;
 import com.mycoaching.mycoaching.Models.Retrofit.Measurement;
 import com.mycoaching.mycoaching.Models.Retrofit.Post;
-import com.mycoaching.mycoaching.Models.Realm.Message;
-import com.mycoaching.mycoaching.Models.Retrofit.Appraisal;
+import com.mycoaching.mycoaching.Models.Retrofit.Prescription;
 import com.mycoaching.mycoaching.Models.Retrofit.Test;
-import com.mycoaching.mycoaching.Models.Retrofit.UserRetrofit;
 import com.mycoaching.mycoaching.Models.Retrofit.Thread;
+import com.mycoaching.mycoaching.Models.Retrofit.UserRetrofit;
 
 import java.util.List;
 
@@ -435,6 +436,47 @@ public class ApiCall {
                                        String thighCircumference,String armCircumference, final ServiceResultListener srl) {
         ApiUtils.getApiInstance().postMeasurements(userId,date,weight,height,hipCircumference,waistCircumference,
                 thighCircumference,armCircumference).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                ApiResults sir = new ApiResults();
+                sir.setResponseCode(response.code());
+                srl.onResult(sir);
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                ApiResults sir = new ApiResults();
+                sir.setException(t);
+                srl.onResult(sir);
+            }
+        });
+    }
+
+    /**
+     * Endpoints for prescription
+     */
+
+    public static void getPrescription(int id, final ServiceResultListener srl) {
+        ApiUtils.getApiInstance().getPrescriptions(id).enqueue(new Callback<List<Prescription>>() {
+            @Override
+            public void onResponse(Call<List<Prescription>> call, Response<List<Prescription>> response) {
+                ApiResults sir = new ApiResults();
+                sir.setResponseCode(response.code());
+                sir.setListPrescription(response.body());
+                srl.onResult(sir);
+            }
+
+            @Override
+            public void onFailure(Call<List<Prescription>> call, Throwable t) {
+                ApiResults sir = new ApiResults();
+                sir.setException(t);
+                srl.onResult(sir);
+            }
+        });
+    }
+
+    public static void postPrescription(String userId,String date,String exercices, final ServiceResultListener srl) {
+        ApiUtils.getApiInstance().postPrescription(userId,date,exercices).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 ApiResults sir = new ApiResults();

@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 
 import com.mycoaching.mycoaching.R;
-import com.mycoaching.mycoaching.Views.Activities.CoachActivity.CoachMainActivity;
 import com.mycoaching.mycoaching.Views.Fragments.Common.EditProfileFragment;
 import com.mycoaching.mycoaching.Views.Fragments.Common.LibrairiesFragment;
 import com.mycoaching.mycoaching.Views.Fragments.UserMenu.CoachProfileFragment;

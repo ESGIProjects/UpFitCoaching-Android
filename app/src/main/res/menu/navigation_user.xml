@@ -7,6 +7,11 @@
         android:title="@string/title_followUp" />
 
     <item
+        android:id="@+id/navigation_prescription"
+        android:icon="@drawable/ic_fitness_center_black_24dp"
+        android:title="@string/title_prescription" />
+
+    <item
         android:id="@+id/navigation_calendar"
         android:icon="@drawable/ic_event_available_black_24dp"
         android:title="@string/title_calendar" />
