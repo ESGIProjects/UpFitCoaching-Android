@@ -20,6 +20,7 @@ import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Query;
@@ -73,7 +74,7 @@ public interface ApiInterface {
 
 
     @GET("threads/")
-    Call<List<Thread>> getThreads(@Query("forumId") int id);
+    Call<List<Thread>> getThreads(@Header("Authorization") String token, @Query("forumId") int id);
 
     @GET("thread/")
     Call<List<Post>> getPosts(@Query("threadId") int id);

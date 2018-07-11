@@ -118,8 +118,8 @@ public class ApiCall {
      * Endpoints for threads and posts
      */
 
-    public static void getThreads(int id, final ServiceResultListener srl) {
-        ApiUtils.getApiInstance().getThreads(id).enqueue(new Callback<List<Thread>>() {
+    public static void getThreads(String token, int id, final ServiceResultListener srl) {
+        ApiUtils.getApiInstance().getThreads(token,id).enqueue(new Callback<List<Thread>>() {
             @Override
             public void onResponse(Call<List<Thread>> call, Response<List<Thread>> response) {
                 ApiResults sir = new ApiResults();

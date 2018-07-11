@@ -18,7 +18,9 @@ import android.view.ViewGroup;
 import com.mycoaching.mycoaching.Api.ApiCall;
 import com.mycoaching.mycoaching.Api.ApiResults;
 import com.mycoaching.mycoaching.Api.ServiceResultListener;
+import com.mycoaching.mycoaching.Models.Realm.UserRealm;
 import com.mycoaching.mycoaching.Models.Retrofit.Thread;
+import com.mycoaching.mycoaching.Models.Retrofit.UserRetrofit;
 import com.mycoaching.mycoaching.R;
 import com.mycoaching.mycoaching.Views.Adapters.ThreadAdapter;
 import com.mycoaching.mycoaching.Views.Dialogs.AddThread;
@@ -33,6 +35,7 @@ import java.util.Locale;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.realm.Realm;
 
 import static com.mycoaching.mycoaching.Util.Constants.DATE_FORMATTER;
 
@@ -50,6 +53,8 @@ public class ThreadFragment extends Fragment implements ThreadAdapter.OnClick {
     View v;
     RecyclerView rv;
     FragmentManager fm;
+    Realm r;
+    UserRealm ur;
 
     @OnClick(R.id.buttonThread) void openDialog(){
         final AddThread at = new AddThread(getActivity());
@@ -73,6 +78,9 @@ public class ThreadFragment extends Fragment implements ThreadAdapter.OnClick {
         v = inflater.inflate(R.layout.fragment_list_thread, container, false);
         ButterKnife.bind(this, v);
 
+        r = Realm.getDefaultInstance();
+        ur = r.where(UserRealm.class).findFirst();
+
         rv = new RecyclerView(getContext());
         pf = null;
 
@@ -91,7 +99,7 @@ public class ThreadFragment extends Fragment implements ThreadAdapter.OnClick {
     }
 
     public void prepareData(){
-        ApiCall.getThreads(1, new ServiceResultListener() {
+        ApiCall.getThreads("Bearer " + ur.getToken(),1, new ServiceResultListener() {
             @Override
             public void onResult(ApiResults ar) {
                 if (ar.getResponseCode() == 200) {
