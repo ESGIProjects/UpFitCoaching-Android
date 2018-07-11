@@ -305,10 +305,10 @@ public class ApiCall {
      * Endpoint for profile
      */
 
-    public static void updateUser(String userId, String mail, String password, String firstName,
+    public static void updateUser(String token, String userId, String mail, String password, String firstName,
                                   String lastName, String city, String phoneNumber, String address,
                                   final ServiceResultListener srl){
-        ApiUtils.getApiInstance().updateUser(userId,mail,password,firstName,lastName,city,phoneNumber,
+        ApiUtils.getApiInstance().updateUser(token,userId,mail,password,firstName,lastName,city,phoneNumber,
                 address).enqueue(new Callback<UserRetrofit>() {
             @Override
             public void onResponse(Call<UserRetrofit> call, Response<UserRetrofit> response) {

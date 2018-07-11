@@ -116,7 +116,7 @@ public interface ApiInterface {
 
     @PUT("users/")
     @FormUrlEncoded
-    Call<UserRetrofit> updateUser(@Field("userId") String userId, @Field("mail") String mail,
+    Call<UserRetrofit> updateUser(@Header("Authorization") String token, @Field("userId") String userId, @Field("mail") String mail,
                                   @Field("password") String password, @Field("firstName") String firstName,
                                   @Field("lastName") String lastName, @Field("city") String city,
                                   @Field("phoneNumber") String phoneNumber, @Field("address") String address);

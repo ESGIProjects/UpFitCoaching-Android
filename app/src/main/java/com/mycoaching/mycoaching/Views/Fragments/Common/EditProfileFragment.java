@@ -80,7 +80,7 @@ public class EditProfileFragment extends Fragment{
                         Toast.makeText(getContext(),"Veuillez saisir une adresse",Toast.LENGTH_LONG).show();
                     }
                 }
-                ApiCall.updateUser(ur.getId(), mail.getText().toString(), pwd,
+                ApiCall.updateUser("Bearer " + ur.getToken(),ur.getId(), mail.getText().toString(), pwd,
                         firstName.getText().toString(), lastName.getText().toString(), city.getText().toString(),
                         phoneNumber.getText().toString(), address.getText().toString(), new ServiceResultListener() {
                             @Override
