@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.gson.Gson;
 import com.mycoaching.mycoaching.Api.ApiCall;
 import com.mycoaching.mycoaching.Api.ApiResults;
 import com.mycoaching.mycoaching.Api.ServiceResultListener;
@@ -75,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
                             }
                             sp = getApplicationContext().getSharedPreferences("user_prefs",MODE_PRIVATE);
                             if((sp.getString("firebase_token", null) == null) || (!sp.getString("firebase_token", null).equals(FirebaseInstanceId.getInstance().getToken()))){
-                                ApiCall.putToken(ar.getUr().getId(), FirebaseInstanceId.getInstance().getToken(), null, new ServiceResultListener() {
+                                ApiCall.putToken(ar.getUt().getUr().getId(), FirebaseInstanceId.getInstance().getToken(), null, new ServiceResultListener() {
                                     @Override
                                     public void onResult(ApiResults ar) {
                                         Log.i("RESPONSE : ", ""+ar.getResponseCode());
@@ -85,7 +86,7 @@ public class LoginActivity extends AppCompatActivity {
                                 });
                             }
                             //we check if the user is a coach or a regular
-                            if (ar.getUr().getType() == 2) {
+                            if (ar.getUt().getUr().getType() == 2) {
                                 i = new Intent(LoginActivity.this, CoachMainActivity.class);
                                 performTransition(LoginActivity.this,i, R.animator.slide_from_right, R.animator.slide_to_left);
                             } else {
@@ -146,29 +147,31 @@ public class LoginActivity extends AppCompatActivity {
         r.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                UserRealm ur = realm.createObject(UserRealm.class, ar.getUr().getId());
-                ur.setMail(ar.getUr().getMail());
-                ur.setSex(ar.getUr().getSex());
-                ur.setFirstName(ar.getUr().getFirstName());
-                ur.setLastName(ar.getUr().getLastName());
-                ur.setCity(ar.getUr().getCity());
-                ur.setPhoneNumber(ar.getUr().getPhoneNumber());
-                ur.setType(ar.getUr().getType());
-                if (ar.getUr().getCoach() != null) {
-                    ur.setBirthDate(ar.getUr().getBirthDate());
-                    ur.setAddress(ar.getUr().getAddress());
-                    ur.setIdCoach(ar.getUr().getCoach().getId());
-                    ur.setMailCoach(ar.getUr().getCoach().getMail());
-                    ur.setFirstNameCoach(ar.getUr().getCoach().getFirstName());
-                    ur.setLastNameCoach(ar.getUr().getCoach().getLastName());
-                    ur.setSexCoach(ar.getUr().getCoach().getSex());
-                    ur.setCityCoach(ar.getUr().getCoach().getCity());
-                    ur.setPhoneNumberCoach(ar.getUr().getCoach().getPhoneNumber());
-                    ur.setTypeCoach(ar.getUr().getCoach().getType());
-                    ur.setAddressCoach(ar.getUr().getCoach().getAddress());
+                UserRealm ur = realm.createObject(UserRealm.class, ar.getUt().getUr().getId());
+                ur.setMail(ar.getUt().getUr().getMail());
+                ur.setSex(ar.getUt().getUr().getSex());
+                ur.setFirstName(ar.getUt().getUr().getFirstName());
+                ur.setLastName(ar.getUt().getUr().getLastName());
+                ur.setCity(ar.getUt().getUr().getCity());
+                ur.setPhoneNumber(ar.getUt().getUr().getPhoneNumber());
+                ur.setType(ar.getUt().getUr().getType());
+                ur.setToken(ar.getUt().getToken());
+                Log.i("TEST TOKEN : ", ar.getUt().getToken());
+                if (ar.getUt().getUr().getCoach() != null) {
+                    ur.setBirthDate(ar.getUt().getUr().getBirthDate());
+                    ur.setAddress(ar.getUt().getUr().getAddress());
+                    ur.setIdCoach(ar.getUt().getUr().getCoach().getId());
+                    ur.setMailCoach(ar.getUt().getUr().getCoach().getMail());
+                    ur.setFirstNameCoach(ar.getUt().getUr().getCoach().getFirstName());
+                    ur.setLastNameCoach(ar.getUt().getUr().getCoach().getLastName());
+                    ur.setSexCoach(ar.getUt().getUr().getCoach().getSex());
+                    ur.setCityCoach(ar.getUt().getUr().getCoach().getCity());
+                    ur.setPhoneNumberCoach(ar.getUt().getUr().getCoach().getPhoneNumber());
+                    ur.setTypeCoach(ar.getUt().getUr().getCoach().getType());
+                    ur.setAddressCoach(ar.getUt().getUr().getCoach().getAddress());
                 }
                 else{
-                    ur.setAddress(ar.getUr().getAddress());
+                    ur.setAddress(ar.getUt().getUr().getAddress());
                 }
             }
         });

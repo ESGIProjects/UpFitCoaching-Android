@@ -75,14 +75,14 @@ public class ClientsFragment extends Fragment implements ClientsAdapter.OnClick{
                         u = new UserRealm(m.getSender().getId(),m.getSender().getMail(),
                                 m.getSender().getFirstName(), m.getSender().getLastName(),
                                 m.getSender().getSex(),m.getSender().getBirthDate(),
-                                m.getSender().getCity(),m.getSender().getPhoneNumber());
+                                m.getSender().getCity(),m.getSender().getPhoneNumber(),null);
                         ids.add(Integer.valueOf(m.getSender().getId()));
                         lu.add(u);
                     } else if (!ids.contains(Integer.valueOf(m.getReceiver().getId()))) {
                         u = new UserRealm(m.getReceiver().getId(),m.getReceiver().getMail(),
                                 m.getReceiver().getFirstName(), m.getReceiver().getLastName(),
                                 m.getReceiver().getSex(),m.getReceiver().getBirthDate(),
-                                m.getReceiver().getCity(),m.getReceiver().getPhoneNumber());
+                                m.getReceiver().getCity(),m.getReceiver().getPhoneNumber(),null);
                         ids.add(Integer.valueOf(m.getReceiver().getId()));
                         lu.add(u);
                     }

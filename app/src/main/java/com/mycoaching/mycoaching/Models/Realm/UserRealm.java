@@ -17,7 +17,7 @@ public class UserRealm extends RealmObject {
     }
 
     public UserRealm(String id, String mail, String firstName, String lastName, String sex, String birthDate,
-                     String city, String phoneNumber){
+                     String city, String phoneNumber, String token){
         this.id = id;
         this.mail = mail;
         this.firstName = firstName;
@@ -26,9 +26,10 @@ public class UserRealm extends RealmObject {
         this.birthDate = birthDate;
         this.city = city;
         this.phoneNumber = phoneNumber;
+        this.token = token;
     }
 
-    private String mail, firstName, lastName, sex, birthDate, address, city, phoneNumber;
+    private String mail, firstName, lastName, sex, birthDate, address, city, phoneNumber, token;
 
     private String idCoach, mailCoach, firstNameCoach, lastNameCoach, sexCoach, addressCoach,
             cityCoach, phoneNumberCoach;
@@ -113,6 +114,14 @@ public class UserRealm extends RealmObject {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public String getMailCoach() {

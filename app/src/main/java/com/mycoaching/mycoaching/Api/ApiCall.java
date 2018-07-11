@@ -11,6 +11,7 @@ import com.mycoaching.mycoaching.Models.Retrofit.Prescription;
 import com.mycoaching.mycoaching.Models.Retrofit.Test;
 import com.mycoaching.mycoaching.Models.Retrofit.Thread;
 import com.mycoaching.mycoaching.Models.Retrofit.UserRetrofit;
+import com.mycoaching.mycoaching.Models.Retrofit.UserToken;
 
 import java.util.List;
 
@@ -32,17 +33,17 @@ public class ApiCall {
      */
 
     public static void signIn(String mail, String password, final ServiceResultListener srl) {
-        ApiUtils.getApiInstance().signIn(mail, password).enqueue(new Callback<UserRetrofit>() {
+        ApiUtils.getApiInstance().signIn(mail, password).enqueue(new Callback<UserToken>() {
             @Override
-            public void onResponse(Call<UserRetrofit> call, Response<UserRetrofit> response) {
+            public void onResponse(Call<UserToken> call, Response<UserToken> response) {
                 ApiResults sir = new ApiResults();
                 sir.setResponseCode(response.code());
-                sir.setUr(response.body());
+                sir.setUt(response.body());
                 srl.onResult(sir);
             }
 
             @Override
-            public void onFailure(Call<UserRetrofit> call, Throwable t) {
+            public void onFailure(Call<UserToken> call, Throwable t) {
                 ApiResults sir = new ApiResults();
                 sir.setException(t);
                 srl.onResult(sir);

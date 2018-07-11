@@ -9,6 +9,7 @@ import com.mycoaching.mycoaching.Models.Retrofit.Prescription;
 import com.mycoaching.mycoaching.Models.Retrofit.Test;
 import com.mycoaching.mycoaching.Models.Retrofit.Thread;
 import com.mycoaching.mycoaching.Models.Retrofit.UserRetrofit;
+import com.mycoaching.mycoaching.Models.Retrofit.UserToken;
 
 import java.util.List;
 
@@ -29,6 +30,7 @@ public class ApiResults {
     private List<Test> listTest;
     private int responseCode;
     private UserRetrofit ur;
+    private UserToken ut;
     private Throwable exception;
 
     public List<Message> getListMessage() {
@@ -117,6 +119,14 @@ public class ApiResults {
 
     public void setListPrescription(List<Prescription> listPrescription) {
         this.listPrescription = listPrescription;
+    }
+
+    public UserToken getUt() {
+        return ut;
+    }
+
+    public void setUt(UserToken ut) {
+        this.ut = ut;
     }
 }
 

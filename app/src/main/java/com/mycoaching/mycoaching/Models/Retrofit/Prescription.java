@@ -57,6 +57,5 @@ public class Prescription {
     public void setExercises(List<Exercise> listExercises) {
         this.listExercises = listExercises;
     }
-
 }
 

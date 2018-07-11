@@ -9,6 +9,7 @@ import com.mycoaching.mycoaching.Models.Retrofit.Prescription;
 import com.mycoaching.mycoaching.Models.Retrofit.Test;
 import com.mycoaching.mycoaching.Models.Retrofit.Thread;
 import com.mycoaching.mycoaching.Models.Retrofit.UserRetrofit;
+import com.mycoaching.mycoaching.Models.Retrofit.UserToken;
 
 import java.util.List;
 
@@ -33,9 +34,9 @@ public interface ApiInterface {
      * Endpoints for authentication
      */
 
-    @POST("signin/")
+    @POST("login/signin/")
     @FormUrlEncoded
-    Call<UserRetrofit> signIn(@Field("mail") String mail, @Field("password") String password);
+    Call<UserToken> signIn(@Field("mail") String mail, @Field("password") String password);
 
     @POST("signup/")
     @FormUrlEncoded

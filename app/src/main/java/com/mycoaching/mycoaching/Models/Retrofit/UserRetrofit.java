@@ -58,6 +58,7 @@ public class UserRetrofit extends RealmObject implements Parcelable {
     @Expose
     private String sex;
 
+
     public UserRetrofit(String id, Integer type, String mail, String firstName, String lastName, String birthDate,
                         String address, String city, String phoneNumber, UserRetrofit coach, String sex) {
         this.id = id;
@@ -177,6 +178,7 @@ public class UserRetrofit extends RealmObject implements Parcelable {
     public void setSex(String sex) {
         this.sex = sex;
     }
+
 
     @Override
     public int describeContents() {
