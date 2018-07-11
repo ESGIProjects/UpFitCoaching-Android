@@ -185,7 +185,7 @@ public class ChatFragment extends Fragment {
         pd = new ProgressDialog(getContext(), R.style.StyledDialog);
         pd.setMessage("Récupération des messages en cours...");
         pd.show();
-        ApiCall.getConversation(Integer.valueOf(ur.getId()), new ServiceResultListener() {
+        ApiCall.getConversation("Bearer " + ur.getToken(),Integer.valueOf(ur.getId()), new ServiceResultListener() {
             @Override
             public void onResult(ApiResults ar) {
                 if (ar.getResponseCode() == 200) {

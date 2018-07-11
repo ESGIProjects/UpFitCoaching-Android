@@ -56,7 +56,7 @@ public interface ApiInterface {
      */
 
     @GET("messages/")
-    Call<List<Message>> getConversation(@Query("userId") int id);
+    Call<List<Message>> getConversation(@Header("Authorization") String token,@Query("userId") int id);
 
     /**
      * Endpoints for threads and posts

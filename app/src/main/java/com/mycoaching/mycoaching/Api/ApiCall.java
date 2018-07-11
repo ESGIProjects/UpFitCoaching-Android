@@ -95,8 +95,8 @@ public class ApiCall {
      * Endpoint for message
      */
 
-    public static void getConversation(int id, final ServiceResultListener srl) {
-        ApiUtils.getApiInstance().getConversation(id).enqueue(new Callback<List<Message>>() {
+    public static void getConversation(String token,int id, final ServiceResultListener srl) {
+        ApiUtils.getApiInstance().getConversation(token,id).enqueue(new Callback<List<Message>>() {
             @Override
             public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
                 ApiResults sir = new ApiResults();

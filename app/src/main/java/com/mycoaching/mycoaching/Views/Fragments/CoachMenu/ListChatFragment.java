@@ -94,7 +94,7 @@ public class ListChatFragment extends Fragment implements ContactAdapter.OnClick
     }
 
     private void getContacts() {
-        ApiCall.getConversation(Integer.valueOf(ur.getId()), new ServiceResultListener() {
+        ApiCall.getConversation("Bearer " + ur.getToken(),Integer.valueOf(ur.getId()), new ServiceResultListener() {
             @Override
             public void onResult(ApiResults ar) {
                 lm.addAll(ar.getListMessage());

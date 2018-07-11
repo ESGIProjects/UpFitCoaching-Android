@@ -66,7 +66,7 @@ public class ClientsFragment extends Fragment implements ClientsAdapter.OnClick{
     }
 
     public void getUsers(){
-        ApiCall.getConversation(Integer.valueOf(ur.getId()), new ServiceResultListener() {
+        ApiCall.getConversation("Bearer " + ur.getToken(), Integer.valueOf(ur.getId()), new ServiceResultListener() {
             @Override
             public void onResult(ApiResults ar) {
                 ids.add(Integer.valueOf(ur.getId()));
