@@ -164,11 +164,11 @@ public interface ApiInterface {
      */
 
     @GET("prescriptions/")
-    Call<List<Prescription>> getPrescriptions(@Query("userId") int id);
+    Call<List<Prescription>> getPrescriptions(@Header("Authorization") String token, @Query("userId") int id);
 
     @POST("prescriptions/")
     @FormUrlEncoded
-    Call<Void> postPrescription(@Field("userId") String userId,@Field("date") String date,
+    Call<Void> postPrescription(@Header("Authorization") String token, @Field("userId") String userId,@Field("date") String date,
                                 @Field("exercises") String exercices);
 
 }

@@ -18,7 +18,7 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.mycoaching.mycoaching.R;
 import com.mycoaching.mycoaching.Views.Activities.Common.LoginActivity;
 import com.mycoaching.mycoaching.Views.Activities.Common.SettingsActivity;
-import com.mycoaching.mycoaching.Views.Fragments.CoachMenu.PrescriptionFragment;
+import com.mycoaching.mycoaching.Views.Fragments.Common.PrescriptionFragment;
 import com.mycoaching.mycoaching.Views.Fragments.Common.ChatFragment;
 import com.mycoaching.mycoaching.Views.Fragments.Common.EventFragment;
 import com.mycoaching.mycoaching.Views.Fragments.Common.FollowUpFragment;

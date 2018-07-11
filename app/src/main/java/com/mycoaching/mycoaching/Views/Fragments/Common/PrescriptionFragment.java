@@ -1,4 +1,4 @@
-package com.mycoaching.mycoaching.Views.Fragments.CoachMenu;
+package com.mycoaching.mycoaching.Views.Fragments.Common;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -104,7 +104,7 @@ public class PrescriptionFragment extends Fragment implements ExerciseAdapter.On
         pd.setMessage("Création du compte en cours...");
         pd.show();
         Log.i("TEST : ",new Gson().toJson(le));
-        ApiCall.postPrescription(id, getDate(), new Gson().toJson(le), new ServiceResultListener() {
+        ApiCall.postPrescription("Bearer " + ur.getToken(), id, getDate(), new Gson().toJson(le), new ServiceResultListener() {
             @Override
             public void onResult(ApiResults ar) {
                 if(ar.getResponseCode() == 201){
@@ -122,13 +122,14 @@ public class PrescriptionFragment extends Fragment implements ExerciseAdapter.On
         b = this.getArguments();
 
         ButterKnife.bind(this, v);
+        r = Realm.getDefaultInstance();
+        ur = r.where(UserRealm.class).findFirst();
 
         if(b != null){
             id = b.getString("id");
         }
         else{
-            r = Realm.getDefaultInstance();
-            id = r.where(UserRealm.class).findFirst().getId();
+            id = ur.getId();
             addPrescription.setVisibility(View.GONE);
             prescription.setVisibility(View.GONE);
         }
@@ -154,7 +155,7 @@ public class PrescriptionFragment extends Fragment implements ExerciseAdapter.On
         pd = new ProgressDialog(getActivity(), R.style.StyledDialog);
         pd.setMessage("Récupération des informations...");
         pd.show();
-        ApiCall.getPrescription(Integer.valueOf(id), new ServiceResultListener() {
+        ApiCall.getPrescription("Bearer " + ur.getToken(),Integer.valueOf(id), new ServiceResultListener() {
             @Override
             public void onResult(ApiResults ar) {
                 if(ar.getResponseCode() == 200){
@@ -174,31 +175,33 @@ public class PrescriptionFragment extends Fragment implements ExerciseAdapter.On
 
     @Override
     public void onItemClick(final int position) {
-        final Exercise e = le.get(position);
-        final EditExercise ee = new EditExercise(getActivity(),e);
-        assert ee.getWindow() != null;
-        ee.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        ee.show();
-        ee.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                if(ee.getIsOK()){
-                    if(ee.getExercise() != null){
-                        le.set(position,ee.getExercise());
-                        ea.notifyDataSetChanged();
-                    }
-                    else{
-                        le.remove(position);
-                        rv.setAdapter(ea);
-                        ea.notifyItemRemoved(position);
-                        if(le.isEmpty()){
-                            addPrescription.setVisibility(View.GONE);
-                            empty.setVisibility(View.VISIBLE);
+        if(b != null){
+            final Exercise e = le.get(position);
+            final EditExercise ee = new EditExercise(getActivity(),e);
+            assert ee.getWindow() != null;
+            ee.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            ee.show();
+            ee.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialogInterface) {
+                    if(ee.getIsOK()){
+                        if(ee.getExercise() != null){
+                            le.set(position,ee.getExercise());
+                            ea.notifyDataSetChanged();
+                        }
+                        else{
+                            le.remove(position);
+                            rv.setAdapter(ea);
+                            ea.notifyItemRemoved(position);
+                            if(le.isEmpty()){
+                                addPrescription.setVisibility(View.GONE);
+                                empty.setVisibility(View.VISIBLE);
+                            }
                         }
                     }
                 }
-            }
-        });
+            });
+        }
     }
 
 }

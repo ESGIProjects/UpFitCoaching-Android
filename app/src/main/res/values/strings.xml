@@ -123,7 +123,7 @@
     <string name="remove_exercise">Supprimer l\'exercice</string>
 
     <string name="time_exercise">Durée : %1$s</string>
-    <string name="serie_exercise">Nombre de série : %1$d</string>
+    <string name="serie_exercise">Nombre de séries : %1$d</string>
     <string name="rep_exercise">Nombre de répétitions : %1$d</string>
     <string name="intensity_exercise">Intensité : %1$s</string>
     <string name="intensity">Intensité : </string>
@@ -178,9 +178,9 @@
 
     <string-array name="intensity">
         <item>Faible</item>
-        <item>Moyen</item>
-        <item>Bon</item>
-        <item>Très bon</item>
+        <item>Moyenne</item>
+        <item>Bonne</item>
+        <item>Très bonne</item>
     </string-array>
 
     <string-array name="exercice">

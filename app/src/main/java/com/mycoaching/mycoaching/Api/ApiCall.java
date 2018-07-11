@@ -457,8 +457,8 @@ public class ApiCall {
      * Endpoints for prescription
      */
 
-    public static void getPrescription(int id, final ServiceResultListener srl) {
-        ApiUtils.getApiInstance().getPrescriptions(id).enqueue(new Callback<List<Prescription>>() {
+    public static void getPrescription(String token, int id, final ServiceResultListener srl) {
+        ApiUtils.getApiInstance().getPrescriptions(token, id).enqueue(new Callback<List<Prescription>>() {
             @Override
             public void onResponse(Call<List<Prescription>> call, Response<List<Prescription>> response) {
                 ApiResults sir = new ApiResults();
@@ -476,8 +476,8 @@ public class ApiCall {
         });
     }
 
-    public static void postPrescription(String userId,String date,String exercices, final ServiceResultListener srl) {
-        ApiUtils.getApiInstance().postPrescription(userId,date,exercices).enqueue(new Callback<Void>() {
+    public static void postPrescription(String token, String userId,String date,String exercices, final ServiceResultListener srl) {
+        ApiUtils.getApiInstance().postPrescription(token,userId,date,exercices).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 ApiResults sir = new ApiResults();

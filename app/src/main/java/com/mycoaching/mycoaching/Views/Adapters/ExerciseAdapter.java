@@ -85,13 +85,13 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.MyView
                 holder.intensity.setText(c.getResources().getString(R.string.intensity_exercise,"Faible"));
                 break;
                 case 1 :
-                    holder.intensity.setText((c.getResources().getString(R.string.intensity_exercise,"Moyen")));
+                    holder.intensity.setText((c.getResources().getString(R.string.intensity_exercise,"Moyenne")));
                     break;
                 case 2 :
-                    holder.intensity.setText((c.getResources().getString(R.string.intensity_exercise,"Bon")));
+                    holder.intensity.setText((c.getResources().getString(R.string.intensity_exercise,"Bonne")));
                     break;
                 default:
-                    holder.intensity.setText((c.getResources().getString(R.string.intensity_exercise,"Très bon")));
+                    holder.intensity.setText((c.getResources().getString(R.string.intensity_exercise,"Très bonne")));
             }
         }
 
