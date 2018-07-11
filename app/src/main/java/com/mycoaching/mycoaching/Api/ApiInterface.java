@@ -126,7 +126,7 @@ public interface ApiInterface {
      */
 
     @GET("appraisals/")
-    Call<Appraisal> getLastAppraisal(@Query("userId") int id);
+    Call<Appraisal> getLastAppraisal(@Header("Authorization") String token, @Query("userId") int id);
 
     @POST("appraisals/")
     @FormUrlEncoded
@@ -138,7 +138,7 @@ public interface ApiInterface {
                                      @Field("hasNutritionist") String hasNutritionist, @Field("comments") String comments);
 
     @GET("tests/")
-    Call<List<Test>> getTests(@Query("userId") int id);
+    Call<List<Test>> getTests(@Header("Authorization") String token, @Query("userId") int id);
 
     @POST("tests/")
     @FormUrlEncoded

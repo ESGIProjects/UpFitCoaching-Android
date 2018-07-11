@@ -331,8 +331,8 @@ public class ApiCall {
      * Endpoints for followUp
      */
 
-    public static void getLastAppraisal(int id, final ServiceResultListener srl) {
-        ApiUtils.getApiInstance().getLastAppraisal(id).enqueue(new Callback<Appraisal>() {
+    public static void getLastAppraisal(String token, int id, final ServiceResultListener srl) {
+        ApiUtils.getApiInstance().getLastAppraisal(token,id).enqueue(new Callback<Appraisal>() {
             @Override
             public void onResponse(Call<Appraisal> call, Response<Appraisal> response) {
                 ApiResults sir = new ApiResults();
@@ -372,8 +372,8 @@ public class ApiCall {
         });
     }
 
-    public static void getTests(int id, final ServiceResultListener srl) {
-        ApiUtils.getApiInstance().getTests(id).enqueue(new Callback<List<Test>>() {
+    public static void getTests(String token, int id, final ServiceResultListener srl) {
+        ApiUtils.getApiInstance().getTests(token,id).enqueue(new Callback<List<Test>>() {
             @Override
             public void onResponse(Call<List<Test>> call, Response<List<Test>> response) {
                 ApiResults sir = new ApiResults();

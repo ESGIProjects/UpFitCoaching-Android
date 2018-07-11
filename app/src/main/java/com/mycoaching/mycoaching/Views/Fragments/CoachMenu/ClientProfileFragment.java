@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.mycoaching.mycoaching.Api.ApiCall;
 import com.mycoaching.mycoaching.Api.ApiResults;
 import com.mycoaching.mycoaching.Api.ServiceResultListener;
+import com.mycoaching.mycoaching.Models.Realm.UserRealm;
 import com.mycoaching.mycoaching.Models.Retrofit.Appraisal;
 import com.mycoaching.mycoaching.Models.Retrofit.Test;
 import com.mycoaching.mycoaching.R;
@@ -31,6 +32,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.realm.Realm;
+import io.realm.RealmObject;
 
 /**
  * Created by kevin on 25/06/2018.
@@ -42,6 +45,9 @@ public class ClientProfileFragment extends Fragment{
     Appraisal a;
     List<Test> lt = new ArrayList<>();
     FragmentManager fm;
+
+    Realm r;
+    UserRealm ur;
 
     ProgressDialog pd;
 
@@ -178,6 +184,8 @@ public class ClientProfileFragment extends Fragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        r = Realm.getDefaultInstance();
+        ur = r.where(UserRealm.class).findFirst();
         v = inflater.inflate(R.layout.fragment_user_profile, container, false);
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this,v);
@@ -208,11 +216,11 @@ public class ClientProfileFragment extends Fragment{
         pd = new ProgressDialog(getActivity(), R.style.StyledDialog);
         pd.setMessage("Récupération des informations...");
         pd.show();
-        ApiCall.getLastAppraisal(Integer.valueOf(b.getString("id")), new ServiceResultListener() {
+        ApiCall.getLastAppraisal("Bearer " + ur.getToken(),Integer.valueOf(b.getString("id")), new ServiceResultListener() {
             @Override
             public void onResult(ApiResults ar) {
                 if(ar.getResponseCode() == 200){
-                    ApiCall.getTests(Integer.valueOf(b.getString("id")), new ServiceResultListener() {
+                    ApiCall.getTests("Bearer " + ur.getToken(),Integer.valueOf(b.getString("id")), new ServiceResultListener() {
                         @Override
                         public void onResult(ApiResults ar) {
                             if(ar.getResponseCode() == 200){

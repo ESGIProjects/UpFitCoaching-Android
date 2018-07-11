@@ -79,7 +79,8 @@ public class ListChatFragment extends Fragment implements ContactAdapter.OnClick
         rv.setItemAnimator(new DefaultItemAnimator());
         rv.setAdapter(ca);
 
-        request = new Request.Builder().url(WEB_SOCKET_ENDPOINT + ur.getId()).build();
+        request = new Request.Builder().url(WEB_SOCKET_ENDPOINT + ur.getId()).addHeader("Authorization",
+                "Bearer " + ur.getToken()).build();
         ws = OkHttpSingleton.getInstance().newWebSocket(request, new CustomWebSocketListener());
 
         getContacts();
