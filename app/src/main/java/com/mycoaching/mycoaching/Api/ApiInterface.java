@@ -64,12 +64,12 @@ public interface ApiInterface {
 
     @POST("thread/")
     @FormUrlEncoded
-    Call<Void> createThread(@Field("title") String title, @Field("date") String date, @Field("content") String content,
+    Call<Void> createThread(@Header("Authorization") String token,@Field("title") String title, @Field("date") String date, @Field("content") String content,
                             @Field("forumId") String forumId, @Field("userId") String userId);
 
     @POST("post/")
     @FormUrlEncoded
-    Call<Void> sendPost(@Field("threadId") String threadId, @Field("date") String date, @Field("content") String content,
+    Call<Void> sendPost(@Header("Authorization") String token,@Field("threadId") String threadId, @Field("date") String date, @Field("content") String content,
                         @Field("userId") String userId);
 
 
@@ -77,7 +77,7 @@ public interface ApiInterface {
     Call<List<Thread>> getThreads(@Header("Authorization") String token, @Query("forumId") int id);
 
     @GET("thread/")
-    Call<List<Post>> getPosts(@Query("threadId") int id);
+    Call<List<Post>> getPosts(@Header("Authorization") String token, @Query("threadId") int id);
 
     /**
      * Endpoints for events

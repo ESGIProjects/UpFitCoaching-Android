@@ -137,8 +137,8 @@ public class ApiCall {
         });
     }
 
-    public static void createThread(String title, String date, String content, String forumId, String userId, final ServiceResultListener srl) {
-        ApiUtils.getApiInstance().createThread(title, date, content, forumId, userId).enqueue(new Callback<Void>() {
+    public static void createThread(String token,String title, String date, String content, String forumId, String userId, final ServiceResultListener srl) {
+        ApiUtils.getApiInstance().createThread(token,title, date, content, forumId, userId).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 ApiResults sir = new ApiResults();
@@ -158,8 +158,8 @@ public class ApiCall {
         }
     }
 
-    public static void getPosts(int id, final ServiceResultListener srl) {
-        ApiUtils.getApiInstance().getPosts(id).enqueue(new Callback<List<Post>>() {
+    public static void getPosts(String token, int id, final ServiceResultListener srl) {
+        ApiUtils.getApiInstance().getPosts(token,id).enqueue(new Callback<List<Post>>() {
             @Override
             public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
                 ApiResults sir = new ApiResults();
@@ -177,8 +177,8 @@ public class ApiCall {
         });
     }
 
-    public static void sendPost(String threadId, String date, String content, String userId, final ServiceResultListener srl) {
-        ApiUtils.getApiInstance().sendPost(threadId, date, content, userId).enqueue(new Callback<Void>() {
+    public static void sendPost(String token, String threadId, String date, String content, String userId, final ServiceResultListener srl) {
+        ApiUtils.getApiInstance().sendPost(token,threadId, date, content, userId).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 ApiResults sir = new ApiResults();

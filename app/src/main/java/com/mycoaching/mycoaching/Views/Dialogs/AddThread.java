@@ -46,7 +46,7 @@ public class AddThread extends Dialog {
         pd.setMessage("Création du sujet en cours...");
         pd.show();
         if (checkFields(threadTitle.getText().toString(), content.getText().toString())) {
-            ApiCall.createThread(threadTitle.getText().toString(), getDate(), content.getText().toString(), "1", ur.getId(), new ServiceResultListener() {
+            ApiCall.createThread("Bearer " + ur.getToken(),threadTitle.getText().toString(), getDate(), content.getText().toString(), "1", ur.getId(), new ServiceResultListener() {
                 @Override
                 public void onResult(ApiResults ar) {
                     if (ar.getResponseCode() == 201) {

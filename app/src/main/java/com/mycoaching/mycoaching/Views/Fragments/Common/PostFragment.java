@@ -50,7 +50,7 @@ public class PostFragment extends Fragment {
     @OnClick(R.id.sendPost)
     void sendMessage() {
         if (!et.getText().toString().isEmpty()) {
-            ApiCall.sendPost(String.valueOf(bundle.getInt("idThread")), getDate(), et.getText().toString(), ur.getId(), new ServiceResultListener() {
+            ApiCall.sendPost("Bearer " + ur.getToken(),String.valueOf(bundle.getInt("idThread")), getDate(), et.getText().toString(), ur.getId(), new ServiceResultListener() {
                 @Override
                 public void onResult(ApiResults ar) {
                     if (ar.getResponseCode() == 201) {
@@ -91,7 +91,7 @@ public class PostFragment extends Fragment {
     }
 
     private void prepareData() {
-        ApiCall.getPosts(bundle.getInt("idThread"), new ServiceResultListener() {
+        ApiCall.getPosts("Bearer " + ur.getToken(),bundle.getInt("idThread"), new ServiceResultListener() {
             @Override
             public void onResult(ApiResults ar) {
                 lp.addAll(ar.getListPost());
