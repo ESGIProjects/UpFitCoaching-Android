@@ -350,11 +350,11 @@ public class ApiCall {
         });
     }
 
-    public static void postAppraisal(String userId,String date, String goal, String sessionsByWeek,
+    public static void postAppraisal(String token, String userId,String date, String goal, String sessionsByWeek,
                                         String contraindication, String sportAntecedents,
                                         String helpNeeded, String hasNutritionist,
                                         String comments, final ServiceResultListener srl) {
-        ApiUtils.getApiInstance().postAppraisal(userId,date,goal,sessionsByWeek, contraindication,
+        ApiUtils.getApiInstance().postAppraisal(token,userId,date,goal,sessionsByWeek, contraindication,
                 sportAntecedents,helpNeeded,hasNutritionist,comments).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
@@ -391,11 +391,11 @@ public class ApiCall {
         });
     }
 
-    public static void postTest(String userId, String date, String warmUp, String startSpeed,
+    public static void postTest(String token, String userId, String date, String warmUp, String startSpeed,
                                 String increase, String frequency, String kneeFlexibility,
                                 String shinFlexibility, String hitFootFlexibility, String closedFistGroundFlexibility,
                                 String handFlatGroundFlexibility, final ServiceResultListener srl) {
-        ApiUtils.getApiInstance().postTest(userId,date,warmUp,startSpeed,increase,frequency,kneeFlexibility,
+        ApiUtils.getApiInstance().postTest(token,userId,date,warmUp,startSpeed,increase,frequency,kneeFlexibility,
                 shinFlexibility,hitFootFlexibility,closedFistGroundFlexibility,handFlatGroundFlexibility)
                 .enqueue(new Callback<Void>() {
             @Override

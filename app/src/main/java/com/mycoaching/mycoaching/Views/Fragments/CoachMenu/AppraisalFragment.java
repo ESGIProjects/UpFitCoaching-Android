@@ -15,12 +15,14 @@ import android.widget.Toast;
 import com.mycoaching.mycoaching.Api.ApiCall;
 import com.mycoaching.mycoaching.Api.ApiResults;
 import com.mycoaching.mycoaching.Api.ServiceResultListener;
+import com.mycoaching.mycoaching.Models.Realm.UserRealm;
 import com.mycoaching.mycoaching.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTouch;
+import io.realm.Realm;
 
 import static com.mycoaching.mycoaching.Util.CommonMethods.checkFields;
 import static com.mycoaching.mycoaching.Util.CommonMethods.getDate;
@@ -33,6 +35,8 @@ public class AppraisalFragment extends Fragment {
     View v;
     Bundle b;
     ProgressDialog pd;
+    Realm r;
+    UserRealm ur;
 
     @OnTouch(R.id.comment)
     boolean handleNestedScroll(View v, MotionEvent event) {
@@ -72,7 +76,7 @@ public class AppraisalFragment extends Fragment {
             pd = new ProgressDialog(getActivity(), R.style.StyledDialog);
             pd.setMessage("Création de la fiche bilan...");
             pd.show();
-            ApiCall.postAppraisal(b.getString("id"), getDate(), goal.getText().toString(),
+            ApiCall.postAppraisal("Bearer " + ur.getToken(),b.getString("id"), getDate(), goal.getText().toString(),
                     rep.getText().toString(), contraindication.getText().toString(),
                     sportAntecedent.getText().toString(), String.valueOf(help.isChecked()),
                     String.valueOf(nutritionist.isChecked()), comment.getText().toString(), new ServiceResultListener() {
@@ -98,6 +102,8 @@ public class AppraisalFragment extends Fragment {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this,v);
         b = this.getArguments();
+        r = Realm.getDefaultInstance();
+        ur = r.where(UserRealm.class).findFirst();
         if(b != null){
             goal.setText(b.getString("goal"), TextView.BufferType.EDITABLE);
             rep.setText(b.getString("rep"),TextView.BufferType.EDITABLE);

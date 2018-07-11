@@ -130,19 +130,21 @@ public interface ApiInterface {
 
     @POST("appraisals/")
     @FormUrlEncoded
-    Call<Void> postAppraisal(@Field("userId") String userId, @Field("date") String date,
-                                     @Field("goal") String goal, @Field("sessionsByWeek") String sessionsByWeek,
-                                     @Field("contraindication") String contraindication,
-                                     @Field("sportAntecedents") String sportAntecedents,
-                                     @Field("helpNeeded") String helpNeeded,
-                                     @Field("hasNutritionist") String hasNutritionist, @Field("comments") String comments);
+    Call<Void> postAppraisal(@Header("Authorization") String token,
+                             @Field("userId") String userId, @Field("date") String date,
+                             @Field("goal") String goal, @Field("sessionsByWeek") String sessionsByWeek,
+                             @Field("contraindication") String contraindication,
+                             @Field("sportAntecedents") String sportAntecedents,
+                             @Field("helpNeeded") String helpNeeded,
+                             @Field("hasNutritionist") String hasNutritionist, @Field("comments") String comments);
 
     @GET("tests/")
     Call<List<Test>> getTests(@Header("Authorization") String token, @Query("userId") int id);
 
     @POST("tests/")
     @FormUrlEncoded
-    Call<Void> postTest(@Field("userId") String userId,@Field("date") String date,
+    Call<Void> postTest(@Header("Authorization") String token,
+                        @Field("userId") String userId,@Field("date") String date,
                         @Field("warmUp") String warmUp,@Field("startSpeed") String startSpeed,
                         @Field("increase") String increase,@Field("frequency") String frequency,
                         @Field("kneeFlexibility") String kneeFlexibility,@Field("shinFlexibility") String shinFlexibility,

@@ -14,11 +14,13 @@ import android.widget.Toast;
 import com.mycoaching.mycoaching.Api.ApiCall;
 import com.mycoaching.mycoaching.Api.ApiResults;
 import com.mycoaching.mycoaching.Api.ServiceResultListener;
+import com.mycoaching.mycoaching.Models.Realm.UserRealm;
 import com.mycoaching.mycoaching.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.realm.Realm;
 
 import static com.mycoaching.mycoaching.Util.CommonMethods.checkFields;
 import static com.mycoaching.mycoaching.Util.CommonMethods.getDate;
@@ -31,6 +33,8 @@ public class TestFragment extends Fragment {
     View v;
     Bundle b;
     ProgressDialog pd;
+    Realm r;
+    UserRealm ur;
 
     @BindView(R.id.warming)
     EditText warming;
@@ -66,7 +70,7 @@ public class TestFragment extends Fragment {
             pd = new ProgressDialog(getActivity(), R.style.StyledDialog);
             pd.setMessage("Création de la fiche bilan...");
             pd.show();
-            ApiCall.postTest(b.getString("id"), getDate(), warming.getText().toString(), start_speed.getText().toString(),
+            ApiCall.postTest("Bearer " + ur.getToken(), b.getString("id"), getDate(), warming.getText().toString(), start_speed.getText().toString(),
                     increase.getText().toString(), freq.getText().toString(), String.valueOf(knee.getSelectedItemPosition()),
                     String.valueOf(shin.getSelectedItemPosition()), String.valueOf(kick.getSelectedItemPosition()),
                     String.valueOf(closedFist.getSelectedItemPosition()),String.valueOf(handFlat.getSelectedItemPosition()), new ServiceResultListener() {
@@ -88,6 +92,8 @@ public class TestFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        r = Realm.getDefaultInstance();
+        ur = r.where(UserRealm.class).findFirst();
         v = inflater.inflate(R.layout.fragment_test,container,false);
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this,v);
