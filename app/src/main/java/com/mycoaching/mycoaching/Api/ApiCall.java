@@ -282,9 +282,9 @@ public class ApiCall {
      * Endpoint for firebase token
      */
 
-    public static void putToken(String userId, String token, @Nullable String oldToken,
+    public static void putToken(String token, String userId, String tokenFirebase, @Nullable String oldToken,
                                 final ServiceResultListener srl){
-        ApiUtils.getApiInstance().putToken(userId,token,oldToken).enqueue(new Callback<Void>() {
+        ApiUtils.getApiInstance().putToken(token,userId,tokenFirebase,oldToken).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 ApiResults sir = new ApiResults();

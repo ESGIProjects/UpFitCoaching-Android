@@ -80,7 +80,8 @@ public class ListChatFragment extends Fragment implements ContactAdapter.OnClick
         rv.setAdapter(ca);
 
         request = new Request.Builder().url(WEB_SOCKET_ENDPOINT + ur.getId()).addHeader("Authorization",
-                "Bearer " + ur.getToken()).build();
+                "Bearer " +
+        ur.getToken()).build();
         ws = OkHttpSingleton.getInstance().newWebSocket(request, new CustomWebSocketListener());
 
         getContacts();
@@ -182,8 +183,8 @@ public class ListChatFragment extends Fragment implements ContactAdapter.OnClick
                 String content = message.getString("content");
                 addMessageToList(String.valueOf(sender.getInt("id")),
                         String.valueOf(receiver.getInt("id")), sender.getString("firstName"),
-                        sender.getString("lastName"), receiver.getString("firstName"),
-                        receiver.getString("lastName"), content,sender.getString("mail"),
+                        sender.getString("lastName"), sender.getString("firstName"),
+                        sender.getString("lastName"), content,sender.getString("mail"),
                         receiver.getString("mail"));
                 if (getFragmentManager().findFragmentByTag("MESSAGES") != null) {
                     ChatFragment cf = (ChatFragment) getFragmentManager().findFragmentByTag("MESSAGES");

@@ -107,7 +107,7 @@ public interface ApiInterface {
 
     @PUT("token/")
     @FormUrlEncoded
-    Call<Void> putToken(@Field("userId") String userId,@Field("token") String token,
+    Call<Void> putToken(@Header("Authorization") String token, @Field("userId") String userId,@Field("token") String tokenFirebase,
                         @Nullable @Field("oldToken") String oldToken);
 
     /**

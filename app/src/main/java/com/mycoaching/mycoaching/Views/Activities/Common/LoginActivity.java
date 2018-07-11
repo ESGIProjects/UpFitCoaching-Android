@@ -76,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
                             }
                             sp = getApplicationContext().getSharedPreferences("user_prefs",MODE_PRIVATE);
                             if((sp.getString("firebase_token", null) == null) || (!sp.getString("firebase_token", null).equals(FirebaseInstanceId.getInstance().getToken()))){
-                                ApiCall.putToken(ar.getUt().getUr().getId(), FirebaseInstanceId.getInstance().getToken(), null, new ServiceResultListener() {
+                                ApiCall.putToken(ar.getUt().getToken(),ar.getUt().getUr().getId(), FirebaseInstanceId.getInstance().getToken(), null, new ServiceResultListener() {
                                     @Override
                                     public void onResult(ApiResults ar) {
                                         Log.i("RESPONSE : ", ""+ar.getResponseCode());
