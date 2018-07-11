@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.mycoaching.mycoaching.Api.ApiCall;
 import com.mycoaching.mycoaching.Api.ApiResults;
 import com.mycoaching.mycoaching.Api.ServiceResultListener;
+import com.mycoaching.mycoaching.Models.Realm.UserRealm;
 import com.mycoaching.mycoaching.R;
 
 import java.text.ParseException;
@@ -28,6 +29,7 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.realm.Realm;
 
 import static com.mycoaching.mycoaching.Util.CommonMethods.checkFields;
 import static com.mycoaching.mycoaching.Util.CommonMethods.getDate;
@@ -40,6 +42,8 @@ import static com.mycoaching.mycoaching.Util.Constants.DATE_TIME_FORMATTER;
 public class EditEvent extends Dialog{
 
     private boolean isOK = false;
+    Realm r;
+    UserRealm ur;
     private String eventID, name, type, start, end, updatedBy;
     private ProgressDialog pd;
     private SimpleDateFormat formatterDate = new SimpleDateFormat(DATE_FORMATTER, Locale.getDefault());
@@ -140,7 +144,7 @@ public class EditEvent extends Dialog{
                     pd.dismiss();
                 }
                 else{
-                    ApiCall.updateEvent(eventID, title.getText().toString(), type, event_start_date.getText().toString() + " " +
+                    ApiCall.updateEvent("Bearer " + ur.getToken(), eventID, title.getText().toString(), type, event_start_date.getText().toString() + " " +
                             event_start_time.getText().toString(), event_end_date.getText().toString() + " " +
                             event_end_time.getText().toString(), getDate(), updatedBy, new ServiceResultListener() {
                         @Override
@@ -170,7 +174,7 @@ public class EditEvent extends Dialog{
         pd = new ProgressDialog(getContext(), R.style.AppCompatAlertDialogStyle);
         pd.setMessage("Annulation de l'évènement en cours...");
         pd.show();
-        ApiCall.deleteEvent(eventID, updatedBy, new ServiceResultListener() {
+        ApiCall.deleteEvent("Bearer " + ur.getToken(), eventID, updatedBy, new ServiceResultListener() {
             @Override
             public void onResult(ApiResults ar) {
                 if(ar.getResponseCode() == 200){
@@ -196,6 +200,8 @@ public class EditEvent extends Dialog{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        r = Realm.getDefaultInstance();
+        ur = r.where(UserRealm.class).findFirst();
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_edit_event);

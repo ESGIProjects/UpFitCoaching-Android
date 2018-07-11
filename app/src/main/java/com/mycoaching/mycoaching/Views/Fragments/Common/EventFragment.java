@@ -119,7 +119,7 @@ public class EventFragment extends Fragment implements EventAdapter.OnClick{
     }
 
     private void prepareData() {
-        ApiCall.getEvents(Integer.valueOf(ur.getId()), new ServiceResultListener() {
+        ApiCall.getEvents("Bearer " + ur.getToken(),Integer.valueOf(ur.getId()), new ServiceResultListener() {
             @Override
             public void onResult(ApiResults ar) {
                 if(ar.getResponseCode() == 200){

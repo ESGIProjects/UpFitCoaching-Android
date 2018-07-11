@@ -199,8 +199,8 @@ public class ApiCall {
      * Endpoints for events
      */
 
-    public static void getEvents(int id, final ServiceResultListener srl) {
-        ApiUtils.getApiInstance().getEvents(id).enqueue(new Callback<List<Event>>() {
+    public static void getEvents(String token, int id, final ServiceResultListener srl) {
+        ApiUtils.getApiInstance().getEvents(token,id).enqueue(new Callback<List<Event>>() {
             @Override
             public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
                 ApiResults sir = new ApiResults();
@@ -218,10 +218,10 @@ public class ApiCall {
         });
     }
 
-    public static void addEvent (String name, String type, String firstUser, String secondUser,
+    public static void addEvent(String token, String name, String type, String firstUser, String secondUser,
                                  String start, String end, String created, String createdBy,
                                  final ServiceResultListener srl) {
-        ApiUtils.getApiInstance().addEvent(name,type,firstUser,secondUser,start,
+        ApiUtils.getApiInstance().addEvent(token,name,type,firstUser,secondUser,start,
                 end,created,createdBy).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
@@ -239,9 +239,9 @@ public class ApiCall {
         });
     }
 
-    public static void updateEvent(String eventId, String name, String type, String start, String end,
+    public static void updateEvent(String token, String eventId, String name, String type, String start, String end,
             String updated, String updatedBy, final ServiceResultListener srl) {
-        ApiUtils.getApiInstance().updateEvent(eventId,name,type,start,end,updated,
+        ApiUtils.getApiInstance().updateEvent(token,eventId,name,type,start,end,updated,
                 updatedBy).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
@@ -259,8 +259,8 @@ public class ApiCall {
         });
     }
 
-    public static void deleteEvent(String eventId, String userId, final ServiceResultListener srl) {
-        ApiUtils.getApiInstance().deleteEvent(eventId, userId).enqueue(new Callback<Void>() {
+    public static void deleteEvent(String token, String eventId, String userId, final ServiceResultListener srl) {
+        ApiUtils.getApiInstance().deleteEvent(token, eventId, userId).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 ApiResults sir = new ApiResults();

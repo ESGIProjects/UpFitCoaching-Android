@@ -84,22 +84,22 @@ public interface ApiInterface {
      */
 
     @GET("events/")
-    Call<List<Event>> getEvents(@Query("userId") int id);
+    Call<List<Event>> getEvents(@Header("Authorization") String token, @Query("userId") int id);
 
     @POST("events/")
     @FormUrlEncoded
-    Call<Void> addEvent(@Field("name") String name, @Field("type") String type, @Field("firstUser") String firstUser,
+    Call<Void> addEvent(@Header("Authorization") String token, @Field("name") String name, @Field("type") String type, @Field("firstUser") String firstUser,
                         @Field("secondUser") String secondUser, @Field("start") String start, @Field("end") String end,
                         @Field("created") String created, @Field("createdBy") String createdBy);
 
     @PUT("events/")
     @FormUrlEncoded
-    Call<Void> updateEvent(@Field("eventId") String eventId, @Field("name") String name, @Field("type") String type,
+    Call<Void> updateEvent(@Header("Authorization") String token, @Field("eventId") String eventId, @Field("name") String name, @Field("type") String type,
                            @Field("start") String start, @Field("end") String end, @Field("updated") String updated, @Field("updateBy") String updateBy);
 
 
     @DELETE("events/")
-    Call<Void> deleteEvent(@Query("eventId") String eventId, @Query("userId") String userId);
+    Call<Void> deleteEvent(@Header("Authorization") String token, @Query("eventId") String eventId, @Query("userId") String userId);
 
     /**
      * Endpoint for firebase token
