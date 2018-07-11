@@ -163,7 +163,8 @@ public class ChatFragment extends Fragment {
             });
             isCoach = true;
         } else {
-            request = new Request.Builder().url(WEB_SOCKET_ENDPOINT + ur.getId()).build();
+            request = new Request.Builder().url(WEB_SOCKET_ENDPOINT + ur.getId()).addHeader("Authorization",
+                    "Bearer " + ur.getToken()).build();
             ws = OkHttpSingleton.getInstance().newWebSocket(request, new CustomWSListener());
             getConversation();
             ma = new MessageAdapter(lm);
