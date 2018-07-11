@@ -414,8 +414,8 @@ public class ApiCall {
         });
     }
 
-    public static void getMeasurements(int id, final ServiceResultListener srl) {
-        ApiUtils.getApiInstance().getMeasurements(id).enqueue(new Callback<List<Measurement>>() {
+    public static void getMeasurements(String token, int id, final ServiceResultListener srl) {
+        ApiUtils.getApiInstance().getMeasurements(token,id).enqueue(new Callback<List<Measurement>>() {
             @Override
             public void onResponse(Call<List<Measurement>> call, Response<List<Measurement>> response) {
                 ApiResults sir = new ApiResults();
@@ -433,9 +433,9 @@ public class ApiCall {
         });
     }
 
-    public static void postMeasurement(String userId,String date, String weight,String height, String hipCircumference,String waistCircumference,
+    public static void postMeasurement(String token, String userId,String date, String weight,String height, String hipCircumference,String waistCircumference,
                                        String thighCircumference,String armCircumference, final ServiceResultListener srl) {
-        ApiUtils.getApiInstance().postMeasurements(userId,date,weight,height,hipCircumference,waistCircumference,
+        ApiUtils.getApiInstance().postMeasurements(token,userId,date,weight,height,hipCircumference,waistCircumference,
                 thighCircumference,armCircumference).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {

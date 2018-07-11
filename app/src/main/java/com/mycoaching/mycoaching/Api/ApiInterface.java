@@ -150,11 +150,11 @@ public interface ApiInterface {
                         @Field("handFlatGroundFlexibility") String handFlatGroundFlexibility);
 
     @GET("measurements/")
-    Call<List<Measurement>> getMeasurements(@Query("userId") int id);
+    Call<List<Measurement>> getMeasurements(@Header("Authorization") String token, @Query("userId") int id);
 
     @POST("measurements/")
     @FormUrlEncoded
-    Call<Void> postMeasurements(@Field("userId") String userId,@Field("date") String date,
+    Call<Void> postMeasurements(@Header("Authorization") String token,@Field("userId") String userId,@Field("date") String date,
                                 @Field("weight") String weight,@Field("height") String height,
                                 @Field("hipCircumference") String hipCircumference,@Field("waistCircumference") String waistCircumference,
                                 @Field("thighCircumference") String thighCircumference,@Field("armCircumference") String armCircumference);

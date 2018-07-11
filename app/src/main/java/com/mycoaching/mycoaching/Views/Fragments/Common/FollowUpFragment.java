@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,6 +69,7 @@ public class FollowUpFragment extends Fragment {
     String id;
     Bundle b;
     Realm r;
+    UserRealm ur;
 
     boolean isMonthClicked = true;
     boolean isYearClicked = false;
@@ -185,6 +187,9 @@ public class FollowUpFragment extends Fragment {
         pd.setMessage("Récupération des informations...");
         pd.show();
 
+        r = Realm.getDefaultInstance();
+        ur = r.where(UserRealm.class).findFirst();
+
         super.onCreate(savedInstanceState);
         v = inflater.inflate(R.layout.fragment_combined_chart, container, false);
         ButterKnife.bind(this, v);
@@ -229,15 +234,14 @@ public class FollowUpFragment extends Fragment {
             id = b.getString("id");
         }
         else{
-            r = Realm.getDefaultInstance();
-            id = r.where(UserRealm.class).findFirst().getId();
+            id = ur.getId();
         }
         getMeasurements();
         return v;
     }
 
     public void getMeasurements(){
-        ApiCall.getMeasurements(Integer.valueOf(id), new ServiceResultListener() {
+        ApiCall.getMeasurements("Bearer " + ur.getToken(),Integer.valueOf(id), new ServiceResultListener() {
             @Override
             public void onResult(ApiResults ar) {
                 if(ar.getResponseCode() == 200){
@@ -262,6 +266,9 @@ public class FollowUpFragment extends Fragment {
                 listDate.add(m.getDate().split(" ")[0]);
                 listSpecific.add(m);
             }
+        }
+        for(Measurement m : listSpecific){
+            Log.i("TEST MEASURE : ", m.getDate());
         }
         Collections.reverse(lm);
         Collections.reverse(listSpecific);

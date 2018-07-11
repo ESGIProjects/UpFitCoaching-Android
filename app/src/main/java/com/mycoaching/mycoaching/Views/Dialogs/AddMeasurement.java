@@ -12,11 +12,13 @@ import android.widget.Toast;
 import com.mycoaching.mycoaching.Api.ApiCall;
 import com.mycoaching.mycoaching.Api.ApiResults;
 import com.mycoaching.mycoaching.Api.ServiceResultListener;
+import com.mycoaching.mycoaching.Models.Realm.UserRealm;
 import com.mycoaching.mycoaching.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.realm.Realm;
 
 import static com.mycoaching.mycoaching.Util.CommonMethods.checkFields;
 import static com.mycoaching.mycoaching.Util.CommonMethods.getDate;
@@ -26,10 +28,11 @@ import static com.mycoaching.mycoaching.Util.CommonMethods.getDate;
  */
 public class AddMeasurement extends Dialog {
 
-    boolean isCoach;
     String id;
     boolean isOK = false;
     ProgressDialog pd;
+    Realm r;
+    UserRealm ur;
 
     public AddMeasurement(Activity a, String id) {
         super(a);
@@ -61,7 +64,7 @@ public class AddMeasurement extends Dialog {
         pd.show();
         if(checkFields(weight.getText().toString(),height.getText().toString(),hip.getText().toString(),
                 waist.getText().toString(),thigh.getText().toString(),arm.getText().toString())){
-            ApiCall.postMeasurement(id, getDate(), weight.getText().toString(), height.getText().toString()
+            ApiCall.postMeasurement("Bearer " + ur.getToken(),id, getDate(), weight.getText().toString(), height.getText().toString()
                     ,hip.getText().toString(), waist.getText().toString(), thigh.getText().toString()
                     ,arm.getText().toString(), new ServiceResultListener() {
                         @Override
@@ -85,6 +88,8 @@ public class AddMeasurement extends Dialog {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        r = Realm.getDefaultInstance();
+        ur = r.where(UserRealm.class).findFirst();
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_measurement);
