@@ -157,9 +157,12 @@ public class UserDataFragment extends Fragment {
             @Override
             public void execute(Realm realm) {
                 UserRealm ur = realm.createObject(UserRealm.class, ar.getUt().getId());
-                ur.setCity(city.getText().toString());
-                ur.setFirstName(firstName.getText().toString());
-                ur.setLastName(lastName.getText().toString());
+                ur.setCity(city.getText().toString().substring(0,1).toUpperCase()
+                        + city.getText().toString().substring(1).toLowerCase());
+                ur.setFirstName(firstName.getText().toString().substring(0,1).toUpperCase()
+                + firstName.getText().toString().substring(1).toLowerCase());
+                ur.setLastName(lastName.getText().toString().substring(0,1).toUpperCase()
+                        + lastName.getText().toString().substring(1).toLowerCase());
                 ur.setSex(sex);
                 ur.setToken(ar.getUt().getToken());
                 ur.setBirthDate(birthDate.getText().toString());

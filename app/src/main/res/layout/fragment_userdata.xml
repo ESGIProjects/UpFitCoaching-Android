@@ -21,6 +21,7 @@
             android:hint="@string/firstName"
             android:textColor="@color/colorWhite"
             android:singleLine="true"
+            android:inputType="text"
             android:nextFocusDown="@id/lastName"/>
     </android.support.design.widget.TextInputLayout>
 
@@ -38,6 +39,7 @@
             android:hint="@string/lastName"
             android:textColor="@color/colorWhite"
             android:singleLine="true"
+            android:inputType="text"
             android:nextFocusDown="@id/birthDate"/>
     </android.support.design.widget.TextInputLayout>
 
@@ -106,6 +108,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/city"
             android:singleLine="true"
+            android:inputType="text"
             android:nextFocusDown="@id/phoneNumber" />
     </android.support.design.widget.TextInputLayout>
 
