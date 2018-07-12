@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -29,6 +30,7 @@ import com.mycoaching.mycoaching.Views.Dialogs.AddEvent;
 import com.mycoaching.mycoaching.Views.Dialogs.EditEvent;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -42,6 +44,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
 
+import static com.mycoaching.mycoaching.Util.CommonMethods.getDate;
 import static com.mycoaching.mycoaching.Util.Constants.DATE_FORMATTER;
 
 /**
@@ -51,6 +54,7 @@ import static com.mycoaching.mycoaching.Util.Constants.DATE_FORMATTER;
 public class EventFragment extends Fragment implements EventAdapter.OnClick{
 
     private List<Event> listEvents = new ArrayList<>();
+    private List<Event> listToDisplay = new ArrayList<>();
     private List<CalendarDay> listDaysSession = new ArrayList<>();
     private List<CalendarDay> listDaysAppointment = new ArrayList<>();
     private List<CalendarDay> listDaysCombined = new ArrayList<>();
@@ -81,6 +85,7 @@ public class EventFragment extends Fragment implements EventAdapter.OnClick{
             public void onDismiss(DialogInterface dialogInterface) {
                 if(ae.getIsOK()){
                     listEvents.clear();
+                    listToDisplay.clear();
                     listDaysAppointment.clear();
                     listDaysSession.clear();
                     listDaysCombined.clear();
@@ -107,13 +112,33 @@ public class EventFragment extends Fragment implements EventAdapter.OnClick{
         rv = new RecyclerView(getContext());
 
         rv = v.findViewById(R.id.listEvents);
-        ea = new EventAdapter(listEvents,getContext(),isCoach,ur.getId());
+        ea = new EventAdapter(listToDisplay,getContext(),isCoach,ur.getId());
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         rv.setLayoutManager(mLayoutManager);
         rv.setItemAnimator(new DefaultItemAnimator());
         rv.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         rv.setAdapter(ea);
 
+        mcv.setOnDateChangedListener(new OnDateSelectedListener() {
+            @Override
+            public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
+                listToDisplay.clear();
+                for(Event e : listEvents){
+                    if(e.getStart().split(" ")[0].equals(formatter.format(date.getDate()))){
+                        listToDisplay.add(e);
+                    }
+                }
+                if(listToDisplay.isEmpty()){
+                    label.setVisibility(View.VISIBLE);
+                    rv.setVisibility(View.GONE);
+                }
+                else{
+                    label.setVisibility(View.GONE);
+                    rv.setVisibility(View.VISIBLE);
+                }
+                ea.notifyDataSetChanged();
+            }
+        });
         ea.setOnClick(this);
         prepareData();
 
@@ -124,34 +149,47 @@ public class EventFragment extends Fragment implements EventAdapter.OnClick{
         ApiCall.getEvents("Bearer " + ur.getToken(),Integer.valueOf(ur.getId()), new ServiceResultListener() {
             @Override
             public void onResult(ApiResults ar) {
+                mcv.setSelectedDate(new Date());
                 if(ar.getResponseCode() == 200){
-                    if(ar.getListEvent().size() == 0){
+                    if(ar.getListEvent().size() != 0){
+                        listEvents.addAll(ar.getListEvent());
+                        for(Event e : listEvents){
+                            if(e.getStart().split(" ")[0].equals(formatter.format(mcv.getSelectedDate().getDate()))){
+                                listToDisplay.add(e);
+                            }
+                        }
+                        if(listToDisplay.isEmpty()){
+                            label.setVisibility(View.VISIBLE);
+                            rv.setVisibility(View.GONE);
+                        }
+                        else{
+                            label.setVisibility(View.GONE);
+                            rv.setVisibility(View.VISIBLE);
+                        }
+
+                        sortElements(listEvents);
+                        addCombinedElements();
+                        removeDuplicateElements();
+
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                int colorsAppointment = Color.rgb(0, 0, 255);
+                                int colorsSession = Color.rgb(0, 255, 0);
+                                int[] colorsCombined = {Color.rgb(0, 0, 255) ,Color.rgb(0, 255, 0)};
+                                mcv.removeDecorators();
+                                mcv.addDecorator(new EventDecorator(listDaysAppointment,colorsAppointment));
+                                mcv.addDecorator(new EventDecorator(listDaysSession,colorsSession));
+                                mcv.addDecorator(new EventDecorator(listDaysCombined,colorsCombined));
+                                mcv.setSelectedDate(new Date());
+                                ea.notifyDataSetChanged();
+                            }
+                        });
+                    }
+                    else{
                         label.setVisibility(View.VISIBLE);
                         rv.setVisibility(View.GONE);
                     }
-                    else{
-                        label.setVisibility(View.GONE);
-                        rv.setVisibility(View.VISIBLE);
-                    }
-                    listEvents.addAll(ar.getListEvent());
-                    sortElements();
-                    addCombinedElements();
-                    removeDuplicateElements();
-
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            int colorsAppointment = Color.rgb(0, 0, 255);
-                            int colorsSession = Color.rgb(0, 255, 0);
-                            int[] colorsCombined = {Color.rgb(0, 0, 255) ,Color.rgb(0, 255, 0)};
-                            mcv.removeDecorators();
-                            mcv.addDecorator(new EventDecorator(listDaysAppointment,colorsAppointment));
-                            mcv.addDecorator(new EventDecorator(listDaysSession,colorsSession));
-                            mcv.addDecorator(new EventDecorator(listDaysCombined,colorsCombined));
-                            mcv.setSelectedDate(new Date());
-                            ea.notifyDataSetChanged();
-                        }
-                    });
                 }
             }
         });
@@ -159,7 +197,7 @@ public class EventFragment extends Fragment implements EventAdapter.OnClick{
 
     @Override
     public void onItemClick(int position) {
-        Event e = listEvents.get(position);
+        Event e = listToDisplay.get(position);
         final EditEvent ee = new EditEvent(getActivity(),e.getId(),e.getName(),e.getType(),e.getStart()
                 ,e.getEnd(),ur.getId());
         assert ee.getWindow() != null;
@@ -170,6 +208,7 @@ public class EventFragment extends Fragment implements EventAdapter.OnClick{
             public void onDismiss(DialogInterface dialogInterface) {
                 if(ee.getIsOK()){
                     listEvents.clear();
+                    listToDisplay.clear();
                     listDaysAppointment.clear();
                     listDaysSession.clear();
                     listDaysCombined.clear();
@@ -179,8 +218,8 @@ public class EventFragment extends Fragment implements EventAdapter.OnClick{
         });
     }
 
-    private void sortElements(){
-        for(Event e : listEvents){
+    private void sortElements(List<Event> le){
+        for(Event e : le){
             try{
                 if(e.getType().equals("0")){
                     listDaysAppointment.add(CalendarDay.from(formatter.parse(e.getStart())));
