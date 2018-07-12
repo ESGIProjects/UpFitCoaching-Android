@@ -1,5 +1,6 @@
 package com.mycoaching.mycoaching.Views.Fragments.Common;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
@@ -35,6 +36,7 @@ public class EditProfileFragment extends Fragment{
     Realm realm;
     UserRealm ur;
     Bundle b;
+    ProgressDialog pd;
 
     @BindView(R.id.mail)
     EditText mail;
@@ -80,6 +82,10 @@ public class EditProfileFragment extends Fragment{
                         Toast.makeText(getContext(),"Veuillez saisir une adresse",Toast.LENGTH_LONG).show();
                     }
                 }
+                pd = new ProgressDialog(getActivity(), R.style.StyledDialog);
+                pd.setMessage("Mise à jour du profil...");
+                pd.setCancelable(false);
+                pd.show();
                 ApiCall.updateUser("Bearer " + ur.getToken(),ur.getId(), mail.getText().toString(), pwd,
                         firstName.getText().toString(), lastName.getText().toString(), city.getText().toString(),
                         phoneNumber.getText().toString(), address.getText().toString(), new ServiceResultListener() {
@@ -91,6 +97,7 @@ public class EditProfileFragment extends Fragment{
                                 }
                             }
                         });
+                pd.dismiss();
             }
         }
         else{

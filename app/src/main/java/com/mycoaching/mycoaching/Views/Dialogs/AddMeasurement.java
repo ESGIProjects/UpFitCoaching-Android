@@ -60,6 +60,7 @@ public class AddMeasurement extends Dialog {
     @OnClick(R.id.confirm_measurement)
     public void confirm(){
         pd = new ProgressDialog(getContext(), R.style.StyledDialog);
+        pd.setCancelable(false);
         pd.setMessage("Ajout des mensurations...");
         pd.show();
         if(checkFields(weight.getText().toString(),height.getText().toString(),hip.getText().toString(),

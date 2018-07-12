@@ -68,7 +68,8 @@ public class TestFragment extends Fragment {
         if(checkFields(warming.getText().toString(),start_speed.getText().toString(),
                 increase.getText().toString(),freq.getText().toString())){
             pd = new ProgressDialog(getActivity(), R.style.StyledDialog);
-            pd.setMessage("Création de la fiche bilan...");
+            pd.setMessage("Création du test...");
+            pd.setCancelable(false);
             pd.show();
             ApiCall.postTest("Bearer " + ur.getToken(), b.getString("id"), getDate(), warming.getText().toString(), start_speed.getText().toString(),
                     increase.getText().toString(), freq.getText().toString(), String.valueOf(knee.getSelectedItemPosition()),
@@ -80,7 +81,6 @@ public class TestFragment extends Fragment {
                                 Toast.makeText(getContext(),"Nouveau test créé !",Toast.LENGTH_LONG).show();
                                 ClientProfileFragment cpf = (ClientProfileFragment) getActivity().getSupportFragmentManager().findFragmentByTag("PROFILE");
                                 cpf.getLastAppraisal();
-                                pd.dismiss();
                             }
                         }
                     });
@@ -88,6 +88,7 @@ public class TestFragment extends Fragment {
         else{
             Toast.makeText(getContext(),"Il manque au moins un champs !",Toast.LENGTH_LONG).show();
         }
+        pd.dismiss();
     }
 
     @Override

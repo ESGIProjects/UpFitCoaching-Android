@@ -42,16 +42,17 @@ public class AddThread extends Dialog {
 
     @OnClick(R.id.confirm)
     void createNews() {
-        pd = new ProgressDialog(getContext(), R.style.AppCompatAlertDialogStyle);
+        pd = new ProgressDialog(getContext(), R.style.StyledDialog);
         pd.setMessage("Création du sujet en cours...");
+        pd.setCancelable(false);
         pd.show();
         if (checkFields(threadTitle.getText().toString(), content.getText().toString())) {
             ApiCall.createThread("Bearer " + ur.getToken(),threadTitle.getText().toString(), getDate(), content.getText().toString(), "1", ur.getId(), new ServiceResultListener() {
                 @Override
                 public void onResult(ApiResults ar) {
                     if (ar.getResponseCode() == 201) {
-                        pd.dismiss();
                         isOK = true;
+                        pd.dismiss();
                         dismiss();
                     }
                 }

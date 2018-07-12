@@ -1,5 +1,6 @@
 package com.mycoaching.mycoaching.Views.Fragments.Common;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -50,6 +51,7 @@ public class ThreadFragment extends Fragment implements ThreadAdapter.OnClick {
     private SimpleDateFormat formatterDate = new SimpleDateFormat(DATE_FORMATTER, Locale.getDefault());
     private ThreadAdapter ta;
     private PostFragment pf;
+    private ProgressDialog pd;
     View v;
     RecyclerView rv;
     FragmentManager fm;
@@ -99,6 +101,10 @@ public class ThreadFragment extends Fragment implements ThreadAdapter.OnClick {
     }
 
     public void prepareData(){
+        pd = new ProgressDialog(getContext(), R.style.StyledDialog);
+        pd.setCancelable(false);
+        pd.setMessage("Récupération des sujets en cours...");
+        pd.show();
         ApiCall.getThreads("Bearer " + ur.getToken(),1, new ServiceResultListener() {
             @Override
             public void onResult(ApiResults ar) {
@@ -125,6 +131,7 @@ public class ThreadFragment extends Fragment implements ThreadAdapter.OnClick {
                         }
                     });
                 }
+                pd.dismiss();
             }
         });
     }

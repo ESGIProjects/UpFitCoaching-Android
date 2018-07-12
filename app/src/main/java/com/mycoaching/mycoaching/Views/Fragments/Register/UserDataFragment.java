@@ -107,6 +107,7 @@ public class UserDataFragment extends Fragment {
                 sex != null){
             pd = new ProgressDialog(getContext(), R.style.StyledDialog);
             pd.setMessage("Création du compte en cours...");
+            pd.setCancelable(false);
             pd.show();
             try{
                 if(formatterDate.parse(birthDate.getText().toString()).compareTo(formatterDate.parse(getDate())) > 0){
@@ -120,7 +121,6 @@ public class UserDataFragment extends Fragment {
                             new ServiceResultListener() {
                                 @Override
                                 public void onResult(ApiResults ar) {
-                                    pd.dismiss();
                                     if (ar.getResponseCode() == 201) {
                                         realm = Realm.getDefaultInstance();
                                         executeTransaction(realm, ar);
@@ -132,6 +132,7 @@ public class UserDataFragment extends Fragment {
                                     }
                                 }
                             });
+                    pd.dismiss();
                 }
             }
             catch (ParseException pe){

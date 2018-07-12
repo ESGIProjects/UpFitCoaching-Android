@@ -125,8 +125,9 @@ public class EditEvent extends Dialog{
 
     @OnClick(R.id.confirm_edit)
     void editEvent(){
-        pd = new ProgressDialog(getContext(), R.style.AppCompatAlertDialogStyle);
+        pd = new ProgressDialog(getContext(), R.style.StyledDialog);
         pd.setMessage("Mise à jour de l'évènement en cours...");
+        pd.setCancelable(false);
         pd.show();
         if(checkFields(title.getText().toString(), event_start_date.getText().toString()
                 ,event_end_date.getText().toString(),event_start_time.getText().toString()

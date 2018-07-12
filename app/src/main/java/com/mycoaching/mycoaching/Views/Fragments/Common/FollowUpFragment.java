@@ -183,10 +183,6 @@ public class FollowUpFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        pd = new ProgressDialog(getActivity(), R.style.StyledDialog);
-        pd.setMessage("Récupération des informations...");
-        pd.show();
-
         r = Realm.getDefaultInstance();
         ur = r.where(UserRealm.class).findFirst();
 
@@ -241,6 +237,10 @@ public class FollowUpFragment extends Fragment {
     }
 
     public void getMeasurements(){
+        pd = new ProgressDialog(getActivity(), R.style.StyledDialog);
+        pd.setMessage("Récupération des mesures...");
+        pd.setCancelable(false);
+        pd.show();
         ApiCall.getMeasurements("Bearer " + ur.getToken(),Integer.valueOf(id), new ServiceResultListener() {
             @Override
             public void onResult(ApiResults ar) {

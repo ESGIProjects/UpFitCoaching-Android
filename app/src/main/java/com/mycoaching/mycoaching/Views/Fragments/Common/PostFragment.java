@@ -50,10 +50,15 @@ public class PostFragment extends Fragment {
     @OnClick(R.id.sendPost)
     void sendMessage() {
         if (!et.getText().toString().isEmpty()) {
+            pd = new ProgressDialog(getContext(), R.style.StyledDialog);
+            pd.setCancelable(false);
+            pd.setMessage("Envoi du post en cours...");
+            pd.show();
             ApiCall.sendPost("Bearer " + ur.getToken(),String.valueOf(bundle.getInt("idThread")), getDate(), et.getText().toString(), ur.getId(), new ServiceResultListener() {
                 @Override
                 public void onResult(ApiResults ar) {
-                    if (ar.getResponseCode() == 201) {
+                    pd.dismiss();
+                    if(ar.getResponseCode() == 201) {
                         lp.clear();
                         prepareData();
                         et.getText().clear();
@@ -65,6 +70,7 @@ public class PostFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         v = inflater.inflate(R.layout.fragment_list_post, container, false);
         ButterKnife.bind(this, v);
         bundle = this.getArguments();
@@ -82,25 +88,29 @@ public class PostFragment extends Fragment {
         rv.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         rv.setAdapter(pa);
 
-        pd = new ProgressDialog(getActivity(), R.style.StyledDialog);
-        pd.setMessage("Récupération des posts...");
-        pd.show();
         prepareData();
-        pd.dismiss();
+
         return v;
     }
 
     private void prepareData() {
+        pd = new ProgressDialog(getContext(), R.style.StyledDialog);
+        pd.setCancelable(false);
+        pd.setMessage("Récupération des posts en cours...");
+        pd.show();
         ApiCall.getPosts("Bearer " + ur.getToken(),bundle.getInt("idThread"), new ServiceResultListener() {
             @Override
             public void onResult(ApiResults ar) {
-                lp.addAll(ar.getListPost());
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        pa.notifyDataSetChanged();
-                    }
-                });
+                if(ar.getResponseCode() == 200){
+                    lp.addAll(ar.getListPost());
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            pa.notifyDataSetChanged();
+                        }
+                    });
+                }
+                pd.dismiss();
             }
         });
     }

@@ -57,12 +57,12 @@ public class LoginActivity extends AppCompatActivity {
             //we check if email and password are set
             if (checkEmail(email.getText().toString()) && checkPassword(password.getText().toString())) {
                 pd = new ProgressDialog(this, R.style.StyledDialog);
+                pd.setCancelable(false);
                 pd.setMessage("Connection en cours...");
                 pd.show();
                 ApiCall.signIn(email.getText().toString(), getSHAPassword(password.getText().toString()), new ServiceResultListener() {
                     @Override
                     public void onResult(ApiResults ar) {
-                        pd.dismiss();
                         if (ar.getResponseCode() == 200) {
                             //we save
                             if (realm.isEmpty()) {
@@ -85,6 +85,7 @@ public class LoginActivity extends AppCompatActivity {
                                     }
                                 });
                             }
+                            pd.dismiss();
                             //we check if the user is a coach or a regular
                             if (ar.getUt().getUr().getType() == 2) {
                                 i = new Intent(LoginActivity.this, CoachMainActivity.class);

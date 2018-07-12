@@ -1,5 +1,6 @@
 package com.mycoaching.mycoaching.Views.Fragments.CoachMenu;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -40,6 +41,7 @@ public class ClientsFragment extends Fragment implements ClientsAdapter.OnClick{
     List<UserRealm> lu = new ArrayList<>();
     private List<Integer> ids = new ArrayList<>();
     FragmentManager fm;
+    ProgressDialog pd;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -55,17 +57,19 @@ public class ClientsFragment extends Fragment implements ClientsAdapter.OnClick{
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         rv.setLayoutManager(mLayoutManager);
         rv.setItemAnimator(new DefaultItemAnimator());
-        rv.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         rv.setAdapter(ca);
 
         getUsers();
         ca.setOnClick(this);
 
-
         return v;
     }
 
     public void getUsers(){
+        pd = new ProgressDialog(getActivity(), R.style.StyledDialog);
+        pd.setMessage("Récupération des informations...");
+        pd.setCancelable(false);
+        pd.show();
         ApiCall.getConversation("Bearer " + ur.getToken(), Integer.valueOf(ur.getId()), new ServiceResultListener() {
             @Override
             public void onResult(ApiResults ar) {
@@ -93,8 +97,9 @@ public class ClientsFragment extends Fragment implements ClientsAdapter.OnClick{
             @Override
             public int compare(UserRealm c1, UserRealm c2) {
                 int res = c1.getLastName().compareToIgnoreCase(c2.getLastName());
-                if (res != 0)
+                if (res != 0){
                     return res;
+                }
                 return c1.getFirstName().compareToIgnoreCase(c2.getFirstName());
             }
         });
@@ -104,6 +109,7 @@ public class ClientsFragment extends Fragment implements ClientsAdapter.OnClick{
                 ca.notifyDataSetChanged();
             }
         });
+        pd.dismiss();
     }
 
     @Override

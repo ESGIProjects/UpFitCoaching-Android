@@ -74,6 +74,7 @@ public class AppraisalFragment extends Fragment {
     public void edit(){
         if(checkFields(goal.getText().toString(),rep.getText().toString())){
             pd = new ProgressDialog(getActivity(), R.style.StyledDialog);
+            pd.setCancelable(false);
             pd.setMessage("Création de la fiche bilan...");
             pd.show();
             ApiCall.postAppraisal("Bearer " + ur.getToken(),b.getString("id"), getDate(), goal.getText().toString(),
@@ -86,10 +87,10 @@ public class AppraisalFragment extends Fragment {
                                 Toast.makeText(getContext(),"Fiche bilan mise à jour !",Toast.LENGTH_LONG).show();
                                 ClientProfileFragment cpf = (ClientProfileFragment) getActivity().getSupportFragmentManager().findFragmentByTag("PROFILE");
                                 cpf.getLastAppraisal();
-                                pd.dismiss();
                             }
                         }
                     });
+            pd.dismiss();
         }
         else{
             Toast.makeText(getContext(),"Il manque au minimum un champs !",Toast.LENGTH_LONG).show();

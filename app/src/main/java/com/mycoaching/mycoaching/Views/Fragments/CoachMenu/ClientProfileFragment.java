@@ -215,6 +215,7 @@ public class ClientProfileFragment extends Fragment{
     public void getLastAppraisal(){
         pd = new ProgressDialog(getActivity(), R.style.StyledDialog);
         pd.setMessage("Récupération des informations...");
+        pd.setCancelable(false);
         pd.show();
         ApiCall.getLastAppraisal("Bearer " + ur.getToken(),Integer.valueOf(b.getString("id")), new ServiceResultListener() {
             @Override
@@ -237,7 +238,6 @@ public class ClientProfileFragment extends Fragment{
                                 add_prescription.setVisibility(View.VISIBLE);
 
                             }
-                            pd.dismiss();
                         }
                     });
                     a = ar.getLastAppraisal();
@@ -250,10 +250,8 @@ public class ClientProfileFragment extends Fragment{
                     goal.setText(getResources().getString(R.string.goal,a.getGoal()));
                     rep.setText(getResources().getString(R.string.rep,a.getSessionsByWeek()));
                 }
-                else{
-                    pd.dismiss();
-                }
             }
         });
+        pd.dismiss();
     }
 }

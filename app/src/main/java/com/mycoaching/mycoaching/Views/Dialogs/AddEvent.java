@@ -113,8 +113,9 @@ public class AddEvent extends Dialog{
 
     @OnClick(R.id.confirm_event)
     void createEvent() {
-        pd = new ProgressDialog(getContext(), R.style.AppCompatAlertDialogStyle);
+        pd = new ProgressDialog(getContext(), R.style.StyledDialog);
         pd.setMessage("Création de l'évènement en cours...");
+        pd.setCancelable(false);
         pd.show();
         if(checkFields(eventTitle.getText().toString(), event_start_date.getText().toString()
                 ,event_end_date.getText().toString(),event_start_time.getText().toString()

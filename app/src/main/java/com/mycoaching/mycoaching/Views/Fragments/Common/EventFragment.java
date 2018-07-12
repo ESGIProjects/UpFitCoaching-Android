@@ -1,5 +1,6 @@
 package com.mycoaching.mycoaching.Views.Fragments.Common;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -63,6 +64,7 @@ public class EventFragment extends Fragment implements EventAdapter.OnClick{
     private UserRealm ur;
     private EventAdapter ea;
     private boolean isCoach = false;
+    private ProgressDialog pd;
     View v;
     Realm r;
     Bundle b;
@@ -146,6 +148,10 @@ public class EventFragment extends Fragment implements EventAdapter.OnClick{
     }
 
     private void prepareData() {
+        pd = new ProgressDialog(getContext(), R.style.StyledDialog);
+        pd.setCancelable(false);
+        pd.setMessage("Récupération des évènements en cours...");
+        pd.show();
         ApiCall.getEvents("Bearer " + ur.getToken(),Integer.valueOf(ur.getId()), new ServiceResultListener() {
             @Override
             public void onResult(ApiResults ar) {
@@ -193,6 +199,7 @@ public class EventFragment extends Fragment implements EventAdapter.OnClick{
                 }
             }
         });
+        pd.dismiss();
     }
 
     @Override

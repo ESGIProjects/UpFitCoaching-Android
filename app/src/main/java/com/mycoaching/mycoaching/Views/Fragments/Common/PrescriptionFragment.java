@@ -101,14 +101,14 @@ public class PrescriptionFragment extends Fragment implements ExerciseAdapter.On
     @OnClick(R.id.addPrescription)
     public void add(){
         pd = new ProgressDialog(getContext(), R.style.StyledDialog);
-        pd.setMessage("Création du compte en cours...");
+        pd.setMessage("Création de la prescription en cours...");
+        pd.setCancelable(false);
         pd.show();
         Log.i("TEST : ",new Gson().toJson(le));
         ApiCall.postPrescription("Bearer " + ur.getToken(), id, getDate(), new Gson().toJson(le), new ServiceResultListener() {
             @Override
             public void onResult(ApiResults ar) {
                 if(ar.getResponseCode() == 201){
-
                     Toast.makeText(getContext(),"La prescription est enregistrée !", Toast.LENGTH_LONG).show();
                 }
                 pd.dismiss();
@@ -154,6 +154,7 @@ public class PrescriptionFragment extends Fragment implements ExerciseAdapter.On
     public void getPrescription(){
         pd = new ProgressDialog(getActivity(), R.style.StyledDialog);
         pd.setMessage("Récupération des informations...");
+        pd.setCancelable(false);
         pd.show();
         ApiCall.getPrescription("Bearer " + ur.getToken(),Integer.valueOf(id), new ServiceResultListener() {
             @Override
