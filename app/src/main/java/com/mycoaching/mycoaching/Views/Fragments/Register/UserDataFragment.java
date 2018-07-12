@@ -156,26 +156,25 @@ public class UserDataFragment extends Fragment {
         r.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                UserRealm ur = realm.createObject(UserRealm.class, ar.getUr().getId());
+                UserRealm ur = realm.createObject(UserRealm.class, ar.getUt().getId());
                 ur.setCity(city.getText().toString());
                 ur.setFirstName(firstName.getText().toString());
                 ur.setLastName(lastName.getText().toString());
                 ur.setSex(sex);
+                ur.setToken(ar.getUt().getToken());
                 ur.setBirthDate(birthDate.getText().toString());
                 ur.setMail(b.getString("mail"));
                 ur.setPhoneNumber(phoneNumber.getText().toString());
                 ur.setType(Integer.valueOf(b.getString("type")));
-                ur.setBirthDate(ar.getUr().getBirthDate());
-                ur.setAddress(ar.getUr().getAddress());
-                ur.setIdCoach(ar.getUr().getCoach().getId());
-                ur.setMailCoach(ar.getUr().getCoach().getMail());
-                ur.setFirstNameCoach(ar.getUr().getCoach().getFirstName());
-                ur.setLastNameCoach(ar.getUr().getCoach().getLastName());
-                ur.setSexCoach(ar.getUr().getCoach().getSex());
-                ur.setCityCoach(ar.getUr().getCoach().getCity());
-                ur.setPhoneNumberCoach(ar.getUr().getCoach().getPhoneNumber());
-                ur.setTypeCoach(ar.getUr().getCoach().getType());
-                ur.setAddressCoach(ar.getUr().getCoach().getAddress());
+                ur.setIdCoach(ar.getUt().getUrc().getId());
+                ur.setMailCoach(ar.getUt().getUrc().getMail());
+                ur.setFirstNameCoach(ar.getUt().getUrc().getFirstName());
+                ur.setLastNameCoach(ar.getUt().getUrc().getLastName());
+                ur.setSexCoach(ar.getUt().getUrc().getSex());
+                ur.setCityCoach(ar.getUt().getUrc().getCity());
+                ur.setPhoneNumberCoach(ar.getUt().getUrc().getPhoneNumber());
+                ur.setTypeCoach(ar.getUt().getUrc().getType());
+                ur.setAddressCoach(ar.getUt().getUrc().getAddress());
             }
         });
     }

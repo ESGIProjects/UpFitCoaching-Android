@@ -47,6 +47,8 @@ public class CredentialsFragment extends Fragment {
             if (checkEmail(mail.getText().toString()) && checkPassword(password.getText().toString()) &&
                     isSame(password.getText().toString(), passwordConfirmation.getText().toString())) {
                 pd = new ProgressDialog(getContext(), R.style.StyledDialog);
+                pd.setCancelable(false);
+                pd.setMessage("Vérification de l'adresse mail...");
                 pd.show();
                 ApiCall.checkMail(mail.getText().toString(), new ServiceResultListener() {
                     @Override
@@ -83,7 +85,7 @@ public class CredentialsFragment extends Fragment {
                 });
             } else {
                 Toast.makeText(getContext(), R.string.wrong_credentials, Toast.LENGTH_LONG).show();
-                clearFields(mail, password, passwordConfirmation);
+                clearFields(password, passwordConfirmation);
             }
         } else {
             Toast.makeText(getContext(), R.string.missing_fields, Toast.LENGTH_LONG).show();

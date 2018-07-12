@@ -1,5 +1,6 @@
 package com.mycoaching.mycoaching.Views.Fragments.CoachMenu;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -55,6 +56,7 @@ public class ListChatFragment extends Fragment implements ContactAdapter.OnClick
     private List<Integer> ids = new ArrayList<>();
     public static boolean isActive = false;
     private Realm r;
+    ProgressDialog pd;
     private UserRealm ur;
     private WebSocket ws;
     private Request request;
@@ -96,6 +98,10 @@ public class ListChatFragment extends Fragment implements ContactAdapter.OnClick
     }
 
     private void getContacts() {
+        pd = new ProgressDialog(getActivity(), R.style.StyledDialog);
+        pd.setCancelable(false);
+        pd.setMessage("Récupération des messages...");
+        pd.show();
         ApiCall.getConversation("Bearer " + ur.getToken(),Integer.valueOf(ur.getId()), new ServiceResultListener() {
             @Override
             public void onResult(ApiResults ar) {
@@ -110,6 +116,7 @@ public class ListChatFragment extends Fragment implements ContactAdapter.OnClick
                     }
                 });
                 updateContacts();
+                pd.dismiss();
             }
         });
     }

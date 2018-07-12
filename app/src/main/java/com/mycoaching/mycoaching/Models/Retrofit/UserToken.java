@@ -2,6 +2,7 @@ package com.mycoaching.mycoaching.Models.Retrofit;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.mycoaching.mycoaching.Models.Realm.UserRealm;
 
 /**
  * Created by kevin on 11/07/2018.
@@ -16,9 +17,19 @@ public class UserToken {
     @Expose
     private UserRetrofit ur;
 
-    public UserToken(String token, UserRetrofit ur) {
+    @SerializedName("coach")
+    @Expose
+    private UserRetrofit urc;
+
+    @SerializedName("id")
+    @Expose
+    private String id;
+
+    public UserToken(String token, UserRetrofit ur, UserRetrofit urc, String id) {
         this.token = token;
         this.ur = ur;
+        this.urc = urc;
+        this.id = id;
     }
 
     public String getToken() {
@@ -35,5 +46,21 @@ public class UserToken {
 
     public void setUr(UserRetrofit ur) {
         this.ur = ur;
+    }
+
+    public UserRetrofit getUrc() {
+        return urc;
+    }
+
+    public void setUrc(UserRetrofit urc) {
+        this.urc = urc;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

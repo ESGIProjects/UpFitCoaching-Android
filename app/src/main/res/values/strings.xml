@@ -18,7 +18,7 @@
     <string name="user_type">Type de compte : </string>
     <string name="firstName">Prénom</string>
     <string name="lastName">Nom de famille</string>
-    <string name="birthDate">Date de naissance (yyyy-mm-dd)</string>
+    <string name="birthDate">Date de naissance</string>
     <string name="address">Adresse</string>
     <string name="city">Ville</string>
     <string name="phoneNumber">Numéro de téléphone</string>

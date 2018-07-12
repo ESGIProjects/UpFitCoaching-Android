@@ -156,7 +156,6 @@ public class LoginActivity extends AppCompatActivity {
                 ur.setPhoneNumber(ar.getUt().getUr().getPhoneNumber());
                 ur.setType(ar.getUt().getUr().getType());
                 ur.setToken(ar.getUt().getToken());
-                Log.i("TEST TOKEN : ", ar.getUt().getToken());
                 if (ar.getUt().getUr().getCoach() != null) {
                     ur.setBirthDate(ar.getUt().getUr().getBirthDate());
                     ur.setAddress(ar.getUt().getUr().getAddress());

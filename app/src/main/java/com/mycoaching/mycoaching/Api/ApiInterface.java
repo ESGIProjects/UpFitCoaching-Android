@@ -39,15 +39,15 @@ public interface ApiInterface {
     @FormUrlEncoded
     Call<UserToken> signIn(@Field("mail") String mail, @Field("password") String password);
 
-    @POST("signup/")
+    @POST("login/signup/")
     @FormUrlEncoded
-    Call<UserRetrofit> signUp(@Field("type") String type, @Field("mail") String mail, @Field("password") String password,
+    Call<UserToken> signUp(@Field("type") String type, @Field("mail") String mail, @Field("password") String password,
                               @Field("firstName") String firstName, @Field("lastName") String lastName,
                               @Field("sex") String sex, @Field("birthDate") String birthDate,
                               @Field("city") String city, @Field("address") String address,
                               @Field("phoneNumber") String phoneNumber);
 
-    @POST("checkmail/")
+    @POST("login/checkmail/")
     @FormUrlEncoded
     Call<Void> checkMail(@Field("mail") String mail);
 

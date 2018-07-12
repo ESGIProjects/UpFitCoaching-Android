@@ -55,17 +55,17 @@ public class ApiCall {
                               String sex, String birthDate, String city, String address, String phoneNumber,
                               final ServiceResultListener srl) {
         ApiUtils.getApiInstance().signUp(type, mail, password, firstName, lastName, sex, birthDate, city, address, phoneNumber)
-                .enqueue(new Callback<UserRetrofit>() {
+                .enqueue(new Callback<UserToken>() {
                     @Override
-                    public void onResponse(Call<UserRetrofit> call, Response<UserRetrofit> response) {
+                    public void onResponse(Call<UserToken> call, Response<UserToken> response) {
                         ApiResults sir = new ApiResults();
                         sir.setResponseCode(response.code());
-                        sir.setUr(response.body());
+                        sir.setUt(response.body());
                         srl.onResult(sir);
                     }
 
                     @Override
-                    public void onFailure(Call<UserRetrofit> call, Throwable t) {
+                    public void onFailure(Call<UserToken> call, Throwable t) {
                         ApiResults sir = new ApiResults();
                         sir.setException(t);
                         srl.onResult(sir);
