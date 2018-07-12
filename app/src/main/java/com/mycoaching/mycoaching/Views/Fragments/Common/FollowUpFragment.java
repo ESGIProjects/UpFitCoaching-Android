@@ -259,7 +259,7 @@ public class FollowUpFragment extends Fragment {
         Collections.reverse(lm);
         for(Measurement m : lm){
             String month = getDate().split(" ")[0].split("-")[0]+getDate().split(" ")[0].split("-")[1];
-            if(!month.equals(m.getDate().split(" ")[0].split("-")[0]+getDate().split(" ")[0].split("-")[1])){
+            if(!month.equals(m.getDate().split(" ")[0].split("-")[0]+m.getDate().split(" ")[0].split("-")[1])){
                 break;
             }
             if(!listDate.contains(m.getDate().split(" ")[0])){
