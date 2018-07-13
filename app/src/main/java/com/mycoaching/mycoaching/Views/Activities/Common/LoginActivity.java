@@ -76,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
                             }
                             sp = getApplicationContext().getSharedPreferences("user_prefs",MODE_PRIVATE);
                             if((sp.getString("firebase_token", null) == null) || (!sp.getString("firebase_token", null).equals(FirebaseInstanceId.getInstance().getToken()))){
-                                ApiCall.putToken(ar.getUt().getToken(),ar.getUt().getUr().getId(), FirebaseInstanceId.getInstance().getToken(), null, new ServiceResultListener() {
+                                ApiCall.putToken("Bearer " + ar.getUt().getToken(),ar.getUt().getUr().getId(), FirebaseInstanceId.getInstance().getToken(), null, new ServiceResultListener() {
                                     @Override
                                     public void onResult(ApiResults ar) {
                                         Log.i("RESPONSE : ", ""+ar.getResponseCode());
@@ -85,7 +85,6 @@ public class LoginActivity extends AppCompatActivity {
                                     }
                                 });
                             }
-                            pd.dismiss();
                             //we check if the user is a coach or a regular
                             if (ar.getUt().getUr().getType() == 2) {
                                 i = new Intent(LoginActivity.this, CoachMainActivity.class);
@@ -106,9 +105,9 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 });
+                pd.dismiss();
             } else {
                 Toast.makeText(getApplicationContext(), R.string.missing_fields, Toast.LENGTH_LONG).show();
-                clearFields(email, password);
             }
         } else {
             Toast.makeText(getApplicationContext(), R.string.no_connection, Toast.LENGTH_LONG).show();

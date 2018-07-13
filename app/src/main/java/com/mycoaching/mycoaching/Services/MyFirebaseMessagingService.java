@@ -2,10 +2,12 @@ package com.mycoaching.mycoaching.Services;
 
 import android.app.ActivityManager;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v4.app.NotificationCompat;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -33,8 +35,20 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         .setAutoCancel(true)
                         .setColor(getResources().getColor(R.color.colorPrimary));
 
+
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel notificationChannel = new NotificationChannel(channelId, "NOTIFICATION_CHANNEL_NAME", importance);
+            notificationChannel.enableLights(true);
+            notificationChannel.setLightColor(getColor(R.color.colorPrimary));
+            notificationChannel.enableVibration(true);
+            assert notificationManager != null;
+            notificationBuilder.setChannelId(channelId);
+            notificationManager.createNotificationChannel(notificationChannel);
+        }
 
         notificationManager.notify(0, notificationBuilder.build());
 
