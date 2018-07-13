@@ -14,6 +14,8 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.mycoaching.mycoaching.R;
 import com.mycoaching.mycoaching.Views.Activities.Common.LoginActivity;
+import com.mycoaching.mycoaching.Views.Fragments.CoachMenu.ListChatFragment;
+import com.mycoaching.mycoaching.Views.Fragments.Common.ChatFragment;
 
 /**
  * Created by kevin on 28/05/2018.
@@ -44,13 +46,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             NotificationChannel notificationChannel = new NotificationChannel(channelId, "NOTIFICATION_CHANNEL_NAME", importance);
             notificationChannel.enableLights(true);
             notificationChannel.setLightColor(getColor(R.color.colorPrimary));
-            notificationChannel.enableVibration(true);
             assert notificationManager != null;
             notificationBuilder.setChannelId(channelId);
             notificationManager.createNotificationChannel(notificationChannel);
         }
 
-        notificationManager.notify(0, notificationBuilder.build());
-
+        if((!ChatFragment.isActive && !ListChatFragment.isActive)){
+            notificationManager.notify(0, notificationBuilder.build());
+        }
     }
 }
