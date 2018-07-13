@@ -22,6 +22,7 @@ import com.mycoaching.mycoaching.Models.Realm.UserRealm;
 import com.mycoaching.mycoaching.R;
 import com.mycoaching.mycoaching.Views.Activities.Common.LoginActivity;
 import com.mycoaching.mycoaching.Views.Activities.Common.SettingsActivity;
+import com.mycoaching.mycoaching.Views.Activities.Common.SplashScreenActivity;
 import com.mycoaching.mycoaching.Views.Fragments.CoachMenu.ClientsFragment;
 import com.mycoaching.mycoaching.Views.Fragments.CoachMenu.ListChatFragment;
 import com.mycoaching.mycoaching.Views.Fragments.Common.ChatFragment;
@@ -130,6 +131,13 @@ public class CoachMainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coach_main);
+
+        if(savedInstanceState != null){
+            Intent i = new Intent(this, SplashScreenActivity.class);
+            performTransition(this,i, R.animator.slide_from_left, R.animator.slide_to_right);
+            finish();
+            return;
+        }
 
         b.putBoolean("isCoach",true);
         ef.setArguments(b);

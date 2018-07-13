@@ -17,6 +17,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
 
+import static com.mycoaching.mycoaching.Util.CommonMethods.performTransition;
+
 /**
  * Created by kevin on 04/05/2018.
  */

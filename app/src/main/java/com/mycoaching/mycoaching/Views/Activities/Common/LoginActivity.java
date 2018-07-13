@@ -131,6 +131,14 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        if(savedInstanceState != null){
+            Intent i = new Intent(this, SplashScreenActivity.class);
+            performTransition(this,i, R.animator.slide_from_left, R.animator.slide_to_right);
+            finish();
+            return;
+        }
+
         getSupportActionBar().hide();
         ButterKnife.bind(this);
 

@@ -18,6 +18,7 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.mycoaching.mycoaching.R;
 import com.mycoaching.mycoaching.Views.Activities.Common.LoginActivity;
 import com.mycoaching.mycoaching.Views.Activities.Common.SettingsActivity;
+import com.mycoaching.mycoaching.Views.Activities.Common.SplashScreenActivity;
 import com.mycoaching.mycoaching.Views.Fragments.Common.PrescriptionFragment;
 import com.mycoaching.mycoaching.Views.Fragments.Common.ChatFragment;
 import com.mycoaching.mycoaching.Views.Fragments.Common.EventFragment;
@@ -114,6 +115,13 @@ public class UserMainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_main);
+
+        if(savedInstanceState != null){
+            Intent i = new Intent(this, SplashScreenActivity.class);
+            performTransition(this,i, R.animator.slide_from_left, R.animator.slide_to_right);
+            finish();
+            return;
+        }
 
         b.putBoolean("isCoach",false);
         ef.setArguments(b);
