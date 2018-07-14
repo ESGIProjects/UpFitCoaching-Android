@@ -162,14 +162,18 @@
     <string name="butterknife_url">https://github.com/JakeWharton/butterknife</string>
     <string name="material_label">Material-calendarview</string>
     <string name="material_url">https://github.com/prolificinteractive/material-calendarview</string>
-    <string name="mockito_label">Mockito</string>
-    <string name="mockito_url">https://github.com/mockito/mockito</string>
     <string name="mp_label">MPAndroidChart</string>
     <string name="mp_url">https://github.com/PhilJay/MPAndroidChart</string>
     <string name="retrofit_label">Retrofit</string>
     <string name="retrofit_url">https://github.com/square/retrofit</string>
     <string name="joda_label">Joda time android</string>
     <string name="joda_url">https://github.com/dlew/joda-time-android</string>
+    <string name="realm_label">Realm</string>
+    <string name="realm_url">https://github.com/realm/realm-java</string>
+    <string name="jwt_label">JWTDecode.Android</string>
+    <string name="jwt_url">https://github.com/auth0/JWTDecode.Android</string>
+    <string name="firebase_label">Firebase</string>
+    <string name="firebase_url">https://firebase.google.com/docs/cloud-messaging/android/client</string>
 
     <string-array name="user_type">
         <item>Gratuit</item>

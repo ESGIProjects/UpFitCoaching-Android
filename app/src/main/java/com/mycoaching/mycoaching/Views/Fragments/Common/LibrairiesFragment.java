@@ -28,15 +28,27 @@ public class LibrairiesFragment extends Fragment{
         startActivity(browserIntent);
     }
 
-    @OnClick(R.id.material_label)
-    public void openMaterial(){
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getResources().getString(R.string.material_url)));
+    @OnClick(R.id.firebase_label)
+    public void openFirebase(){
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getResources().getString(R.string.firebase_url)));
         startActivity(browserIntent);
     }
 
-    @OnClick(R.id.mockito_label)
-    public void openMockito(){
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getResources().getString(R.string.mockito_url)));
+    @OnClick(R.id.joda_label)
+    public void openJoda(){
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getResources().getString(R.string.joda_url)));
+        startActivity(browserIntent);
+    }
+
+    @OnClick(R.id.jwt_label)
+    public void openJwt(){
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getResources().getString(R.string.jwt_url)));
+        startActivity(browserIntent);
+    }
+
+    @OnClick(R.id.material_label)
+    public void openMaterial(){
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getResources().getString(R.string.material_url)));
         startActivity(browserIntent);
     }
 
@@ -46,15 +58,15 @@ public class LibrairiesFragment extends Fragment{
         startActivity(browserIntent);
     }
 
-    @OnClick(R.id.retrofit_label)
-    public void openRetrofit(){
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getResources().getString(R.string.retrofit_url)));
+    @OnClick(R.id.realm_label)
+    public void openRealm(){
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getResources().getString(R.string.realm_url)));
         startActivity(browserIntent);
     }
 
-    @OnClick(R.id.joda_label)
-    public void openJoda(){
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getResources().getString(R.string.joda_url)));
+    @OnClick(R.id.retrofit_label)
+    public void openRetrofit(){
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getResources().getString(R.string.retrofit_url)));
         startActivity(browserIntent);
     }
 

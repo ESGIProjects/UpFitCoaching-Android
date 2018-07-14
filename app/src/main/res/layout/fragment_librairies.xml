@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:clickable="true"
@@ -10,9 +10,9 @@
     android:orientation="vertical">
     
     <TextView
+        android:layout_gravity="center_horizontal"
         android:id="@+id/title"
-        android:layout_marginTop="40dp"
-        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
         android:text="@string/librairies"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,18 +24,45 @@
         android:id="@+id/butterknife_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/title"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="50dp"
         android:text="@string/butterknife_label"
         android:textColor="@color/colorWhite"
         android:textSize="24sp"
         android:textStyle="bold|italic"/>
 
+    <TextView
+        android:id="@+id/firebase_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/firebase_label"
+        android:textColor="@color/colorWhite"
+        android:textSize="24sp"
+        android:textStyle="bold|italic"/>
 
     <TextView
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="20dp"
         android:textColor="@color/colorWhite"
-        android:layout_below="@+id/butterknife_label"
+        android:id="@+id/joda_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:textStyle="bold|italic"
+        android:text="@string/joda_label"/>
+
+    <TextView
+        android:layout_marginTop="20dp"
+        android:textColor="@color/colorWhite"
+        android:id="@+id/jwt_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:textStyle="bold|italic"
+        android:text="@string/jwt_label"/>
+
+    <TextView
+        android:layout_marginTop="20dp"
+        android:textColor="@color/colorWhite"
         android:id="@+id/material_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -45,22 +72,8 @@
 
 
     <TextView
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="20dp"
         android:textColor="@color/colorWhite"
-        android:layout_below="@+id/material_label"
-        android:id="@+id/mockito_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="24sp"
-        android:textStyle="bold|italic"
-        android:text="@string/mockito_label"/>
-
-
-
-    <TextView
-        android:layout_marginTop="25dp"
-        android:textColor="@color/colorWhite"
-        android:layout_below="@+id/mockito_label"
         android:id="@+id/MPAndroid_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -69,9 +82,18 @@
         android:text="@string/mp_label"/>
 
     <TextView
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="20dp"
         android:textColor="@color/colorWhite"
-        android:layout_below="@+id/MPAndroid_label"
+        android:id="@+id/realm_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:textStyle="bold|italic"
+        android:text="@string/realm_label"/>
+
+    <TextView
+        android:layout_marginTop="20dp"
+        android:textColor="@color/colorWhite"
         android:id="@+id/retrofit_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -79,16 +101,4 @@
         android:textStyle="bold|italic"
         android:text="@string/retrofit_label"/>
 
-    <TextView
-        android:layout_marginTop="25dp"
-        android:textColor="@color/colorWhite"
-        android:layout_below="@+id/retrofit_label"
-        android:id="@+id/joda_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="24sp"
-        android:textStyle="bold|italic"
-        android:text="@string/joda_label"/>
-
-
-</RelativeLayout>
+</LinearLayout>
