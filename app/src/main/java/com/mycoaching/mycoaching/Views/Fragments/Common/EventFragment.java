@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.auth0.android.jwt.JWT;
 import com.mycoaching.mycoaching.Api.ApiCall;
@@ -45,7 +46,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
 
+import static com.mycoaching.mycoaching.Util.CommonMethods.getCorrespondingErrorMessage;
 import static com.mycoaching.mycoaching.Util.CommonMethods.getDate;
+import static com.mycoaching.mycoaching.Util.CommonMethods.isTokenExpired;
+import static com.mycoaching.mycoaching.Util.CommonMethods.refreshToken;
 import static com.mycoaching.mycoaching.Util.Constants.DATE_FORMATTER;
 
 /**
@@ -152,6 +156,9 @@ public class EventFragment extends Fragment implements EventAdapter.OnClick{
         pd.setCancelable(false);
         pd.setMessage("Récupération des évènements en cours...");
         pd.show();
+        if(isTokenExpired(ur.getToken())){
+            refreshToken(ur.getToken(),getContext());
+        }
         ApiCall.getEvents("Bearer " + ur.getToken(),Integer.valueOf(ur.getId()), new ServiceResultListener() {
             @Override
             public void onResult(ApiResults ar) {
@@ -193,9 +200,14 @@ public class EventFragment extends Fragment implements EventAdapter.OnClick{
                         });
                     }
                     else{
+                        mcv.removeDecorators();
                         label.setVisibility(View.VISIBLE);
                         rv.setVisibility(View.GONE);
                     }
+                }
+                else{
+                    Toast.makeText(getContext(),getCorrespondingErrorMessage(ar.getErrorMessage()),
+                            Toast.LENGTH_LONG).show();
                 }
             }
         });

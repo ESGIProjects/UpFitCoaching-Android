@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.mycoaching.mycoaching.Api.ApiCall;
 import com.mycoaching.mycoaching.Api.ApiResults;
@@ -27,6 +28,10 @@ import java.util.Comparator;
 import java.util.List;
 
 import io.realm.Realm;
+
+import static com.mycoaching.mycoaching.Util.CommonMethods.getCorrespondingErrorMessage;
+import static com.mycoaching.mycoaching.Util.CommonMethods.isTokenExpired;
+import static com.mycoaching.mycoaching.Util.CommonMethods.refreshToken;
 
 /**
  * Created by kevin on 24/06/2018.
@@ -70,43 +75,52 @@ public class ClientsFragment extends Fragment implements ClientsAdapter.OnClick{
         pd.setMessage("Récupération des informations...");
         pd.setCancelable(false);
         pd.show();
+        if(isTokenExpired(ur.getToken())){
+            refreshToken(ur.getToken(),getContext());
+        }
         ApiCall.getConversation("Bearer " + ur.getToken(), Integer.valueOf(ur.getId()), new ServiceResultListener() {
             @Override
             public void onResult(ApiResults ar) {
-                ids.add(Integer.valueOf(ur.getId()));
-                for (Message m : ar.getListMessage()) {
-                    if (!ids.contains(Integer.valueOf(m.getSender().getId()))) {
-                        u = new UserRealm(m.getSender().getId(),m.getSender().getMail(),
-                                m.getSender().getFirstName(), m.getSender().getLastName(),
-                                m.getSender().getSex(),m.getSender().getBirthDate(),
-                                m.getSender().getCity(),m.getSender().getPhoneNumber(),null);
-                        ids.add(Integer.valueOf(m.getSender().getId()));
-                        lu.add(u);
-                    } else if (!ids.contains(Integer.valueOf(m.getReceiver().getId()))) {
-                        u = new UserRealm(m.getReceiver().getId(),m.getReceiver().getMail(),
-                                m.getReceiver().getFirstName(), m.getReceiver().getLastName(),
-                                m.getReceiver().getSex(),m.getReceiver().getBirthDate(),
-                                m.getReceiver().getCity(),m.getReceiver().getPhoneNumber(),null);
-                        ids.add(Integer.valueOf(m.getReceiver().getId()));
-                        lu.add(u);
+                if(ar.getResponseCode() == 200){
+                    ids.add(Integer.valueOf(ur.getId()));
+                    for (Message m : ar.getListMessage()) {
+                        if (!ids.contains(Integer.valueOf(m.getSender().getId()))) {
+                            u = new UserRealm(m.getSender().getId(),m.getSender().getMail(),
+                                    m.getSender().getFirstName(), m.getSender().getLastName(),
+                                    m.getSender().getSex(),m.getSender().getBirthDate(),
+                                    m.getSender().getCity(),m.getSender().getPhoneNumber(),null);
+                            ids.add(Integer.valueOf(m.getSender().getId()));
+                            lu.add(u);
+                        } else if (!ids.contains(Integer.valueOf(m.getReceiver().getId()))) {
+                            u = new UserRealm(m.getReceiver().getId(),m.getReceiver().getMail(),
+                                    m.getReceiver().getFirstName(), m.getReceiver().getLastName(),
+                                    m.getReceiver().getSex(),m.getReceiver().getBirthDate(),
+                                    m.getReceiver().getCity(),m.getReceiver().getPhoneNumber(),null);
+                            ids.add(Integer.valueOf(m.getReceiver().getId()));
+                            lu.add(u);
+                        }
+                        Collections.sort(lu, new Comparator<UserRealm>() {
+                            @Override
+                            public int compare(UserRealm c1, UserRealm c2) {
+                                int res = c1.getLastName().compareToIgnoreCase(c2.getLastName());
+                                if (res != 0){
+                                    return res;
+                                }
+                                return c1.getFirstName().compareToIgnoreCase(c2.getFirstName());
+                            }
+                        });
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ca.notifyDataSetChanged();
+                            }
+                        });
                     }
                 }
-            }
-        });
-        Collections.sort(lu, new Comparator<UserRealm>() {
-            @Override
-            public int compare(UserRealm c1, UserRealm c2) {
-                int res = c1.getLastName().compareToIgnoreCase(c2.getLastName());
-                if (res != 0){
-                    return res;
+                else{
+                    Toast.makeText(getContext(),getCorrespondingErrorMessage(ar.getErrorMessage()),
+                            Toast.LENGTH_LONG).show();
                 }
-                return c1.getFirstName().compareToIgnoreCase(c2.getFirstName());
-            }
-        });
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                ca.notifyDataSetChanged();
             }
         });
         pd.dismiss();

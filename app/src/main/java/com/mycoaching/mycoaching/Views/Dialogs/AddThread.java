@@ -20,7 +20,11 @@ import butterknife.OnClick;
 import io.realm.Realm;
 
 import static com.mycoaching.mycoaching.Util.CommonMethods.checkFields;
+import static com.mycoaching.mycoaching.Util.CommonMethods.getCorrespondingErrorMessage;
 import static com.mycoaching.mycoaching.Util.CommonMethods.getDate;
+import static com.mycoaching.mycoaching.Util.CommonMethods.isNetworkAvailable;
+import static com.mycoaching.mycoaching.Util.CommonMethods.isTokenExpired;
+import static com.mycoaching.mycoaching.Util.CommonMethods.refreshToken;
 
 /**
  * Created by kevin on 03/06/2018.
@@ -34,6 +38,7 @@ public class AddThread extends Dialog {
     ProgressDialog pd;
 
     boolean isOK = false;
+
     @BindView(R.id.thread_title)
     EditText threadTitle;
 
@@ -46,21 +51,33 @@ public class AddThread extends Dialog {
         pd.setMessage("Création du sujet en cours...");
         pd.setCancelable(false);
         pd.show();
-        if (checkFields(threadTitle.getText().toString(), content.getText().toString())) {
-            ApiCall.createThread("Bearer " + ur.getToken(),threadTitle.getText().toString(), getDate(), content.getText().toString(), "1", ur.getId(), new ServiceResultListener() {
-                @Override
-                public void onResult(ApiResults ar) {
-                    if (ar.getResponseCode() == 201) {
-                        isOK = true;
-                        pd.dismiss();
-                        dismiss();
+        if (isNetworkAvailable(getContext())) {
+            if (isTokenExpired(ur.getToken())) {
+                refreshToken(ur.getToken(), getContext());
+            }
+            if (checkFields(threadTitle.getText().toString(), content.getText().toString())) {
+                ApiCall.createThread("Bearer " + ur.getToken(), threadTitle.getText().toString(), getDate(), content.getText().toString(), "1", ur.getId(), new ServiceResultListener() {
+                    @Override
+                    public void onResult(ApiResults ar) {
+                        if (ar.getResponseCode() == 201) {
+                            isOK = true;
+                            pd.dismiss();
+                            dismiss();
+                        } else {
+                            pd.dismiss();
+                            Toast.makeText(getContext(), getCorrespondingErrorMessage(ar.getErrorMessage()),
+                                    Toast.LENGTH_LONG).show();
+                        }
                     }
-                }
-            });
+                });
+            } else {
+                pd.dismiss();
+                Toast.makeText(getContext(), "Il manque au moins un champs !", Toast.LENGTH_LONG).show();
+            }
         }
-        else{
+        else {
             pd.dismiss();
-            Toast.makeText(getContext(),"Il manque un champs !", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), R.string.no_connection, Toast.LENGTH_LONG).show();
         }
     }
 

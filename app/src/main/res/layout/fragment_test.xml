@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:paddingStart="30dp"
     android:paddingEnd="30dp"
-    android:background="@color/colorPrimary"
+    android:background="@color/colorWhite"
     android:clickable="true"
     android:focusable="true">
 
@@ -25,13 +25,13 @@
                 android:paddingTop="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorBlack"
                 android:textStyle="bold"
                 android:textSize="20sp"
                 android:text="@string/vVO2max"/>
 
             <android.support.design.widget.TextInputLayout
-                android:theme="@style/AppThemeCustom"
+                android:theme="@style/AppThemeCustomBackground"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -42,13 +42,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/speed_input"
-                    android:textColor="@color/colorWhite"
+                    android:textColor="@color/colorBlack"
                     android:maxLines="1"
                     android:inputType="number"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
-                android:theme="@style/AppThemeCustom"
+                android:theme="@style/AppThemeCustomBackground"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -59,13 +59,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/start_speed_input"
-                    android:textColor="@color/colorWhite"
+                    android:textColor="@color/colorBlack"
                     android:inputType="number"
                     android:maxLines="1" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
-                android:theme="@style/AppThemeCustom"
+                android:theme="@style/AppThemeCustomBackground"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -76,13 +76,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/increase_input"
-                    android:textColor="@color/colorWhite"
+                    android:textColor="@color/colorBlack"
                     android:inputType="number"
                     android:maxLines="1" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
-                android:theme="@style/AppThemeCustom"
+                android:theme="@style/AppThemeCustomBackground"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -93,7 +93,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/freq_input"
-                    android:textColor="@color/colorWhite"
+                    android:textColor="@color/colorBlack"
                     android:inputType="number"
                     android:maxLines="1" />
             </android.support.design.widget.TextInputLayout>
@@ -102,7 +102,7 @@
                 android:paddingTop="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorBlack"
                 android:textStyle="bold"
                 android:textSize="20sp"
                 android:text="@string/flexibility"/>
@@ -118,10 +118,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/knee_input"
-                    android:textColor="@color/colorWhite"/>
+                    android:textColor="@color/colorBlack"/>
                 <Spinner
                     android:id="@+id/spinnerKnee"
-                    android:theme="@style/customSpinner"
+                    android:theme="@style/customSpinnerBackground"
                     android:layout_marginEnd="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -139,10 +139,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/shin_input"
-                    android:textColor="@color/colorWhite"/>
+                    android:textColor="@color/colorBlack"/>
                 <Spinner
                     android:id="@+id/spinnerShin"
-                    android:theme="@style/customSpinner"
+                    android:theme="@style/customSpinnerBackground"
                     android:layout_marginEnd="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -160,10 +160,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/kick_input"
-                    android:textColor="@color/colorWhite"/>
+                    android:textColor="@color/colorBlack"/>
                 <Spinner
                     android:id="@+id/spinnerKick"
-                    android:theme="@style/customSpinner"
+                    android:theme="@style/customSpinnerBackground"
                     android:layout_marginEnd="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -181,10 +181,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/closedFist_input"
-                    android:textColor="@color/colorWhite"/>
+                    android:textColor="@color/colorBlack"/>
                 <Spinner
                     android:id="@+id/spinnerClosedFist"
-                    android:theme="@style/customSpinner"
+                    android:theme="@style/customSpinnerBackground"
                     android:layout_marginEnd="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -202,10 +202,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/handFlat_input"
-                    android:textColor="@color/colorWhite"/>
+                    android:textColor="@color/colorBlack"/>
                 <Spinner
                     android:id="@+id/spinnerHandFlat"
-                    android:theme="@style/customSpinner"
+                    android:theme="@style/customSpinnerBackground"
                     android:layout_marginEnd="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

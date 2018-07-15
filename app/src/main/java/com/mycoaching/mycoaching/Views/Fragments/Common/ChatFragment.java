@@ -42,8 +42,12 @@ import okhttp3.Response;
 import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
 
+import static com.mycoaching.mycoaching.Util.CommonMethods.checkFields;
+import static com.mycoaching.mycoaching.Util.CommonMethods.getCorrespondingErrorMessage;
 import static com.mycoaching.mycoaching.Util.CommonMethods.getDate;
 import static com.mycoaching.mycoaching.Util.CommonMethods.getJSONFromString;
+import static com.mycoaching.mycoaching.Util.CommonMethods.isTokenExpired;
+import static com.mycoaching.mycoaching.Util.CommonMethods.refreshToken;
 import static com.mycoaching.mycoaching.Util.Constants.WEB_SOCKET_ENDPOINT;
 import static com.mycoaching.mycoaching.Util.Constants.WEB_SOCKET_TIMER;
 
@@ -70,7 +74,7 @@ public class ChatFragment extends Fragment {
 
     @OnClick(R.id.send)
     void sendMessage() {
-        if (!et.getText().toString().equals("")) {
+        if (checkFields(et.getText().toString())){
             JSONObject object = new JSONObject();
             try {
                 object.put("date",getDate());
@@ -119,6 +123,9 @@ public class ChatFragment extends Fragment {
                 e.printStackTrace();
             }
             if(isCoach) {
+                if(isTokenExpired(ur.getToken())){
+                    refreshToken(ur.getToken(),getContext());
+                }
                 ListChatFragment lcf = (ListChatFragment) getActivity().getSupportFragmentManager().findFragmentByTag("LCF");
                 lcf.getWs().send(object.toString());
                 lcf.addMessageToList(ur.getId(), lm.get(lm.size() - 1).getSender().getId(), ur.getFirstName(),
@@ -130,6 +137,9 @@ public class ChatFragment extends Fragment {
                         lm.get(lm.size() - 1).getSender().getLastName(), et.getText().toString(),ur.getMail(),
                         lm.get(lm.size() - 1).getSender().getMail());
             } else {
+                if(isTokenExpired(ur.getToken())){
+                    refreshToken(ur.getToken(),getContext());
+                }
                 ws.send(object.toString());
                 Log.i("WS TEST : ",object.toString());
                 addMessageToList(ur.getId(), ur.getIdCoach(), ur.getFirstName(), ur.getLastName(),
@@ -186,6 +196,9 @@ public class ChatFragment extends Fragment {
         pd = new ProgressDialog(getContext(), R.style.StyledDialog);
         pd.setMessage("Récupération des messages en cours...");
         pd.show();
+        if(isTokenExpired(ur.getToken())){
+            refreshToken(ur.getToken(),getContext());
+        }
         ApiCall.getConversation("Bearer " + ur.getToken(),Integer.valueOf(ur.getId()), new ServiceResultListener() {
             @Override
             public void onResult(ApiResults ar) {
@@ -211,8 +224,9 @@ public class ChatFragment extends Fragment {
                             r.insert(messages);
                         }
                     });
-                } else {
-                    Toast.makeText(getContext(), "Veuillez réessayer ultérieurement", Toast.LENGTH_SHORT).show();
+                } else{
+                    Toast.makeText(getContext(),getCorrespondingErrorMessage(ar.getErrorMessage()),
+                            Toast.LENGTH_LONG).show();
                 }
             }
         });

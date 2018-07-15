@@ -5,7 +5,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.auth0.android.jwt.JWT;
+import com.mycoaching.mycoaching.Api.ApiCall;
+import com.mycoaching.mycoaching.Api.ApiResults;
+import com.mycoaching.mycoaching.Api.ServiceResultListener;
 
 import org.json.JSONObject;
 
@@ -42,7 +49,7 @@ public class CommonMethods {
      */
     public static boolean checkFields(String... fields) {
         for (int i = 0; i < fields.length; i++) {
-            if (fields[i].equals("")) {
+            if (fields[i].equals("") || !(fields[i].trim().length() > 0)) {
                 return false;
             }
         }
@@ -131,5 +138,98 @@ public class CommonMethods {
     public static void performTransition(Activity a, Intent i, int from, int to) {
         a.startActivity(i);
         a.overridePendingTransition(from, to);
+    }
+
+    /**
+     * @param token the token to check
+     * @return true if the token is expired, false if it's not
+     */
+    public static boolean isTokenExpired(String token) {
+        JWT jwt = new JWT(token);
+        if(jwt.getExpiresAt().before(new Date())){
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @param message the message in JSON response
+     * @return the corresponding error message to display
+     */
+    public static String getCorrespondingErrorMessage(String message) {
+        String toReturn = "";
+        switch (message){
+            case "appraisal_not_found":
+                toReturn = "Aucun bilan correspondant";
+                break;
+            case "user_already_exists":
+                toReturn = "Cet utilisateur existe déjà";
+                break;
+            case "user_insert_failed":
+                toReturn = "Nous avons rencontré un problème lors du traitement du compte utilisateur. Merci de réessayer plus tard";
+                break;
+            case "prescription_insert_failed":
+                toReturn = "Nous avons rencontré un problème lors de l'ajout de la prescription. Merci de réessayer plus tard";
+                break;
+            case "thread_insert_failed":
+                toReturn = "Nous avons rencontré un problème lors de l'ajout du sujet. Merci de réessayer plus tard";
+                break;
+            case "post_insert_failed":
+                toReturn = "Nous avons rencontré un problème lors de l'ajout du message. Merci de réessayer plus tard";
+                break;
+            case "appraisal_insert_failed":
+                toReturn = "Nous avons rencontré un problème lors de l'ajout du bilan. Merci de réessayer plus tard";
+                break;
+            case "measurements_insert_failed":
+                toReturn = "Nous avons recontré un problème lors de l'ajout des mensurations. Merci de réessayer plus tard";
+                break;
+            case "test_insert_failed":
+                toReturn = "Nous avons rencontré un problème lors de l'ajout du test. Merci de réessayer plus tard";
+                break;
+            case "event_insert_failed":
+                toReturn = "Nous avons rencontré un problème lors de l'ajout de l'événement. Merci de réessayer plus tard";
+                break;
+            case "token_error":
+                toReturn = "En raison d'une erreur inconnue, nous ne pouvons plus vous identifier. Merci de vous reconnecer avant de réessayer";
+                break;
+            case "token_not_valid":
+                toReturn = "En raison d'une erreur inconnue, nous ne pouvons plus vous identifier. Merci de vous reconnecer avant de réessayer";
+                break;
+            case "user_wrong_password":
+                toReturn = "Ce mot de passe est incorrect";
+                break;
+            case "parameter_error":
+                toReturn = "Certains paramètres sont manquants ou erronés. Vérifiez avant de réessayer";
+                break;
+            case "user_not_exist":
+                toReturn = "Cet utilisateur n'existe pas";
+                break;
+            case "event_not_exist":
+                toReturn = "Cet événement n'existe pas";
+                break;
+            case "token_creation_error":
+                toReturn = "Nous recontrons un problème réseau. Merci de réessayer plus tard";
+                break;
+            default:
+                toReturn = "Nous recontrons un problème réseau. Merci de réessayer plus tard";
+        }
+        return toReturn;
+    }
+
+    /**
+     * @param oldToken the old token to refresh
+     */
+    public static void refreshToken(String oldToken, final Context context){
+        ApiCall.getRefreshedToken("Bearer " + oldToken, new ServiceResultListener() {
+            @Override
+            public void onResult(ApiResults ar) {
+                if(ar.getResponseCode() == 200){
+                    Toast.makeText(context,"Le token a été mis à jour !",Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Toast.makeText(context, getCorrespondingErrorMessage(ar.getErrorMessage()), Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 }

@@ -23,6 +23,7 @@ import static com.mycoaching.mycoaching.Util.CommonMethods.checkEmail;
 import static com.mycoaching.mycoaching.Util.CommonMethods.checkFields;
 import static com.mycoaching.mycoaching.Util.CommonMethods.checkPassword;
 import static com.mycoaching.mycoaching.Util.CommonMethods.clearFields;
+import static com.mycoaching.mycoaching.Util.CommonMethods.getCorrespondingErrorMessage;
 import static com.mycoaching.mycoaching.Util.CommonMethods.getSHAPassword;
 import static com.mycoaching.mycoaching.Util.CommonMethods.isSame;
 
@@ -78,8 +79,9 @@ public class CredentialsFragment extends Fragment {
                                 cdf.setArguments(b);
                                 ((RegisterActivity)getActivity()).replaceFragment(cdf,R.id.container);
                             }*/
-                        } else {
-                            Toast.makeText(getContext(), R.string.already_exists, Toast.LENGTH_LONG).show();
+                        } else{
+                            Toast.makeText(getContext(),getCorrespondingErrorMessage(ar.getErrorMessage()),
+                                    Toast.LENGTH_LONG).show();
                         }
                     }
                 });

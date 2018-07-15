@@ -41,7 +41,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
 
+import static com.mycoaching.mycoaching.Util.CommonMethods.getCorrespondingErrorMessage;
 import static com.mycoaching.mycoaching.Util.CommonMethods.getDate;
+import static com.mycoaching.mycoaching.Util.CommonMethods.isTokenExpired;
+import static com.mycoaching.mycoaching.Util.CommonMethods.refreshToken;
 
 /**
  * Created by kevin on 07/07/2018.
@@ -104,12 +107,18 @@ public class PrescriptionFragment extends Fragment implements ExerciseAdapter.On
         pd.setMessage("Création de la prescription en cours...");
         pd.setCancelable(false);
         pd.show();
-        Log.i("TEST : ",new Gson().toJson(le));
+        if(isTokenExpired(ur.getToken())){
+            refreshToken(ur.getToken(),getContext());
+        }
         ApiCall.postPrescription("Bearer " + ur.getToken(), id, getDate(), new Gson().toJson(le), new ServiceResultListener() {
             @Override
             public void onResult(ApiResults ar) {
                 if(ar.getResponseCode() == 201){
                     Toast.makeText(getContext(),"La prescription est enregistrée !", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    Toast.makeText(getContext(),getCorrespondingErrorMessage(ar.getErrorMessage()),
+                            Toast.LENGTH_LONG).show();
                 }
                 pd.dismiss();
             }
@@ -156,6 +165,9 @@ public class PrescriptionFragment extends Fragment implements ExerciseAdapter.On
         pd.setMessage("Récupération des informations...");
         pd.setCancelable(false);
         pd.show();
+        if(isTokenExpired(ur.getToken())){
+            refreshToken(ur.getToken(),getContext());
+        }
         ApiCall.getPrescription("Bearer " + ur.getToken(),Integer.valueOf(id), new ServiceResultListener() {
             @Override
             public void onResult(ApiResults ar) {
@@ -169,6 +181,10 @@ public class PrescriptionFragment extends Fragment implements ExerciseAdapter.On
                         empty.setVisibility(View.VISIBLE);
                     }
                 }
+                else{
+                    Toast.makeText(getContext(),getCorrespondingErrorMessage(ar.getErrorMessage()),
+                            Toast.LENGTH_LONG).show();
+                }
                 pd.dismiss();
             }
         });
@@ -179,7 +195,6 @@ public class PrescriptionFragment extends Fragment implements ExerciseAdapter.On
         if(b != null){
             final Exercise e = le.get(position);
             final EditExercise ee = new EditExercise(getActivity(),e);
-            assert ee.getWindow() != null;
             ee.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             ee.show();
             ee.setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -190,7 +205,7 @@ public class PrescriptionFragment extends Fragment implements ExerciseAdapter.On
                             le.set(position,ee.getExercise());
                             ea.notifyDataSetChanged();
                         }
-                        else{
+                        else if(ee.getIsCancel()){
                             le.remove(position);
                             rv.setAdapter(ea);
                             ea.notifyItemRemoved(position);

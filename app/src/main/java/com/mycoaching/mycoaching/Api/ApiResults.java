@@ -29,6 +29,7 @@ public class ApiResults {
     private Appraisal lastAppraisal;
     private List<Test> listTest;
     private int responseCode;
+    private String errorMessage;
     private UserRetrofit ur;
     private UserToken ut;
     private Throwable exception;
@@ -127,6 +128,14 @@ public class ApiResults {
 
     public void setUt(UserToken ut) {
         this.ut = ut;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
     }
 }
 

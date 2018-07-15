@@ -13,6 +13,8 @@ import com.mycoaching.mycoaching.Models.Retrofit.Thread;
 import com.mycoaching.mycoaching.Models.Retrofit.UserRetrofit;
 import com.mycoaching.mycoaching.Models.Retrofit.UserToken;
 
+import org.json.JSONObject;
+
 import java.util.List;
 
 import javax.annotation.Nullable;
@@ -36,10 +38,22 @@ public class ApiCall {
         ApiUtils.getApiInstance().signIn(mail, password).enqueue(new Callback<UserToken>() {
             @Override
             public void onResponse(Call<UserToken> call, Response<UserToken> response) {
-                ApiResults sir = new ApiResults();
-                sir.setResponseCode(response.code());
-                sir.setUt(response.body());
-                srl.onResult(sir);
+                if(response.isSuccessful()){
+                    ApiResults sir = new ApiResults();
+                    sir.setResponseCode(response.code());
+                    sir.setUt(response.body());
+                    srl.onResult(sir);
+                }
+                else{
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        ApiResults sir = new ApiResults();
+                        sir.setErrorMessage(jObjError.getString("message"));
+                        srl.onResult(sir);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
             }
 
             @Override
@@ -58,10 +72,22 @@ public class ApiCall {
                 .enqueue(new Callback<UserToken>() {
                     @Override
                     public void onResponse(Call<UserToken> call, Response<UserToken> response) {
-                        ApiResults sir = new ApiResults();
-                        sir.setResponseCode(response.code());
-                        sir.setUt(response.body());
-                        srl.onResult(sir);
+                        if(response.isSuccessful()){
+                            ApiResults sir = new ApiResults();
+                            sir.setResponseCode(response.code());
+                            sir.setUt(response.body());
+                            srl.onResult(sir);
+                        }
+                        else{
+                            try {
+                                JSONObject jObjError = new JSONObject(response.errorBody().string());
+                                ApiResults sir = new ApiResults();
+                                sir.setErrorMessage(jObjError.getString("message"));
+                                srl.onResult(sir);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
                     }
 
                     @Override
@@ -77,11 +103,22 @@ public class ApiCall {
         ApiUtils.getApiInstance().checkMail(mail).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                ApiResults sir = new ApiResults();
-                sir.setResponseCode(response.code());
-                srl.onResult(sir);
+                if(response.isSuccessful()){
+                    ApiResults sir = new ApiResults();
+                    sir.setResponseCode(response.code());
+                    srl.onResult(sir);
+                }
+                else{
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        ApiResults sir = new ApiResults();
+                        sir.setErrorMessage(jObjError.getString("message"));
+                        srl.onResult(sir);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
             }
-
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
                 ApiResults sir = new ApiResults();
@@ -122,10 +159,22 @@ public class ApiCall {
         ApiUtils.getApiInstance().getThreads(token,id).enqueue(new Callback<List<Thread>>() {
             @Override
             public void onResponse(Call<List<Thread>> call, Response<List<Thread>> response) {
-                ApiResults sir = new ApiResults();
-                sir.setResponseCode(response.code());
-                sir.setListThread(response.body());
-                srl.onResult(sir);
+                if(response.isSuccessful()){
+                    ApiResults sir = new ApiResults();
+                    sir.setResponseCode(response.code());
+                    sir.setListThread(response.body());
+                    srl.onResult(sir);
+                }
+                else{
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        ApiResults sir = new ApiResults();
+                        sir.setErrorMessage(jObjError.getString("message"));
+                        srl.onResult(sir);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
             }
 
             @Override
@@ -141,9 +190,21 @@ public class ApiCall {
         ApiUtils.getApiInstance().createThread(token,title, date, content, forumId, userId).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                ApiResults sir = new ApiResults();
-                sir.setResponseCode(response.code());
-                srl.onResult(sir);
+                if(response.isSuccessful()){
+                    ApiResults sir = new ApiResults();
+                    sir.setResponseCode(response.code());
+                    srl.onResult(sir);
+                }
+                else{
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        ApiResults sir = new ApiResults();
+                        sir.setErrorMessage(jObjError.getString("message"));
+                        srl.onResult(sir);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
             }
 
             @Override
@@ -162,10 +223,22 @@ public class ApiCall {
         ApiUtils.getApiInstance().getPosts(token,id).enqueue(new Callback<List<Post>>() {
             @Override
             public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
-                ApiResults sir = new ApiResults();
-                sir.setResponseCode(response.code());
-                sir.setListPost(response.body());
-                srl.onResult(sir);
+                if(response.isSuccessful()){
+                    ApiResults sir = new ApiResults();
+                    sir.setResponseCode(response.code());
+                    sir.setListPost(response.body());
+                    srl.onResult(sir);
+                }
+                else{
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        ApiResults sir = new ApiResults();
+                        sir.setErrorMessage(jObjError.getString("message"));
+                        srl.onResult(sir);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
             }
 
             @Override
@@ -181,9 +254,21 @@ public class ApiCall {
         ApiUtils.getApiInstance().sendPost(token,threadId, date, content, userId).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                ApiResults sir = new ApiResults();
-                sir.setResponseCode(response.code());
-                srl.onResult(sir);
+                if(response.isSuccessful()){
+                    ApiResults sir = new ApiResults();
+                    sir.setResponseCode(response.code());
+                    srl.onResult(sir);
+                }
+                else{
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        ApiResults sir = new ApiResults();
+                        sir.setErrorMessage(jObjError.getString("message"));
+                        srl.onResult(sir);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
             }
 
             @Override
@@ -203,10 +288,22 @@ public class ApiCall {
         ApiUtils.getApiInstance().getEvents(token,id).enqueue(new Callback<List<Event>>() {
             @Override
             public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
-                ApiResults sir = new ApiResults();
-                sir.setResponseCode(response.code());
-                sir.setListEvent(response.body());
-                srl.onResult(sir);
+                if(response.isSuccessful()){
+                    ApiResults sir = new ApiResults();
+                    sir.setResponseCode(response.code());
+                    sir.setListEvent(response.body());
+                    srl.onResult(sir);
+                }
+                else{
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        ApiResults sir = new ApiResults();
+                        sir.setErrorMessage(jObjError.getString("message"));
+                        srl.onResult(sir);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
             }
 
             @Override
@@ -225,9 +322,21 @@ public class ApiCall {
                 end,created,createdBy).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                ApiResults sir = new ApiResults();
-                sir.setResponseCode(response.code());
-                srl.onResult(sir);
+                if(response.isSuccessful()){
+                    ApiResults sir = new ApiResults();
+                    sir.setResponseCode(response.code());
+                    srl.onResult(sir);
+                }
+                else{
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        ApiResults sir = new ApiResults();
+                        sir.setErrorMessage(jObjError.getString("message"));
+                        srl.onResult(sir);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
             }
 
             @Override
@@ -245,9 +354,21 @@ public class ApiCall {
                 updatedBy).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                ApiResults sir = new ApiResults();
-                sir.setResponseCode(response.code());
-                srl.onResult(sir);
+                if(response.isSuccessful()){
+                    ApiResults sir = new ApiResults();
+                    sir.setResponseCode(response.code());
+                    srl.onResult(sir);
+                }
+                else{
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        ApiResults sir = new ApiResults();
+                        sir.setErrorMessage(jObjError.getString("message"));
+                        srl.onResult(sir);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
             }
 
             @Override
@@ -263,10 +384,21 @@ public class ApiCall {
         ApiUtils.getApiInstance().deleteEvent(token, eventId, userId).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                ApiResults sir = new ApiResults();
-                Log.i("REQUEST : ",response.headers().toString());
-                sir.setResponseCode(response.code());
-                srl.onResult(sir);
+                if(response.isSuccessful()){
+                    ApiResults sir = new ApiResults();
+                    sir.setResponseCode(response.code());
+                    srl.onResult(sir);
+                }
+                else{
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        ApiResults sir = new ApiResults();
+                        sir.setErrorMessage(jObjError.getString("message"));
+                        srl.onResult(sir);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
             }
 
             @Override
@@ -287,9 +419,21 @@ public class ApiCall {
         ApiUtils.getApiInstance().putToken(token,userId,tokenFirebase,oldToken).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                ApiResults sir = new ApiResults();
-                sir.setResponseCode(response.code());
-                srl.onResult(sir);
+                if(response.isSuccessful()){
+                    ApiResults sir = new ApiResults();
+                    sir.setResponseCode(response.code());
+                    srl.onResult(sir);
+                }
+                else{
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        ApiResults sir = new ApiResults();
+                        sir.setErrorMessage(jObjError.getString("message"));
+                        srl.onResult(sir);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
             }
 
             @Override
@@ -312,10 +456,22 @@ public class ApiCall {
                 address).enqueue(new Callback<UserRetrofit>() {
             @Override
             public void onResponse(Call<UserRetrofit> call, Response<UserRetrofit> response) {
-                ApiResults sir = new ApiResults();
-                sir.setResponseCode(response.code());
-                sir.setUr(response.body());
-                srl.onResult(sir);
+                if(response.isSuccessful()){
+                    ApiResults sir = new ApiResults();
+                    sir.setResponseCode(response.code());
+                    sir.setUr(response.body());
+                    srl.onResult(sir);
+                }
+                else{
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        ApiResults sir = new ApiResults();
+                        sir.setErrorMessage(jObjError.getString("message"));
+                        srl.onResult(sir);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
             }
 
             @Override
@@ -335,10 +491,22 @@ public class ApiCall {
         ApiUtils.getApiInstance().getLastAppraisal(token,id).enqueue(new Callback<Appraisal>() {
             @Override
             public void onResponse(Call<Appraisal> call, Response<Appraisal> response) {
-                ApiResults sir = new ApiResults();
-                sir.setResponseCode(response.code());
-                sir.setLastAppraisal(response.body());
-                srl.onResult(sir);
+                if(response.isSuccessful()){
+                    ApiResults sir = new ApiResults();
+                    sir.setResponseCode(response.code());
+                    sir.setLastAppraisal(response.body());
+                    srl.onResult(sir);
+                }
+                else{
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        ApiResults sir = new ApiResults();
+                        sir.setErrorMessage(jObjError.getString("message"));
+                        srl.onResult(sir);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
             }
 
             @Override
@@ -358,9 +526,21 @@ public class ApiCall {
                 sportAntecedents,helpNeeded,hasNutritionist,comments).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                ApiResults sir = new ApiResults();
-                sir.setResponseCode(response.code());
-                srl.onResult(sir);
+                if(response.isSuccessful()){
+                    ApiResults sir = new ApiResults();
+                    sir.setResponseCode(response.code());
+                    srl.onResult(sir);
+                }
+                else{
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        ApiResults sir = new ApiResults();
+                        sir.setErrorMessage(jObjError.getString("message"));
+                        srl.onResult(sir);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
             }
 
             @Override
@@ -376,10 +556,22 @@ public class ApiCall {
         ApiUtils.getApiInstance().getTests(token,id).enqueue(new Callback<List<Test>>() {
             @Override
             public void onResponse(Call<List<Test>> call, Response<List<Test>> response) {
-                ApiResults sir = new ApiResults();
-                sir.setResponseCode(response.code());
-                sir.setListTest(response.body());
-                srl.onResult(sir);
+                if(response.isSuccessful()){
+                    ApiResults sir = new ApiResults();
+                    sir.setResponseCode(response.code());
+                    sir.setListTest(response.body());
+                    srl.onResult(sir);
+                }
+                else{
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        ApiResults sir = new ApiResults();
+                        sir.setErrorMessage(jObjError.getString("message"));
+                        srl.onResult(sir);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
             }
 
             @Override
@@ -400,9 +592,21 @@ public class ApiCall {
                 .enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                ApiResults sir = new ApiResults();
-                sir.setResponseCode(response.code());
-                srl.onResult(sir);
+                if(response.isSuccessful()){
+                    ApiResults sir = new ApiResults();
+                    sir.setResponseCode(response.code());
+                    srl.onResult(sir);
+                }
+                else{
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        ApiResults sir = new ApiResults();
+                        sir.setErrorMessage(jObjError.getString("message"));
+                        srl.onResult(sir);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
             }
 
             @Override
@@ -418,10 +622,22 @@ public class ApiCall {
         ApiUtils.getApiInstance().getMeasurements(token,id).enqueue(new Callback<List<Measurement>>() {
             @Override
             public void onResponse(Call<List<Measurement>> call, Response<List<Measurement>> response) {
-                ApiResults sir = new ApiResults();
-                sir.setResponseCode(response.code());
-                sir.setListMeasurement(response.body());
-                srl.onResult(sir);
+                if(response.isSuccessful()){
+                    ApiResults sir = new ApiResults();
+                    sir.setResponseCode(response.code());
+                    sir.setListMeasurement(response.body());
+                    srl.onResult(sir);
+                }
+                else{
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        ApiResults sir = new ApiResults();
+                        sir.setErrorMessage(jObjError.getString("message"));
+                        srl.onResult(sir);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
             }
 
             @Override
@@ -439,9 +655,21 @@ public class ApiCall {
                 thighCircumference,armCircumference).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                ApiResults sir = new ApiResults();
-                sir.setResponseCode(response.code());
-                srl.onResult(sir);
+                if(response.isSuccessful()){
+                    ApiResults sir = new ApiResults();
+                    sir.setResponseCode(response.code());
+                    srl.onResult(sir);
+                }
+                else{
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        ApiResults sir = new ApiResults();
+                        sir.setErrorMessage(jObjError.getString("message"));
+                        srl.onResult(sir);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
             }
 
             @Override
@@ -461,10 +689,22 @@ public class ApiCall {
         ApiUtils.getApiInstance().getPrescriptions(token, id).enqueue(new Callback<List<Prescription>>() {
             @Override
             public void onResponse(Call<List<Prescription>> call, Response<List<Prescription>> response) {
-                ApiResults sir = new ApiResults();
-                sir.setResponseCode(response.code());
-                sir.setListPrescription(response.body());
-                srl.onResult(sir);
+                if(response.isSuccessful()){
+                    ApiResults sir = new ApiResults();
+                    sir.setResponseCode(response.code());
+                    sir.setListPrescription(response.body());
+                    srl.onResult(sir);
+                }
+                else{
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        ApiResults sir = new ApiResults();
+                        sir.setErrorMessage(jObjError.getString("message"));
+                        srl.onResult(sir);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
             }
 
             @Override
@@ -480,13 +720,60 @@ public class ApiCall {
         ApiUtils.getApiInstance().postPrescription(token,userId,date,exercices).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                ApiResults sir = new ApiResults();
-                sir.setResponseCode(response.code());
-                srl.onResult(sir);
+                if(response.isSuccessful()){
+                    ApiResults sir = new ApiResults();
+                    sir.setResponseCode(response.code());
+                    srl.onResult(sir);
+                }
+                else{
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        ApiResults sir = new ApiResults();
+                        sir.setErrorMessage(jObjError.getString("message"));
+                        srl.onResult(sir);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
+                ApiResults sir = new ApiResults();
+                sir.setException(t);
+                srl.onResult(sir);
+            }
+        });
+    }
+
+    /**
+     * Endpoint for token
+     */
+
+    public static void getRefreshedToken(String token, final ServiceResultListener srl) {
+        ApiUtils.getApiInstance().getRefreshedToken(token).enqueue(new Callback<UserToken>() {
+            @Override
+            public void onResponse(Call<UserToken> call, Response<UserToken> response) {
+                if(response.isSuccessful()){
+                    ApiResults sir = new ApiResults();
+                    sir.setUt(response.body());
+                    sir.setResponseCode(response.code());
+                    srl.onResult(sir);
+                }
+                else{
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        ApiResults sir = new ApiResults();
+                        sir.setErrorMessage(jObjError.getString("message"));
+                        srl.onResult(sir);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserToken> call, Throwable t) {
                 ApiResults sir = new ApiResults();
                 sir.setException(t);
                 srl.onResult(sir);

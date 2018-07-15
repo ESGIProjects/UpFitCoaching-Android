@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:clickable="true"
     android:focusable="true"
-    android:background="@color/colorPrimary"
+    android:background="@color/colorWhite"
     android:paddingRight="30dp"
     android:paddingLeft="30dp"
     android:orientation="vertical">
@@ -17,7 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="34sp"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/colorBlack"
         android:textStyle="bold"/>
 
     <TextView
@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:text="@string/butterknife_label"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/colorBlack"
         android:textSize="24sp"
         android:textStyle="bold|italic"/>
 
@@ -36,13 +36,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/firebase_label"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/colorBlack"
         android:textSize="24sp"
         android:textStyle="bold|italic"/>
 
     <TextView
         android:layout_marginTop="20dp"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/colorBlack"
         android:id="@+id/joda_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
 
     <TextView
         android:layout_marginTop="20dp"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/colorBlack"
         android:id="@+id/jwt_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
 
     <TextView
         android:layout_marginTop="20dp"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/colorBlack"
         android:id="@+id/material_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -73,7 +73,7 @@
 
     <TextView
         android:layout_marginTop="20dp"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/colorBlack"
         android:id="@+id/MPAndroid_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -83,7 +83,7 @@
 
     <TextView
         android:layout_marginTop="20dp"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/colorBlack"
         android:id="@+id/realm_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -93,7 +93,7 @@
 
     <TextView
         android:layout_marginTop="20dp"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/colorBlack"
         android:id="@+id/retrofit_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

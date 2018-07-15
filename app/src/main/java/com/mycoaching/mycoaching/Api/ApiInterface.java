@@ -173,4 +173,9 @@ public interface ApiInterface {
     Call<Void> postPrescription(@Header("Authorization") String token, @Field("userId") String userId,@Field("date") String date,
                                 @Field("exercises") String exercices);
 
+    /**
+     * * Endpoint for token
+     */
+    @GET("login/refreshToken/")
+    Call<UserToken> getRefreshedToken (@Header("Authorization") String token);
 }

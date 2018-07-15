@@ -15,6 +15,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.mycoaching.mycoaching.Api.ApiCall;
 import com.mycoaching.mycoaching.Api.ApiResults;
@@ -38,7 +39,12 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
 
+import static com.mycoaching.mycoaching.Util.CommonMethods.getCorrespondingErrorMessage;
+import static com.mycoaching.mycoaching.Util.CommonMethods.isNetworkAvailable;
+import static com.mycoaching.mycoaching.Util.CommonMethods.isTokenExpired;
+import static com.mycoaching.mycoaching.Util.CommonMethods.refreshToken;
 import static com.mycoaching.mycoaching.Util.Constants.DATE_FORMATTER;
+import static com.mycoaching.mycoaching.Util.Constants.DATE_TIME_FORMATTER;
 
 /**
  * Created by kevin on 28/04/2018.
@@ -48,7 +54,7 @@ import static com.mycoaching.mycoaching.Util.Constants.DATE_FORMATTER;
 public class ThreadFragment extends Fragment implements ThreadAdapter.OnClick {
 
     private List<Thread> lt = new ArrayList<>();
-    private SimpleDateFormat formatterDate = new SimpleDateFormat(DATE_FORMATTER, Locale.getDefault());
+    private SimpleDateFormat formatterDate = new SimpleDateFormat(DATE_TIME_FORMATTER, Locale.getDefault());
     private ThreadAdapter ta;
     private PostFragment pf;
     private ProgressDialog pd;
@@ -60,7 +66,6 @@ public class ThreadFragment extends Fragment implements ThreadAdapter.OnClick {
 
     @OnClick(R.id.buttonThread) void openDialog(){
         final AddThread at = new AddThread(getActivity());
-        assert at.getWindow() != null;
         at.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         at.show();
         at.setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -105,35 +110,48 @@ public class ThreadFragment extends Fragment implements ThreadAdapter.OnClick {
         pd.setCancelable(false);
         pd.setMessage("Récupération des sujets en cours...");
         pd.show();
-        ApiCall.getThreads("Bearer " + ur.getToken(),1, new ServiceResultListener() {
-            @Override
-            public void onResult(ApiResults ar) {
-                if (ar.getResponseCode() == 200) {
-                    Collections.sort(ar.getListThread(), new Comparator<Thread>() {
-                        @Override
-                        public int compare(Thread t1, Thread t2) {
-                            int comp = 0;
-                            try{
-                                comp = formatterDate.parse(t1.getLastUpdated()).compareTo(formatterDate.parse(t2.getLastUpdated()));
-                            }
-                            catch (ParseException pe){
-                                pe.printStackTrace();
-                            }
-                            return comp;
-                        }
-                    });
-                    Collections.reverse(ar.getListThread());
-                    lt.addAll(ar.getListThread());
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            ta.notifyDataSetChanged();
-                        }
-                    });
-                }
-                pd.dismiss();
+        if(isNetworkAvailable(getContext())) {
+            if (isTokenExpired(ur.getToken())) {
+                refreshToken(ur.getToken(), getContext());
             }
-        });
+            ApiCall.getThreads("Bearer " + ur.getToken(), 1, new ServiceResultListener() {
+                @Override
+                public void onResult(ApiResults ar) {
+                    if (ar.getResponseCode() == 200) {
+                        Collections.sort(ar.getListThread(), new Comparator<Thread>() {
+                            @Override
+                            public int compare(Thread t1, Thread t2) {
+                                int comp = 0;
+                                try {
+                                    comp = formatterDate.parse(t1.getLastUpdated()).compareTo(formatterDate.parse(t2.getLastUpdated()));
+                                } catch (ParseException pe) {
+                                    pe.printStackTrace();
+                                }
+                                return comp;
+                            }
+                        });
+                        Collections.reverse(ar.getListThread());
+                        lt.addAll(ar.getListThread());
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ta.notifyDataSetChanged();
+                            }
+                        });
+                    } else {
+                        Toast.makeText(getContext(), getCorrespondingErrorMessage(ar.getErrorMessage()),
+                                Toast.LENGTH_LONG).show();
+                    }
+                    pd.dismiss();
+                }
+            });
+        }
+        else{
+            pd.dismiss();
+            Toast.makeText(getContext(), R.string.no_connection, Toast.LENGTH_LONG).show();
+            lt.clear();
+            ta.notifyDataSetChanged();
+        }
     }
 
     public List<Thread> getLt(){

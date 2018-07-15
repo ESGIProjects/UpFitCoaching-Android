@@ -25,7 +25,10 @@ import static com.mycoaching.mycoaching.Util.CommonMethods.checkEmail;
 import static com.mycoaching.mycoaching.Util.CommonMethods.checkFields;
 import static com.mycoaching.mycoaching.Util.CommonMethods.checkPassword;
 import static com.mycoaching.mycoaching.Util.CommonMethods.clearFields;
+import static com.mycoaching.mycoaching.Util.CommonMethods.getCorrespondingErrorMessage;
 import static com.mycoaching.mycoaching.Util.CommonMethods.getSHAPassword;
+import static com.mycoaching.mycoaching.Util.CommonMethods.isTokenExpired;
+import static com.mycoaching.mycoaching.Util.CommonMethods.refreshToken;
 
 /**
  * Created by kevin on 23/06/2018.
@@ -65,11 +68,14 @@ public class EditProfileFragment extends Fragment{
     @OnClick(R.id.confirm_edit)
     public void edit(){
         if(checkFields(mail.getText().toString(),firstName.getText().toString(),lastName.getText().toString(),
-                city.getText().toString(),city.getText().toString(),phoneNumber.getText().toString()) &&
+                city.getText().toString(),phoneNumber.getText().toString()) &&
                 checkEmail(mail.getText().toString())){
-            if(!password.getText().toString().equals("") && !checkPassword(password.getText().toString())){
+            if(!checkFields(password.getText().toString()) || !checkPassword(password.getText().toString())){
                 Toast.makeText(getContext(),"Ce mot de passe n'est pas valide",Toast.LENGTH_LONG).show();
                 clearFields(password);
+            }
+            else if(phoneNumber.getText().toString().length() != 10){
+                Toast.makeText(getContext(),"Le format du numéro de téléphone est invalide",Toast.LENGTH_LONG).show();
             }
             else{
                 String pwd = null;
@@ -86,6 +92,9 @@ public class EditProfileFragment extends Fragment{
                 pd.setMessage("Mise à jour du profil...");
                 pd.setCancelable(false);
                 pd.show();
+                if(isTokenExpired(ur.getToken())){
+                    refreshToken(ur.getToken(),getContext());
+                }
                 ApiCall.updateUser("Bearer " + ur.getToken(),ur.getId(), mail.getText().toString(), pwd,
                         firstName.getText().toString(), lastName.getText().toString(), city.getText().toString(),
                         phoneNumber.getText().toString(), address.getText().toString(), new ServiceResultListener() {
@@ -94,6 +103,10 @@ public class EditProfileFragment extends Fragment{
                                 if(ar.getResponseCode() == 200){
                                     executeTransaction(realm);
                                     Toast.makeText(getContext(),"Le profil a été mis à jour !",Toast.LENGTH_LONG).show();
+                                }
+                                else{
+                                    Toast.makeText(getContext(),getCorrespondingErrorMessage(ar.getErrorMessage()),
+                                            Toast.LENGTH_LONG).show();
                                 }
                             }
                         });

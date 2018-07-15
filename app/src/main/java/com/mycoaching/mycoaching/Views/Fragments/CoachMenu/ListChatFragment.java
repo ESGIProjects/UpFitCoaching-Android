@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.mycoaching.mycoaching.Api.ApiCall;
 import com.mycoaching.mycoaching.Api.ApiResults;
@@ -39,8 +40,11 @@ import okhttp3.Response;
 import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
 
+import static com.mycoaching.mycoaching.Util.CommonMethods.getCorrespondingErrorMessage;
 import static com.mycoaching.mycoaching.Util.CommonMethods.getDate;
 import static com.mycoaching.mycoaching.Util.CommonMethods.getJSONFromString;
+import static com.mycoaching.mycoaching.Util.CommonMethods.isTokenExpired;
+import static com.mycoaching.mycoaching.Util.CommonMethods.refreshToken;
 import static com.mycoaching.mycoaching.Util.Constants.WEB_SOCKET_ENDPOINT;
 import static com.mycoaching.mycoaching.Util.Constants.WEB_SOCKET_TIMER;
 
@@ -101,20 +105,29 @@ public class ListChatFragment extends Fragment implements ContactAdapter.OnClick
         pd.setCancelable(false);
         pd.setMessage("Récupération des messages...");
         pd.show();
+        if(isTokenExpired(ur.getToken())){
+            refreshToken(ur.getToken(),getContext());
+        }
         ApiCall.getConversation("Bearer " + ur.getToken(),Integer.valueOf(ur.getId()), new ServiceResultListener() {
             @Override
             public void onResult(ApiResults ar) {
-                lm.addAll(ar.getListMessage());
-                ids.add(Integer.valueOf(ur.getId()));
-                r.executeTransaction(new Realm.Transaction() {
-                    @Override
-                    public void execute(Realm realm) {
-                        RealmList<Message> messages = new RealmList<>();
-                        messages.addAll(lm);
-                        r.insert(messages);
-                    }
-                });
-                updateContacts();
+                if(ar.getResponseCode() == 200){
+                    lm.addAll(ar.getListMessage());
+                    ids.add(Integer.valueOf(ur.getId()));
+                    r.executeTransaction(new Realm.Transaction() {
+                        @Override
+                        public void execute(Realm realm) {
+                            RealmList<Message> messages = new RealmList<>();
+                            messages.addAll(lm);
+                            r.insert(messages);
+                        }
+                    });
+                    updateContacts();
+                }
+                else{
+                    Toast.makeText(getContext(),getCorrespondingErrorMessage(ar.getErrorMessage()),
+                            Toast.LENGTH_LONG).show();
+                }
                 pd.dismiss();
             }
         });

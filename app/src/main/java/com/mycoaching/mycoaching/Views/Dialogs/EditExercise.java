@@ -49,6 +49,7 @@ import static com.mycoaching.mycoaching.Util.Constants.DATE_TIME_FORMATTER;
 public class EditExercise extends Dialog{
 
     private boolean isOK = false;
+    private boolean isCancel = false;
     private Exercise editedExercise;
 
     @BindView(R.id.layout_intensity)
@@ -78,6 +79,7 @@ public class EditExercise extends Dialog{
     @OnClick(R.id.remove_exercise)
     public void cancel(){
         editedExercise = null;
+        isCancel = true;
         isOK = true;
         dismiss();
     }
@@ -265,5 +267,9 @@ public class EditExercise extends Dialog{
 
     public boolean getIsOK(){
         return isOK;
+    }
+
+    public boolean getIsCancel(){
+        return isCancel;
     }
 }

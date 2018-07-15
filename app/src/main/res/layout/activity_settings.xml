@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".Views.Activities.Common.SettingsActivity"
-    android:background="@color/colorPrimary">
+    android:background="@color/colorWhite">
 
     <FrameLayout
         android:id="@+id/container"

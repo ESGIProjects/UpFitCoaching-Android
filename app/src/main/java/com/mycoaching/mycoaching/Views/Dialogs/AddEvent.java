@@ -41,7 +41,10 @@ import butterknife.OnClick;
 import io.realm.Realm;
 
 import static com.mycoaching.mycoaching.Util.CommonMethods.checkFields;
+import static com.mycoaching.mycoaching.Util.CommonMethods.getCorrespondingErrorMessage;
 import static com.mycoaching.mycoaching.Util.CommonMethods.getDate;
+import static com.mycoaching.mycoaching.Util.CommonMethods.isTokenExpired;
+import static com.mycoaching.mycoaching.Util.CommonMethods.refreshToken;
 import static com.mycoaching.mycoaching.Util.Constants.DATE_FORMATTER;
 import static com.mycoaching.mycoaching.Util.Constants.DATE_TIME_FORMATTER;
 
@@ -117,6 +120,9 @@ public class AddEvent extends Dialog{
         pd.setMessage("Création de l'évènement en cours...");
         pd.setCancelable(false);
         pd.show();
+        if(isTokenExpired(ur.getToken())){
+            refreshToken(ur.getToken(),getContext());
+        }
         if(checkFields(eventTitle.getText().toString(), event_start_date.getText().toString()
                 ,event_end_date.getText().toString(),event_start_time.getText().toString()
                 , event_end_time.getText().toString(),typeSpinner.getSelectedItem().toString())) {
@@ -144,7 +150,7 @@ public class AddEvent extends Dialog{
                 }
                 else if(formatterDateTime.parse(event_start_date.getText().toString() + " " + event_start_time.getText().toString()).compareTo(
                         formatterDateTime.parse(getDate()))<0){
-                    Toast.makeText(getContext(),"La date de début est antérieure à la date de départ",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(),"La date de début est antérieure à la date d'aujourd'hui",Toast.LENGTH_LONG).show();
                     pd.dismiss();
                 }
                 else{
@@ -170,7 +176,8 @@ public class AddEvent extends Dialog{
                                     }
                                     else{
                                         pd.dismiss();
-                                        System.out.println(ar.getResponseCode());
+                                        Toast.makeText(getContext(),getCorrespondingErrorMessage(ar.getErrorMessage()),
+                                                Toast.LENGTH_LONG).show();
                                     }
                                 }
                             });

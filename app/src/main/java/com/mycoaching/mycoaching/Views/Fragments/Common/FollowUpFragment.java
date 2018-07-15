@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -43,7 +44,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
 
+import static com.mycoaching.mycoaching.Util.CommonMethods.getCorrespondingErrorMessage;
 import static com.mycoaching.mycoaching.Util.CommonMethods.getDate;
+import static com.mycoaching.mycoaching.Util.CommonMethods.isTokenExpired;
+import static com.mycoaching.mycoaching.Util.CommonMethods.refreshToken;
 
 /**
  * Created by kevin on 28/04/2018.
@@ -241,6 +245,9 @@ public class FollowUpFragment extends Fragment {
         pd.setMessage("Récupération des mesures...");
         pd.setCancelable(false);
         pd.show();
+        if(isTokenExpired(ur.getToken())){
+            refreshToken(ur.getToken(),getContext());
+        }
         ApiCall.getMeasurements("Bearer " + ur.getToken(),Integer.valueOf(id), new ServiceResultListener() {
             @Override
             public void onResult(ApiResults ar) {
@@ -249,6 +256,10 @@ public class FollowUpFragment extends Fragment {
                         lm.addAll(ar.getListMeasurement());
                         getMonthMeasurements(lm);
                     }
+                }
+                else{
+                    Toast.makeText(getContext(),getCorrespondingErrorMessage(ar.getErrorMessage()),
+                            Toast.LENGTH_LONG).show();
                 }
                 pd.dismiss();
             }
@@ -266,9 +277,6 @@ public class FollowUpFragment extends Fragment {
                 listDate.add(m.getDate().split(" ")[0]);
                 listSpecific.add(m);
             }
-        }
-        for(Measurement m : listSpecific){
-            Log.i("TEST MEASURE : ", m.getDate());
         }
         Collections.reverse(lm);
         Collections.reverse(listSpecific);
@@ -420,15 +428,11 @@ public class FollowUpFragment extends Fragment {
         lcWeight.getXAxis().setValueFormatter(new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
-                if(value >= 0){
-                    if (listDate.size() > (int)value) {
-                        return listDate.get((int)value);
-                    }
-                    else{
-                        return "";
-                    }
+                if (value >= 0 && (listDate.size() > (int) value)) {
+                    return listDate.get((int) value);
+                } else {
+                    return "";
                 }
-                return "";
             }
         });
 
@@ -441,15 +445,12 @@ public class FollowUpFragment extends Fragment {
         lcBody.getXAxis().setValueFormatter(new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
-                if(value >= 0){
-                    if (listDate.size() > (int)value) {
-                        return listDate.get((int)value);
-                    }
-                    else{
-                        return "";
-                    }
+                if(value >= 0 && (listDate.size() > (int)value)) {
+                    return listDate.get((int) value);
                 }
-                return "";
+                else {
+                    return "";
+                }
             }
         });
 
@@ -462,15 +463,11 @@ public class FollowUpFragment extends Fragment {
         lcMeasure.getXAxis().setValueFormatter(new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
-                if(value >= 0){
-                    if (listDate.size() > (int)value) {
-                        return listDate.get((int)value);
-                    }
-                    else{
-                        return "";
-                    }
+                if (value >= 0 && (listDate.size() > (int) value)) {
+                    return listDate.get((int) value);
+                } else {
+                    return "";
                 }
-                return "";
             }
         });
 

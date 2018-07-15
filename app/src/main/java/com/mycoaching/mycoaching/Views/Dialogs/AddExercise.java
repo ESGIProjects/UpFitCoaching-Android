@@ -67,7 +67,9 @@ public class AddExercise extends Dialog {
     @OnClick(R.id.confirm_exercise)
     public void addExercise(){
         if(spinner.getSelectedItem().equals("Abdominaux")){
-            if(checkFields(rep.getText().toString(),serie.getText().toString())){
+            if(checkFields(rep.getText().toString(),serie.getText().toString()) &&
+                    (Integer.valueOf(rep.getText().toString()) != 0) &&
+                    (Integer.valueOf(serie.getText().toString()) != 0)){
                 newExercise = new Exercise(null,"Abdominaux",null,
                         Integer.valueOf(rep.getText().toString()), Integer.valueOf(serie.getText().toString()));
                 isOK = true;
@@ -78,7 +80,7 @@ public class AddExercise extends Dialog {
             }
         }
         else if(spinner.getSelectedItem().equals("Footing")){
-            if(checkFields(timer.getText().toString())){
+            if(checkFields(timer.getText().toString()) && !timer.getText().toString().equals("0:0:00")){
                 String s = timer.getText().toString();
                 String[] times = s.split(":");
 
@@ -98,7 +100,7 @@ public class AddExercise extends Dialog {
             }
         }
         else if(spinner.getSelectedItem().equals("Natation")){
-            if(checkFields(timer.getText().toString())){
+            if(checkFields(timer.getText().toString()) && !timer.getText().toString().equals("0:0:00")){
                 String s = timer.getText().toString();
                 String[] times = s.split(":");
 
@@ -118,7 +120,9 @@ public class AddExercise extends Dialog {
             }
         }
         else if(spinner.getSelectedItem().equals("Pompes")){
-            if(checkFields(rep.getText().toString(),serie.getText().toString())){
+            if(checkFields(rep.getText().toString(),serie.getText().toString()) &&
+                    (Integer.valueOf(rep.getText().toString()) != 0) &&
+                    (Integer.valueOf(serie.getText().toString()) != 0)){
                 newExercise = new Exercise(null,"Pompes",null,
                         Integer.valueOf(rep.getText().toString()), Integer.valueOf(serie.getText().toString()));
                 isOK = true;
@@ -129,7 +133,9 @@ public class AddExercise extends Dialog {
             }
         }
         else if(spinner.getSelectedItem().equals("Squats")){
-            if(checkFields(rep.getText().toString(),serie.getText().toString())){
+            if(checkFields(rep.getText().toString(),serie.getText().toString()) &&
+                    (Integer.valueOf(rep.getText().toString()) != 0) &&
+                    (Integer.valueOf(serie.getText().toString()) != 0)){
                 newExercise = new Exercise(null,"Squats",null,
                         Integer.valueOf(rep.getText().toString()), Integer.valueOf(serie.getText().toString()));
                 isOK = true;
@@ -140,7 +146,7 @@ public class AddExercise extends Dialog {
             }
         }
         else if(spinner.getSelectedItem().equals("Vélo")){
-            if(checkFields(timer.getText().toString())){
+            if(checkFields(timer.getText().toString()) && !timer.getText().toString().equals("0:0:00")){
                 String s = timer.getText().toString();
                 String[] times = s.split(":");
 
@@ -180,7 +186,7 @@ public class AddExercise extends Dialog {
         ButterKnife.bind(this);
 
         final ArrayAdapter<String> list =
-                new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, listExercise);
+                new ArrayAdapter<String>(getContext(), R.layout.custom_arrayadapter, listExercise);
         spinner.setAdapter(list);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

@@ -28,6 +28,18 @@
         <item name="android:textColorHint">@color/colorWhite</item>
     </style>
 
+    <style name="CheckboxCustom" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:colorControlNormal">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="AppThemeCustomBackground" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorBlack</item>
+        <item name="android:colorControlNormal">@color/colorBlack</item>
+        <item name="android:textColorHint">@color/colorBlack</item>
+    </style>
+
     <style name="AppThemeCustomSettings" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorAccent">@color/colorPrimary</item>
         <item name="android:colorControlNormal">@color/colorPrimary</item>
@@ -82,6 +94,11 @@
     <style name="customSpinner" parent="@android:style/Widget.Holo.DropDownItem.Spinner">
         <item name="android:textColor">@color/colorWhite</item>
         <item name="android:backgroundTint">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="customSpinnerBackground" parent="@android:style/Widget.Holo.DropDownItem.Spinner">
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:backgroundTint">@color/colorPrimary</item>
     </style>
 
     <style name="customPicker" parent="Theme.AppCompat.Light.Dialog">

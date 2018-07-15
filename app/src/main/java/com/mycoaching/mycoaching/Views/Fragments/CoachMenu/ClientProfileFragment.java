@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mycoaching.mycoaching.Api.ApiCall;
 import com.mycoaching.mycoaching.Api.ApiResults;
@@ -34,6 +35,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
 import io.realm.RealmObject;
+
+import static com.mycoaching.mycoaching.Util.CommonMethods.getCorrespondingErrorMessage;
+import static com.mycoaching.mycoaching.Util.CommonMethods.isTokenExpired;
+import static com.mycoaching.mycoaching.Util.CommonMethods.refreshToken;
 
 /**
  * Created by kevin on 25/06/2018.
@@ -217,6 +222,9 @@ public class ClientProfileFragment extends Fragment{
         pd.setMessage("Récupération des informations...");
         pd.setCancelable(false);
         pd.show();
+        if(isTokenExpired(ur.getToken())){
+            refreshToken(ur.getToken(),getContext());
+        }
         ApiCall.getLastAppraisal("Bearer " + ur.getToken(),Integer.valueOf(b.getString("id")), new ServiceResultListener() {
             @Override
             public void onResult(ApiResults ar) {
@@ -237,6 +245,10 @@ public class ClientProfileFragment extends Fragment{
                                 add_test.setVisibility(View.VISIBLE);
                                 add_prescription.setVisibility(View.VISIBLE);
 
+                            }
+                            else{
+                                Toast.makeText(getContext(),getCorrespondingErrorMessage(ar.getErrorMessage()),
+                                        Toast.LENGTH_LONG).show();
                             }
                         }
                     });

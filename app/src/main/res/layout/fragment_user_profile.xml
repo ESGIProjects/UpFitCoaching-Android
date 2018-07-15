@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@color/colorWhite"
     android:paddingStart="30dp"
     android:paddingEnd="30dp">
 
@@ -19,7 +19,7 @@
             <TextView
                 android:id="@+id/title"
                 android:paddingTop="20dp"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="24sp"
@@ -29,7 +29,7 @@
                 android:layout_marginTop="8dp"
                 android:id="@+id/sex"
                 android:layout_below="@id/title"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"/>
@@ -37,7 +37,7 @@
             <TextView
                 android:id="@+id/birthDate"
                 android:layout_below="@id/sex"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"/>
@@ -45,7 +45,7 @@
             <TextView
                 android:id="@+id/location"
                 android:layout_below="@id/birthDate"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"/>
@@ -99,7 +99,7 @@
                 android:textSize="24sp"
                 android:textStyle="bold"
                 android:text="@string/appraisal"
-                android:textColor="@color/colorWhite" />
+                android:textColor="@color/colorBlack" />
 
             <TextView
                 android:visibility="gone"
@@ -109,7 +109,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
-                android:textColor="@color/colorWhite" />
+                android:textColor="@color/colorBlack" />
 
             <TextView
                 android:visibility="gone"
@@ -119,7 +119,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
-                android:textColor="@color/colorWhite" />
+                android:textColor="@color/colorBlack" />
 
             <Button
                 android:layout_below="@id/rep"
@@ -154,7 +154,7 @@
                 android:textSize="24sp"
                 android:textStyle="bold"
                 android:text="@string/test"
-                android:textColor="@color/colorWhite" />
+                android:textColor="@color/colorBlack" />
 
             <TextView
                 android:visibility="gone"
@@ -165,7 +165,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
-                android:textColor="@color/colorWhite" />
+                android:textColor="@color/colorBlack" />
 
             <TextView
                 android:visibility="gone"
@@ -176,7 +176,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
-                android:textColor="@color/colorWhite" />
+                android:textColor="@color/colorBlack" />
 
             <Button
                 android:visibility="gone"

@@ -21,6 +21,9 @@ import com.mycoaching.mycoaching.Models.Realm.UserRealm;
 import com.mycoaching.mycoaching.R;
 import com.mycoaching.mycoaching.Views.Activities.UserActivity.UserMainActivity;
 
+import org.joda.time.LocalDate;
+import org.joda.time.Years;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -110,8 +113,21 @@ public class UserDataFragment extends Fragment {
             pd.setCancelable(false);
             pd.show();
             try{
+                String splitBirth[] = birthDate.getText().toString().split("-");
+                LocalDate birth = new LocalDate(Integer.valueOf(splitBirth[0])
+                        ,Integer.valueOf(splitBirth[1]),Integer.valueOf(splitBirth[2]));
+                LocalDate now = new LocalDate();
+                Years age = Years.yearsBetween(birth,now);
                 if(formatterDate.parse(birthDate.getText().toString()).compareTo(formatterDate.parse(getDate())) > 0){
-                    Toast.makeText(getContext(),"Votre date de naissance est supérieure à la date actuelle...",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(),"Votre date de naissance est supérieure à la date actuelle",Toast.LENGTH_LONG).show();
+                    pd.dismiss();
+                }
+                else if(age.getYears() < 18 || age.getYears() > 100){
+                    Toast.makeText(getContext(),"Vous devez avoir entre 18 et 100 ans pour utiliser cette application",Toast.LENGTH_LONG).show();
+                    pd.dismiss();
+                }
+                else if(phoneNumber.getText().toString().length() != 10){
+                    Toast.makeText(getContext(),"Le format du numéro de téléphone est invalide",Toast.LENGTH_LONG).show();
                     pd.dismiss();
                 }
                 else{
@@ -140,7 +156,7 @@ public class UserDataFragment extends Fragment {
             }
         }
         else{
-            Toast.makeText(getContext(), "Il manque un champs !", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), R.string.missing_fields, Toast.LENGTH_LONG).show();
         }
     }
 

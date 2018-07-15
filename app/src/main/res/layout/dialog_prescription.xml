@@ -94,6 +94,7 @@
             android:hint="@string/repet_input"
             android:textColor="@color/colorWhite"
             android:maxLines="1"
+            android:maxLength="2"
             android:inputType="number"/>
     </android.support.design.widget.TextInputLayout>
 
@@ -112,6 +113,7 @@
             android:hint="@string/serie_input"
             android:textColor="@color/colorWhite"
             android:maxLines="1"
+            android:maxLength="2"
             android:inputType="number"/>
     </android.support.design.widget.TextInputLayout>
 

@@ -25,7 +25,10 @@ import butterknife.OnTouch;
 import io.realm.Realm;
 
 import static com.mycoaching.mycoaching.Util.CommonMethods.checkFields;
+import static com.mycoaching.mycoaching.Util.CommonMethods.getCorrespondingErrorMessage;
 import static com.mycoaching.mycoaching.Util.CommonMethods.getDate;
+import static com.mycoaching.mycoaching.Util.CommonMethods.isTokenExpired;
+import static com.mycoaching.mycoaching.Util.CommonMethods.refreshToken;
 
 /**
  * Created by kevin on 29/06/2018.
@@ -77,6 +80,9 @@ public class AppraisalFragment extends Fragment {
             pd.setCancelable(false);
             pd.setMessage("Création de la fiche bilan...");
             pd.show();
+            if(isTokenExpired(ur.getToken())){
+                refreshToken(ur.getToken(),getContext());
+            }
             ApiCall.postAppraisal("Bearer " + ur.getToken(),b.getString("id"), getDate(), goal.getText().toString(),
                     rep.getText().toString(), contraindication.getText().toString(),
                     sportAntecedent.getText().toString(), String.valueOf(help.isChecked()),
@@ -87,6 +93,10 @@ public class AppraisalFragment extends Fragment {
                                 Toast.makeText(getContext(),"Fiche bilan mise à jour !",Toast.LENGTH_LONG).show();
                                 ClientProfileFragment cpf = (ClientProfileFragment) getActivity().getSupportFragmentManager().findFragmentByTag("PROFILE");
                                 cpf.getLastAppraisal();
+                            }
+                            else{
+                                Toast.makeText(getContext(),getCorrespondingErrorMessage(ar.getErrorMessage()),
+                                        Toast.LENGTH_LONG).show();
                             }
                         }
                     });

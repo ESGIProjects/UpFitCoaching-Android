@@ -27,6 +27,7 @@ import io.realm.Realm;
 import static com.mycoaching.mycoaching.Util.CommonMethods.checkEmail;
 import static com.mycoaching.mycoaching.Util.CommonMethods.checkPassword;
 import static com.mycoaching.mycoaching.Util.CommonMethods.clearFields;
+import static com.mycoaching.mycoaching.Util.CommonMethods.getCorrespondingErrorMessage;
 import static com.mycoaching.mycoaching.Util.CommonMethods.getSHAPassword;
 import static com.mycoaching.mycoaching.Util.CommonMethods.isNetworkAvailable;
 import static com.mycoaching.mycoaching.Util.CommonMethods.performTransition;
@@ -38,7 +39,7 @@ import static com.mycoaching.mycoaching.Util.CommonMethods.performTransition;
 public class LoginActivity extends AppCompatActivity {
 
     private Intent i = null;
-    private ProgressDialog pd = null;
+    private ProgressDialog pd;
     private Realm realm = null;
     private SharedPreferences sp;
 
@@ -52,11 +53,10 @@ public class LoginActivity extends AppCompatActivity {
     void signIn() {
 
         //we check if the network is available
-        if (isNetworkAvailable(getApplicationContext())) {
-
+        if(isNetworkAvailable(getApplicationContext())) {
             //we check if email and password are set
             if (checkEmail(email.getText().toString()) && checkPassword(password.getText().toString())) {
-                pd = new ProgressDialog(this, R.style.StyledDialog);
+                pd = new ProgressDialog(LoginActivity.this, R.style.StyledDialog);
                 pd.setCancelable(false);
                 pd.setMessage("Connection en cours...");
                 pd.show();
@@ -89,27 +89,27 @@ public class LoginActivity extends AppCompatActivity {
                             if (ar.getUt().getUr().getType() == 2) {
                                 i = new Intent(LoginActivity.this, CoachMainActivity.class);
                                 performTransition(LoginActivity.this,i, R.animator.slide_from_right, R.animator.slide_to_left);
-                            } else {
+                            }
+                            else {
                                 i = new Intent(LoginActivity.this, UserMainActivity.class);
                                 performTransition(LoginActivity.this,i, R.animator.slide_from_right, R.animator.slide_to_left);
                             }
                             Toast.makeText(getApplicationContext(), "Connexion réussie !", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Log.i("ERROR : ", "" + ar.getResponseCode());
-                            if (ar.getResponseCode() != 0) {
-                                Toast.makeText(getApplicationContext(), "Veuillez réessayer ultérieurement", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(getApplicationContext(), "Pas de réponse du serveur", Toast.LENGTH_SHORT).show();
-                            }
-                            clearFields(email, password);
+                        }
+                        else{
+                            Toast.makeText(getApplicationContext(),getCorrespondingErrorMessage(ar.getErrorMessage()),
+                                    Toast.LENGTH_LONG).show();
+                            clearFields(email,password);
                         }
                     }
                 });
                 pd.dismiss();
-            } else {
+            }
+            else {
                 Toast.makeText(getApplicationContext(), R.string.missing_fields, Toast.LENGTH_LONG).show();
             }
-        } else {
+        }
+        else {
             Toast.makeText(getApplicationContext(), R.string.no_connection, Toast.LENGTH_LONG).show();
         }
     }
@@ -117,12 +117,6 @@ public class LoginActivity extends AppCompatActivity {
     @OnClick(R.id.signup)
     void signUp() {
         i = new Intent(this, RegisterActivity.class);
-        performTransition(this,i, R.animator.slide_from_right, R.animator.slide_to_left);
-    }
-
-    @OnClick(R.id.forgot)
-    void forgot() {
-        i = new Intent(LoginActivity.this, UserMainActivity.class);
         performTransition(this,i, R.animator.slide_from_right, R.animator.slide_to_left);
     }
 

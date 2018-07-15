@@ -49,6 +49,23 @@ public class CoachProfileFragment extends Fragment {
         startActivity(mapIntent);
     }
 
+    @OnClick(R.id.phoneNumber)
+    public void call(){
+        String phone = ur.getPhoneNumberCoach();
+        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phone, null));
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.mail)
+    public void mail(){
+        Uri uri = Uri.parse("mailto:" + ur.getMailCoach())
+                .buildUpon()
+                .build();
+
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO, uri);
+        startActivity(Intent.createChooser(emailIntent, "UpFit Coaching"));
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_coach_profile, container, false);
