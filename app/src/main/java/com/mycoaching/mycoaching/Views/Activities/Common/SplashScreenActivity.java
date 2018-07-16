@@ -20,28 +20,31 @@ import static com.mycoaching.mycoaching.Util.CommonMethods.refreshToken;
 
 /**
  * Created by kevin on 06/03/2018.
- * V1.0
+ * Version 1.0
  */
 
 public class SplashScreenActivity extends AppCompatActivity {
 
-    final int TIMER = 1500;
-    Realm realm;
+    protected final int TIMER = 1500;
+    protected Realm realm;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splashscreen);
         getSupportActionBar().hide();
 
+        // realm is init here in order to perform realm transaction all accross the application
         Realm.init(getApplicationContext());
         realm = Realm.getDefaultInstance();
 
+        // we check is there is already a user registered on the device
         UserRealm ur = realm.where(UserRealm.class).findFirst();
         if(isNetworkAvailable(getApplicationContext())) {
             if (ur != null) {
                 if(isTokenExpired(ur.getToken())){
                     refreshToken(ur.getToken(),getApplicationContext());
                 }
+                // if the user saved in local database is a coach, CoachMainActivity is launched
                 if (ur.getType() == 2) {
                     new Handler().postDelayed(new Runnable() {
                         @Override
@@ -50,7 +53,9 @@ public class SplashScreenActivity extends AppCompatActivity {
                             performTransition(SplashScreenActivity.this, i, R.animator.slide_from_right, R.animator.slide_to_left);
                         }
                     }, TIMER);
-                } else {
+                }
+                // else, UserMainActivity is launched
+                else {
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -60,6 +65,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                     }, TIMER);
                 }
             }
+            // if there is no user registered, LogicActivity is launched
             else{
                 new Handler().postDelayed(new Runnable() {
                     @Override
@@ -70,9 +76,9 @@ public class SplashScreenActivity extends AppCompatActivity {
                 }, TIMER);
             }
         }
+        // we start LoginActivity and alert the user that there is no internet
         else{
             Toast.makeText(getApplicationContext(), R.string.no_connection, Toast.LENGTH_LONG).show();
-            // we start the transition to LoginActivity when the time is up
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
