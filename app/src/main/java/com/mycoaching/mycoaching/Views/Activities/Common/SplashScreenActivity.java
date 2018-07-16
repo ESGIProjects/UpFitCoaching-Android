@@ -36,11 +36,11 @@ public class SplashScreenActivity extends AppCompatActivity {
         realm = Realm.getDefaultInstance();
 
         UserRealm ur = realm.where(UserRealm.class).findFirst();
-        if (isNetworkAvailable(getApplicationContext())) {
-            if(isTokenExpired(ur.getToken())){
-                refreshToken(ur.getToken(),getApplicationContext());
-            }
+        if(isNetworkAvailable(getApplicationContext())) {
             if (ur != null) {
+                if(isTokenExpired(ur.getToken())){
+                    refreshToken(ur.getToken(),getApplicationContext());
+                }
                 if (ur.getType() == 2) {
                     new Handler().postDelayed(new Runnable() {
                         @Override
