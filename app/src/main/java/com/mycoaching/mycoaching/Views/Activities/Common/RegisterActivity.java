@@ -15,28 +15,32 @@ import static com.mycoaching.mycoaching.Util.CommonMethods.performTransition;
 
 /**
  * Created by kevin on 06/03/2018.
+ * Version 1.0
  */
 
 public class RegisterActivity extends AppCompatActivity {
 
-    FragmentTransaction ft;
-    Bundle b = new Bundle();
-    CredentialsFragment cf = new CredentialsFragment();
-    //RegisterChoiceFragment rcf = new RegisterChoiceFragment();
+    private FragmentTransaction ft;
+    private Bundle b = new Bundle();
+    private CredentialsFragment cf = new CredentialsFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        /*
+          if the application is killed by the system (due to RAM issue for example), we kill the activity
+          and we restart from the splashscreen
+          */
         if(savedInstanceState != null){
             Intent i = new Intent(this, SplashScreenActivity.class);
             performTransition(this,i, R.animator.slide_from_left, R.animator.slide_to_right);
             finish();
             return;
         }
-
         getSupportActionBar().hide();
+        // we put 0 as type value because signup is just for regular user at the moment
         b.putString("type", "0");
         cf.setArguments(b);
         ft = getSupportFragmentManager().beginTransaction();

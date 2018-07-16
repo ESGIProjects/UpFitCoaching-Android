@@ -2,11 +2,12 @@ package com.mycoaching.mycoaching.Models.Retrofit;
 
 /**
  * Created by kevin on 28/06/2018.
+ * Version 1.0
  */
 public class Appraisal {
 
     private String id, date, goal, sessionsByWeek, contraindication, sportAntecedents, helpNeeded,
-        hasNutritionist, comments;
+            hasNutritionist, comments;
     private UserRetrofit user;
 
     public Appraisal(String id, String date, String goal, String sessionsByWeek, String contraindication,

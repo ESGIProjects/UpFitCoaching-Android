@@ -27,6 +27,7 @@ import retrofit2.http.Query;
 
 /**
  * Created by kevin on 07/03/2018.
+ * Version 1.0
  */
 
 public interface ApiInterface {

@@ -64,7 +64,7 @@ public class ChatFragment extends Fragment {
     private UserRealm ur;
     private WebSocket ws = null;
     private Request request;
-    private boolean isCoach = false;
+    private Boolean isCoach = false;
     public static boolean isActive = false;
     View v;
     RecyclerView rv;

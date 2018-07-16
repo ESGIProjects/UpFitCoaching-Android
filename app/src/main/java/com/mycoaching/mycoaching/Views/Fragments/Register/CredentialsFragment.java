@@ -28,10 +28,15 @@ import static com.mycoaching.mycoaching.Util.CommonMethods.getSHAPassword;
 import static com.mycoaching.mycoaching.Util.CommonMethods.isNetworkAvailable;
 import static com.mycoaching.mycoaching.Util.CommonMethods.isSame;
 
+/**
+ * Created by kevin on 05/03/2018.
+ * Version 1.0
+ */
+
 public class CredentialsFragment extends Fragment {
 
-    View v;
-    private Bundle b;
+    protected View v;
+    private Bundle b = new Bundle();
     private ProgressDialog pd;
 
     @BindView(R.id.mail)
@@ -58,6 +63,7 @@ public class CredentialsFragment extends Fragment {
                         public void onResult(ApiResults ar) {
                             pd.dismiss();
                             if (ar.getResponseCode() == 200) {
+                                // if the mail is available, UserDataFragment is launched
                                 b.putString("mail", mail.getText().toString());
                                 b.putString("password", getSHAPassword(password.getText().toString()));
                                 UserDataFragment udf = new UserDataFragment();
@@ -81,7 +87,8 @@ public class CredentialsFragment extends Fragment {
                                 cdf.setArguments(b);
                                 ((RegisterActivity)getActivity()).replaceFragment(cdf,R.id.container);
                             }*/
-                            } else{
+                            }
+                            else{
                                 Toast.makeText(getContext(),getCorrespondingErrorMessage(ar.getErrorMessage()),
                                         Toast.LENGTH_LONG).show();
                             }

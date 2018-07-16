@@ -9,6 +9,7 @@ import static android.content.ContentValues.TAG;
 
 /**
  * Created by kevin on 28/05/2018.
+ * Version 1.0
  */
 public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
 

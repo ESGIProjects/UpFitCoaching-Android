@@ -130,7 +130,6 @@ public class CommonMethods {
         return new JSONObject(s);
     }
 
-
     /**
      * @param a the calling activity
      * @param i the intent to perform

@@ -3,6 +3,7 @@ package com.mycoaching.mycoaching.Models.Retrofit;
 
 /**
  * Created by kevin on 28/04/2018.
+ * Version 1.0
  */
 
 public class Event {

@@ -39,9 +39,9 @@ import static com.mycoaching.mycoaching.Util.CommonMethods.performTransition;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private Intent i = null;
+    private Intent i;
     private ProgressDialog pd;
-    private Realm realm = null;
+    private Realm realm;
     private SharedPreferences sp;
 
     @BindView(R.id.email)
@@ -58,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
             if (checkEmail(email.getText().toString()) && checkPassword(password.getText().toString())) {
                 pd = new ProgressDialog(LoginActivity.this, R.style.StyledDialog);
                 pd.setCancelable(false);
-                pd.setMessage("Connection en cours...");
+                pd.setMessage(getResources().getString(R.string.connection_progress));
                 pd.show();
                 ApiCall.signIn(email.getText().toString(), getSHAPassword(password.getText().toString()), new ServiceResultListener() {
                     @Override

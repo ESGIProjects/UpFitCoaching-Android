@@ -3,6 +3,7 @@ package com.mycoaching.mycoaching.Views.Fragments.Register;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.mycoaching.mycoaching.Api.ApiCall;
 import com.mycoaching.mycoaching.Api.ApiResults;
 import com.mycoaching.mycoaching.Api.ServiceResultListener;
@@ -35,22 +37,29 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
 
+import static android.content.Context.MODE_PRIVATE;
 import static com.mycoaching.mycoaching.Util.CommonMethods.checkFields;
 import static com.mycoaching.mycoaching.Util.CommonMethods.getDate;
 import static com.mycoaching.mycoaching.Util.CommonMethods.isNetworkAvailable;
 import static com.mycoaching.mycoaching.Util.CommonMethods.performTransition;
 import static com.mycoaching.mycoaching.Util.Constants.DATE_FORMATTER;
 
+/**
+ * Created by kevin on 05/03/2018.
+ * Version 1.0
+ */
+
 public class UserDataFragment extends Fragment {
 
     private Bundle b;
-    private ProgressDialog pd;
     private Intent i;
     private Realm realm;
     private String sex;
     private SimpleDateFormat formatterDate = new SimpleDateFormat(DATE_FORMATTER, Locale.getDefault());
+    private SharedPreferences sp;
 
-    View v;
+    protected ProgressDialog pd;
+    protected View v;
 
     @BindView(R.id.firstName)
     EditText firstName;
@@ -60,6 +69,18 @@ public class UserDataFragment extends Fragment {
 
     @BindView(R.id.birthDate)
     TextView birthDate;
+
+    @BindView(R.id.city)
+    EditText city;
+
+    @BindView(R.id.phoneNumber)
+    EditText phoneNumber;
+
+    @BindView(R.id.woman)
+    CheckBox woman;
+
+    @BindView(R.id.man)
+    CheckBox man;
 
     @OnClick(R.id.birthDate)
     void setDate(final TextView tv){
@@ -77,18 +98,6 @@ public class UserDataFragment extends Fragment {
                 ,Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
         dialog.show();
     }
-
-    @BindView(R.id.city)
-    EditText city;
-
-    @BindView(R.id.phoneNumber)
-    EditText phoneNumber;
-
-    @BindView(R.id.woman)
-    CheckBox woman;
-
-    @BindView(R.id.man)
-    CheckBox man;
 
     @OnClick(R.id.woman)
     void setWoman(){
@@ -111,25 +120,26 @@ public class UserDataFragment extends Fragment {
                     birthDate.getText().toString(), city.getText().toString(), phoneNumber.getText().toString()) &&
                     sex != null){
                 pd = new ProgressDialog(getContext(), R.style.StyledDialog);
-                pd.setMessage("Création du compte en cours...");
+                pd.setMessage(getResources().getString(R.string.account_creation_progress));
                 pd.setCancelable(false);
                 pd.show();
                 try{
+                    // we perform a check on birthdate in order to extract the age of the user
                     String splitBirth[] = birthDate.getText().toString().split("-");
                     LocalDate birth = new LocalDate(Integer.valueOf(splitBirth[0])
                             ,Integer.valueOf(splitBirth[1]),Integer.valueOf(splitBirth[2]));
                     LocalDate now = new LocalDate();
                     Years age = Years.yearsBetween(birth,now);
                     if(formatterDate.parse(birthDate.getText().toString()).compareTo(formatterDate.parse(getDate())) > 0){
-                        Toast.makeText(getContext(),"Votre date de naissance est supérieure à la date actuelle",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(),R.string.check_birthdate,Toast.LENGTH_LONG).show();
                         pd.dismiss();
                     }
                     else if(age.getYears() < 18 || age.getYears() > 100){
-                        Toast.makeText(getContext(),"Vous devez avoir entre 18 et 100 ans pour utiliser cette application",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(),getResources().getString(R.string.check_age),Toast.LENGTH_LONG).show();
                         pd.dismiss();
                     }
                     else if(phoneNumber.getText().toString().length() != 10){
-                        Toast.makeText(getContext(),"Le format du numéro de téléphone est invalide",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(),getResources().getString(R.string.check_phoneNumber),Toast.LENGTH_LONG).show();
                         pd.dismiss();
                     }
                     else{
@@ -140,12 +150,23 @@ public class UserDataFragment extends Fragment {
                                     @Override
                                     public void onResult(ApiResults ar) {
                                         if (ar.getResponseCode() == 201) {
+                                            sp = getContext().getSharedPreferences("user_prefs",MODE_PRIVATE);
+                                            if((sp.getString("firebase_token", null) == null) || (!sp.getString("firebase_token", null).equals(FirebaseInstanceId.getInstance().getToken()))){
+                                                ApiCall.putToken("Bearer " + ar.getUt().getToken(),ar.getUt().getId(), FirebaseInstanceId.getInstance().getToken(), null, new ServiceResultListener() {
+                                                    @Override
+                                                    public void onResult(ApiResults ar) {
+                                                        sp = getContext().getSharedPreferences("user_prefs",MODE_PRIVATE);
+                                                        sp.edit().putString("firebase_token", FirebaseInstanceId.getInstance().getToken()).apply();
+                                                    }
+                                                });
+                                            }
                                             realm = Realm.getDefaultInstance();
                                             executeTransaction(realm, ar);
                                             i = new Intent(getContext(), UserMainActivity.class);
                                             performTransition(getActivity(),i, R.animator.slide_from_left, R.animator.slide_to_right);
-                                            Toast.makeText(getContext(), "Compte créé !", Toast.LENGTH_LONG).show();
-                                        } else {
+                                            Toast.makeText(getContext(),getResources().getString(R.string.account_done),Toast.LENGTH_LONG).show();
+                                        }
+                                        else {
                                             Toast.makeText(getContext(), R.string.error, Toast.LENGTH_LONG).show();
                                         }
                                     }
@@ -176,6 +197,12 @@ public class UserDataFragment extends Fragment {
     }
 
     public void executeTransaction(Realm r, final ApiResults ar) {
+        // we check if a user is already registered
+        if(!r.isEmpty()){
+            r.beginTransaction();
+            r.deleteAll();
+            r.commitTransaction();
+        }
         r.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {

@@ -10,6 +10,7 @@ import io.realm.RealmObject;
 
 /**
  * Created by kevin on 20/04/2018.
+ * Version 1.0
  */
 
 public class UserRetrofit extends RealmObject implements Parcelable {

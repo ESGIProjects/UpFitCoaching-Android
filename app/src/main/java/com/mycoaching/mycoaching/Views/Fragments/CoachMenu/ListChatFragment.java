@@ -62,7 +62,7 @@ public class ListChatFragment extends Fragment implements ContactAdapter.OnClick
     private List<Contact> lc = new ArrayList<>();
     private ArrayList<Message> lm = new ArrayList<>();
     private List<Integer> ids = new ArrayList<>();
-    public static boolean isActive = false;
+    public static Boolean isActive = false;
     private Realm r;
     ProgressDialog pd;
     private UserRealm ur;

@@ -2,6 +2,7 @@ package com.mycoaching.mycoaching.Util;
 
 /**
  * Created by kevin on 22/06/2018.
+ * Version 1.0
  */
 public class Constants {
 

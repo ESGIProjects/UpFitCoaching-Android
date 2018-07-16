@@ -25,6 +25,7 @@ import retrofit2.Response;
 
 /**
  * Created by kevin on 08/03/2018.
+ * Version 1.0
  */
 
 

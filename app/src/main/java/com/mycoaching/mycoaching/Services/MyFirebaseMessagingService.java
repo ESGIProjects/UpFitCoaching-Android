@@ -19,13 +19,13 @@ import com.mycoaching.mycoaching.Views.Fragments.Common.ChatFragment;
 
 /**
  * Created by kevin on 28/05/2018.
+ * Version 1.0
  */
+
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage rm) {
-
-        ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
 
         String channelId = getString(R.string.default_notification_channel_id);
         NotificationCompat.Builder notificationBuilder =
@@ -41,6 +41,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
+        // notification system is different since Android O, so we have to check the android version
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             int importance = NotificationManager.IMPORTANCE_HIGH;
             NotificationChannel notificationChannel = new NotificationChannel(channelId, "NOTIFICATION_CHANNEL_NAME", importance);
@@ -51,7 +52,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             notificationManager.createNotificationChannel(notificationChannel);
         }
 
-        if((!ChatFragment.isActive && !ListChatFragment.isActive)){
+        // notifications are not displayed when ChatFragment or ListChatFragment are visible
+        if((!ChatFragment.isActive && ListChatFragment.isActive == null) ||(!ChatFragment.isActive && !ListChatFragment.isActive)){
             notificationManager.notify(0, notificationBuilder.build());
         }
     }

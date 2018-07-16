@@ -4,6 +4,7 @@ import io.realm.RealmObject;
 
 /**
  * Created by kevin on 20/05/2018.
+ * Version 1.0
  */
 public class Contact extends RealmObject{
 

@@ -2,31 +2,16 @@ package com.mycoaching.mycoaching.Models.Retrofit;
 
 /**
  * Created by kevin on 08/07/2018.
+ * Version 1.0
  */
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Exercise {
 
-    @SerializedName("duration")
-    @Expose
-    private Integer duration;
+    private Integer duration, intensity, repetitions, series;
 
-    @SerializedName("exercise")
-    @Expose
     private String exercise;
-
-    @SerializedName("intensity")
-    @Expose
-    private Integer intensity;
-
-    @SerializedName("repetitions")
-    @Expose
-    private Integer repetitions;
-
-    @SerializedName("series")
-    @Expose
-    private Integer series;
 
     public Exercise(Integer duration, String exercise, Integer intensity, Integer repetitions, Integer series) {
         this.duration = duration;

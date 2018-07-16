@@ -11,27 +11,23 @@ import io.realm.RealmObject;
 
 /**
  * Created by kevin on 06/05/2018.
+ * Version 1.0
  */
+
+/**
+ * This model implements the Parcelable interface in order to be put in a Bundle object
+ */
+
 public class Message extends RealmObject implements Parcelable {
 
-    @SerializedName("id")
-    @Expose
     private Integer id;
 
-    @SerializedName("sender")
-    @Expose
     private UserRetrofit sender;
 
-    @SerializedName("receiver")
-    @Expose
     private UserRetrofit receiver;
 
-    @SerializedName("date")
-    @Expose
     private String date;
 
-    @SerializedName("content")
-    @Expose
     private String content;
 
     public Message(Integer id, UserRetrofit sender, UserRetrofit receiver, String date, String content) {

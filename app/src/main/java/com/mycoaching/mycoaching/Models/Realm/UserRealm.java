@@ -5,6 +5,7 @@ import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by kevin on 20/04/2018.
+ * Version 1.0
  */
 
 public class UserRealm extends RealmObject {
@@ -13,7 +14,6 @@ public class UserRealm extends RealmObject {
     String id;
 
     public UserRealm(){
-
     }
 
     public UserRealm(String id, String mail, String firstName, String lastName, String sex, String birthDate,
