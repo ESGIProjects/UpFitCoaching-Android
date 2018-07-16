@@ -19,7 +19,8 @@ import static com.mycoaching.mycoaching.Util.CommonMethods.performTransition;
 import static com.mycoaching.mycoaching.Util.CommonMethods.refreshToken;
 
 /**
- * Created by tensa on 06/03/2018.
+ * Created by kevin on 06/03/2018.
+ * V1.0
  */
 
 public class SplashScreenActivity extends AppCompatActivity {
