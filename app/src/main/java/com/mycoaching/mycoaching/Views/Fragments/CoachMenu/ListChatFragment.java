@@ -125,6 +125,7 @@ public class ListChatFragment extends Fragment implements ContactAdapter.OnClick
                     if(ar.getResponseCode() == 200){
                         lm.addAll(ar.getListMessage());
                         ids.add(Integer.valueOf(ur.getId()));
+                        r = Realm.getDefaultInstance();
                         r.executeTransaction(new Realm.Transaction() {
                             @Override
                             public void execute(Realm realm) {
