@@ -26,6 +26,7 @@ import static com.mycoaching.mycoaching.Util.Constants.DATE_TIME_FORMATTER;
 
 /**
  * Created by kevin on 17/03/2018.
+ * Version 1.0
  */
 
 public class CommonMethods {
@@ -33,6 +34,7 @@ public class CommonMethods {
     private CommonMethods() {
 
     }
+
     /**
      * @param context The context attached to the current environment
      * @return true if there is network is available and false if it's unavailable

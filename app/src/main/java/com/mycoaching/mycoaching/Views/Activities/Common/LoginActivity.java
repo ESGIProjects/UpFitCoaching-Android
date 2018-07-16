@@ -34,6 +34,7 @@ import static com.mycoaching.mycoaching.Util.CommonMethods.performTransition;
 
 /**
  * Created by kevin on 01/03/2018.
+ * Version 1.0
  */
 
 public class LoginActivity extends AppCompatActivity {
@@ -52,9 +53,8 @@ public class LoginActivity extends AppCompatActivity {
     @OnClick(R.id.signin)
     void signIn() {
 
-        //we check if the network is available
         if(isNetworkAvailable(getApplicationContext())) {
-            //we check if email and password are set
+            // we check if email and password are set
             if (checkEmail(email.getText().toString()) && checkPassword(password.getText().toString())) {
                 pd = new ProgressDialog(LoginActivity.this, R.style.StyledDialog);
                 pd.setCancelable(false);
@@ -64,16 +64,18 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onResult(ApiResults ar) {
                         if (ar.getResponseCode() == 200) {
-                            //we save
+                            // we save
                             if (realm.isEmpty()) {
                                 executeTransaction(realm, ar);
                             }
+                            // if there is already a user registered, we delete the user before saving the new one
                             else{
                                 realm.beginTransaction();
                                 realm.deleteAll();
                                 realm.commitTransaction();
                                 executeTransaction(realm, ar);
                             }
+                            // the firebase token is checked and saved
                             sp = getApplicationContext().getSharedPreferences("user_prefs",MODE_PRIVATE);
                             if((sp.getString("firebase_token", null) == null) || (!sp.getString("firebase_token", null).equals(FirebaseInstanceId.getInstance().getToken()))){
                                 ApiCall.putToken("Bearer " + ar.getUt().getToken(),ar.getUt().getUr().getId(), FirebaseInstanceId.getInstance().getToken(), null, new ServiceResultListener() {
@@ -94,7 +96,7 @@ public class LoginActivity extends AppCompatActivity {
                                 i = new Intent(LoginActivity.this, UserMainActivity.class);
                                 performTransition(LoginActivity.this,i, R.animator.slide_from_right, R.animator.slide_to_left);
                             }
-                            Toast.makeText(getApplicationContext(), "Connexion réussie !", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), R.string.connection_success, Toast.LENGTH_SHORT).show();
                         }
                         else{
                             pd.dismiss();
@@ -124,17 +126,18 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        ButterKnife.bind(this);
+        /*
+          if the application is killed by the system (due to RAM issue for example), we kill the activity
+          and we restart from the splashscreen
+          */
         if(savedInstanceState != null){
             Intent i = new Intent(this, SplashScreenActivity.class);
             performTransition(this,i, R.animator.slide_from_left, R.animator.slide_to_right);
             finish();
             return;
         }
-
         getSupportActionBar().hide();
-        ButterKnife.bind(this);
-
         realm = Realm.getDefaultInstance();
     }
 
