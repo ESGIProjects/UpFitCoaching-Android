@@ -97,13 +97,13 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Connexion réussie !", Toast.LENGTH_SHORT).show();
                         }
                         else{
+                            pd.dismiss();
                             Toast.makeText(getApplicationContext(),getCorrespondingErrorMessage(ar.getErrorMessage()),
                                     Toast.LENGTH_LONG).show();
                             clearFields(email,password);
                         }
                     }
                 });
-                pd.dismiss();
             }
             else {
                 Toast.makeText(getApplicationContext(), R.string.missing_fields, Toast.LENGTH_LONG).show();

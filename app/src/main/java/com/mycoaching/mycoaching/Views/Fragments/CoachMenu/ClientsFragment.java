@@ -100,13 +100,19 @@ public class ClientsFragment extends Fragment implements ClientsAdapter.OnClick{
                             lu.add(u);
                         }
                         Collections.sort(lu, new Comparator<UserRealm>() {
-                            @Override
-                            public int compare(UserRealm c1, UserRealm c2) {
-                                int res = c1.getLastName().compareToIgnoreCase(c2.getLastName());
-                                if (res != 0){
+                            public int compare(UserRealm u1, UserRealm u2) {
+                                String fn1 = u1.getFirstName();
+                                String fn2 = u2.getFirstName();
+
+                                int res = fn1.compareTo(fn2);
+                                if (res != 0) {
                                     return res;
                                 }
-                                return c1.getFirstName().compareToIgnoreCase(c2.getFirstName());
+                                else {
+                                    String ln1 = u1.getLastName();
+                                    String ln2 = u2.getLastName();
+                                    return ln1.compareTo(ln2);
+                                }
                             }
                         });
                         getActivity().runOnUiThread(new Runnable() {

@@ -49,7 +49,6 @@ import static com.mycoaching.mycoaching.Util.Constants.DATE_TIME_FORMATTER;
 public class EditExercise extends Dialog{
 
     private boolean isOK = false;
-    private boolean isCancel = false;
     private Exercise editedExercise;
 
     @BindView(R.id.layout_intensity)
@@ -77,10 +76,9 @@ public class EditExercise extends Dialog{
     Spinner intensity;
 
     @OnClick(R.id.remove_exercise)
-    public void cancel(){
-        editedExercise = null;
-        isCancel = true;
+    public void removeExercice(){
         isOK = true;
+        editedExercise = null;
         dismiss();
     }
 
@@ -98,7 +96,9 @@ public class EditExercise extends Dialog{
     @OnClick(R.id.confirm_edit)
     public void editExercise(){
         if(editedExercise.getExercise().equals("Abdominaux")){
-            if(checkFields(rep.getText().toString(),serie.getText().toString())){
+            if(checkFields(rep.getText().toString(),serie.getText().toString()) &&
+                    (Integer.valueOf(rep.getText().toString()) != 0) &&
+                    (Integer.valueOf(serie.getText().toString()) != 0)){
                 editedExercise = new Exercise(null,"Abdominaux",null,
                         Integer.valueOf(rep.getText().toString()), Integer.valueOf(serie.getText().toString()));
                 isOK = true;
@@ -109,7 +109,7 @@ public class EditExercise extends Dialog{
             }
         }
         else if(editedExercise.getExercise().equals("Footing")){
-            if(checkFields(timer.getText().toString())){
+            if(checkFields(timer.getText().toString()) && !timer.getText().toString().equals("0:0:00")){
                 String s = timer.getText().toString();
                 String[] times = s.split(":");
 
@@ -129,7 +129,7 @@ public class EditExercise extends Dialog{
             }
         }
         else if(editedExercise.getExercise().equals("Natation")){
-            if(checkFields(timer.getText().toString())){
+            if(checkFields(timer.getText().toString()) && !timer.getText().toString().equals("0:0:00")){
                 String s = timer.getText().toString();
                 String[] times = s.split(":");
 
@@ -149,7 +149,9 @@ public class EditExercise extends Dialog{
             }
         }
         else if(editedExercise.getExercise().equals("Pompes")){
-            if(checkFields(rep.getText().toString(),serie.getText().toString())){
+            if(checkFields(rep.getText().toString(),serie.getText().toString()) &&
+                    (Integer.valueOf(rep.getText().toString()) != 0) &&
+                    (Integer.valueOf(serie.getText().toString()) != 0)){
                 editedExercise = new Exercise(null,"Pompes",null,
                         Integer.valueOf(rep.getText().toString()), Integer.valueOf(serie.getText().toString()));
                 isOK = true;
@@ -160,7 +162,9 @@ public class EditExercise extends Dialog{
             }
         }
         else if(editedExercise.getExercise().equals("Squats")){
-            if(checkFields(rep.getText().toString(),serie.getText().toString())){
+            if(checkFields(rep.getText().toString(),serie.getText().toString()) &&
+                    (Integer.valueOf(rep.getText().toString()) != 0) &&
+                    (Integer.valueOf(serie.getText().toString()) != 0)){
                 editedExercise = new Exercise(null,"Squats",null,
                         Integer.valueOf(rep.getText().toString()), Integer.valueOf(serie.getText().toString()));
                 isOK = true;
@@ -171,7 +175,7 @@ public class EditExercise extends Dialog{
             }
         }
         else if(editedExercise.getExercise().equals("Vélo")){
-            if(checkFields(timer.getText().toString())){
+            if(checkFields(timer.getText().toString()) && !timer.getText().toString().equals("0:0:00")){
                 String s = timer.getText().toString();
                 String[] times = s.split(":");
 
@@ -267,9 +271,5 @@ public class EditExercise extends Dialog{
 
     public boolean getIsOK(){
         return isOK;
-    }
-
-    public boolean getIsCancel(){
-        return isCancel;
     }
 }

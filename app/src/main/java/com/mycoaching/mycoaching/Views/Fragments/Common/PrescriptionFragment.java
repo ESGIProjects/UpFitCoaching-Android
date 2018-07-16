@@ -56,7 +56,7 @@ public class PrescriptionFragment extends Fragment implements ExerciseAdapter.On
     UserRealm ur;
     View v;
     ProgressDialog pd;
-    List<Exercise> le= new ArrayList<>();
+    List<Exercise> le = new ArrayList<>();
     private RecyclerView rv;
     ExerciseAdapter ea;
 
@@ -68,7 +68,7 @@ public class PrescriptionFragment extends Fragment implements ExerciseAdapter.On
 
     @OnClick(R.id.buttonPrescription)
     public void prescription(){
-        List<String> allExercises = new LinkedList<String>(Arrays.asList(getResources().getStringArray(R.array.exercice)));
+        List<String> allExercises = new LinkedList<>(Arrays.asList(getResources().getStringArray(R.array.exercice)));
         for(Exercise e : le){
             if(allExercises.contains(e.getExercise())){
                 allExercises.remove(e.getExercise());
@@ -202,10 +202,10 @@ public class PrescriptionFragment extends Fragment implements ExerciseAdapter.On
                 public void onDismiss(DialogInterface dialogInterface) {
                     if(ee.getIsOK()){
                         if(ee.getExercise() != null){
-                            le.set(position,ee.getExercise());
+                            le.set(position, ee.getExercise());
                             ea.notifyDataSetChanged();
                         }
-                        else if(ee.getIsCancel()){
+                        else{
                             le.remove(position);
                             rv.setAdapter(ea);
                             ea.notifyItemRemoved(position);
