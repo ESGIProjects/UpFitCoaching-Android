@@ -25,6 +25,7 @@ import static com.mycoaching.mycoaching.Util.CommonMethods.checkPassword;
 import static com.mycoaching.mycoaching.Util.CommonMethods.clearFields;
 import static com.mycoaching.mycoaching.Util.CommonMethods.getCorrespondingErrorMessage;
 import static com.mycoaching.mycoaching.Util.CommonMethods.getSHAPassword;
+import static com.mycoaching.mycoaching.Util.CommonMethods.isNetworkAvailable;
 import static com.mycoaching.mycoaching.Util.CommonMethods.isSame;
 
 public class CredentialsFragment extends Fragment {
@@ -44,25 +45,26 @@ public class CredentialsFragment extends Fragment {
 
     @OnClick(R.id.next)
     void dataTransition() {
-        if (checkFields(mail.getText().toString(), password.getText().toString(), passwordConfirmation.getText().toString())) {
-            if (checkEmail(mail.getText().toString()) && checkPassword(password.getText().toString()) &&
-                    isSame(password.getText().toString(), passwordConfirmation.getText().toString())) {
-                pd = new ProgressDialog(getContext(), R.style.StyledDialog);
-                pd.setCancelable(false);
-                pd.setMessage("Vérification de l'adresse mail...");
-                pd.show();
-                ApiCall.checkMail(mail.getText().toString(), new ServiceResultListener() {
-                    @Override
-                    public void onResult(ApiResults ar) {
-                        pd.dismiss();
-                        if (ar.getResponseCode() == 200) {
-                            b.putString("mail", mail.getText().toString());
-                            b.putString("password", getSHAPassword(password.getText().toString()));
-                            UserDataFragment udf = new UserDataFragment();
-                            udf.setArguments(b);
-                            ((RegisterActivity) getActivity()).replaceFragment(udf, R.id.container);
+        if(isNetworkAvailable(getContext())){
+            if (checkFields(mail.getText().toString(), password.getText().toString(), passwordConfirmation.getText().toString())) {
+                if (checkEmail(mail.getText().toString()) && checkPassword(password.getText().toString()) &&
+                        isSame(password.getText().toString(), passwordConfirmation.getText().toString())) {
+                    pd = new ProgressDialog(getContext(), R.style.StyledDialog);
+                    pd.setCancelable(false);
+                    pd.setMessage("Vérification de l'adresse mail...");
+                    pd.show();
+                    ApiCall.checkMail(mail.getText().toString(), new ServiceResultListener() {
+                        @Override
+                        public void onResult(ApiResults ar) {
+                            pd.dismiss();
+                            if (ar.getResponseCode() == 200) {
+                                b.putString("mail", mail.getText().toString());
+                                b.putString("password", getSHAPassword(password.getText().toString()));
+                                UserDataFragment udf = new UserDataFragment();
+                                udf.setArguments(b);
+                                ((RegisterActivity) getActivity()).replaceFragment(udf, R.id.container);
 
-                            //that part is commented for the moment due to single coach capacity
+                                //that part is commented for the moment due to single coach capacity
 
                             /*
                             if(b.getString("type") == "0"){
@@ -79,18 +81,22 @@ public class CredentialsFragment extends Fragment {
                                 cdf.setArguments(b);
                                 ((RegisterActivity)getActivity()).replaceFragment(cdf,R.id.container);
                             }*/
-                        } else{
-                            Toast.makeText(getContext(),getCorrespondingErrorMessage(ar.getErrorMessage()),
-                                    Toast.LENGTH_LONG).show();
+                            } else{
+                                Toast.makeText(getContext(),getCorrespondingErrorMessage(ar.getErrorMessage()),
+                                        Toast.LENGTH_LONG).show();
+                            }
                         }
-                    }
-                });
+                    });
+                } else {
+                    Toast.makeText(getContext(), R.string.wrong_credentials, Toast.LENGTH_LONG).show();
+                    clearFields(password, passwordConfirmation);
+                }
             } else {
-                Toast.makeText(getContext(), R.string.wrong_credentials, Toast.LENGTH_LONG).show();
-                clearFields(password, passwordConfirmation);
+                Toast.makeText(getContext(), R.string.missing_fields, Toast.LENGTH_LONG).show();
             }
-        } else {
-            Toast.makeText(getContext(), R.string.missing_fields, Toast.LENGTH_LONG).show();
+        }
+        else{
+            Toast.makeText(getContext(), R.string.no_connection, Toast.LENGTH_LONG).show();
         }
     }
 

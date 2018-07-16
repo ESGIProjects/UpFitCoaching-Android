@@ -34,6 +34,7 @@ import io.realm.Realm;
 import static com.mycoaching.mycoaching.Util.CommonMethods.checkFields;
 import static com.mycoaching.mycoaching.Util.CommonMethods.getCorrespondingErrorMessage;
 import static com.mycoaching.mycoaching.Util.CommonMethods.getDate;
+import static com.mycoaching.mycoaching.Util.CommonMethods.isNetworkAvailable;
 import static com.mycoaching.mycoaching.Util.CommonMethods.isTokenExpired;
 import static com.mycoaching.mycoaching.Util.CommonMethods.refreshToken;
 import static com.mycoaching.mycoaching.Util.Constants.DATE_FORMATTER;
@@ -132,57 +133,63 @@ public class EditEvent extends Dialog{
         pd.setMessage("Mise à jour de l'évènement en cours...");
         pd.setCancelable(false);
         pd.show();
-        if(isTokenExpired(ur.getToken())){
-            refreshToken(ur.getToken(),getContext());
-        }
-        if(checkFields(title.getText().toString(), event_start_date.getText().toString()
-                ,event_end_date.getText().toString(),event_start_time.getText().toString()
-                , event_end_time.getText().toString(),typeSpinner.getSelectedItem().toString())) {
-            if(typeSpinner.getSelectedItem().equals("Bilan")){
-                type = "0";
+        if(isNetworkAvailable(getContext())){
+            if(isTokenExpired(ur.getToken())){
+                refreshToken(ur.getToken(),getContext());
             }
-            else{
-                type = "1";
-            }
-            try {
-                if (formatterDateTime.parse(event_start_date.getText().toString() + " " + event_start_time.getText().toString())
-                        .compareTo(formatterDateTime.parse(event_end_date.getText().toString() + " " + event_end_time.getText().toString())) > 0) {
-                    Toast.makeText(getContext(), "La date de fin est antérieure à la date de départ", Toast.LENGTH_LONG).show();
-                    pd.dismiss();
-                }
-                else if(formatterDateTime.parse(event_start_date.getText().toString() + " " + event_start_time.getText().toString()).compareTo(
-                        formatterDateTime.parse(getDate()))<0){
-                    Toast.makeText(getContext(),"La date de début est antérieure à la date d'aujourd'hui",Toast.LENGTH_LONG).show();
-                    pd.dismiss();
+            if(checkFields(title.getText().toString(), event_start_date.getText().toString()
+                    ,event_end_date.getText().toString(),event_start_time.getText().toString()
+                    , event_end_time.getText().toString(),typeSpinner.getSelectedItem().toString())) {
+                if(typeSpinner.getSelectedItem().equals("Bilan")){
+                    type = "0";
                 }
                 else{
-                    ApiCall.updateEvent("Bearer " + ur.getToken(), eventID, title.getText().toString(), type, event_start_date.getText().toString() + " " +
-                            event_start_time.getText().toString(), event_end_date.getText().toString() + " " +
-                            event_end_time.getText().toString(), getDate(), updatedBy, new ServiceResultListener() {
-                        @Override
-                        public void onResult(ApiResults ar) {
-                            if(ar.getResponseCode() == 200){
-                                pd.dismiss();
-                                isOK = true;
-                                Toast.makeText(getContext(),"L'évènement a été mis à jour",Toast.LENGTH_LONG).show();
-                                dismiss();
+                    type = "1";
+                }
+                try {
+                    if (formatterDateTime.parse(event_start_date.getText().toString() + " " + event_start_time.getText().toString())
+                            .compareTo(formatterDateTime.parse(event_end_date.getText().toString() + " " + event_end_time.getText().toString())) > 0) {
+                        Toast.makeText(getContext(), "La date de fin est antérieure à la date de départ", Toast.LENGTH_LONG).show();
+                        pd.dismiss();
+                    }
+                    else if(formatterDateTime.parse(event_start_date.getText().toString() + " " + event_start_time.getText().toString()).compareTo(
+                            formatterDateTime.parse(getDate()))<0){
+                        Toast.makeText(getContext(),"La date de début est antérieure à la date d'aujourd'hui",Toast.LENGTH_LONG).show();
+                        pd.dismiss();
+                    }
+                    else{
+                        ApiCall.updateEvent("Bearer " + ur.getToken(), eventID, title.getText().toString(), type, event_start_date.getText().toString() + " " +
+                                event_start_time.getText().toString(), event_end_date.getText().toString() + " " +
+                                event_end_time.getText().toString(), getDate(), updatedBy, new ServiceResultListener() {
+                            @Override
+                            public void onResult(ApiResults ar) {
+                                if(ar.getResponseCode() == 200){
+                                    pd.dismiss();
+                                    isOK = true;
+                                    Toast.makeText(getContext(),"L'évènement a été mis à jour",Toast.LENGTH_LONG).show();
+                                    dismiss();
+                                }
+                                else{
+                                    pd.dismiss();
+                                    Toast.makeText(getContext(),getCorrespondingErrorMessage(ar.getErrorMessage()),
+                                            Toast.LENGTH_LONG).show();
+                                }
                             }
-                            else{
-                                pd.dismiss();
-                                Toast.makeText(getContext(),getCorrespondingErrorMessage(ar.getErrorMessage()),
-                                        Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    });
+                        });
+                    }
+                }
+                catch (ParseException pe){
+                    pe.printStackTrace();
                 }
             }
-            catch (ParseException pe){
-                pe.printStackTrace();
+            else{
+                pd.dismiss();
+                Toast.makeText(getContext(),"Certains champs sont manquants !", Toast.LENGTH_LONG).show();
             }
         }
         else{
             pd.dismiss();
-            Toast.makeText(getContext(),"Certains champs sont manquants !", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), R.string.no_connection, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -191,17 +198,28 @@ public class EditEvent extends Dialog{
         pd = new ProgressDialog(getContext(), R.style.AppCompatAlertDialogStyle);
         pd.setMessage("Annulation de l'évènement en cours...");
         pd.show();
-        ApiCall.deleteEvent("Bearer " + ur.getToken(), eventID, updatedBy, new ServiceResultListener() {
-            @Override
-            public void onResult(ApiResults ar) {
-                if(ar.getResponseCode() == 200){
-                    pd.dismiss();
-                    isOK = true;
-                    Toast.makeText(getContext(),"L'évènement a été annulé",Toast.LENGTH_LONG).show();
-                    dismiss();
+        if(isNetworkAvailable(getContext())){
+            ApiCall.deleteEvent("Bearer " + ur.getToken(), eventID, updatedBy, new ServiceResultListener() {
+                @Override
+                public void onResult(ApiResults ar) {
+                    if(ar.getResponseCode() == 200){
+                        pd.dismiss();
+                        isOK = true;
+                        Toast.makeText(getContext(),"L'évènement a été annulé",Toast.LENGTH_LONG).show();
+                        dismiss();
+                    }
+                    else{
+                        pd.dismiss();
+                        Toast.makeText(getContext(),getCorrespondingErrorMessage(ar.getErrorMessage()),
+                                Toast.LENGTH_LONG).show();
+                    }
                 }
-            }
-        });
+            });
+        }
+        else{
+            pd.dismiss();
+            Toast.makeText(getContext(), R.string.no_connection, Toast.LENGTH_LONG).show();
+        }
     }
 
     public EditEvent(Activity a, String eventID, String name, String type, String start

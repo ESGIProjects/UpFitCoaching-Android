@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -35,6 +36,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
@@ -51,7 +53,7 @@ import static com.mycoaching.mycoaching.Util.Constants.DATE_TIME_FORMATTER;
  */
 
 
-public class ThreadFragment extends Fragment implements ThreadAdapter.OnClick {
+public class ThreadFragment extends Fragment implements ThreadAdapter.OnClick, SwipeRefreshLayout.OnRefreshListener {
 
     private List<Thread> lt = new ArrayList<>();
     private SimpleDateFormat formatterDate = new SimpleDateFormat(DATE_TIME_FORMATTER, Locale.getDefault());
@@ -64,19 +66,27 @@ public class ThreadFragment extends Fragment implements ThreadAdapter.OnClick {
     Realm r;
     UserRealm ur;
 
+    @BindView(R.id.swipe)
+    SwipeRefreshLayout srl;
+
     @OnClick(R.id.buttonThread) void openDialog(){
-        final AddThread at = new AddThread(getActivity());
-        at.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        at.show();
-        at.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                if(at.getIsOK()){
-                    lt.clear();
-                    prepareData();
+        if(isNetworkAvailable(getContext())){
+            final AddThread at = new AddThread(getActivity());
+            at.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            at.show();
+            at.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialogInterface) {
+                    if(at.getIsOK()){
+                        lt.clear();
+                        prepareData();
+                    }
                 }
-            }
-        });
+            });
+        }
+        else{
+            Toast.makeText(getContext(), R.string.no_connection, Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
@@ -84,6 +94,8 @@ public class ThreadFragment extends Fragment implements ThreadAdapter.OnClick {
         super.onCreate(savedInstanceState);
         v = inflater.inflate(R.layout.fragment_list_thread, container, false);
         ButterKnife.bind(this, v);
+
+        srl.setOnRefreshListener(this);
 
         r = Realm.getDefaultInstance();
         ur = r.where(UserRealm.class).findFirst();
@@ -138,7 +150,8 @@ public class ThreadFragment extends Fragment implements ThreadAdapter.OnClick {
                                 ta.notifyDataSetChanged();
                             }
                         });
-                    } else {
+                    }
+                    else {
                         Toast.makeText(getContext(), getCorrespondingErrorMessage(ar.getErrorMessage()),
                                 Toast.LENGTH_LONG).show();
                     }
@@ -149,8 +162,9 @@ public class ThreadFragment extends Fragment implements ThreadAdapter.OnClick {
         else{
             pd.dismiss();
             Toast.makeText(getContext(), R.string.no_connection, Toast.LENGTH_LONG).show();
-            lt.clear();
-            ta.notifyDataSetChanged();
+        }
+        if (srl.isRefreshing()) {
+            srl.setRefreshing(false);
         }
     }
 
@@ -160,17 +174,30 @@ public class ThreadFragment extends Fragment implements ThreadAdapter.OnClick {
 
     @Override
     public void onItemClick(int position) {
-        int id = lt.get(position).getId();
-        fm = getActivity().getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        Bundle b = new Bundle();
-        b.putInt("idThread", id);
-        pf = new PostFragment();
-        pf.setArguments(b);
-        lt.clear();
-        ft.add(R.id.container, pf, "POSTS");
-        ft.hide(getActivity().getSupportFragmentManager().findFragmentByTag("TF"));
-        ft.show(pf);
-        ft.commit();
+        if(isNetworkAvailable(getContext())){
+            int id = lt.get(position).getId();
+            fm = getActivity().getSupportFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            Bundle b = new Bundle();
+            b.putInt("idThread", id);
+            pf = new PostFragment();
+            pf.setArguments(b);
+            lt.clear();
+            ft.add(R.id.container, pf, "POSTS");
+            ft.hide(getActivity().getSupportFragmentManager().findFragmentByTag("TF"));
+            ft.show(pf);
+            ft.commit();
+        }
+        else{
+            Toast.makeText(getContext(), R.string.no_connection, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void onRefresh() {
+        if(isNetworkAvailable(getContext())){
+            lt.clear();
+        }
+        prepareData();
     }
 }

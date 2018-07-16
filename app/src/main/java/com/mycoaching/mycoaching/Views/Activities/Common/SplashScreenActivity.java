@@ -14,7 +14,9 @@ import com.mycoaching.mycoaching.Views.Activities.UserActivity.UserMainActivity;
 import io.realm.Realm;
 
 import static com.mycoaching.mycoaching.Util.CommonMethods.isNetworkAvailable;
+import static com.mycoaching.mycoaching.Util.CommonMethods.isTokenExpired;
 import static com.mycoaching.mycoaching.Util.CommonMethods.performTransition;
+import static com.mycoaching.mycoaching.Util.CommonMethods.refreshToken;
 
 /**
  * Created by tensa on 06/03/2018.
@@ -35,6 +37,9 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         UserRealm ur = realm.where(UserRealm.class).findFirst();
         if (isNetworkAvailable(getApplicationContext())) {
+            if(isTokenExpired(ur.getToken())){
+                refreshToken(ur.getToken(),getApplicationContext());
+            }
             if (ur != null) {
                 if (ur.getType() == 2) {
                     new Handler().postDelayed(new Runnable() {

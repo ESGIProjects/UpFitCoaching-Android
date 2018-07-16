@@ -25,6 +25,7 @@ import io.realm.Realm;
 import static com.mycoaching.mycoaching.Util.CommonMethods.checkFields;
 import static com.mycoaching.mycoaching.Util.CommonMethods.getCorrespondingErrorMessage;
 import static com.mycoaching.mycoaching.Util.CommonMethods.getDate;
+import static com.mycoaching.mycoaching.Util.CommonMethods.isNetworkAvailable;
 import static com.mycoaching.mycoaching.Util.CommonMethods.isTokenExpired;
 import static com.mycoaching.mycoaching.Util.CommonMethods.refreshToken;
 
@@ -74,26 +75,31 @@ public class TestFragment extends Fragment {
             pd.setMessage("Création du test...");
             pd.setCancelable(false);
             pd.show();
-            if(isTokenExpired(ur.getToken())){
-                refreshToken(ur.getToken(),getContext());
+            if(isNetworkAvailable(getContext())){
+                if(isTokenExpired(ur.getToken())){
+                    refreshToken(ur.getToken(),getContext());
+                }
+                ApiCall.postTest("Bearer " + ur.getToken(), b.getString("id"), getDate(), warming.getText().toString(), start_speed.getText().toString(),
+                        increase.getText().toString(), freq.getText().toString(), String.valueOf(knee.getSelectedItemPosition()),
+                        String.valueOf(shin.getSelectedItemPosition()), String.valueOf(kick.getSelectedItemPosition()),
+                        String.valueOf(closedFist.getSelectedItemPosition()),String.valueOf(handFlat.getSelectedItemPosition()), new ServiceResultListener() {
+                            @Override
+                            public void onResult(ApiResults ar) {
+                                if(ar.getResponseCode() == 201){
+                                    Toast.makeText(getContext(),"Nouveau test créé !",Toast.LENGTH_LONG).show();
+                                    ClientProfileFragment cpf = (ClientProfileFragment) getActivity().getSupportFragmentManager().findFragmentByTag("PROFILE");
+                                    cpf.getLastAppraisal();
+                                }
+                                else{
+                                    Toast.makeText(getContext(),getCorrespondingErrorMessage(ar.getErrorMessage()),
+                                            Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        });
             }
-            ApiCall.postTest("Bearer " + ur.getToken(), b.getString("id"), getDate(), warming.getText().toString(), start_speed.getText().toString(),
-                    increase.getText().toString(), freq.getText().toString(), String.valueOf(knee.getSelectedItemPosition()),
-                    String.valueOf(shin.getSelectedItemPosition()), String.valueOf(kick.getSelectedItemPosition()),
-                    String.valueOf(closedFist.getSelectedItemPosition()),String.valueOf(handFlat.getSelectedItemPosition()), new ServiceResultListener() {
-                        @Override
-                        public void onResult(ApiResults ar) {
-                            if(ar.getResponseCode() == 201){
-                                Toast.makeText(getContext(),"Nouveau test créé !",Toast.LENGTH_LONG).show();
-                                ClientProfileFragment cpf = (ClientProfileFragment) getActivity().getSupportFragmentManager().findFragmentByTag("PROFILE");
-                                cpf.getLastAppraisal();
-                            }
-                            else{
-                                Toast.makeText(getContext(),getCorrespondingErrorMessage(ar.getErrorMessage()),
-                                        Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    });
+            else{
+                Toast.makeText(getContext(),R.string.no_connection,Toast.LENGTH_LONG).show();
+            }
             pd.dismiss();
         }
         else{

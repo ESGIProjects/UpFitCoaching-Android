@@ -23,6 +23,7 @@ import io.realm.Realm;
 import static com.mycoaching.mycoaching.Util.CommonMethods.checkFields;
 import static com.mycoaching.mycoaching.Util.CommonMethods.getCorrespondingErrorMessage;
 import static com.mycoaching.mycoaching.Util.CommonMethods.getDate;
+import static com.mycoaching.mycoaching.Util.CommonMethods.isNetworkAvailable;
 import static com.mycoaching.mycoaching.Util.CommonMethods.isTokenExpired;
 import static com.mycoaching.mycoaching.Util.CommonMethods.refreshToken;
 
@@ -66,51 +67,56 @@ public class AddMeasurement extends Dialog {
         pd.setCancelable(false);
         pd.setMessage("Ajout des mensurations...");
         pd.show();
-        if(isTokenExpired(ur.getToken())){
-            refreshToken(ur.getToken(),getContext());
-        }
-        if(checkFields(weight.getText().toString(),height.getText().toString(),hip.getText().toString(),
-                waist.getText().toString(),thigh.getText().toString(),arm.getText().toString())){
-            if(Float.valueOf(weight.getText().toString()) > 200.0f){
-                Toast.makeText(getContext(),"Le poids ne peut excéder 200kg !", Toast.LENGTH_LONG).show();
+        if(isNetworkAvailable(getContext())){
+            if(isTokenExpired(ur.getToken())){
+                refreshToken(ur.getToken(),getContext());
             }
-            else if(Float.valueOf(height.getText().toString()) > 250.0f){
-                Toast.makeText(getContext(),"La taille ne peut excéder 2m50 !", Toast.LENGTH_LONG).show();
-            }
-            else if(Float.valueOf(hip.getText().toString()) > 120.0f){
-                Toast.makeText(getContext(),"Le tour de taille ne peut excéder 120cm !", Toast.LENGTH_LONG).show();
-            }
-            else if(Float.valueOf(waist.getText().toString()) > 150.0f){
-                Toast.makeText(getContext(),"Le tour de ventre ne peuxt excéder 150cm !", Toast.LENGTH_LONG).show();
-            }
-            else if(Float.valueOf(thigh.getText().toString()) > 90.0f){
-                Toast.makeText(getContext(),"Le tour de cuisse ne peut excéder 90cm !", Toast.LENGTH_LONG).show();
-            }
-            else if(Float.valueOf(arm.getText().toString()) > 50.0f){
-                Toast.makeText(getContext(),"Le tour de bras ne peut excéder 50cm !", Toast.LENGTH_LONG).show();
+            if(checkFields(weight.getText().toString(),height.getText().toString(),hip.getText().toString(),
+                    waist.getText().toString(),thigh.getText().toString(),arm.getText().toString())){
+                if(Float.valueOf(weight.getText().toString()) > 200.0f){
+                    Toast.makeText(getContext(),"Le poids ne peut excéder 200kg !", Toast.LENGTH_LONG).show();
+                }
+                else if(Float.valueOf(height.getText().toString()) > 250.0f){
+                    Toast.makeText(getContext(),"La taille ne peut excéder 2m50 !", Toast.LENGTH_LONG).show();
+                }
+                else if(Float.valueOf(hip.getText().toString()) > 120.0f){
+                    Toast.makeText(getContext(),"Le tour de taille ne peut excéder 120cm !", Toast.LENGTH_LONG).show();
+                }
+                else if(Float.valueOf(waist.getText().toString()) > 150.0f){
+                    Toast.makeText(getContext(),"Le tour de ventre ne peuxt excéder 150cm !", Toast.LENGTH_LONG).show();
+                }
+                else if(Float.valueOf(thigh.getText().toString()) > 90.0f){
+                    Toast.makeText(getContext(),"Le tour de cuisse ne peut excéder 90cm !", Toast.LENGTH_LONG).show();
+                }
+                else if(Float.valueOf(arm.getText().toString()) > 50.0f){
+                    Toast.makeText(getContext(),"Le tour de bras ne peut excéder 50cm !", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    ApiCall.postMeasurement("Bearer " + ur.getToken(),id, getDate(), weight.getText().toString(), height.getText().toString()
+                            ,hip.getText().toString(), waist.getText().toString(), thigh.getText().toString()
+                            ,arm.getText().toString(), new ServiceResultListener() {
+                                @Override
+                                public void onResult(ApiResults ar) {
+                                    if (ar.getResponseCode() == 201) {
+                                        pd.dismiss();
+                                        isOK = true;
+                                        dismiss();
+                                    }
+                                    else{
+                                        pd.dismiss();
+                                        Toast.makeText(getContext(),getCorrespondingErrorMessage(ar.getErrorMessage()),
+                                                Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                            });
+                }
             }
             else{
-                ApiCall.postMeasurement("Bearer " + ur.getToken(),id, getDate(), weight.getText().toString(), height.getText().toString()
-                        ,hip.getText().toString(), waist.getText().toString(), thigh.getText().toString()
-                        ,arm.getText().toString(), new ServiceResultListener() {
-                            @Override
-                            public void onResult(ApiResults ar) {
-                                if (ar.getResponseCode() == 201) {
-                                    pd.dismiss();
-                                    isOK = true;
-                                    dismiss();
-                                }
-                                else{
-                                    pd.dismiss();
-                                    Toast.makeText(getContext(),getCorrespondingErrorMessage(ar.getErrorMessage()),
-                                            Toast.LENGTH_LONG).show();
-                                }
-                            }
-                        });
+                Toast.makeText(getContext(),"Il manque au moins un champs !", Toast.LENGTH_LONG).show();
             }
         }
         else{
-            Toast.makeText(getContext(),"Il manque au moins un champs !", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), R.string.no_connection, Toast.LENGTH_LONG).show();
         }
         pd.dismiss();
     }

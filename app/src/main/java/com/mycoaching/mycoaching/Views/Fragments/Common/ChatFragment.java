@@ -46,6 +46,7 @@ import static com.mycoaching.mycoaching.Util.CommonMethods.checkFields;
 import static com.mycoaching.mycoaching.Util.CommonMethods.getCorrespondingErrorMessage;
 import static com.mycoaching.mycoaching.Util.CommonMethods.getDate;
 import static com.mycoaching.mycoaching.Util.CommonMethods.getJSONFromString;
+import static com.mycoaching.mycoaching.Util.CommonMethods.isNetworkAvailable;
 import static com.mycoaching.mycoaching.Util.CommonMethods.isTokenExpired;
 import static com.mycoaching.mycoaching.Util.CommonMethods.refreshToken;
 import static com.mycoaching.mycoaching.Util.Constants.WEB_SOCKET_ENDPOINT;
@@ -74,79 +75,84 @@ public class ChatFragment extends Fragment {
 
     @OnClick(R.id.send)
     void sendMessage() {
-        if (checkFields(et.getText().toString())){
-            JSONObject object = new JSONObject();
-            try {
-                object.put("date",getDate());
-                JSONObject sender = new JSONObject();
-                sender.put("id", Integer.valueOf(ur.getId()));
-                sender.put("type", Integer.valueOf(ur.getType()));
-                sender.put("mail", ur.getMail());
-                sender.put("firstName", ur.getFirstName());
-                sender.put("lastName", ur.getLastName());
-                sender.put("sex", Integer.valueOf(ur.getSex()));
-                sender.put("city", ur.getCity());
-                sender.put("phoneNumber", ur.getPhoneNumber());
-                if (!isCoach) {
-                    sender.put("birthDate", ur.getBirthDate());
-                } else {
-                    sender.put("address", ur.getAddress());
-                }
-                object.put("sender", sender);
+        if(isNetworkAvailable(getContext())){
+            if(checkFields(et.getText().toString())){
+                JSONObject object = new JSONObject();
+                try {
+                    object.put("date",getDate());
+                    JSONObject sender = new JSONObject();
+                    sender.put("id", Integer.valueOf(ur.getId()));
+                    sender.put("type", Integer.valueOf(ur.getType()));
+                    sender.put("mail", ur.getMail());
+                    sender.put("firstName", ur.getFirstName());
+                    sender.put("lastName", ur.getLastName());
+                    sender.put("sex", Integer.valueOf(ur.getSex()));
+                    sender.put("city", ur.getCity());
+                    sender.put("phoneNumber", ur.getPhoneNumber());
+                    if (!isCoach) {
+                        sender.put("birthDate", ur.getBirthDate());
+                    } else {
+                        sender.put("address", ur.getAddress());
+                    }
+                    object.put("sender", sender);
 
-                JSONObject receiver = new JSONObject();
+                    JSONObject receiver = new JSONObject();
 
-                if (!isCoach) {
-                    receiver.put("id", Integer.valueOf(ur.getIdCoach()));
-                    receiver.put("type", 2);
-                    receiver.put("mail", ur.getMailCoach());
-                    receiver.put("firstName", ur.getFirstNameCoach());
-                    receiver.put("lastName", ur.getLastNameCoach());
-                    receiver.put("sex",Integer.valueOf(ur.getSexCoach()));
-                    receiver.put("city", ur.getCityCoach());
-                    receiver.put("phoneNumber", ur.getPhoneNumberCoach());
-                    receiver.put("address", ur.getAddressCoach());
+                    if (!isCoach) {
+                        receiver.put("id", Integer.valueOf(ur.getIdCoach()));
+                        receiver.put("type", 2);
+                        receiver.put("mail", ur.getMailCoach());
+                        receiver.put("firstName", ur.getFirstNameCoach());
+                        receiver.put("lastName", ur.getLastNameCoach());
+                        receiver.put("sex",Integer.valueOf(ur.getSexCoach()));
+                        receiver.put("city", ur.getCityCoach());
+                        receiver.put("phoneNumber", ur.getPhoneNumberCoach());
+                        receiver.put("address", ur.getAddressCoach());
+                    } else {
+                        receiver.put("id", Integer.valueOf(lm.get(lm.size() - 1).getSender().getId()));
+                        receiver.put("type", lm.get(lm.size() - 1).getSender().getType());
+                        receiver.put("mail", lm.get(lm.size() - 1).getSender().getMail());
+                        receiver.put("firstName", lm.get(lm.size() - 1).getSender().getFirstName());
+                        receiver.put("lastName", lm.get(lm.size() - 1).getSender().getLastName());
+                        receiver.put("sex", Integer.valueOf(lm.get(lm.size() - 1).getSender().getSex()));
+                        receiver.put("city", lm.get(lm.size() - 1).getSender().getCity());
+                        receiver.put("phoneNumber", lm.get(lm.size() - 1).getSender().getPhoneNumber());
+                        receiver.put("birthDate", lm.get(lm.size() - 1).getSender().getBirthDate());
+                    }
+                    object.put("receiver", receiver);
+                    object.put("content", et.getText().toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                if(isCoach) {
+                    if(isTokenExpired(ur.getToken())){
+                        refreshToken(ur.getToken(),getContext());
+                    }
+                    ListChatFragment lcf = (ListChatFragment) getActivity().getSupportFragmentManager().findFragmentByTag("LCF");
+                    lcf.getWs().send(object.toString());
+                    lcf.addMessageToList(ur.getId(), lm.get(lm.size() - 1).getSender().getId(), ur.getFirstName(),
+                            ur.getLastName(), lm.get(lm.size() - 1).getSender().getFirstName(),
+                            lm.get(lm.size() - 1).getSender().getLastName(), et.getText().toString(),ur.getMail(),
+                            lm.get(lm.size() - 1).getSender().getMail());
+                    addMessageToList(ur.getId(), lm.get(lm.size() - 1).getSender().getId(), ur.getFirstName(),
+                            ur.getLastName(), lm.get(lm.size() - 1).getSender().getFirstName(),
+                            lm.get(lm.size() - 1).getSender().getLastName(), et.getText().toString(),ur.getMail(),
+                            lm.get(lm.size() - 1).getSender().getMail());
                 } else {
-                    receiver.put("id", Integer.valueOf(lm.get(lm.size() - 1).getSender().getId()));
-                    receiver.put("type", lm.get(lm.size() - 1).getSender().getType());
-                    receiver.put("mail", lm.get(lm.size() - 1).getSender().getMail());
-                    receiver.put("firstName", lm.get(lm.size() - 1).getSender().getFirstName());
-                    receiver.put("lastName", lm.get(lm.size() - 1).getSender().getLastName());
-                    receiver.put("sex", Integer.valueOf(lm.get(lm.size() - 1).getSender().getSex()));
-                    receiver.put("city", lm.get(lm.size() - 1).getSender().getCity());
-                    receiver.put("phoneNumber", lm.get(lm.size() - 1).getSender().getPhoneNumber());
-                    receiver.put("birthDate", lm.get(lm.size() - 1).getSender().getBirthDate());
+                    if(isTokenExpired(ur.getToken())){
+                        refreshToken(ur.getToken(),getContext());
+                    }
+                    ws.send(object.toString());
+                    Log.i("WS TEST : ",object.toString());
+                    addMessageToList(ur.getId(), ur.getIdCoach(), ur.getFirstName(), ur.getLastName(),
+                            ur.getFirstNameCoach(), ur.getLastNameCoach(), et.getText().toString(),ur.getMail(),
+                            ur.getMailCoach());
                 }
-                object.put("receiver", receiver);
-                object.put("content", et.getText().toString());
-            } catch (JSONException e) {
-                e.printStackTrace();
+                et.getText().clear();
             }
-            if(isCoach) {
-                if(isTokenExpired(ur.getToken())){
-                    refreshToken(ur.getToken(),getContext());
-                }
-                ListChatFragment lcf = (ListChatFragment) getActivity().getSupportFragmentManager().findFragmentByTag("LCF");
-                lcf.getWs().send(object.toString());
-                lcf.addMessageToList(ur.getId(), lm.get(lm.size() - 1).getSender().getId(), ur.getFirstName(),
-                        ur.getLastName(), lm.get(lm.size() - 1).getSender().getFirstName(),
-                        lm.get(lm.size() - 1).getSender().getLastName(), et.getText().toString(),ur.getMail(),
-                        lm.get(lm.size() - 1).getSender().getMail());
-                addMessageToList(ur.getId(), lm.get(lm.size() - 1).getSender().getId(), ur.getFirstName(),
-                        ur.getLastName(), lm.get(lm.size() - 1).getSender().getFirstName(),
-                        lm.get(lm.size() - 1).getSender().getLastName(), et.getText().toString(),ur.getMail(),
-                        lm.get(lm.size() - 1).getSender().getMail());
-            } else {
-                if(isTokenExpired(ur.getToken())){
-                    refreshToken(ur.getToken(),getContext());
-                }
-                ws.send(object.toString());
-                Log.i("WS TEST : ",object.toString());
-                addMessageToList(ur.getId(), ur.getIdCoach(), ur.getFirstName(), ur.getLastName(),
-                        ur.getFirstNameCoach(), ur.getLastNameCoach(), et.getText().toString(),ur.getMail(),
-                        ur.getMailCoach());
-            }
-            et.getText().clear();
+        }
+        else{
+            Toast.makeText(getContext(), R.string.no_connection, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -196,40 +202,42 @@ public class ChatFragment extends Fragment {
         pd = new ProgressDialog(getContext(), R.style.StyledDialog);
         pd.setMessage("Récupération des messages en cours...");
         pd.show();
-        if(isTokenExpired(ur.getToken())){
-            refreshToken(ur.getToken(),getContext());
-        }
-        ApiCall.getConversation("Bearer " + ur.getToken(),Integer.valueOf(ur.getId()), new ServiceResultListener() {
-            @Override
-            public void onResult(ApiResults ar) {
-                if (ar.getResponseCode() == 200) {
-                    lm.addAll(ar.getListMessage());
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            ma.notifyDataSetChanged();
-                        }
-                    });
-                    r.executeTransaction(new Realm.Transaction() {
-                        @Override
-                        public void execute(Realm realm) {
-                            ur.setMailCoach(lm.get(lm.size()-1).getReceiver().getMail());
-                            ur.setFirstNameCoach(lm.get(lm.size()-1).getReceiver().getFirstName());
-                            ur.setLastNameCoach(lm.get(lm.size()-1).getReceiver().getLastName());
-                            ur.setCityCoach(lm.get(lm.size()-1).getReceiver().getCity());
-                            ur.setAddressCoach(lm.get(lm.size()-1).getReceiver().getAddress());
-                            ur.setPhoneNumberCoach(lm.get(lm.size()-1).getReceiver().getPhoneNumber());
-                            RealmList<Message> messages = new RealmList<>();
-                            messages.addAll(lm);
-                            r.insert(messages);
-                        }
-                    });
-                } else{
-                    Toast.makeText(getContext(),getCorrespondingErrorMessage(ar.getErrorMessage()),
-                            Toast.LENGTH_LONG).show();
-                }
+        if(isNetworkAvailable(getContext())){
+            if(isTokenExpired(ur.getToken())){
+                refreshToken(ur.getToken(),getContext());
             }
-        });
+            ApiCall.getConversation("Bearer " + ur.getToken(),Integer.valueOf(ur.getId()), new ServiceResultListener() {
+                @Override
+                public void onResult(ApiResults ar) {
+                    if (ar.getResponseCode() == 200) {
+                        lm.addAll(ar.getListMessage());
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ma.notifyDataSetChanged();
+                            }
+                        });
+                        r.executeTransaction(new Realm.Transaction() {
+                            @Override
+                            public void execute(Realm realm) {
+                                ur.setMailCoach(lm.get(lm.size()-1).getReceiver().getMail());
+                                ur.setFirstNameCoach(lm.get(lm.size()-1).getReceiver().getFirstName());
+                                ur.setLastNameCoach(lm.get(lm.size()-1).getReceiver().getLastName());
+                                ur.setCityCoach(lm.get(lm.size()-1).getReceiver().getCity());
+                                ur.setAddressCoach(lm.get(lm.size()-1).getReceiver().getAddress());
+                                ur.setPhoneNumberCoach(lm.get(lm.size()-1).getReceiver().getPhoneNumber());
+                                RealmList<Message> messages = new RealmList<>();
+                                messages.addAll(lm);
+                                r.insert(messages);
+                            }
+                        });
+                    } else{
+                        Toast.makeText(getContext(),getCorrespondingErrorMessage(ar.getErrorMessage()),
+                                Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+        }
         pd.dismiss();
     }
 

@@ -7,6 +7,7 @@ import android.os.Looper;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -33,6 +34,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.realm.Realm;
 import io.realm.RealmList;
 import okhttp3.Request;
@@ -43,6 +46,7 @@ import okhttp3.WebSocketListener;
 import static com.mycoaching.mycoaching.Util.CommonMethods.getCorrespondingErrorMessage;
 import static com.mycoaching.mycoaching.Util.CommonMethods.getDate;
 import static com.mycoaching.mycoaching.Util.CommonMethods.getJSONFromString;
+import static com.mycoaching.mycoaching.Util.CommonMethods.isNetworkAvailable;
 import static com.mycoaching.mycoaching.Util.CommonMethods.isTokenExpired;
 import static com.mycoaching.mycoaching.Util.CommonMethods.refreshToken;
 import static com.mycoaching.mycoaching.Util.Constants.WEB_SOCKET_ENDPOINT;
@@ -52,7 +56,7 @@ import static com.mycoaching.mycoaching.Util.Constants.WEB_SOCKET_TIMER;
  * Created by kevin on 17/05/2018.
  */
 
-public class ListChatFragment extends Fragment implements ContactAdapter.OnClick {
+public class ListChatFragment extends Fragment implements ContactAdapter.OnClick, SwipeRefreshLayout.OnRefreshListener {
 
     private ContactAdapter ca;
     private List<Contact> lc = new ArrayList<>();
@@ -69,12 +73,18 @@ public class ListChatFragment extends Fragment implements ContactAdapter.OnClick
     Contact c;
     FragmentManager fm;
 
+    @BindView(R.id.swipe)
+    SwipeRefreshLayout srl;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         isActive = true;
         v = inflater.inflate(R.layout.fragment_list_contact, container, false);
+        ButterKnife.bind(this,v);
         r = Realm.getDefaultInstance();
         ur = r.where(UserRealm.class).findFirst();
+
+        srl.setOnRefreshListener(this);
 
         rv = v.findViewById(R.id.listContact);
 
@@ -105,32 +115,40 @@ public class ListChatFragment extends Fragment implements ContactAdapter.OnClick
         pd.setCancelable(false);
         pd.setMessage("Récupération des messages...");
         pd.show();
-        if(isTokenExpired(ur.getToken())){
-            refreshToken(ur.getToken(),getContext());
-        }
-        ApiCall.getConversation("Bearer " + ur.getToken(),Integer.valueOf(ur.getId()), new ServiceResultListener() {
-            @Override
-            public void onResult(ApiResults ar) {
-                if(ar.getResponseCode() == 200){
-                    lm.addAll(ar.getListMessage());
-                    ids.add(Integer.valueOf(ur.getId()));
-                    r.executeTransaction(new Realm.Transaction() {
-                        @Override
-                        public void execute(Realm realm) {
-                            RealmList<Message> messages = new RealmList<>();
-                            messages.addAll(lm);
-                            r.insert(messages);
-                        }
-                    });
-                    updateContacts();
-                }
-                else{
-                    Toast.makeText(getContext(),getCorrespondingErrorMessage(ar.getErrorMessage()),
-                            Toast.LENGTH_LONG).show();
-                }
-                pd.dismiss();
+        if(isNetworkAvailable(getContext())){
+            if(isTokenExpired(ur.getToken())){
+                refreshToken(ur.getToken(),getContext());
             }
-        });
+            ApiCall.getConversation("Bearer " + ur.getToken(),Integer.valueOf(ur.getId()), new ServiceResultListener() {
+                @Override
+                public void onResult(ApiResults ar) {
+                    if(ar.getResponseCode() == 200){
+                        lm.addAll(ar.getListMessage());
+                        ids.add(Integer.valueOf(ur.getId()));
+                        r.executeTransaction(new Realm.Transaction() {
+                            @Override
+                            public void execute(Realm realm) {
+                                RealmList<Message> messages = new RealmList<>();
+                                messages.addAll(lm);
+                                r.insert(messages);
+                            }
+                        });
+                        updateContacts();
+                    }
+                    else{
+                        Toast.makeText(getContext(),getCorrespondingErrorMessage(ar.getErrorMessage()),
+                                Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+        }
+        else{
+            Toast.makeText(getContext(), R.string.no_connection, Toast.LENGTH_LONG).show();
+        }
+        if (srl.isRefreshing()) {
+            srl.setRefreshing(false);
+        }
+        pd.dismiss();
     }
 
     public void updateContacts() {
@@ -250,5 +268,15 @@ public class ListChatFragment extends Fragment implements ContactAdapter.OnClick
         ids.clear();
         ids.add(Integer.valueOf(senderID));
         updateContacts();
+    }
+
+    @Override
+    public void onRefresh() {
+        if(isNetworkAvailable(getContext())){
+            lm.clear();
+            lc.clear();
+            ids.clear();
+        }
+        getContacts();
     }
 }

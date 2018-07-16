@@ -43,6 +43,7 @@ import io.realm.Realm;
 
 import static com.mycoaching.mycoaching.Util.CommonMethods.getCorrespondingErrorMessage;
 import static com.mycoaching.mycoaching.Util.CommonMethods.getDate;
+import static com.mycoaching.mycoaching.Util.CommonMethods.isNetworkAvailable;
 import static com.mycoaching.mycoaching.Util.CommonMethods.isTokenExpired;
 import static com.mycoaching.mycoaching.Util.CommonMethods.refreshToken;
 
@@ -107,22 +108,27 @@ public class PrescriptionFragment extends Fragment implements ExerciseAdapter.On
         pd.setMessage("Création de la prescription en cours...");
         pd.setCancelable(false);
         pd.show();
-        if(isTokenExpired(ur.getToken())){
-            refreshToken(ur.getToken(),getContext());
-        }
-        ApiCall.postPrescription("Bearer " + ur.getToken(), id, getDate(), new Gson().toJson(le), new ServiceResultListener() {
-            @Override
-            public void onResult(ApiResults ar) {
-                if(ar.getResponseCode() == 201){
-                    Toast.makeText(getContext(),"La prescription est enregistrée !", Toast.LENGTH_LONG).show();
-                }
-                else{
-                    Toast.makeText(getContext(),getCorrespondingErrorMessage(ar.getErrorMessage()),
-                            Toast.LENGTH_LONG).show();
-                }
-                pd.dismiss();
+        if(isNetworkAvailable(getContext())){
+            if(isTokenExpired(ur.getToken())){
+                refreshToken(ur.getToken(),getContext());
             }
-        });
+            ApiCall.postPrescription("Bearer " + ur.getToken(), id, getDate(), new Gson().toJson(le), new ServiceResultListener() {
+                @Override
+                public void onResult(ApiResults ar) {
+                    if(ar.getResponseCode() == 201){
+                        Toast.makeText(getContext(),"La prescription est enregistrée !", Toast.LENGTH_LONG).show();
+                    }
+                    else{
+                        Toast.makeText(getContext(),getCorrespondingErrorMessage(ar.getErrorMessage()),
+                                Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+        }
+        else{
+            Toast.makeText(getContext(),R.string.no_connection,Toast.LENGTH_LONG).show();
+        }
+        pd.dismiss();
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -165,29 +171,34 @@ public class PrescriptionFragment extends Fragment implements ExerciseAdapter.On
         pd.setMessage("Récupération des informations...");
         pd.setCancelable(false);
         pd.show();
-        if(isTokenExpired(ur.getToken())){
-            refreshToken(ur.getToken(),getContext());
-        }
-        ApiCall.getPrescription("Bearer " + ur.getToken(),Integer.valueOf(id), new ServiceResultListener() {
-            @Override
-            public void onResult(ApiResults ar) {
-                if(ar.getResponseCode() == 200){
-                    if(!ar.getListPrescription().isEmpty()){
-                        le.addAll(ar.getListPrescription().get(ar.getListPrescription().size()-1).getExercises());
-                        ea.notifyDataSetChanged();
+        if(isNetworkAvailable(getContext())){
+            if(isTokenExpired(ur.getToken())){
+                refreshToken(ur.getToken(),getContext());
+            }
+            ApiCall.getPrescription("Bearer " + ur.getToken(),Integer.valueOf(id), new ServiceResultListener() {
+                @Override
+                public void onResult(ApiResults ar) {
+                    if(ar.getResponseCode() == 200){
+                        if(!ar.getListPrescription().isEmpty()){
+                            le.addAll(ar.getListPrescription().get(ar.getListPrescription().size()-1).getExercises());
+                            ea.notifyDataSetChanged();
+                        }
+                        else{
+                            addPrescription.setVisibility(View.GONE);
+                            empty.setVisibility(View.VISIBLE);
+                        }
                     }
                     else{
-                        addPrescription.setVisibility(View.GONE);
-                        empty.setVisibility(View.VISIBLE);
+                        Toast.makeText(getContext(),getCorrespondingErrorMessage(ar.getErrorMessage()),
+                                Toast.LENGTH_LONG).show();
                     }
                 }
-                else{
-                    Toast.makeText(getContext(),getCorrespondingErrorMessage(ar.getErrorMessage()),
-                            Toast.LENGTH_LONG).show();
-                }
-                pd.dismiss();
-            }
-        });
+            });
+        }
+        else{
+            Toast.makeText(getContext(),R.string.no_connection,Toast.LENGTH_LONG).show();
+        }
+        pd.dismiss();
     }
 
     @Override

@@ -43,6 +43,7 @@ import io.realm.Realm;
 import static com.mycoaching.mycoaching.Util.CommonMethods.checkFields;
 import static com.mycoaching.mycoaching.Util.CommonMethods.getCorrespondingErrorMessage;
 import static com.mycoaching.mycoaching.Util.CommonMethods.getDate;
+import static com.mycoaching.mycoaching.Util.CommonMethods.isNetworkAvailable;
 import static com.mycoaching.mycoaching.Util.CommonMethods.isTokenExpired;
 import static com.mycoaching.mycoaching.Util.CommonMethods.refreshToken;
 import static com.mycoaching.mycoaching.Util.Constants.DATE_FORMATTER;
@@ -120,76 +121,82 @@ public class AddEvent extends Dialog{
         pd.setMessage("Création de l'évènement en cours...");
         pd.setCancelable(false);
         pd.show();
-        if(isTokenExpired(ur.getToken())){
-            refreshToken(ur.getToken(),getContext());
-        }
-        if(checkFields(eventTitle.getText().toString(), event_start_date.getText().toString()
-                ,event_end_date.getText().toString(),event_start_time.getText().toString()
-                , event_end_time.getText().toString(),typeSpinner.getSelectedItem().toString())) {
-            if(typeSpinner.getSelectedItem().equals("Bilan")){
-                type = 0;
+        if(isNetworkAvailable(getContext())){
+            if(isTokenExpired(ur.getToken())){
+                refreshToken(ur.getToken(),getContext());
             }
-            else{
-                type = 1;
-            }
-            if(isCoach){
-                if(!checkFields(listUser.getText().toString())){
-                    Toast.makeText(getContext(),"Vous n'avez pas précisé le nom de l'utilisateur",Toast.LENGTH_LONG).show();
-                    pd.dismiss();
-                }
-                else if(!list.contains(listUser.getText().toString())){
-                    Toast.makeText(getContext(),"Ce client n'existe pas",Toast.LENGTH_LONG).show();
-                    pd.dismiss();
-                }
-            }
-            try{
-                if(formatterDateTime.parse(event_start_date.getText().toString() + " " + event_start_time.getText().toString())
-                        .compareTo(formatterDateTime.parse(event_end_date.getText().toString() + " " + event_end_time.getText().toString())) > 0){
-                    Toast.makeText(getContext(),"La date de fin est antérieure à la date de départ",Toast.LENGTH_LONG).show();
-                    pd.dismiss();
-                }
-                else if(formatterDateTime.parse(event_start_date.getText().toString() + " " + event_start_time.getText().toString()).compareTo(
-                        formatterDateTime.parse(getDate()))<0){
-                    Toast.makeText(getContext(),"La date de début est antérieure à la date d'aujourd'hui",Toast.LENGTH_LONG).show();
-                    pd.dismiss();
+            if(checkFields(eventTitle.getText().toString(), event_start_date.getText().toString()
+                    ,event_end_date.getText().toString(),event_start_time.getText().toString()
+                    , event_end_time.getText().toString(),typeSpinner.getSelectedItem().toString())) {
+                if(typeSpinner.getSelectedItem().equals("Bilan")){
+                    type = 0;
                 }
                 else{
-                    if(isCoach){
-                        Matcher m = Pattern.compile("\\(([^)]+)\\)").matcher(listUser.getText().toString());
-                        while(m.find()) {
-                            idSecondUser = r.where(Contact.class).equalTo("mail",m.group(1)).findFirst().getId();
-                        }
+                    type = 1;
+                }
+                if(isCoach){
+                    if(!checkFields(listUser.getText().toString())){
+                        Toast.makeText(getContext(),"Vous n'avez pas précisé le nom de l'utilisateur",Toast.LENGTH_LONG).show();
+                        pd.dismiss();
+                    }
+                    else if(!list.contains(listUser.getText().toString())){
+                        Toast.makeText(getContext(),"Ce client n'existe pas",Toast.LENGTH_LONG).show();
+                        pd.dismiss();
+                    }
+                }
+                try{
+                    if(formatterDateTime.parse(event_start_date.getText().toString() + " " + event_start_time.getText().toString())
+                            .compareTo(formatterDateTime.parse(event_end_date.getText().toString() + " " + event_end_time.getText().toString())) > 0){
+                        Toast.makeText(getContext(),"La date de fin est antérieure à la date de départ",Toast.LENGTH_LONG).show();
+                        pd.dismiss();
+                    }
+                    else if(formatterDateTime.parse(event_start_date.getText().toString() + " " + event_start_time.getText().toString()).compareTo(
+                            formatterDateTime.parse(getDate()))<0){
+                        Toast.makeText(getContext(),"La date de début est antérieure à la date d'aujourd'hui",Toast.LENGTH_LONG).show();
+                        pd.dismiss();
                     }
                     else{
-                        idSecondUser = "15";
+                        if(isCoach){
+                            Matcher m = Pattern.compile("\\(([^)]+)\\)").matcher(listUser.getText().toString());
+                            while(m.find()) {
+                                idSecondUser = r.where(Contact.class).equalTo("mail",m.group(1)).findFirst().getId();
+                            }
+                        }
+                        else{
+                            idSecondUser = "15";
+                        }
+                        ApiCall.addEvent("Bearer " + ur.getToken(), eventTitle.getText().toString(), String.valueOf(type)
+                                , ur.getId(), idSecondUser, event_start_date.getText().toString() + " " +
+                                        event_start_time.getText().toString(), event_end_date.getText().toString()
+                                        + " " + event_end_time.getText().toString(), getDate(), ur.getId(), new ServiceResultListener() {
+                                    @Override
+                                    public void onResult(ApiResults ar) {
+                                        if (ar.getResponseCode() == 201) {
+                                            pd.dismiss();
+                                            isOK = true;
+                                            dismiss();
+                                        }
+                                        else{
+                                            pd.dismiss();
+                                            Toast.makeText(getContext(),getCorrespondingErrorMessage(ar.getErrorMessage()),
+                                                    Toast.LENGTH_LONG).show();
+                                        }
+                                    }
+                                });
                     }
-                    ApiCall.addEvent("Bearer " + ur.getToken(), eventTitle.getText().toString(), String.valueOf(type)
-                            , ur.getId(), idSecondUser, event_start_date.getText().toString() + " " +
-                                    event_start_time.getText().toString(), event_end_date.getText().toString()
-                                    + " " + event_end_time.getText().toString(), getDate(), ur.getId(), new ServiceResultListener() {
-                                @Override
-                                public void onResult(ApiResults ar) {
-                                    if (ar.getResponseCode() == 201) {
-                                        pd.dismiss();
-                                        isOK = true;
-                                        dismiss();
-                                    }
-                                    else{
-                                        pd.dismiss();
-                                        Toast.makeText(getContext(),getCorrespondingErrorMessage(ar.getErrorMessage()),
-                                                Toast.LENGTH_LONG).show();
-                                    }
-                                }
-                            });
+                }
+                catch(ParseException pe){
+                    pe.printStackTrace();
                 }
             }
-            catch(ParseException pe){
-                pe.printStackTrace();
+            else{
+                pd.dismiss();
+                Toast.makeText(getContext(),"Certains champs sont manquants !", Toast.LENGTH_LONG).show();
             }
         }
         else{
             pd.dismiss();
-            Toast.makeText(getContext(),"Certains champs sont manquants !", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(),R.string.no_connection, Toast.LENGTH_LONG).show();
         }
     }
 

@@ -27,6 +27,7 @@ import io.realm.Realm;
 import static com.mycoaching.mycoaching.Util.CommonMethods.checkFields;
 import static com.mycoaching.mycoaching.Util.CommonMethods.getCorrespondingErrorMessage;
 import static com.mycoaching.mycoaching.Util.CommonMethods.getDate;
+import static com.mycoaching.mycoaching.Util.CommonMethods.isNetworkAvailable;
 import static com.mycoaching.mycoaching.Util.CommonMethods.isTokenExpired;
 import static com.mycoaching.mycoaching.Util.CommonMethods.refreshToken;
 
@@ -80,30 +81,35 @@ public class AppraisalFragment extends Fragment {
             pd.setCancelable(false);
             pd.setMessage("Création de la fiche bilan...");
             pd.show();
-            if(isTokenExpired(ur.getToken())){
-                refreshToken(ur.getToken(),getContext());
+            if(isNetworkAvailable(getContext())){
+                if(isTokenExpired(ur.getToken())){
+                    refreshToken(ur.getToken(),getContext());
+                }
+                ApiCall.postAppraisal("Bearer " + ur.getToken(),b.getString("id"), getDate(), goal.getText().toString(),
+                        rep.getText().toString(), contraindication.getText().toString(),
+                        sportAntecedent.getText().toString(), String.valueOf(help.isChecked()),
+                        String.valueOf(nutritionist.isChecked()), comment.getText().toString(), new ServiceResultListener() {
+                            @Override
+                            public void onResult(ApiResults ar) {
+                                if(ar.getResponseCode() == 201){
+                                    Toast.makeText(getContext(),"Fiche bilan mise à jour !",Toast.LENGTH_LONG).show();
+                                    ClientProfileFragment cpf = (ClientProfileFragment) getActivity().getSupportFragmentManager().findFragmentByTag("PROFILE");
+                                    cpf.getLastAppraisal();
+                                }
+                                else{
+                                    Toast.makeText(getContext(),getCorrespondingErrorMessage(ar.getErrorMessage()),
+                                            Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        });
             }
-            ApiCall.postAppraisal("Bearer " + ur.getToken(),b.getString("id"), getDate(), goal.getText().toString(),
-                    rep.getText().toString(), contraindication.getText().toString(),
-                    sportAntecedent.getText().toString(), String.valueOf(help.isChecked()),
-                    String.valueOf(nutritionist.isChecked()), comment.getText().toString(), new ServiceResultListener() {
-                        @Override
-                        public void onResult(ApiResults ar) {
-                            if(ar.getResponseCode() == 201){
-                                Toast.makeText(getContext(),"Fiche bilan mise à jour !",Toast.LENGTH_LONG).show();
-                                ClientProfileFragment cpf = (ClientProfileFragment) getActivity().getSupportFragmentManager().findFragmentByTag("PROFILE");
-                                cpf.getLastAppraisal();
-                            }
-                            else{
-                                Toast.makeText(getContext(),getCorrespondingErrorMessage(ar.getErrorMessage()),
-                                        Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    });
+            else{
+                Toast.makeText(getContext(),R.string.no_connection,Toast.LENGTH_LONG).show();
+            }
             pd.dismiss();
         }
         else{
-            Toast.makeText(getContext(),"Il manque au minimum un champs !",Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(),R.string.missing_fields,Toast.LENGTH_LONG).show();
         }
     }
 

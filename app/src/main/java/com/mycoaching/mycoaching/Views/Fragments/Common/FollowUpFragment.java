@@ -46,6 +46,7 @@ import io.realm.Realm;
 
 import static com.mycoaching.mycoaching.Util.CommonMethods.getCorrespondingErrorMessage;
 import static com.mycoaching.mycoaching.Util.CommonMethods.getDate;
+import static com.mycoaching.mycoaching.Util.CommonMethods.isNetworkAvailable;
 import static com.mycoaching.mycoaching.Util.CommonMethods.isTokenExpired;
 import static com.mycoaching.mycoaching.Util.CommonMethods.refreshToken;
 
@@ -159,30 +160,35 @@ public class FollowUpFragment extends Fragment {
 
     @OnClick(R.id.buttonMeasure)
     void addMeasurement() {
-        final AddMeasurement am = new AddMeasurement(getActivity(), id);
-        assert am.getWindow() != null;
-        am.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        am.show();
-        am.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                if(am.getIsOK()) {
-                    if(lm.size() != 0){
-                        listDate.clear();
-                        lm.clear();
-                        clearCharts();
-                        listSpecific.clear();
-                        isMonthClicked = true;
-                        isYearClicked = false;
-                        isGlobalClicked = false;
-                        month.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-                        global.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                        year.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        if(isNetworkAvailable(getContext())){
+            final AddMeasurement am = new AddMeasurement(getActivity(), id);
+            assert am.getWindow() != null;
+            am.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            am.show();
+            am.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialogInterface) {
+                    if(am.getIsOK()) {
+                        if(lm.size() != 0){
+                            listDate.clear();
+                            lm.clear();
+                            clearCharts();
+                            listSpecific.clear();
+                            isMonthClicked = true;
+                            isYearClicked = false;
+                            isGlobalClicked = false;
+                            month.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                            global.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                            year.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                        }
+                        getMeasurements();
                     }
-                    getMeasurements();
                 }
-            }
-        });
+            });
+        }
+        else{
+            Toast.makeText(getContext(), R.string.no_connection, Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override

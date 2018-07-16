@@ -37,6 +37,7 @@ import io.realm.Realm;
 
 import static com.mycoaching.mycoaching.Util.CommonMethods.checkFields;
 import static com.mycoaching.mycoaching.Util.CommonMethods.getDate;
+import static com.mycoaching.mycoaching.Util.CommonMethods.isNetworkAvailable;
 import static com.mycoaching.mycoaching.Util.CommonMethods.performTransition;
 import static com.mycoaching.mycoaching.Util.Constants.DATE_FORMATTER;
 
@@ -105,58 +106,63 @@ public class UserDataFragment extends Fragment {
 
     @OnClick(R.id.account_creation)
     void createAccount() {
-        if (checkFields(firstName.getText().toString(), lastName.getText().toString(),
-                birthDate.getText().toString(), city.getText().toString(), phoneNumber.getText().toString()) &&
-                sex != null){
-            pd = new ProgressDialog(getContext(), R.style.StyledDialog);
-            pd.setMessage("Création du compte en cours...");
-            pd.setCancelable(false);
-            pd.show();
-            try{
-                String splitBirth[] = birthDate.getText().toString().split("-");
-                LocalDate birth = new LocalDate(Integer.valueOf(splitBirth[0])
-                        ,Integer.valueOf(splitBirth[1]),Integer.valueOf(splitBirth[2]));
-                LocalDate now = new LocalDate();
-                Years age = Years.yearsBetween(birth,now);
-                if(formatterDate.parse(birthDate.getText().toString()).compareTo(formatterDate.parse(getDate())) > 0){
-                    Toast.makeText(getContext(),"Votre date de naissance est supérieure à la date actuelle",Toast.LENGTH_LONG).show();
-                    pd.dismiss();
-                }
-                else if(age.getYears() < 18 || age.getYears() > 100){
-                    Toast.makeText(getContext(),"Vous devez avoir entre 18 et 100 ans pour utiliser cette application",Toast.LENGTH_LONG).show();
-                    pd.dismiss();
-                }
-                else if(phoneNumber.getText().toString().length() != 10){
-                    Toast.makeText(getContext(),"Le format du numéro de téléphone est invalide",Toast.LENGTH_LONG).show();
-                    pd.dismiss();
-                }
-                else{
-                    ApiCall.signUp(b.getString("type"), b.getString("mail"),
-                            b.getString("password"), firstName.getText().toString(), lastName.getText().toString(), sex,
-                            birthDate.getText().toString(), city.getText().toString(), null, phoneNumber.getText().toString(),
-                            new ServiceResultListener() {
-                                @Override
-                                public void onResult(ApiResults ar) {
-                                    if (ar.getResponseCode() == 201) {
-                                        realm = Realm.getDefaultInstance();
-                                        executeTransaction(realm, ar);
-                                        i = new Intent(getContext(), UserMainActivity.class);
-                                        performTransition(getActivity(),i, R.animator.slide_from_left, R.animator.slide_to_right);
-                                        Toast.makeText(getContext(), "Compte créé !", Toast.LENGTH_LONG).show();
-                                    } else {
-                                        Toast.makeText(getContext(), R.string.error, Toast.LENGTH_LONG).show();
+        if (isNetworkAvailable(getContext())) {
+            if (checkFields(firstName.getText().toString(), lastName.getText().toString(),
+                    birthDate.getText().toString(), city.getText().toString(), phoneNumber.getText().toString()) &&
+                    sex != null){
+                pd = new ProgressDialog(getContext(), R.style.StyledDialog);
+                pd.setMessage("Création du compte en cours...");
+                pd.setCancelable(false);
+                pd.show();
+                try{
+                    String splitBirth[] = birthDate.getText().toString().split("-");
+                    LocalDate birth = new LocalDate(Integer.valueOf(splitBirth[0])
+                            ,Integer.valueOf(splitBirth[1]),Integer.valueOf(splitBirth[2]));
+                    LocalDate now = new LocalDate();
+                    Years age = Years.yearsBetween(birth,now);
+                    if(formatterDate.parse(birthDate.getText().toString()).compareTo(formatterDate.parse(getDate())) > 0){
+                        Toast.makeText(getContext(),"Votre date de naissance est supérieure à la date actuelle",Toast.LENGTH_LONG).show();
+                        pd.dismiss();
+                    }
+                    else if(age.getYears() < 18 || age.getYears() > 100){
+                        Toast.makeText(getContext(),"Vous devez avoir entre 18 et 100 ans pour utiliser cette application",Toast.LENGTH_LONG).show();
+                        pd.dismiss();
+                    }
+                    else if(phoneNumber.getText().toString().length() != 10){
+                        Toast.makeText(getContext(),"Le format du numéro de téléphone est invalide",Toast.LENGTH_LONG).show();
+                        pd.dismiss();
+                    }
+                    else{
+                        ApiCall.signUp(b.getString("type"), b.getString("mail"),
+                                b.getString("password"), firstName.getText().toString(), lastName.getText().toString(), sex,
+                                birthDate.getText().toString(), city.getText().toString(), null, phoneNumber.getText().toString(),
+                                new ServiceResultListener() {
+                                    @Override
+                                    public void onResult(ApiResults ar) {
+                                        if (ar.getResponseCode() == 201) {
+                                            realm = Realm.getDefaultInstance();
+                                            executeTransaction(realm, ar);
+                                            i = new Intent(getContext(), UserMainActivity.class);
+                                            performTransition(getActivity(),i, R.animator.slide_from_left, R.animator.slide_to_right);
+                                            Toast.makeText(getContext(), "Compte créé !", Toast.LENGTH_LONG).show();
+                                        } else {
+                                            Toast.makeText(getContext(), R.string.error, Toast.LENGTH_LONG).show();
+                                        }
                                     }
-                                }
-                            });
-                    pd.dismiss();
+                                });
+                        pd.dismiss();
+                    }
+                }
+                catch (ParseException pe){
+                    pe.printStackTrace();
                 }
             }
-            catch (ParseException pe){
-                pe.printStackTrace();
+            else{
+                Toast.makeText(getContext(), R.string.missing_fields, Toast.LENGTH_LONG).show();
             }
         }
         else{
-            Toast.makeText(getContext(), R.string.missing_fields, Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), R.string.no_connection, Toast.LENGTH_LONG).show();
         }
     }
 

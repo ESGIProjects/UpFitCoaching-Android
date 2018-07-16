@@ -3,6 +3,7 @@ package com.mycoaching.mycoaching.Views.Fragments.Common;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -46,7 +47,7 @@ import static com.mycoaching.mycoaching.Util.CommonMethods.refreshToken;
 /**
  * Created by kevin on 02/06/2018.
  */
-public class PostFragment extends Fragment {
+public class PostFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
 
     private Bundle bundle;
     private List<Post> lp = new ArrayList<>();
@@ -56,6 +57,9 @@ public class PostFragment extends Fragment {
     ProgressDialog pd;
     View v;
     Realm r;
+
+    @BindView(R.id.swipe)
+    SwipeRefreshLayout srl;
 
     @BindView(R.id.inputPost)
     EditText et;
@@ -98,6 +102,8 @@ public class PostFragment extends Fragment {
         v = inflater.inflate(R.layout.fragment_list_post, container, false);
         ButterKnife.bind(this, v);
         bundle = this.getArguments();
+
+        srl.setOnRefreshListener(this);
 
         rv = new RecyclerView(getContext());
 
@@ -149,5 +155,16 @@ public class PostFragment extends Fragment {
             Toast.makeText(getContext(), R.string.no_connection, Toast.LENGTH_LONG).show();
             pd.dismiss();
         }
+        if (srl.isRefreshing()) {
+            srl.setRefreshing(false);
+        }
+    }
+
+    @Override
+    public void onRefresh() {
+        if(isNetworkAvailable(getContext())){
+            lp.clear();
+        }
+        prepareData();
     }
 }

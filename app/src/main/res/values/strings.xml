@@ -38,6 +38,8 @@
     <string name="next">Suivant</string>
     <string name="send_message">Envoyer un message</string>
 
+    <string name="search">Recherche</string>
+
     <string name="title_activity_user_main">UserMainActivity</string>
     <string name="title_followUp">Suivi</string>
     <string name="title_prescription">Programme</string>

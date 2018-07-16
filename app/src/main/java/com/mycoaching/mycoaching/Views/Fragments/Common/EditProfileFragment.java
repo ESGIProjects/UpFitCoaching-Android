@@ -27,6 +27,7 @@ import static com.mycoaching.mycoaching.Util.CommonMethods.checkPassword;
 import static com.mycoaching.mycoaching.Util.CommonMethods.clearFields;
 import static com.mycoaching.mycoaching.Util.CommonMethods.getCorrespondingErrorMessage;
 import static com.mycoaching.mycoaching.Util.CommonMethods.getSHAPassword;
+import static com.mycoaching.mycoaching.Util.CommonMethods.isNetworkAvailable;
 import static com.mycoaching.mycoaching.Util.CommonMethods.isNumber;
 import static com.mycoaching.mycoaching.Util.CommonMethods.isTokenExpired;
 import static com.mycoaching.mycoaching.Util.CommonMethods.refreshToken;
@@ -68,55 +69,60 @@ public class EditProfileFragment extends Fragment{
 
     @OnClick(R.id.confirm_edit)
     public void edit(){
-        if(checkFields(mail.getText().toString(),firstName.getText().toString(),lastName.getText().toString(),
-                city.getText().toString(),phoneNumber.getText().toString()) &&
-                checkEmail(mail.getText().toString())){
-            if((password.getText().toString().length() > 0)
-                    &&(!checkFields(password.getText().toString()) || !checkPassword(password.getText().toString()))){
-                Toast.makeText(getContext(),"Ce mot de passe n'est pas valide",Toast.LENGTH_LONG).show();
-                clearFields(password);
-            }
-            else if(phoneNumber.getText().toString().length() != 10 || !isNumber(phoneNumber.getText().toString())){
-                Toast.makeText(getContext(),"Le format du numéro de téléphone est invalide",Toast.LENGTH_LONG).show();
+        if(isNetworkAvailable(getContext())){
+            if(checkFields(mail.getText().toString(),firstName.getText().toString(),lastName.getText().toString(),
+                    city.getText().toString(),phoneNumber.getText().toString()) &&
+                    checkEmail(mail.getText().toString())){
+                if((password.getText().toString().length() > 0)
+                        &&(!checkFields(password.getText().toString()) || !checkPassword(password.getText().toString()))){
+                    Toast.makeText(getContext(),"Ce mot de passe n'est pas valide",Toast.LENGTH_LONG).show();
+                    clearFields(password);
+                }
+                else if(phoneNumber.getText().toString().length() != 10 || !isNumber(phoneNumber.getText().toString())){
+                    Toast.makeText(getContext(),"Le format du numéro de téléphone est invalide",Toast.LENGTH_LONG).show();
+                }
+                else{
+                    String pwd = null;
+                    if (checkPassword(password.getText().toString())){
+                        pwd = getSHAPassword(password.getText().toString());
+                    }
+
+                    if(b.getBoolean("isCoach",false)){
+                        if(!checkFields(address.getText().toString())){
+                            Toast.makeText(getContext(),"Veuillez saisir une adresse",Toast.LENGTH_LONG).show();
+                        }
+                    }
+                    pd = new ProgressDialog(getActivity(), R.style.StyledDialog);
+                    pd.setMessage("Mise à jour du profil...");
+                    pd.setCancelable(false);
+                    pd.show();
+                    if(isTokenExpired(ur.getToken())){
+                        refreshToken(ur.getToken(),getContext());
+                    }
+                    ApiCall.updateUser("Bearer " + ur.getToken(),ur.getId(), mail.getText().toString(), pwd,
+                            firstName.getText().toString(), lastName.getText().toString(), city.getText().toString(),
+                            phoneNumber.getText().toString(), address.getText().toString(), new ServiceResultListener() {
+                                @Override
+                                public void onResult(ApiResults ar) {
+                                    if(ar.getResponseCode() == 200){
+                                        executeTransaction(realm);
+                                        Toast.makeText(getContext(),"Le profil a été mis à jour !",Toast.LENGTH_LONG).show();
+                                    }
+                                    else{
+                                        Toast.makeText(getContext(),getCorrespondingErrorMessage(ar.getErrorMessage()),
+                                                Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                            });
+                    pd.dismiss();
+                }
             }
             else{
-                String pwd = null;
-                if (checkPassword(password.getText().toString())){
-                    pwd = getSHAPassword(password.getText().toString());
-                }
-
-                if(b.getBoolean("isCoach",false)){
-                    if(!checkFields(address.getText().toString())){
-                        Toast.makeText(getContext(),"Veuillez saisir une adresse",Toast.LENGTH_LONG).show();
-                    }
-                }
-                pd = new ProgressDialog(getActivity(), R.style.StyledDialog);
-                pd.setMessage("Mise à jour du profil...");
-                pd.setCancelable(false);
-                pd.show();
-                if(isTokenExpired(ur.getToken())){
-                    refreshToken(ur.getToken(),getContext());
-                }
-                ApiCall.updateUser("Bearer " + ur.getToken(),ur.getId(), mail.getText().toString(), pwd,
-                        firstName.getText().toString(), lastName.getText().toString(), city.getText().toString(),
-                        phoneNumber.getText().toString(), address.getText().toString(), new ServiceResultListener() {
-                            @Override
-                            public void onResult(ApiResults ar) {
-                                if(ar.getResponseCode() == 200){
-                                    executeTransaction(realm);
-                                    Toast.makeText(getContext(),"Le profil a été mis à jour !",Toast.LENGTH_LONG).show();
-                                }
-                                else{
-                                    Toast.makeText(getContext(),getCorrespondingErrorMessage(ar.getErrorMessage()),
-                                            Toast.LENGTH_LONG).show();
-                                }
-                            }
-                        });
-                pd.dismiss();
+                Toast.makeText(getContext(),"Au moins un des champs n'est pas valide !",Toast.LENGTH_LONG).show();
             }
         }
         else{
-            Toast.makeText(getContext(),"Au moins un des champs n'est pas valide !",Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), R.string.no_connection, Toast.LENGTH_LONG).show();
         }
     }
 

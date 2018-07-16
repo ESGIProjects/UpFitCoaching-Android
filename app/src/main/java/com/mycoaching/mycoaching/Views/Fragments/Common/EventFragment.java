@@ -48,6 +48,7 @@ import io.realm.Realm;
 
 import static com.mycoaching.mycoaching.Util.CommonMethods.getCorrespondingErrorMessage;
 import static com.mycoaching.mycoaching.Util.CommonMethods.getDate;
+import static com.mycoaching.mycoaching.Util.CommonMethods.isNetworkAvailable;
 import static com.mycoaching.mycoaching.Util.CommonMethods.isTokenExpired;
 import static com.mycoaching.mycoaching.Util.CommonMethods.refreshToken;
 import static com.mycoaching.mycoaching.Util.Constants.DATE_FORMATTER;
@@ -82,23 +83,28 @@ public class EventFragment extends Fragment implements EventAdapter.OnClick{
 
     @OnClick(R.id.buttonEvents)
     void action() {
-        final AddEvent ae = new AddEvent(getActivity(),isCoach);
-        assert ae.getWindow() != null;
-        ae.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        ae.show();
-        ae.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                if(ae.getIsOK()){
-                    listEvents.clear();
-                    listToDisplay.clear();
-                    listDaysAppointment.clear();
-                    listDaysSession.clear();
-                    listDaysCombined.clear();
-                    prepareData();
+        if(isNetworkAvailable(getContext())){
+            final AddEvent ae = new AddEvent(getActivity(),isCoach);
+            assert ae.getWindow() != null;
+            ae.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            ae.show();
+            ae.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialogInterface) {
+                    if(ae.getIsOK()){
+                        listEvents.clear();
+                        listToDisplay.clear();
+                        listDaysAppointment.clear();
+                        listDaysSession.clear();
+                        listDaysCombined.clear();
+                        prepareData();
+                    }
                 }
-            }
-        });
+            });
+        }
+        else{
+            Toast.makeText(getContext(), R.string.no_connection, Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
@@ -216,25 +222,30 @@ public class EventFragment extends Fragment implements EventAdapter.OnClick{
 
     @Override
     public void onItemClick(int position) {
-        Event e = listToDisplay.get(position);
-        final EditEvent ee = new EditEvent(getActivity(),e.getId(),e.getName(),e.getType(),e.getStart()
-                ,e.getEnd(),ur.getId());
-        assert ee.getWindow() != null;
-        ee.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        ee.show();
-        ee.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                if(ee.getIsOK()){
-                    listEvents.clear();
-                    listToDisplay.clear();
-                    listDaysAppointment.clear();
-                    listDaysSession.clear();
-                    listDaysCombined.clear();
-                    prepareData();
+        if(isNetworkAvailable(getContext())){
+            Event e = listToDisplay.get(position);
+            final EditEvent ee = new EditEvent(getActivity(),e.getId(),e.getName(),e.getType(),e.getStart()
+                    ,e.getEnd(),ur.getId());
+            assert ee.getWindow() != null;
+            ee.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            ee.show();
+            ee.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialogInterface) {
+                    if(ee.getIsOK()){
+                        listEvents.clear();
+                        listToDisplay.clear();
+                        listDaysAppointment.clear();
+                        listDaysSession.clear();
+                        listDaysCombined.clear();
+                        prepareData();
+                    }
                 }
-            }
-        });
+            });
+        }
+        else{
+            Toast.makeText(getContext(), R.string.no_connection, Toast.LENGTH_LONG).show();
+        }
     }
 
     private void sortElements(List<Event> le){

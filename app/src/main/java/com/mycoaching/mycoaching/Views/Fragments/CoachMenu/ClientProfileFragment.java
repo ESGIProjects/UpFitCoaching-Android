@@ -37,6 +37,7 @@ import io.realm.Realm;
 import io.realm.RealmObject;
 
 import static com.mycoaching.mycoaching.Util.CommonMethods.getCorrespondingErrorMessage;
+import static com.mycoaching.mycoaching.Util.CommonMethods.isNetworkAvailable;
 import static com.mycoaching.mycoaching.Util.CommonMethods.isTokenExpired;
 import static com.mycoaching.mycoaching.Util.CommonMethods.refreshToken;
 
@@ -117,74 +118,94 @@ public class ClientProfileFragment extends Fragment{
 
     @OnClick(R.id.follow)
     public void follow(){
-        fm = getActivity().getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        AppraisalFragment af = new AppraisalFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("id",b.getString("id"));
-        if(a != null){
-            bundle.putString("goal",a.getGoal());
-            bundle.putString("rep",a.getSessionsByWeek());
-            bundle.putString("contre",a.getContraindication());
-            bundle.putString("antecedent",a.getSportAntecedents());
-            bundle.putString("help",a.getHelpNeeded());
-            bundle.putString("nutritionist",a.getHasNutritionist());
-            bundle.putString("comment",a.getComments());
+        if(isNetworkAvailable(getContext())){
+            fm = getActivity().getSupportFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            AppraisalFragment af = new AppraisalFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("id",b.getString("id"));
+            if(a != null){
+                bundle.putString("goal",a.getGoal());
+                bundle.putString("rep",a.getSessionsByWeek());
+                bundle.putString("contre",a.getContraindication());
+                bundle.putString("antecedent",a.getSportAntecedents());
+                bundle.putString("help",a.getHelpNeeded());
+                bundle.putString("nutritionist",a.getHasNutritionist());
+                bundle.putString("comment",a.getComments());
+            }
+            af.setArguments(bundle);
+            ft.hide(getFragmentManager().findFragmentByTag("PROFILE"));
+            ft.add(R.id.container, af,"APPRAISAL");
+            ft.commit();
         }
-        af.setArguments(bundle);
-        ft.hide(getFragmentManager().findFragmentByTag("PROFILE"));
-        ft.add(R.id.container, af,"APPRAISAL");
-        ft.commit();
+        else{
+            Toast.makeText(getContext(), R.string.no_connection, Toast.LENGTH_LONG).show();
+        }
     }
 
     @OnClick(R.id.consult)
     public void consult(){
-        fm = getActivity().getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        Bundle bundle = new Bundle();
-        bundle.putString("id",b.getString("id"));
-        FollowUpFragment fuf = new FollowUpFragment();
-        fuf.setArguments(bundle);
-        ft.hide(getFragmentManager().findFragmentByTag("PROFILE"));
-        ft.add(R.id.container, fuf,"FOLLOW");
-        ft.commit();
+        if(isNetworkAvailable(getContext())){
+            fm = getActivity().getSupportFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            Bundle bundle = new Bundle();
+            bundle.putString("id",b.getString("id"));
+            FollowUpFragment fuf = new FollowUpFragment();
+            fuf.setArguments(bundle);
+            ft.hide(getFragmentManager().findFragmentByTag("PROFILE"));
+            ft.add(R.id.container, fuf,"FOLLOW");
+            ft.commit();
+        }
+        else{
+            Toast.makeText(getContext(), R.string.no_connection, Toast.LENGTH_LONG).show();
+        }
     }
 
     @OnClick(R.id.add_test)
     public void test(){
-        fm = getActivity().getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        Bundle bundle = new Bundle();
-        bundle.putString("id",b.getString("id"));
-        if(!lt.isEmpty()){
-            bundle.putString("warming",lt.get(lt.size()-1).getWarmUp());
-            bundle.putString("start_speed",lt.get(lt.size()-1).getStartSpeed());
-            bundle.putString("increase",lt.get(lt.size()-1).getIncrease());
-            bundle.putString("freq",lt.get(lt.size()-1).getFrequency());
-            bundle.putString("knee",lt.get(lt.size()-1).getKneeFlexibility());
-            bundle.putString("shin",lt.get(lt.size()-1).getShinFlexibility());
-            bundle.putString("kick",lt.get(lt.size()-1).getHitFootFlexibility());
-            bundle.putString("closedFist",lt.get(lt.size()-1).getClosedFistGroundFlexibility());
-            bundle.putString("handFlat",lt.get(lt.size()-1).getHandFlatGroundFlexibility());
+        if(isNetworkAvailable(getContext())){
+            fm = getActivity().getSupportFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            Bundle bundle = new Bundle();
+            bundle.putString("id",b.getString("id"));
+            if(!lt.isEmpty()){
+                bundle.putString("warming",lt.get(lt.size()-1).getWarmUp());
+                bundle.putString("start_speed",lt.get(lt.size()-1).getStartSpeed());
+                bundle.putString("increase",lt.get(lt.size()-1).getIncrease());
+                bundle.putString("freq",lt.get(lt.size()-1).getFrequency());
+                bundle.putString("knee",lt.get(lt.size()-1).getKneeFlexibility());
+                bundle.putString("shin",lt.get(lt.size()-1).getShinFlexibility());
+                bundle.putString("kick",lt.get(lt.size()-1).getHitFootFlexibility());
+                bundle.putString("closedFist",lt.get(lt.size()-1).getClosedFistGroundFlexibility());
+                bundle.putString("handFlat",lt.get(lt.size()-1).getHandFlatGroundFlexibility());
+            }
+            TestFragment tf = new TestFragment();
+            tf.setArguments(bundle);
+            ft.hide(getFragmentManager().findFragmentByTag("PROFILE"));
+            ft.add(R.id.container, tf,"TEST");
+            ft.commit();
         }
-        TestFragment tf = new TestFragment();
-        tf.setArguments(bundle);
-        ft.hide(getFragmentManager().findFragmentByTag("PROFILE"));
-        ft.add(R.id.container, tf,"TEST");
-        ft.commit();
+        else{
+            Toast.makeText(getContext(), R.string.no_connection, Toast.LENGTH_LONG).show();
+        }
     }
 
     @OnClick(R.id.add_prescription)
     public void prescription(){
-        fm = getActivity().getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        PrescriptionFragment pf = new PrescriptionFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("id",b.getString("id"));
-        pf.setArguments(bundle);
-        ft.hide(getFragmentManager().findFragmentByTag("PROFILE"));
-        ft.add(R.id.container, pf,"PRESCRIPTION");
-        ft.commit();
+        if(isNetworkAvailable(getContext())){
+            fm = getActivity().getSupportFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            PrescriptionFragment pf = new PrescriptionFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("id",b.getString("id"));
+            pf.setArguments(bundle);
+            ft.hide(getFragmentManager().findFragmentByTag("PROFILE"));
+            ft.add(R.id.container, pf,"PRESCRIPTION");
+            ft.commit();
+        }
+        else{
+            Toast.makeText(getContext(), R.string.no_connection, Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
@@ -222,48 +243,53 @@ public class ClientProfileFragment extends Fragment{
         pd.setMessage("Récupération des informations...");
         pd.setCancelable(false);
         pd.show();
-        if(isTokenExpired(ur.getToken())){
-            refreshToken(ur.getToken(),getContext());
-        }
-        ApiCall.getLastAppraisal("Bearer " + ur.getToken(),Integer.valueOf(b.getString("id")), new ServiceResultListener() {
-            @Override
-            public void onResult(ApiResults ar) {
-                if(ar.getResponseCode() == 200){
-                    ApiCall.getTests("Bearer " + ur.getToken(),Integer.valueOf(b.getString("id")), new ServiceResultListener() {
-                        @Override
-                        public void onResult(ApiResults ar) {
-                            if(ar.getResponseCode() == 200){
-                                if(!ar.getListTest().isEmpty()){
-                                    lt.addAll(ar.getListTest());
-                                    test.setVisibility(View.VISIBLE);
-                                    speed.setVisibility(View.VISIBLE);
-                                    freq.setVisibility(View.VISIBLE);
-
-                                    speed.setText(getResources().getString(R.string.test_speed,lt.get(lt.size()-1).getWarmUp()));
-                                    freq.setText(getResources().getString(R.string.test_freq,lt.get(lt.size()-1).getFrequency()));
-                                }
-                                add_test.setVisibility(View.VISIBLE);
-                                add_prescription.setVisibility(View.VISIBLE);
-
-                            }
-                            else{
-                                Toast.makeText(getContext(),getCorrespondingErrorMessage(ar.getErrorMessage()),
-                                        Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    });
-                    a = ar.getLastAppraisal();
-                    appraisal.setVisibility(View.VISIBLE);
-                    goal.setVisibility(View.VISIBLE);
-                    rep.setVisibility(View.VISIBLE);
-                    consult.setVisibility(View.VISIBLE);
-
-                    follow.setText(getResources().getString(R.string.display_appraisal));
-                    goal.setText(getResources().getString(R.string.goal,a.getGoal()));
-                    rep.setText(getResources().getString(R.string.rep,a.getSessionsByWeek()));
-                }
+        if(isNetworkAvailable(getContext())){
+            if(isTokenExpired(ur.getToken())){
+                refreshToken(ur.getToken(),getContext());
             }
-        });
+            ApiCall.getLastAppraisal("Bearer " + ur.getToken(),Integer.valueOf(b.getString("id")), new ServiceResultListener() {
+                @Override
+                public void onResult(ApiResults ar) {
+                    if(ar.getResponseCode() == 200){
+                        ApiCall.getTests("Bearer " + ur.getToken(),Integer.valueOf(b.getString("id")), new ServiceResultListener() {
+                            @Override
+                            public void onResult(ApiResults ar) {
+                                if(ar.getResponseCode() == 200){
+                                    if(!ar.getListTest().isEmpty()){
+                                        lt.addAll(ar.getListTest());
+                                        test.setVisibility(View.VISIBLE);
+                                        speed.setVisibility(View.VISIBLE);
+                                        freq.setVisibility(View.VISIBLE);
+
+                                        speed.setText(getResources().getString(R.string.test_speed,lt.get(lt.size()-1).getWarmUp()));
+                                        freq.setText(getResources().getString(R.string.test_freq,lt.get(lt.size()-1).getFrequency()));
+                                    }
+                                    add_test.setVisibility(View.VISIBLE);
+                                    add_prescription.setVisibility(View.VISIBLE);
+
+                                }
+                                else{
+                                    Toast.makeText(getContext(),getCorrespondingErrorMessage(ar.getErrorMessage()),
+                                            Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        });
+                        a = ar.getLastAppraisal();
+                        appraisal.setVisibility(View.VISIBLE);
+                        goal.setVisibility(View.VISIBLE);
+                        rep.setVisibility(View.VISIBLE);
+                        consult.setVisibility(View.VISIBLE);
+
+                        follow.setText(getResources().getString(R.string.display_appraisal));
+                        goal.setText(getResources().getString(R.string.goal,a.getGoal()));
+                        rep.setText(getResources().getString(R.string.rep,a.getSessionsByWeek()));
+                    }
+                }
+            });
+        }
+        else{
+            Toast.makeText(getContext(), R.string.no_connection, Toast.LENGTH_LONG).show();
+        }
         pd.dismiss();
     }
 }
