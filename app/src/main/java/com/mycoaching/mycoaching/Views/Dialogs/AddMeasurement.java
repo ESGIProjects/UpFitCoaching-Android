@@ -83,8 +83,8 @@ public class AddMeasurement extends Dialog {
             else if(Float.valueOf(waist.getText().toString()) > 150.0f){
                 Toast.makeText(getContext(),"Le tour de ventre ne peuxt excéder 150cm !", Toast.LENGTH_LONG).show();
             }
-            else if(Float.valueOf(thigh.getText().toString()) > 100.0f){
-                Toast.makeText(getContext(),"Le tour de cuisse ne peut excéder 100cm !", Toast.LENGTH_LONG).show();
+            else if(Float.valueOf(thigh.getText().toString()) > 90.0f){
+                Toast.makeText(getContext(),"Le tour de cuisse ne peut excéder 90cm !", Toast.LENGTH_LONG).show();
             }
             else if(Float.valueOf(arm.getText().toString()) > 50.0f){
                 Toast.makeText(getContext(),"Le tour de bras ne peut excéder 50cm !", Toast.LENGTH_LONG).show();

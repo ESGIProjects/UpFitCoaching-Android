@@ -30,7 +30,8 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/thread_title"
                 android:textColor="@color/colorWhite"
-                android:maxLines="1" />
+                android:inputType="text"
+                android:maxLength="60"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -46,7 +47,8 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/thread_message"
                 android:textColor="@color/colorWhite"
-                android:inputType="textMultiLine"
+                android:maxLines="4"
+                android:maxLength="300"
                 />
         </android.support.design.widget.TextInputLayout>
 

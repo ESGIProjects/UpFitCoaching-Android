@@ -43,7 +43,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/speed_input"
                     android:textColor="@color/colorBlack"
-                    android:maxLines="1"
+                    android:maxLength="2"
                     android:inputType="number"/>
             </android.support.design.widget.TextInputLayout>
 
@@ -61,7 +61,7 @@
                     android:hint="@string/start_speed_input"
                     android:textColor="@color/colorBlack"
                     android:inputType="number"
-                    android:maxLines="1" />
+                    android:maxLength="2" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -78,7 +78,7 @@
                     android:hint="@string/increase_input"
                     android:textColor="@color/colorBlack"
                     android:inputType="number"
-                    android:maxLines="1" />
+                    android:maxLength="2" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -95,7 +95,7 @@
                     android:hint="@string/freq_input"
                     android:textColor="@color/colorBlack"
                     android:inputType="number"
-                    android:maxLines="1" />
+                    android:maxLength="2" />
             </android.support.design.widget.TextInputLayout>
 
             <TextView

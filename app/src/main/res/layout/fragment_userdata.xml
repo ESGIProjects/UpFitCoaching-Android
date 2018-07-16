@@ -19,6 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/firstName"
+            android:maxLength="60"
             android:textColor="@color/colorWhite"
             android:singleLine="true"
             android:inputType="text"
@@ -40,6 +41,7 @@
             android:textColor="@color/colorWhite"
             android:singleLine="true"
             android:inputType="text"
+            android:maxLength="60"
             android:nextFocusDown="@id/birthDate"/>
     </android.support.design.widget.TextInputLayout>
 
@@ -107,6 +109,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/city"
+            android:maxLength="60"
             android:singleLine="true"
             android:inputType="text"
             android:nextFocusDown="@id/phoneNumber" />
@@ -125,6 +128,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/phoneNumber"
+            android:maxLength="10"
             android:inputType="phone"
             android:singleLine="true"
             android:nextFocusDown="@id/account_creation" />

@@ -232,4 +232,12 @@ public class CommonMethods {
             }
         });
     }
+
+    /**
+     * @param string the string to check
+     * @return true if string is composed exclusively of digits, false else
+     */
+    public static boolean isNumber(String string) {
+        return string.matches("\\d+");
+    }
 }

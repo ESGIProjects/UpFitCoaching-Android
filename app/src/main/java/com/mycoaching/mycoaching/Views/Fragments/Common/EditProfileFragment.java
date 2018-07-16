@@ -27,6 +27,7 @@ import static com.mycoaching.mycoaching.Util.CommonMethods.checkPassword;
 import static com.mycoaching.mycoaching.Util.CommonMethods.clearFields;
 import static com.mycoaching.mycoaching.Util.CommonMethods.getCorrespondingErrorMessage;
 import static com.mycoaching.mycoaching.Util.CommonMethods.getSHAPassword;
+import static com.mycoaching.mycoaching.Util.CommonMethods.isNumber;
 import static com.mycoaching.mycoaching.Util.CommonMethods.isTokenExpired;
 import static com.mycoaching.mycoaching.Util.CommonMethods.refreshToken;
 
@@ -70,11 +71,12 @@ public class EditProfileFragment extends Fragment{
         if(checkFields(mail.getText().toString(),firstName.getText().toString(),lastName.getText().toString(),
                 city.getText().toString(),phoneNumber.getText().toString()) &&
                 checkEmail(mail.getText().toString())){
-            if(!checkFields(password.getText().toString()) || !checkPassword(password.getText().toString())){
+            if((password.getText().toString().length() > 0)
+                    &&(!checkFields(password.getText().toString()) || !checkPassword(password.getText().toString()))){
                 Toast.makeText(getContext(),"Ce mot de passe n'est pas valide",Toast.LENGTH_LONG).show();
                 clearFields(password);
             }
-            else if(phoneNumber.getText().toString().length() != 10){
+            else if(phoneNumber.getText().toString().length() != 10 || !isNumber(phoneNumber.getText().toString())){
                 Toast.makeText(getContext(),"Le format du numéro de téléphone est invalide",Toast.LENGTH_LONG).show();
             }
             else{

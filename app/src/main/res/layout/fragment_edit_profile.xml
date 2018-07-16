@@ -32,6 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/mail_label"
+            android:maxLength="100"
             android:textColor="@color/colorBlack"
             android:maxLines="1" />
     </android.support.design.widget.TextInputLayout>
@@ -48,6 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/firstName"
+            android:maxLength="60"
             android:textColor="@color/colorBlack"
             android:maxLines="1" />
     </android.support.design.widget.TextInputLayout>
@@ -64,6 +66,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/lastName"
+            android:maxLength="60"
             android:textColor="@color/colorBlack"
             android:maxLines="1" />
     </android.support.design.widget.TextInputLayout>
@@ -80,6 +83,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/passwd_label_opt"
+            android:maxLength="60"
             android:textColor="@color/colorBlack"
             android:maxLines="1" />
     </android.support.design.widget.TextInputLayout>
@@ -96,6 +100,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/city"
+            android:maxLength="60"
             android:textColor="@color/colorBlack"
             android:maxLines="1" />
     </android.support.design.widget.TextInputLayout>
@@ -114,6 +119,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/address"
+            android:maxLength="100"
             android:textColor="@color/colorBlack"
             android:maxLines="1" />
     </android.support.design.widget.TextInputLayout>
@@ -130,6 +136,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/phoneNumber"
+            android:maxLength="10"
             android:textColor="@color/colorBlack"
             android:maxLines="1" />
     </android.support.design.widget.TextInputLayout>

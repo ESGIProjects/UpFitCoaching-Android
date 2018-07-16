@@ -31,6 +31,8 @@
             android:layout_height="wrap_content"
             android:hint="@string/event_title"
             android:textColor="@color/colorWhite"
+            android:inputType="text"
+            android:maxLength="30"
             android:maxLines="1" />
     </android.support.design.widget.TextInputLayout>
 
@@ -46,7 +48,8 @@
             android:layout_height="wrap_content"
             android:textColor="@color/colorWhite"
             android:hint="Nom et mail de l'utilisateur"
-            android:textSize="12sp"
+            android:textSize="14sp"
+            android:maxLength="120"
             android:maxLines="1" />
     </android.support.design.widget.TextInputLayout>
 

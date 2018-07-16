@@ -2,6 +2,7 @@
     <string name="app_name">UpFit Coaching</string>
     <string name="mail_label">Email</string>
     <string name="passwd_label">Mot de passe</string>
+    <string name="passwd_label_input">Mot de passe (8 caractères minimum)</string>
     <string name="passwd_label_opt">Mot de passe (optionnel)</string>
     <string name="passwd_confirmation">Confirmation du mot de passe</string>
     <string name="sign_in">Connexion</string>
