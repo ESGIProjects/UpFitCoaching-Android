@@ -7,7 +7,6 @@ import com.mycoaching.mycoaching.Util.Singletons.RetrofitSingleton;
  * Version 1.0
  */
 
-
 public class ApiUtils {
 
     private static final String BASE_URL = "http://212.47.234.147/";

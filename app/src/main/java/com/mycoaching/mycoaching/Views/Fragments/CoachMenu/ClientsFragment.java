@@ -39,18 +39,20 @@ import static com.mycoaching.mycoaching.Util.CommonMethods.refreshToken;
 
 /**
  * Created by kevin on 24/06/2018.
+ * Version 1.0
  */
+
 public class ClientsFragment extends Fragment implements ClientsAdapter.OnClick, SwipeRefreshLayout.OnRefreshListener{
 
-    Realm r;
-    UserRealm ur,u;
-    View v;
-    RecyclerView rv;
-    ClientsAdapter ca;
-    List<UserRealm> lu = new ArrayList<>();
+    private UserRealm ur,u;
+    private ClientsAdapter ca;
+    private List<UserRealm> lu = new ArrayList<>();
     private List<Integer> ids = new ArrayList<>();
-    FragmentManager fm;
-    ProgressDialog pd;
+    protected FragmentManager fm;
+    protected ProgressDialog pd;
+    protected View v;
+    protected RecyclerView rv;
+    protected Realm r;
 
     @BindView(R.id.swipe)
     SwipeRefreshLayout srl;

@@ -20,7 +20,7 @@ import io.realm.Realm;
 
 public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHolder> {
 
-    Realm r;
+    protected Realm r;
 
     private List<Contact> listContacts;
 

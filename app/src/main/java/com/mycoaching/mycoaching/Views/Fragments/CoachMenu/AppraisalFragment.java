@@ -33,14 +33,16 @@ import static com.mycoaching.mycoaching.Util.CommonMethods.refreshToken;
 
 /**
  * Created by kevin on 29/06/2018.
+ * Version 1.0
  */
+
 public class AppraisalFragment extends Fragment {
 
-    View v;
-    Bundle b;
-    ProgressDialog pd;
-    Realm r;
-    UserRealm ur;
+    private Bundle b;
+    private UserRealm ur;
+    protected ProgressDialog pd;
+    protected Realm r;
+    protected View v;
 
     @OnTouch(R.id.comment)
     boolean handleNestedScroll(View v, MotionEvent event) {

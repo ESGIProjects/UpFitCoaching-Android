@@ -11,6 +11,7 @@ import static junit.framework.Assert.assertTrue;
 
 /**
  * Created by kevin on 22/06/2018.
+ * Version 1.0
  */
 public class ConstantsTest{
 

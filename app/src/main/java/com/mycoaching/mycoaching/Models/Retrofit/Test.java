@@ -4,6 +4,7 @@ package com.mycoaching.mycoaching.Models.Retrofit;
  * Created by kevin on 01/07/2018.
  * Version 1.0
  */
+
 public class Test {
 
     private String id, date, warmUp, startSpeed, increase, frequency, kneeFlexibility, shinFlexibility,

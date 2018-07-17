@@ -35,30 +35,22 @@ import static com.mycoaching.mycoaching.Util.CommonMethods.performTransition;
 
 /**
  * Created by kevin on 07/03/2018.
+ * Version 1.0
  */
 
 public class UserMainActivity extends AppCompatActivity {
 
-    @BindView(R.id.title)
-    TextView title;
-
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-
-    Intent intent;
-    BottomNavigationView navigation;
-
-    FollowUpFragment fuf = new FollowUpFragment();
-    PrescriptionFragment pf = new PrescriptionFragment();
-    EventFragment ef = new EventFragment();
-    ChatFragment chf = new ChatFragment();
-    ThreadFragment tf = new ThreadFragment();
-    FragmentTransaction ft;
-    Bundle b = new Bundle();
-
-    boolean doubleTapToExit = false;
-
-    Realm realm = null;
+    private Intent intent;
+    private BottomNavigationView navigation;
+    private FollowUpFragment fuf = new FollowUpFragment();
+    private PrescriptionFragment pf = new PrescriptionFragment();
+    private EventFragment ef = new EventFragment();
+    private ChatFragment chf = new ChatFragment();
+    private ThreadFragment tf = new ThreadFragment();
+    private FragmentTransaction ft;
+    private Bundle b = new Bundle();
+    private boolean doubleTapToExit = false;
+    private Realm realm = null;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -110,6 +102,12 @@ public class UserMainActivity extends AppCompatActivity {
             return false;
         }
     };
+
+    @BindView(R.id.title)
+    TextView title;
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

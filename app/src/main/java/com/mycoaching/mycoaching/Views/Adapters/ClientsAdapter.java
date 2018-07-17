@@ -20,7 +20,7 @@ import io.realm.Realm;
 
 public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.MyViewHolder> {
 
-    Realm r;
+    protected Realm r;
 
     private List<UserRealm> listUsers;
 

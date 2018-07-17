@@ -9,7 +9,6 @@ import android.text.style.LineBackgroundSpan;
  * Version 1.0
  */
 
-
 /**
  * This class is used in order to display dots on a Material Calendar View
  */

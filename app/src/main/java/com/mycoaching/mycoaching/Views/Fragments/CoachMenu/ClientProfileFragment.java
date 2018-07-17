@@ -43,14 +43,16 @@ import static com.mycoaching.mycoaching.Util.CommonMethods.refreshToken;
 
 /**
  * Created by kevin on 25/06/2018.
+ * Version 1.0
  */
+
 public class ClientProfileFragment extends Fragment{
 
-    View v;
-    Bundle b;
-    Appraisal a;
-    List<Test> lt = new ArrayList<>();
-    FragmentManager fm;
+    private Bundle b;
+    private Appraisal a;
+    private List<Test> lt = new ArrayList<>();
+    private FragmentManager fm;
+    protected View v;
 
     Realm r;
     UserRealm ur;
@@ -242,14 +244,15 @@ public class ClientProfileFragment extends Fragment{
         pd = new ProgressDialog(getActivity(), R.style.StyledDialog);
         pd.setMessage("Récupération des informations...");
         pd.setCancelable(false);
-        pd.show();
         if(isNetworkAvailable(getContext())){
             if(isTokenExpired(ur.getToken())){
                 refreshToken(ur.getToken(),getContext());
             }
+            pd.show();
             ApiCall.getLastAppraisal("Bearer " + ur.getToken(),Integer.valueOf(b.getString("id")), new ServiceResultListener() {
                 @Override
                 public void onResult(ApiResults ar) {
+                    pd.dismiss();
                     if(ar.getResponseCode() == 200){
                         ApiCall.getTests("Bearer " + ur.getToken(),Integer.valueOf(b.getString("id")), new ServiceResultListener() {
                             @Override
@@ -290,6 +293,5 @@ public class ClientProfileFragment extends Fragment{
         else{
             Toast.makeText(getContext(), R.string.no_connection, Toast.LENGTH_LONG).show();
         }
-        pd.dismiss();
     }
 }

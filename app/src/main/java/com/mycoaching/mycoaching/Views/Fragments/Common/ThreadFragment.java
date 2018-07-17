@@ -50,8 +50,8 @@ import static com.mycoaching.mycoaching.Util.Constants.DATE_TIME_FORMATTER;
 
 /**
  * Created by kevin on 28/04/2018.
+ * Version 1.0
  */
-
 
 public class ThreadFragment extends Fragment implements ThreadAdapter.OnClick, SwipeRefreshLayout.OnRefreshListener {
 
@@ -60,11 +60,11 @@ public class ThreadFragment extends Fragment implements ThreadAdapter.OnClick, S
     private ThreadAdapter ta;
     private PostFragment pf;
     private ProgressDialog pd;
-    View v;
-    RecyclerView rv;
-    FragmentManager fm;
-    Realm r;
-    UserRealm ur;
+    private UserRealm ur;
+    protected View v;
+    protected RecyclerView rv;
+    protected FragmentManager fm;
+    protected Realm r;
 
     @BindView(R.id.swipe)
     SwipeRefreshLayout srl;

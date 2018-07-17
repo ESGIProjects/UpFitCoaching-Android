@@ -21,6 +21,7 @@ import io.realm.Realm;
  * Created by kevin on 23/06/2018.
  * Version 1.0
  */
+
 public class CoachProfileFragment extends Fragment {
 
     protected View v;

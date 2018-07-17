@@ -4,6 +4,7 @@ package com.mycoaching.mycoaching.Models.Retrofit;
  * Created by kevin on 03/07/2018.
  * Version 1.0
  */
+
 public class Measurement {
 
     private String id, date, weight, height, hipCircumference, waistCircumference, thighCircumference,

@@ -7,6 +7,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by kevin on 16/05/2018.
  * Version 1.0
  */
+
 public class Thread {
 
     private int id;

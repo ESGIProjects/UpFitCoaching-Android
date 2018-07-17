@@ -23,7 +23,7 @@ import java.util.List;
 public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.MyViewHolder> {
 
     private List<Exercise> listExercise;
-    Context c;
+    private Context c;
     private OnClick onClick;
 
     public interface OnClick {

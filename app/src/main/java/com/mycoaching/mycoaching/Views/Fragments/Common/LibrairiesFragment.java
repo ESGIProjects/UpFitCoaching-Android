@@ -16,11 +16,13 @@ import io.realm.Realm;
 
 /**
  * Created by kevin on 23/06/2018.
+ * Version 1.0
  */
+
 public class LibrairiesFragment extends Fragment{
 
-    View v;
-    Realm realm;
+    protected View v;
+    protected Realm realm;
 
     @OnClick(R.id.butterknife_label)
     public void openButterknife(){

@@ -50,17 +50,20 @@ import static com.mycoaching.mycoaching.Util.CommonMethods.refreshToken;
 
 /**
  * Created by kevin on 07/07/2018.
+ * Version 1.0
  */
+
 public class PrescriptionFragment extends Fragment implements ExerciseAdapter.OnClick, SwipeRefreshLayout.OnRefreshListener{
-    Bundle b;
-    String id;
-    Realm r;
-    UserRealm ur;
-    View v;
-    ProgressDialog pd;
-    List<Exercise> le = new ArrayList<>();
+
+    private Bundle b;
+    private String id;
+    private UserRealm ur;
+    private ProgressDialog pd;
+    private List<Exercise> le = new ArrayList<>();
     private RecyclerView rv;
-    ExerciseAdapter ea;
+    private ExerciseAdapter ea;
+    protected Realm r;
+    protected View v;
 
     @BindView(R.id.empty)
     TextView empty;

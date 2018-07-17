@@ -1,11 +1,12 @@
 package com.mycoaching.mycoaching.Models.Retrofit;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by kevin on 08/07/2018.
  * Version 1.0
  */
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
 public class Exercise {
 

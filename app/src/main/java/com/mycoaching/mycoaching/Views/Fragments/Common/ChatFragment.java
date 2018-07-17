@@ -55,6 +55,7 @@ import static com.mycoaching.mycoaching.Util.Constants.WEB_SOCKET_TIMER;
 
 /**
  * Created by kevin on 28/04/2018.
+ * Version 1.0
  */
 
 public class ChatFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
@@ -67,9 +68,9 @@ public class ChatFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private Request request;
     private Boolean isCoach = false;
     public static boolean isActive = false;
-    View v;
-    RecyclerView rv;
-    ProgressDialog pd;
+    protected View v;
+    protected RecyclerView rv;
+    protected ProgressDialog pd;
 
     @BindView(R.id.input)
     EditText et;
@@ -207,6 +208,7 @@ public class ChatFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     public void getConversation() {
         pd = new ProgressDialog(getContext(), R.style.StyledDialog);
         pd.setMessage("Récupération des messages en cours...");
+        pd.setCancelable(true);
         pd.show();
         if(isNetworkAvailable(getContext())){
             if(isTokenExpired(ur.getToken())){
@@ -319,9 +321,7 @@ public class ChatFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             getConversation();
         }
         else{
-            if (srl.isRefreshing()) {
-                srl.setRefreshing(false);
-            }
+
         }
     }
 

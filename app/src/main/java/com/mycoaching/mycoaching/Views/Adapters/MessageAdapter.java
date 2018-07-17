@@ -21,9 +21,9 @@ import io.realm.Realm;
 
 public class MessageAdapter extends RecyclerView.Adapter {
 
-    Realm r;
-    int sent = 1;
-    int received = 2;
+    protected Realm r;
+    private int sent = 1;
+    private int received = 2;
 
     private List<Message> listMessages;
 

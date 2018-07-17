@@ -31,14 +31,16 @@ import static com.mycoaching.mycoaching.Util.CommonMethods.refreshToken;
 
 /**
  * Created by kevin on 01/07/2018.
+ * Version 1.0
  */
+
 public class TestFragment extends Fragment {
 
-    View v;
-    Bundle b;
-    ProgressDialog pd;
-    Realm r;
-    UserRealm ur;
+    private Bundle b;
+    private UserRealm ur;
+    protected ProgressDialog pd;
+    protected Realm r;
+    protected View v;
 
     @BindView(R.id.warming)
     EditText warming;

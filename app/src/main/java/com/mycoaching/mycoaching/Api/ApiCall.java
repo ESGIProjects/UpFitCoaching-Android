@@ -28,7 +28,6 @@ import retrofit2.Response;
  * Version 1.0
  */
 
-
 public class ApiCall {
 
     /**

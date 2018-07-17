@@ -8,6 +8,7 @@ import com.mycoaching.mycoaching.Models.Realm.UserRealm;
  * Created by kevin on 11/07/2018.
  * Version 1.0
  */
+
 public class UserToken {
 
     @SerializedName("token")

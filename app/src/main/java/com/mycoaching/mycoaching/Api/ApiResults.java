@@ -18,7 +18,6 @@ import java.util.List;
  * Version 1.0
  */
 
-
 public class ApiResults {
 
     private List<Message> listMessage;

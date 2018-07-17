@@ -56,6 +56,7 @@ import static com.mycoaching.mycoaching.Util.Constants.DATE_FORMATTER;
 
 /**
  * Created by kevin on 28/04/2018.
+ * Version 1.0
  */
 
 public class EventFragment extends Fragment implements EventAdapter.OnClick, SwipeRefreshLayout.OnRefreshListener{
@@ -70,11 +71,11 @@ public class EventFragment extends Fragment implements EventAdapter.OnClick, Swi
     private UserRealm ur;
     private EventAdapter ea;
     private boolean isCoach = false;
-    private ProgressDialog pd;
-    View v;
-    Realm r;
-    Bundle b;
-    FragmentManager fm;
+    protected ProgressDialog pd;
+    protected View v;
+    protected Realm r;
+    protected Bundle b;
+    protected FragmentManager fm;
 
     @BindView(R.id.calendar)
     MaterialCalendarView mcv;
@@ -226,8 +227,9 @@ public class EventFragment extends Fragment implements EventAdapter.OnClick, Swi
             });
         }
         else{
-            Toast.makeText(getContext(),R.string.no_connection,Toast.LENGTH_LONG).show();
+
         }
+
         if (srl.isRefreshing()) {
             srl.setRefreshing(false);
         }

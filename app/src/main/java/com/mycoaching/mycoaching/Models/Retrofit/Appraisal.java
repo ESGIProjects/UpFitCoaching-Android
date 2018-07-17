@@ -4,6 +4,7 @@ package com.mycoaching.mycoaching.Models.Retrofit;
  * Created by kevin on 28/06/2018.
  * Version 1.0
  */
+
 public class Appraisal {
 
     private String id, date, goal, sessionsByWeek, contraindication, sportAntecedents, helpNeeded,

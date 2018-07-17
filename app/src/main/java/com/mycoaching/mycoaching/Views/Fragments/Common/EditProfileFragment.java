@@ -34,14 +34,16 @@ import static com.mycoaching.mycoaching.Util.CommonMethods.refreshToken;
 
 /**
  * Created by kevin on 23/06/2018.
+ * Version 1.0
  */
+
 public class EditProfileFragment extends Fragment{
 
-    View v;
-    Realm realm;
-    UserRealm ur;
-    Bundle b;
-    ProgressDialog pd;
+    private Realm realm;
+    private UserRealm ur;
+    private Bundle b;
+    protected View v;
+    protected ProgressDialog pd;
 
     @BindView(R.id.mail)
     EditText mail;

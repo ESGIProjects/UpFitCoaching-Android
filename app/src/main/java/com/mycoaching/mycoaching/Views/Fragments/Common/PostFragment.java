@@ -46,17 +46,19 @@ import static com.mycoaching.mycoaching.Util.CommonMethods.refreshToken;
 
 /**
  * Created by kevin on 02/06/2018.
+ * Version 1.0
  */
+
 public class PostFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
 
     private Bundle bundle;
     private List<Post> lp = new ArrayList<>();
     private PostAdapter pa;
     private UserRealm ur;
-    RecyclerView rv;
-    ProgressDialog pd;
-    View v;
-    Realm r;
+    private ProgressDialog pd;
+    protected RecyclerView rv;
+    protected View v;
+    protected Realm r;
 
     @BindView(R.id.swipe)
     SwipeRefreshLayout srl;

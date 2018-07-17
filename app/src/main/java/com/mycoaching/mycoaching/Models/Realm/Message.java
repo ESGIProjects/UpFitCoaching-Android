@@ -22,13 +22,9 @@ public class Message extends RealmObject implements Parcelable {
 
     private Integer id;
 
-    private UserRetrofit sender;
+    private UserRetrofit sender, receiver;
 
-    private UserRetrofit receiver;
-
-    private String date;
-
-    private String content;
+    private String date, content;
 
     public Message(Integer id, UserRetrofit sender, UserRetrofit receiver, String date, String content) {
         this.id = id;

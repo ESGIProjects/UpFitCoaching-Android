@@ -11,7 +11,14 @@ import io.realm.annotations.PrimaryKey;
 public class UserRealm extends RealmObject {
 
     @PrimaryKey
-    String id;
+    private String id;
+
+    private String mail, firstName, lastName, sex, birthDate, address, city, phoneNumber, token;
+
+    private String idCoach, mailCoach, firstNameCoach, lastNameCoach, sexCoach, addressCoach,
+            cityCoach, phoneNumberCoach;
+
+    private int type, typeCoach;
 
     public UserRealm(){
     }
@@ -28,13 +35,6 @@ public class UserRealm extends RealmObject {
         this.phoneNumber = phoneNumber;
         this.token = token;
     }
-
-    private String mail, firstName, lastName, sex, birthDate, address, city, phoneNumber, token;
-
-    private String idCoach, mailCoach, firstNameCoach, lastNameCoach, sexCoach, addressCoach,
-            cityCoach, phoneNumberCoach;
-
-    private int type, typeCoach;
 
     public int getType() {
         return type;

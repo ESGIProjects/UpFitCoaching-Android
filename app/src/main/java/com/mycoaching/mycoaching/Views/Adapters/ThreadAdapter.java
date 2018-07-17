@@ -14,12 +14,14 @@ import java.util.List;
 
 /**
  * Created by kevin on 16/05/2018.
+ * Version 1.0
  */
+
 public class ThreadAdapter extends RecyclerView.Adapter<ThreadAdapter.MyViewHolder> {
 
     private List<Thread> listThreads;
     private OnClick onClick;
-    Context c;
+    private Context c;
 
     public interface OnClick {
         void onItemClick(int position);

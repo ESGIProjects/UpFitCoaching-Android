@@ -54,6 +54,7 @@ import static com.mycoaching.mycoaching.Util.Constants.WEB_SOCKET_TIMER;
 
 /**
  * Created by kevin on 17/05/2018.
+ * Version 1.0
  */
 
 public class ListChatFragment extends Fragment implements ContactAdapter.OnClick, SwipeRefreshLayout.OnRefreshListener {
@@ -62,16 +63,16 @@ public class ListChatFragment extends Fragment implements ContactAdapter.OnClick
     private List<Contact> lc = new ArrayList<>();
     private ArrayList<Message> lm = new ArrayList<>();
     private List<Integer> ids = new ArrayList<>();
-    public static Boolean isActive = false;
     private Realm r;
-    ProgressDialog pd;
     private UserRealm ur;
     private WebSocket ws;
     private Request request;
-    View v;
-    RecyclerView rv;
-    Contact c;
-    FragmentManager fm;
+    public static Boolean isActive = false;
+    protected ProgressDialog pd;
+    protected View v;
+    protected RecyclerView rv;
+    protected Contact c;
+    protected FragmentManager fm;
 
     @BindView(R.id.swipe)
     SwipeRefreshLayout srl;
@@ -81,7 +82,6 @@ public class ListChatFragment extends Fragment implements ContactAdapter.OnClick
         isActive = true;
         v = inflater.inflate(R.layout.fragment_list_contact, container, false);
         ButterKnife.bind(this,v);
-
         r = Realm.getDefaultInstance();
         ur = r.where(UserRealm.class).findFirst();
 

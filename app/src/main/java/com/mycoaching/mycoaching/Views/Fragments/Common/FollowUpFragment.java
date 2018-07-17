@@ -52,33 +52,29 @@ import static com.mycoaching.mycoaching.Util.CommonMethods.refreshToken;
 
 /**
  * Created by kevin on 28/04/2018.
+ * Version 1.0
  */
 
 public class FollowUpFragment extends Fragment {
 
-    View v;
-    ProgressDialog pd;
-
-    List<Measurement> lm = new ArrayList<>();
-    List<Measurement> listSpecific = new ArrayList<>();
-    List<String> listDate = new ArrayList<>();
-
-    LineChart lcWeight;
-    LineChart lcBody;
-    LineChart lcMeasure;
-
-    LineData ldWeight;
-    LineData ldBody;
-    LineData ldMeasure;
-
-    String id;
-    Bundle b;
-    Realm r;
-    UserRealm ur;
-
-    boolean isMonthClicked = true;
-    boolean isYearClicked = false;
-    boolean isGlobalClicked = false;
+    private ProgressDialog pd;
+    private List<Measurement> lm = new ArrayList<>();
+    private List<Measurement> listSpecific = new ArrayList<>();
+    private List<String> listDate = new ArrayList<>();
+    private LineChart lcWeight;
+    private LineChart lcBody;
+    private LineChart lcMeasure;
+    private LineData ldWeight;
+    private LineData ldBody;
+    private LineData ldMeasure;
+    private String id;
+    private UserRealm ur;
+    private boolean isMonthClicked = true;
+    private boolean isYearClicked = false;
+    private boolean isGlobalClicked = false;
+    protected Bundle b;
+    protected Realm r;
+    protected View v;
 
     @BindView(R.id.weightValue)
     TextView weightValue;
