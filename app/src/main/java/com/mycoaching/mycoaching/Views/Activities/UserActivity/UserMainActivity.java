@@ -115,6 +115,7 @@ public class UserMainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_main);
+        ButterKnife.bind(this);
 
         if(savedInstanceState != null){
             Intent i = new Intent(this, SplashScreenActivity.class);
@@ -135,8 +136,12 @@ public class UserMainActivity extends AppCompatActivity {
         ft.show(ef);
         ft.commit();
         realm = Realm.getDefaultInstance();
-        ButterKnife.bind(this);
 
+        /**
+         * The following code is used to display the overflow three dots button in the Toolbar.
+         * This overflow button gives access to deconnection feature et settings.
+         * If the user choose the decconnection feature, all data of the application will be erased.
+         */
         toolbar.inflateMenu(R.menu.overflow);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
@@ -187,7 +192,13 @@ public class UserMainActivity extends AppCompatActivity {
             }
         });
     }
-
+    /**
+     * This method manages the behaviour of the back button.
+     * If the user is on a nested fragment, it will display the previous fragment in the stack.
+     * For example, if the user is on PostFragment, it will display ThreadFragment instead.
+     * If there is no nested fragment on the screen, the user have to tap the back button twice during the delay
+     * in order to quit the application.
+     */
     @Override
     public void onBackPressed() {
         if(getSupportFragmentManager().findFragmentByTag("POSTS") != null && navigation.getMenu().getItem(4).isChecked()){
@@ -206,7 +217,7 @@ public class UserMainActivity extends AppCompatActivity {
                 chf.getWs().close(1000,null);
             }
             this.doubleTapToExit = true;
-            Toast.makeText(this, "Veuillez appuyer une seconde fois pour quitter.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.tap_twice), Toast.LENGTH_SHORT).show();
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -225,6 +236,10 @@ public class UserMainActivity extends AppCompatActivity {
     }
 
     public void hideFragments() {
+        /*
+          The isActive variable is used by MyFirebaseMessagingService in order to display push notifications
+          only if ChatFragment is not displayed
+          */
         ChatFragment.isActive = false;
         ft.hide(fuf);
         ft.hide(ef);
@@ -233,6 +248,7 @@ public class UserMainActivity extends AppCompatActivity {
         ft.hide(pf);
     }
 
+    // This method is used in order to hide PostFragment if it's displayed
     public void hideTF(){
         if(getSupportFragmentManager().findFragmentByTag("POSTS") != null){
             ft.hide(getSupportFragmentManager().findFragmentByTag("POSTS"));

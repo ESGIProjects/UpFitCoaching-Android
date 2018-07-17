@@ -32,7 +32,7 @@ public class RegisterActivity extends AppCompatActivity {
         /*
           if the application is killed by the system (due to RAM issue for example), we kill the activity
           and we restart from the splashscreen
-          */
+        */
         if(savedInstanceState != null){
             Intent i = new Intent(this, SplashScreenActivity.class);
             performTransition(this,i, R.animator.slide_from_left, R.animator.slide_to_right);
@@ -55,6 +55,10 @@ public class RegisterActivity extends AppCompatActivity {
         ft.commit();
     }
 
+    /**
+     * This method manages the behaviour of the back button.
+     * If the user choose to exit, it will kill the RegisterActivity and will return to LoginActivity
+     */
     @Override
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this, R.style.AlertDialogCustom);

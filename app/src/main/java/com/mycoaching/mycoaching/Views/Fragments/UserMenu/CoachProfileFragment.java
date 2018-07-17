@@ -19,12 +19,13 @@ import io.realm.Realm;
 
 /**
  * Created by kevin on 23/06/2018.
+ * Version 1.0
  */
 public class CoachProfileFragment extends Fragment {
 
-    View v;
-    Realm r;
-    UserRealm ur;
+    protected View v;
+    protected Realm r;
+    private UserRealm ur;
 
     @BindView(R.id.firstName)
     TextView firstName;
@@ -41,6 +42,9 @@ public class CoachProfileFragment extends Fragment {
     @BindView(R.id.address)
     TextView address;
 
+    /**
+        This method opens the GPS app of the phone (Google maps)
+     */
     @OnClick(R.id.address)
     public void intentMaps(){
         Uri gmmIntentUri = Uri.parse("geo:0,0?q=" + ur.getAddressCoach() + " , " + ur.getCityCoach());
@@ -49,6 +53,9 @@ public class CoachProfileFragment extends Fragment {
         startActivity(mapIntent);
     }
 
+    /**
+        This method opens the call app of the phone
+     */
     @OnClick(R.id.phoneNumber)
     public void call(){
         String phone = ur.getPhoneNumberCoach();
@@ -56,6 +63,9 @@ public class CoachProfileFragment extends Fragment {
         startActivity(intent);
     }
 
+    /**
+        This method opens the email client installed on the phone
+     */
     @OnClick(R.id.mail)
     public void mail(){
         Uri uri = Uri.parse("mailto:" + ur.getMailCoach())

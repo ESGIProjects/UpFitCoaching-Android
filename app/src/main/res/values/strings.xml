@@ -41,6 +41,7 @@
     <string name="connection_progress">Connexion en cours...</string>
     <string name="account_creation_progress">Création du compte en cours...</string>
     <string name="account_done">Compte créé !</string>
+    <string name="tap_twice">Veuillez appuyer une seconde fois pour quitter</string>
 
     <string name="check_birthdate">Votre date de naissance est supérieure à la date actuelle</string>
     <string name="check_age">Vous devez avoir entre 18 et 100 ans pour utiliser cette application</string>

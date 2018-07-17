@@ -82,6 +82,10 @@ public class UserDataFragment extends Fragment {
     @BindView(R.id.man)
     CheckBox man;
 
+
+    /**
+     * Opens a DatePickerDialog which is used by user in order to select a date in a Google Calendar Dialog
+     */
     @OnClick(R.id.birthDate)
     void setDate(final TextView tv){
         DatePickerDialog dialog = new DatePickerDialog(getContext(),R.style.customPicker, new DatePickerDialog.OnDateSetListener() {

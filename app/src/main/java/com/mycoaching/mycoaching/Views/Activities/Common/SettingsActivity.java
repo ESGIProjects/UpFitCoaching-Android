@@ -21,15 +21,14 @@ import static com.mycoaching.mycoaching.Util.CommonMethods.performTransition;
 
 /**
  * Created by kevin on 04/05/2018.
+ * Version 1.0
  */
 
 public class SettingsActivity extends AppCompatActivity {
 
-    Realm r;
-    FragmentTransaction ft;
-    Intent intent;
-
-    boolean isCoach;
+    private FragmentTransaction ft;
+    private boolean isCoach;
+    protected Realm r;
 
     @OnClick(R.id.edit_profile)
     void editProfile(){

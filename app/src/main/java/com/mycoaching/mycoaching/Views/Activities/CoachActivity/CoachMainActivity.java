@@ -2,6 +2,7 @@ package com.mycoaching.mycoaching.Views.Activities.CoachActivity;
 
 /**
  * Created by kevin on 07/03/2018.
+ * Version 1.0
  */
 
 import android.app.AlertDialog;
@@ -39,27 +40,23 @@ import static com.mycoaching.mycoaching.Util.CommonMethods.performTransition;
 
 public class CoachMainActivity extends AppCompatActivity {
 
-    Realm realm = null;
-    Intent intent;
-    UserRealm ur;
-
-    BottomNavigationView navigation;
-
-    ClientsFragment cf = new ClientsFragment();
-    ListChatFragment lcf = new ListChatFragment();
-    ThreadFragment tf = new ThreadFragment();
-    EventFragment ef = new EventFragment();
-    Bundle b = new Bundle();
-    FragmentTransaction ft;
-
-    boolean doubleTapToExit = false;
+    private Realm realm;
+    private Intent intent;
+    private BottomNavigationView navigation;
+    private ClientsFragment cf = new ClientsFragment();
+    private ListChatFragment lcf = new ListChatFragment();
+    private ThreadFragment tf = new ThreadFragment();
+    private EventFragment ef = new EventFragment();
+    private Bundle b = new Bundle();
+    private FragmentTransaction ft;
+    private boolean doubleTapToExit = false;
+    protected UserRealm ur;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
@@ -131,6 +128,7 @@ public class CoachMainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coach_main);
+        ButterKnife.bind(this);
 
         if(savedInstanceState != null){
             Intent i = new Intent(this, SplashScreenActivity.class);
@@ -156,8 +154,12 @@ public class CoachMainActivity extends AppCompatActivity {
         hideFragments();
         ft.show(lcf);
         ft.commit();
-        ButterKnife.bind(this);
 
+        /**
+         * The following code is used to display the overflow three dots button in the Toolbar.
+         * This overflow button gives access to deconnection feature et settings.
+         * If the user choose the deconnection feature, all data of the application will be erased.
+         */
         toolbar.inflateMenu(R.menu.overflow);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
@@ -203,13 +205,19 @@ public class CoachMainActivity extends AppCompatActivity {
                                 .show();
                         return true;
                     default:
-                        System.out.println("");
                         return true;
                 }
             }
         });
     }
 
+    /**
+     * This method manages the behaviour of the back button.
+     * If the user is on a nested fragment, it will display the previous fragment in the stack.
+     * For example, if the user is on PostFragment, it will display ThreadFragment instead.
+     * If there is no nested fragment on the screen, the user have to tap the back button twice during the delay
+     * in order to quit the application.
+     */
     @Override
     public void onBackPressed() {
         if(getSupportFragmentManager().findFragmentByTag("POSTS") != null && navigation.getMenu().getItem(3).isChecked()){
@@ -264,7 +272,7 @@ public class CoachMainActivity extends AppCompatActivity {
                 lcf.getWs().close(1000,null);
             }
             this.doubleTapToExit = true;
-            Toast.makeText(this, "Veuillez appuyer une seconde fois pour quitter.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.tap_twice), Toast.LENGTH_SHORT).show();
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -282,6 +290,10 @@ public class CoachMainActivity extends AppCompatActivity {
     }
 
     public void hideFragments() {
+        /*
+          The isActive variable is used by MyFirebaseMessagingService in order to display push notifications
+          only if ChatFragment and ListChatFragment are not displayed
+          */
         ListChatFragment.isActive = false;
         ChatFragment.isActive = false;
         ft.hide(cf);
@@ -290,6 +302,9 @@ public class CoachMainActivity extends AppCompatActivity {
         ft.hide(tf);
     }
 
+    /**
+     * This method is used to hide nested fragments like ChatFragment or TestFragment
+     */
     public void hideSpecificFragments(){
         if(getSupportFragmentManager().findFragmentByTag("MESSAGES") != null){
             ft.hide(getSupportFragmentManager().findFragmentByTag("MESSAGES"));

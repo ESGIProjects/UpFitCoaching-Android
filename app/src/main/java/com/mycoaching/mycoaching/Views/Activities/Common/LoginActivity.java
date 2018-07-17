@@ -81,7 +81,6 @@ public class LoginActivity extends AppCompatActivity {
                                 ApiCall.putToken("Bearer " + ar.getUt().getToken(),ar.getUt().getUr().getId(), FirebaseInstanceId.getInstance().getToken(), null, new ServiceResultListener() {
                                     @Override
                                     public void onResult(ApiResults ar) {
-                                        Log.i("RESPONSE : ", ""+ar.getResponseCode());
                                         sp = getApplicationContext().getSharedPreferences("user_prefs",MODE_PRIVATE);
                                         sp.edit().putString("firebase_token", FirebaseInstanceId.getInstance().getToken()).apply();
                                     }
