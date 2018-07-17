@@ -24,7 +24,6 @@ public class MessageAdapter extends RecyclerView.Adapter {
     protected Realm r;
     private int sent = 1;
     private int received = 2;
-
     private List<Message> listMessages;
 
     public class Holder extends RecyclerView.ViewHolder {
@@ -65,6 +64,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
         r = Realm.getDefaultInstance();
         UserRealm ur = r.where(UserRealm.class).findFirst();
 
+        // we check if the current message is from the current user or another
         if (message.getSender().getId().equals(ur.getId())) {
             return sent;
         } else {
@@ -75,11 +75,14 @@ public class MessageAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v;
+        // if the message is from the current user, the message is placed to the left of the screen
         if (viewType == sent) {
             v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.self_message, parent, false);
             return new Holder(v);
-        } else {
+        }
+        // else, it is placed to the right
+        else {
             v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.message, parent, false);
             return new SenderHolder(v);

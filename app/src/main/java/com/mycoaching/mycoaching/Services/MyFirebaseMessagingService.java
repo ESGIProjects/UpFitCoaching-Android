@@ -1,19 +1,14 @@
 package com.mycoaching.mycoaching.Services;
 
-import android.app.ActivityManager;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
 import android.support.v4.app.NotificationCompat;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.mycoaching.mycoaching.R;
-import com.mycoaching.mycoaching.Views.Activities.Common.LoginActivity;
 import com.mycoaching.mycoaching.Views.Fragments.CoachMenu.ListChatFragment;
 import com.mycoaching.mycoaching.Views.Fragments.Common.ChatFragment;
 
@@ -27,7 +22,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage rm) {
 
+        // we define a default channel for android version >= 0
         String channelId = getString(R.string.default_notification_channel_id);
+
+
         NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(this, channelId)
                         .setSmallIcon(R.drawable.logo)

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -127,10 +126,10 @@ public class AddMeasurement extends Dialog {
     protected void onCreate(Bundle savedInstanceState) {
         r = Realm.getDefaultInstance();
         ur = r.where(UserRealm.class).findFirst();
+        ButterKnife.bind(this);
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_measurement);
-        ButterKnife.bind(this);
     }
 
     public boolean getIsOK(){

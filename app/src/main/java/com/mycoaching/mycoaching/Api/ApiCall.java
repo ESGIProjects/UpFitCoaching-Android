@@ -1,7 +1,5 @@
 package com.mycoaching.mycoaching.Api;
 
-import android.util.Log;
-
 import com.mycoaching.mycoaching.Models.Realm.Message;
 import com.mycoaching.mycoaching.Models.Retrofit.Appraisal;
 import com.mycoaching.mycoaching.Models.Retrofit.Event;

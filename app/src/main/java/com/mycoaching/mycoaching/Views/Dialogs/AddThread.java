@@ -89,13 +89,13 @@ public class AddThread extends Dialog {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.dialog_thread);
+        ButterKnife.bind(this);
 
         r = Realm.getDefaultInstance();
         ur = r.where(UserRealm.class).findFirst();
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.dialog_thread);
-        ButterKnife.bind(this);
     }
 
     public boolean getIsOK(){

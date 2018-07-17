@@ -157,6 +157,10 @@ public class AddEvent extends Dialog{
                     }
                     else{
                         if(isCoach){
+                            /*
+                                we extract the id of the second user from the local database
+                                the matcher will find the Contact thanks to the mail of the user
+                              */
                             Matcher m = Pattern.compile("\\(([^)]+)\\)").matcher(listUser.getText().toString());
                             while(m.find()) {
                                 idSecondUser = r.where(Contact.class).equalTo("mail",m.group(1)).findFirst().getId();
@@ -191,7 +195,7 @@ public class AddEvent extends Dialog{
             }
             else{
                 pd.dismiss();
-                Toast.makeText(getContext(),"Certains champs sont manquants !", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(),R.string.missing_fields, Toast.LENGTH_LONG).show();
             }
         }
         else{
@@ -215,6 +219,7 @@ public class AddEvent extends Dialog{
         r = Realm.getDefaultInstance();
         ur = r.where(UserRealm.class).findFirst();
 
+        // if the user is a Coach, we fill the AutoCompleteTextView from the local database
         if(isCoach){
             TextInputLayout til = this.findViewById(R.id.til);
             til.setVisibility(View.VISIBLE);

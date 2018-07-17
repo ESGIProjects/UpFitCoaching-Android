@@ -12,11 +12,9 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -76,12 +74,20 @@ public class PrescriptionFragment extends Fragment implements ExerciseAdapter.On
 
     @OnClick(R.id.buttonPrescription)
     public void prescription(){
+        /*
+            we check all exercises which are not already in the list so
+            the user will not be able to add an exercise which is already created
+         */
         List<String> allExercises = new LinkedList<>(Arrays.asList(getResources().getStringArray(R.array.exercice)));
         for(Exercise e : le){
             if(allExercises.contains(e.getExercise())){
                 allExercises.remove(e.getExercise());
             }
         }
+        /*
+            if allExercises is empty, all exercises are already in the list so the user will not be
+            able to add another exercise
+         */
         if(allExercises.isEmpty()){
             Toast.makeText(getContext(),"Vous ne pouvez plus ajouter d'exercice !",Toast.LENGTH_LONG).show();
         }
@@ -190,6 +196,9 @@ public class PrescriptionFragment extends Fragment implements ExerciseAdapter.On
                         if(!ar.getListPrescription().isEmpty()){
                             le.addAll(ar.getListPrescription().get(ar.getListPrescription().size()-1).getExercises());
                             ea.notifyDataSetChanged();
+                            if(empty.getVisibility() == View.VISIBLE){
+                                empty.setVisibility(View.GONE);
+                            }
                         }
                         else{
                             addPrescription.setVisibility(View.GONE);

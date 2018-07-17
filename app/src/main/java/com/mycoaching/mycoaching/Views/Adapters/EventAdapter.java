@@ -24,8 +24,11 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder
     private Context c;
     private Boolean isCoach;
     private String id;
-    private OnClick onClick;
 
+    /**
+     * we define an OnClick interface in order to interact with each cell of the recyclerview
+     */
+    private OnClick onClick;
     public interface OnClick {
         void onItemClick(int position);
     }
@@ -73,6 +76,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder
             holder.iv.setImageResource(R.drawable.ic_fitness_center_black_24dp);
         }
         if(isCoach){
+            // we extract the name of the initial author of the event
             if(event.getFirstUser().getId().equals(id)){
                 String name = event.getName() + " (" + event.getSecondUser().getFirstName() + " " +
                         event.getSecondUser().getLastName() + ")";
@@ -88,6 +92,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder
             holder.title.setText(event.getName() );
         }
         holder.time.setText(c.getString(R.string.duration,event.getStart(),event.getEnd()));
+        //we define the address of the coach
         if(event.getType().equals("0")){
             if(event.getFirstUser().getCoach() != null){
                 holder.location.setText(c.getString(R.string.event_location,event.getFirstUser().getCoach().getAddress(),

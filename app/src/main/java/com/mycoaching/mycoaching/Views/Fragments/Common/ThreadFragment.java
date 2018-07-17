@@ -23,7 +23,6 @@ import com.mycoaching.mycoaching.Api.ApiResults;
 import com.mycoaching.mycoaching.Api.ServiceResultListener;
 import com.mycoaching.mycoaching.Models.Realm.UserRealm;
 import com.mycoaching.mycoaching.Models.Retrofit.Thread;
-import com.mycoaching.mycoaching.Models.Retrofit.UserRetrofit;
 import com.mycoaching.mycoaching.R;
 import com.mycoaching.mycoaching.Views.Adapters.ThreadAdapter;
 import com.mycoaching.mycoaching.Views.Dialogs.AddThread;
@@ -45,7 +44,6 @@ import static com.mycoaching.mycoaching.Util.CommonMethods.getCorrespondingError
 import static com.mycoaching.mycoaching.Util.CommonMethods.isNetworkAvailable;
 import static com.mycoaching.mycoaching.Util.CommonMethods.isTokenExpired;
 import static com.mycoaching.mycoaching.Util.CommonMethods.refreshToken;
-import static com.mycoaching.mycoaching.Util.Constants.DATE_FORMATTER;
 import static com.mycoaching.mycoaching.Util.Constants.DATE_TIME_FORMATTER;
 
 /**

@@ -129,6 +129,9 @@ public class CoachMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coach_main);
         ButterKnife.bind(this);
+        realm = Realm.getDefaultInstance();
+        ur = realm.where(UserRealm.class).findFirst();
+        ft = getSupportFragmentManager().beginTransaction();
 
         if(savedInstanceState != null){
             Intent i = new Intent(this, SplashScreenActivity.class);
@@ -137,25 +140,25 @@ public class CoachMainActivity extends AppCompatActivity {
             return;
         }
 
+        // we put a boolean which indicates to EventFragment that the current user is a Coach
         b.putBoolean("isCoach",true);
         ef.setArguments(b);
 
         navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        // by default, the first item to display in the navigation bar is the ListChatFragment
         navigation.getMenu().getItem(2).setChecked(true);
 
         ft = getSupportFragmentManager().beginTransaction();
-
-        realm = Realm.getDefaultInstance();
-        ur = realm.where(UserRealm.class).findFirst();
-
-        ft = getSupportFragmentManager().beginTransaction();
+        // we add all fragments to the activity
         addFragments();
+        // then we hide all fragments in order to display only the ListChatFragment at the creation of the view
         hideFragments();
         ft.show(lcf);
         ft.commit();
 
-        /**
+        /*
          * The following code is used to display the overflow three dots button in the Toolbar.
          * This overflow button gives access to deconnection feature et settings.
          * If the user choose the deconnection feature, all data of the application will be erased.
@@ -289,11 +292,11 @@ public class CoachMainActivity extends AppCompatActivity {
         ft.add(R.id.container, tf,"TF");
     }
 
+    /**
+     The isActive variable is used by MyFirebaseMessagingService in order to display push notifications
+     only if ChatFragment and ListChatFragment are not displayed
+     */
     public void hideFragments() {
-        /*
-          The isActive variable is used by MyFirebaseMessagingService in order to display push notifications
-          only if ChatFragment and ListChatFragment are not displayed
-          */
         ListChatFragment.isActive = false;
         ChatFragment.isActive = false;
         ft.hide(cf);

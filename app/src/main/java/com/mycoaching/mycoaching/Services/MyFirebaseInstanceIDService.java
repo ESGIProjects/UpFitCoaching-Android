@@ -14,6 +14,10 @@ import static android.content.ContentValues.TAG;
 
 public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
 
+    /**
+     * This method is called automatically when the firebase token is refreshed
+     */
+
     @Override
     public void onTokenRefresh() {
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();

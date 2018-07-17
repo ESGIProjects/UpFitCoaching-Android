@@ -18,6 +18,10 @@ import java.util.List;
  * Version 1.0
  */
 
+/**
+ * ApiResults is used as a response object in HTTP requests.
+ */
+
 public class ApiResults {
 
     private List<Message> listMessage;

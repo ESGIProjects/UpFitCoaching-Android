@@ -5,6 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by kevin on 17/03/2018.
+ * Version 1.0
  */
 
 public class RetrofitSingleton {

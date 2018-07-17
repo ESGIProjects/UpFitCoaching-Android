@@ -1,6 +1,5 @@
 package com.mycoaching.mycoaching.Views.Activities.Common;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -16,8 +15,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
-
-import static com.mycoaching.mycoaching.Util.CommonMethods.performTransition;
 
 /**
  * Created by kevin on 04/05/2018.
@@ -70,6 +67,7 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
         ButterKnife.bind(this);
         r = Realm.getDefaultInstance();
+        // is the user is a regular type, the action "view coach profile" is available
         isCoach = getIntent().getExtras().getBoolean("isCoach",false);
         if(!isCoach){
             button.setVisibility(View.VISIBLE);

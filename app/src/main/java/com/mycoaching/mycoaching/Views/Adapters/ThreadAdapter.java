@@ -20,9 +20,12 @@ import java.util.List;
 public class ThreadAdapter extends RecyclerView.Adapter<ThreadAdapter.MyViewHolder> {
 
     private List<Thread> listThreads;
-    private OnClick onClick;
     private Context c;
 
+    /**
+     * we define an OnClick interface in order to interact with each cell of the recyclerview
+     */
+    private OnClick onClick;
     public interface OnClick {
         void onItemClick(int position);
     }

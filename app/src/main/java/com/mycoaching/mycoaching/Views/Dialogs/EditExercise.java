@@ -1,46 +1,32 @@
 package com.mycoaching.mycoaching.Views.Dialogs;
 
 import android.app.Activity;
-import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.mycoaching.mycoaching.Api.ApiCall;
-import com.mycoaching.mycoaching.Api.ApiResults;
-import com.mycoaching.mycoaching.Api.ServiceResultListener;
 import com.mycoaching.mycoaching.Models.Retrofit.Exercise;
 import com.mycoaching.mycoaching.R;
 
 import org.joda.time.LocalTime;
 import org.joda.time.format.DateTimeFormat;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.mycoaching.mycoaching.Util.CommonMethods.checkFields;
-import static com.mycoaching.mycoaching.Util.CommonMethods.getDate;
-import static com.mycoaching.mycoaching.Util.Constants.DATE_FORMATTER;
-import static com.mycoaching.mycoaching.Util.Constants.DATE_TIME_FORMATTER;
 
 /**
  * Created by kevin on 09/07/2018.

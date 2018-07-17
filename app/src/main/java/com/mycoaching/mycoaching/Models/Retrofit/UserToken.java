@@ -2,7 +2,6 @@ package com.mycoaching.mycoaching.Models.Retrofit;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.mycoaching.mycoaching.Models.Realm.UserRealm;
 
 /**
  * Created by kevin on 11/07/2018.

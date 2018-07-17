@@ -19,7 +19,6 @@ import android.widget.Toast;
 import com.mycoaching.mycoaching.Models.Retrofit.Exercise;
 import com.mycoaching.mycoaching.R;
 
-import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
@@ -187,6 +186,7 @@ public class AddExercise extends Dialog {
         setContentView(R.layout.dialog_prescription);
         ButterKnife.bind(this);
 
+        // we define an ArrayAdapter which contains all exercices available
         final ArrayAdapter<String> list =
                 new ArrayAdapter<String>(getContext(), R.layout.custom_arrayadapter, listExercise);
         spinner.setAdapter(list);

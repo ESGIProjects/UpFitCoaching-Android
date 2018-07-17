@@ -3,8 +3,6 @@ package com.mycoaching.mycoaching.Models.Realm;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 import com.mycoaching.mycoaching.Models.Retrofit.UserRetrofit;
 
 import io.realm.RealmObject;

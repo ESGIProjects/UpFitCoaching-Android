@@ -82,13 +82,13 @@ public class ListChatFragment extends Fragment implements ContactAdapter.OnClick
         isActive = true;
         v = inflater.inflate(R.layout.fragment_list_contact, container, false);
         ButterKnife.bind(this,v);
+
         r = Realm.getDefaultInstance();
         ur = r.where(UserRealm.class).findFirst();
 
         srl.setOnRefreshListener(this);
 
         rv = v.findViewById(R.id.listContact);
-
         ca = new ContactAdapter(lc);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext()
                 , LinearLayoutManager.VERTICAL, false);
@@ -96,6 +96,7 @@ public class ListChatFragment extends Fragment implements ContactAdapter.OnClick
         rv.setItemAnimator(new DefaultItemAnimator());
         rv.setAdapter(ca);
 
+        // we build the websocket with the jwt token
         request = new Request.Builder().url(WEB_SOCKET_ENDPOINT + ur.getId()).addHeader("Authorization",
                 "Bearer " + ur.getToken()).build();
         ws = OkHttpSingleton.getInstance().newWebSocket(request, new CustomWebSocketListener());
@@ -124,6 +125,10 @@ public class ListChatFragment extends Fragment implements ContactAdapter.OnClick
                 @Override
                 public void onResult(ApiResults ar) {
                     if(ar.getResponseCode() == 200){
+                        /*
+                            if there are already messages on the local database, we delete them and insert
+                            new ones
+                         */
                         lm.addAll(ar.getListMessage());
                         ids.add(Integer.valueOf(ur.getId()));
                         r = Realm.getDefaultInstance();
@@ -212,6 +217,10 @@ public class ListChatFragment extends Fragment implements ContactAdapter.OnClick
             Log.i("LCF ws is open :", r.toString());
         }
 
+        /**
+         * When a message is capted by the websocket, we add it to the list and update it
+         * if the coach is in ChatFragment, the list will be updated in the background
+         */
         @Override
         public void onMessage(WebSocket ws, String text) {
             Log.i("Message on LCF :", text);
@@ -220,18 +229,23 @@ public class ListChatFragment extends Fragment implements ContactAdapter.OnClick
                 JSONObject sender = message.getJSONObject("sender");
                 JSONObject receiver = message.getJSONObject("receiver");
                 String content = message.getString("content");
+
                 addMessageToList(String.valueOf(sender.getInt("id")),
                         String.valueOf(receiver.getInt("id")), sender.getString("firstName"),
                         sender.getString("lastName"), sender.getString("firstName"),
                         sender.getString("lastName"), content,sender.getString("mail"),
                         receiver.getString("mail"));
+
+                // if the coach is in ChatFragment, the message is pushed in ChatFragment list
                 if (getFragmentManager().findFragmentByTag("MESSAGES") != null) {
                     ChatFragment cf = (ChatFragment) getFragmentManager().findFragmentByTag("MESSAGES");
-                    cf.addMessageToList(String.valueOf(sender.getInt("id")),
-                            String.valueOf(receiver.getInt("id")), sender.getString("firstName"),
-                            sender.getString("lastName"), receiver.getString("firstName"),
-                            receiver.getString("lastName"), content,sender.getString("mail"),
-                            receiver.getString("mail"));
+                    if((String.valueOf(sender.getInt("id")).equals(cf.getUserId()))){
+                        cf.addMessageToList(String.valueOf(sender.getInt("id")),
+                                String.valueOf(receiver.getInt("id")), sender.getString("firstName"),
+                                sender.getString("lastName"), receiver.getString("firstName"),
+                                receiver.getString("lastName"), content,sender.getString("mail"),
+                                receiver.getString("mail"));
+                    }
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -244,6 +258,10 @@ public class ListChatFragment extends Fragment implements ContactAdapter.OnClick
             Log.i("CLOSE LCF ws : ", code + " & " + reason);
         }
 
+        /**
+         * if the websocket is in failure for some reason (network for example), we try to rebuild the websocket
+         * depends on the WEB_SOCKET_TIMER variable
+         */
         @Override
         public void onFailure(WebSocket webSocket, Throwable t, Response response) {
             ws.close(1000,"Network issue");
@@ -257,6 +275,10 @@ public class ListChatFragment extends Fragment implements ContactAdapter.OnClick
         }
     }
 
+    /**
+     *   This method is used in order to add a message to the list with informations from
+     *   incomming message on websocket
+     */
     public void addMessageToList(String senderID, String receiverID, String firstNameS, String lastNameS,
                                  String firstNameR, String lastNameR, String content,String emailSender,
                                  String emailReceiver) {

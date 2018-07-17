@@ -21,11 +21,12 @@ import io.realm.Realm;
 public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHolder> {
 
     protected Realm r;
-
     private List<Contact> listContacts;
 
+    /**
+     * we define an OnClick interface in order to interact with each cell of the recyclerview
+     */
     private OnClick onClick;
-
     public interface OnClick {
         void onItemClick(int position);
     }

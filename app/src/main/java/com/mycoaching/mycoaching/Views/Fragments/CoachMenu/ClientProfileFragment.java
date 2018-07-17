@@ -34,7 +34,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
-import io.realm.RealmObject;
 
 import static com.mycoaching.mycoaching.Util.CommonMethods.getCorrespondingErrorMessage;
 import static com.mycoaching.mycoaching.Util.CommonMethods.isNetworkAvailable;
@@ -101,6 +100,9 @@ public class ClientProfileFragment extends Fragment{
     @BindView(R.id.add_prescription)
     Button add_prescription;
 
+    /**
+     * This method will perform an intent to the Phone application
+     */
     @OnClick(R.id.call)
     public void call(){
         String phone = b.getString("phoneNumber");
@@ -108,6 +110,9 @@ public class ClientProfileFragment extends Fragment{
         startActivity(intent);
     }
 
+    /**
+     * This method will perform an intent to the mail application (Gmail)
+     */
     @OnClick(R.id.mail)
     public void mail(){
         Uri uri = Uri.parse("mailto:" + b.getString("mail"))

@@ -19,10 +19,10 @@ import com.mycoaching.mycoaching.R;
 import com.mycoaching.mycoaching.Views.Activities.Common.LoginActivity;
 import com.mycoaching.mycoaching.Views.Activities.Common.SettingsActivity;
 import com.mycoaching.mycoaching.Views.Activities.Common.SplashScreenActivity;
-import com.mycoaching.mycoaching.Views.Fragments.Common.PrescriptionFragment;
 import com.mycoaching.mycoaching.Views.Fragments.Common.ChatFragment;
 import com.mycoaching.mycoaching.Views.Fragments.Common.EventFragment;
 import com.mycoaching.mycoaching.Views.Fragments.Common.FollowUpFragment;
+import com.mycoaching.mycoaching.Views.Fragments.Common.PrescriptionFragment;
 import com.mycoaching.mycoaching.Views.Fragments.Common.ThreadFragment;
 
 import java.io.IOException;
@@ -122,20 +122,25 @@ public class UserMainActivity extends AppCompatActivity {
             return;
         }
 
+        // we put a boolean which indicates to EventFragment that the current user is a Coach
         b.putBoolean("isCoach",false);
         ef.setArguments(b);
 
+        // by default, the first item to display in the navigation bar is the ChatFragment
         navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.getMenu().getItem(2).setChecked(true);
+
         ft = getSupportFragmentManager().beginTransaction();
+        // we add all fragments to the activity
         addFragments();
+        // then we hide all fragments in order to display only the EventFragment at the creation of the view
         hideFragments();
         ft.show(ef);
         ft.commit();
         realm = Realm.getDefaultInstance();
 
-        /**
+        /*
          * The following code is used to display the overflow three dots button in the Toolbar.
          * This overflow button gives access to deconnection feature et settings.
          * If the user choose the decconnection feature, all data of the application will be erased.

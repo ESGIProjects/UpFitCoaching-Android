@@ -44,6 +44,9 @@ public class AppraisalFragment extends Fragment {
     protected Realm r;
     protected View v;
 
+    /**
+     * This method is defined in order to enable a nest Scroll into the parent scrollview
+     */
     @OnTouch(R.id.comment)
     boolean handleNestedScroll(View v, MotionEvent event) {
         v.getParent().getParent().requestDisallowInterceptTouchEvent(true);

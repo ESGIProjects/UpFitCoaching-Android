@@ -182,6 +182,7 @@ public class EditEvent extends Dialog{
                 }
                 catch (ParseException pe){
                     pe.printStackTrace();
+                    pd.dismiss();
                 }
             }
             else{
@@ -244,6 +245,11 @@ public class EditEvent extends Dialog{
         setContentView(R.layout.dialog_edit_event);
         ButterKnife.bind(this);
         title.setText(name);
+        /*
+            we check the type of the event
+            if it' 0, the default position of the spinner will be "Bilan"
+            else, it will be "Session"
+         */
         if(type.equals("0")){
             typeSpinner.setSelection(getIndex(typeSpinner,"Bilan"));
         }

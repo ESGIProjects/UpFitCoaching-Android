@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -329,7 +328,6 @@ public class FollowUpFragment extends Fragment {
         List<Entry> armEntries = new ArrayList<>();
 
         for(int i = 0; i < listSpecific.size(); i++){
-
             String splitBirth[] = listSpecific.get(i).getUser().getBirthDate().split(" ")[0].split("-");
             LocalDate birth = new LocalDate(Integer.valueOf(splitBirth[0])
                     ,Integer.valueOf(splitBirth[1]),Integer.valueOf(splitBirth[2]));
@@ -498,6 +496,7 @@ public class FollowUpFragment extends Fragment {
         thighValue.setText(getResources().getString(R.string.thigh,listSpecific.get(listSpecific.size()-1).getThighCircumference()));
         armValue.setText(getResources().getString(R.string.arm,listSpecific.get(listSpecific.size()-1).getArmCircumference()));
 
+        // do not remove these three lines, invalidate method is used in order to refresh a chart
         lcWeight.invalidate();
         lcBody.invalidate();
         lcMeasure.invalidate();

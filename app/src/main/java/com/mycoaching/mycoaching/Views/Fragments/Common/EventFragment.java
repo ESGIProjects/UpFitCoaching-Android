@@ -13,14 +13,12 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.auth0.android.jwt.JWT;
 import com.mycoaching.mycoaching.Api.ApiCall;
 import com.mycoaching.mycoaching.Api.ApiResults;
 import com.mycoaching.mycoaching.Api.ServiceResultListener;
@@ -48,7 +46,6 @@ import butterknife.OnClick;
 import io.realm.Realm;
 
 import static com.mycoaching.mycoaching.Util.CommonMethods.getCorrespondingErrorMessage;
-import static com.mycoaching.mycoaching.Util.CommonMethods.getDate;
 import static com.mycoaching.mycoaching.Util.CommonMethods.isNetworkAvailable;
 import static com.mycoaching.mycoaching.Util.CommonMethods.isTokenExpired;
 import static com.mycoaching.mycoaching.Util.CommonMethods.refreshToken;
@@ -138,6 +135,10 @@ public class EventFragment extends Fragment implements EventAdapter.OnClick, Swi
         rv.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         rv.setAdapter(ea);
 
+        /*
+            We set a listener to the calendar in order to display only events available for a
+            specific date
+         */
         mcv.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
@@ -227,9 +228,8 @@ public class EventFragment extends Fragment implements EventAdapter.OnClick, Swi
             });
         }
         else{
-
+            Toast.makeText(getContext(),R.string.no_connection,Toast.LENGTH_LONG).show();
         }
-
         if (srl.isRefreshing()) {
             srl.setRefreshing(false);
         }
@@ -280,6 +280,10 @@ public class EventFragment extends Fragment implements EventAdapter.OnClick, Swi
         }
     }
 
+    /**
+     * If an date is in listDaysSession and in listDaysAppointment, it means that
+     * the date contained at least one event of each type, so we add it to listDaysCombined
+     */
     private void addCombinedElements(){
         for(CalendarDay cd : listDaysAppointment){
             if(listDaysSession.contains(cd)){
@@ -288,6 +292,10 @@ public class EventFragment extends Fragment implements EventAdapter.OnClick, Swi
         }
     }
 
+    /**
+     * If a date is already presents in listDaysCombined, we have to remove it from listDaysSession
+     * and listDaysAppointment. Otherwise, dates will be duplicated
+     */
     private void removeDuplicateElements(){
         for(CalendarDay cd : listDaysCombined){
             listDaysSession.remove(cd);

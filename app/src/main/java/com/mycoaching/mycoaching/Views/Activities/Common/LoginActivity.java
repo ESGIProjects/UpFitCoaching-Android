@@ -5,12 +5,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.gson.Gson;
 import com.mycoaching.mycoaching.Api.ApiCall;
 import com.mycoaching.mycoaching.Api.ApiResults;
 import com.mycoaching.mycoaching.Api.ServiceResultListener;
@@ -86,7 +84,9 @@ public class LoginActivity extends AppCompatActivity {
                                     }
                                 });
                             }
-                            //we check if the user is a coach or a regular
+                            /*
+                             * we check if the user is a coach or a regular
+                             */
                             if (ar.getUt().getUr().getType() == 2) {
                                 i = new Intent(LoginActivity.this, CoachMainActivity.class);
                                 performTransition(LoginActivity.this,i, R.animator.slide_from_right, R.animator.slide_to_left);

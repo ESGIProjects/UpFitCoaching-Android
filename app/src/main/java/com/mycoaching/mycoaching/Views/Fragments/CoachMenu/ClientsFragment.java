@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -96,6 +95,9 @@ public class ClientsFragment extends Fragment implements ClientsAdapter.OnClick,
                 public void onResult(ApiResults ar) {
                     if(ar.getResponseCode() == 200){
                         ids.add(Integer.valueOf(ur.getId()));
+                        /*
+                            We build a contact list from getConversation HTTP request
+                         */
                         for (Message m : ar.getListMessage()) {
                             if (!ids.contains(Integer.valueOf(m.getSender().getId()))) {
                                 u = new UserRealm(m.getSender().getId(),m.getSender().getMail(),
@@ -112,6 +114,9 @@ public class ClientsFragment extends Fragment implements ClientsAdapter.OnClick,
                                 ids.add(Integer.valueOf(m.getReceiver().getId()));
                                 lu.add(u);
                             }
+                            /*
+                                When we have all contacts, we perform a sort with firstname and lastname
+                             */
                             Collections.sort(lu, new Comparator<UserRealm>() {
                                 public int compare(UserRealm u1, UserRealm u2) {
                                     String fn1 = u1.getFirstName();

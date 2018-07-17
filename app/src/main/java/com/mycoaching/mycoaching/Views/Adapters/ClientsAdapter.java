@@ -24,8 +24,10 @@ public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.MyViewHo
 
     private List<UserRealm> listUsers;
 
+    /**
+     * we define an OnClick interface in order to interact with each cell of the recyclerview
+     */
     private OnClick onClick;
-
     public interface OnClick {
         void onItemClick(int position);
     }

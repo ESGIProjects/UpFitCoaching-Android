@@ -82,6 +82,9 @@ public class ChatFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     void sendMessage() {
         if(isNetworkAvailable(getContext())){
             if(checkFields(et.getText().toString())){
+                /*
+                   We build the first JSON Object which will be the sender
+                 */
                 JSONObject object = new JSONObject();
                 try {
                     object.put("date",getDate());
@@ -103,6 +106,12 @@ public class ChatFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
                     JSONObject receiver = new JSONObject();
 
+                    /*
+                        Then we build the JSON object depends on the user type
+                        If the user is not a coach, the object is build from local database
+                        If the user is a coach, we build the object from the first message
+                        in the list because the first is always send by the regular user
+                    */
                     if (!isCoach) {
                         receiver.put("id", Integer.valueOf(ur.getIdCoach()));
                         receiver.put("type", 2);
@@ -133,6 +142,9 @@ public class ChatFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                     if(isTokenExpired(ur.getToken())){
                         refreshToken(ur.getToken(),getContext());
                     }
+                    /*
+                        If the user is a coach, we use the websocket defined in ListChatFragment
+                     */
                     ListChatFragment lcf = (ListChatFragment) getActivity().getSupportFragmentManager().findFragmentByTag("LCF");
                     lcf.getWs().send(object.toString());
                     lcf.addMessageToList(ur.getId(), lm.get(lm.size() - 1).getSender().getId(), ur.getFirstName(),
@@ -246,12 +258,19 @@ public class ChatFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 }
             });
         }
+        else{
+            Toast.makeText(getContext(),R.string.no_connection,Toast.LENGTH_LONG).show();
+        }
         if (srl.isRefreshing()) {
             srl.setRefreshing(false);
         }
         pd.dismiss();
     }
 
+    /**
+     *   This method is used in order to add a message to the list with informations from
+     *   incomming message on websocket
+     */
     public void addMessageToList(String senderID, String receiverID, String firstNameS, String lastNameS,
                                  String firstNameR, String lastNameR, String content, String emailSender,
                                  String emailReceiver) {
@@ -301,6 +320,10 @@ public class ChatFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             Log.i("CLOSE CF ws : ", code + " & " + reason);
         }
 
+        /**
+         * if the websocket is in failure for some reason (network for example), we try to rebuild the websocket
+         * depends on the WEB_SOCKET_TIMER variable
+         */
         @Override
         public void onFailure(WebSocket webSocket, Throwable t, Response response) {
             ws.close(1000,"Network issue");
@@ -314,14 +337,25 @@ public class ChatFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         }
     }
 
+    /**
+      *  This method is used by ListChatFragment in order to know if the message received have to be push
+      *  in the coach ChatFragment
+      */
+
+    public String getUserId(){
+        return lm.get(lm.size() - 1).getSender().getId();
+    }
+
     @Override
     public void onRefresh() {
-        if(isNetworkAvailable(getContext()) && !isCoach){
-            lm.clear();
+        if(!isCoach){
+            if(isNetworkAvailable(getContext()) && !isCoach){
+                lm.clear();
+            }
             getConversation();
         }
         else{
-
+            srl.setRefreshing(false);
         }
     }
 
