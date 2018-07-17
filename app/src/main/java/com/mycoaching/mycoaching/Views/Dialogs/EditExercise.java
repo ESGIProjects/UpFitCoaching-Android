@@ -44,6 +44,7 @@ import static com.mycoaching.mycoaching.Util.Constants.DATE_TIME_FORMATTER;
 
 /**
  * Created by kevin on 09/07/2018.
+ * Version 1.0
  */
 
 public class EditExercise extends Dialog{

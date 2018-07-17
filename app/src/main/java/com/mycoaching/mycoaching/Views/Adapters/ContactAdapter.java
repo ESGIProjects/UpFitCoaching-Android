@@ -15,7 +15,9 @@ import io.realm.Realm;
 
 /**
  * Created by kevin on 20/05/2018.
+ * Version 1.0
  */
+
 public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHolder> {
 
     Realm r;

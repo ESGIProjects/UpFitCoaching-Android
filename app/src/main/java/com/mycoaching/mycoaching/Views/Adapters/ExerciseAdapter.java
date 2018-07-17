@@ -17,7 +17,9 @@ import java.util.List;
 
 /**
  * Created by kevin on 08/07/2018.
+ * Version 1.0
  */
+
 public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.MyViewHolder> {
 
     private List<Exercise> listExercise;

@@ -30,12 +30,14 @@ import static com.mycoaching.mycoaching.Util.CommonMethods.checkFields;
 
 /**
  * Created by kevin on 08/07/2018.
+ * Version 1.0
  */
+
 public class AddExercise extends Dialog {
 
     private boolean isOK = false;
-    List<String> listExercise;
-    Exercise newExercise;
+    private List<String> listExercise;
+    private Exercise newExercise;
 
     @BindView(R.id.spinner)
     Spinner spinner;

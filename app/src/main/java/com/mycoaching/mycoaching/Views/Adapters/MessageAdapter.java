@@ -16,6 +16,7 @@ import io.realm.Realm;
 
 /**
  * Created by kevin on 08/05/2018.
+ * Version 1.0
  */
 
 public class MessageAdapter extends RecyclerView.Adapter {

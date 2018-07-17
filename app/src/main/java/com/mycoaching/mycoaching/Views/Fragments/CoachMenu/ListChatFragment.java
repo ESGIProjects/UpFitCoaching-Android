@@ -81,6 +81,7 @@ public class ListChatFragment extends Fragment implements ContactAdapter.OnClick
         isActive = true;
         v = inflater.inflate(R.layout.fragment_list_contact, container, false);
         ButterKnife.bind(this,v);
+
         r = Realm.getDefaultInstance();
         ur = r.where(UserRealm.class).findFirst();
 

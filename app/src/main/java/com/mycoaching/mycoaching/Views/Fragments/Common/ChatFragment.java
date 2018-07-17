@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -56,7 +57,7 @@ import static com.mycoaching.mycoaching.Util.Constants.WEB_SOCKET_TIMER;
  * Created by kevin on 28/04/2018.
  */
 
-public class ChatFragment extends Fragment {
+public class ChatFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
 
     private MessageAdapter ma;
     private List<Message> lm = new ArrayList<>();
@@ -72,6 +73,9 @@ public class ChatFragment extends Fragment {
 
     @BindView(R.id.input)
     EditText et;
+
+    @BindView(R.id.swipe)
+    SwipeRefreshLayout srl;
 
     @OnClick(R.id.send)
     void sendMessage() {
@@ -167,6 +171,8 @@ public class ChatFragment extends Fragment {
 
         rv = v.findViewById(R.id.list);
 
+        srl.setOnRefreshListener(this);
+
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             lm.addAll(bundle.<Message>getParcelableArrayList("listMessages"));
@@ -238,6 +244,9 @@ public class ChatFragment extends Fragment {
                 }
             });
         }
+        if (srl.isRefreshing()) {
+            srl.setRefreshing(false);
+        }
         pd.dismiss();
     }
 
@@ -302,4 +311,18 @@ public class ChatFragment extends Fragment {
             t.printStackTrace();
         }
     }
+
+    @Override
+    public void onRefresh() {
+        if(isNetworkAvailable(getContext()) && !isCoach){
+            lm.clear();
+            getConversation();
+        }
+        else{
+            if (srl.isRefreshing()) {
+                srl.setRefreshing(false);
+            }
+        }
+    }
+
 }

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -57,7 +58,7 @@ import static com.mycoaching.mycoaching.Util.Constants.DATE_FORMATTER;
  * Created by kevin on 28/04/2018.
  */
 
-public class EventFragment extends Fragment implements EventAdapter.OnClick{
+public class EventFragment extends Fragment implements EventAdapter.OnClick, SwipeRefreshLayout.OnRefreshListener{
 
     private List<Event> listEvents = new ArrayList<>();
     private List<Event> listToDisplay = new ArrayList<>();
@@ -80,6 +81,9 @@ public class EventFragment extends Fragment implements EventAdapter.OnClick{
 
     @BindView(R.id.no_data)
     TextView label;
+
+    @BindView(R.id.swipe)
+    SwipeRefreshLayout srl;
 
     @OnClick(R.id.buttonEvents)
     void action() {
@@ -112,6 +116,8 @@ public class EventFragment extends Fragment implements EventAdapter.OnClick{
         super.onCreate(savedInstanceState);
         v = inflater.inflate(R.layout.fragment_event, container, false);
         ButterKnife.bind(this, v);
+
+        srl.setOnRefreshListener(this);
 
         fm = getActivity().getSupportFragmentManager();
 
@@ -162,61 +168,69 @@ public class EventFragment extends Fragment implements EventAdapter.OnClick{
         pd.setCancelable(false);
         pd.setMessage("Récupération des évènements en cours...");
         pd.show();
-        if(isTokenExpired(ur.getToken())){
-            refreshToken(ur.getToken(),getContext());
-        }
-        ApiCall.getEvents("Bearer " + ur.getToken(),Integer.valueOf(ur.getId()), new ServiceResultListener() {
-            @Override
-            public void onResult(ApiResults ar) {
-                mcv.setSelectedDate(new Date());
-                if(ar.getResponseCode() == 200){
-                    if(ar.getListEvent().size() != 0){
-                        listEvents.addAll(ar.getListEvent());
-                        for(Event e : listEvents){
-                            if(e.getStart().split(" ")[0].equals(formatter.format(mcv.getSelectedDate().getDate()))){
-                                listToDisplay.add(e);
+        if(isNetworkAvailable(getContext())){
+            if(isTokenExpired(ur.getToken())){
+                refreshToken(ur.getToken(),getContext());
+            }
+            ApiCall.getEvents("Bearer " + ur.getToken(),Integer.valueOf(ur.getId()), new ServiceResultListener() {
+                @Override
+                public void onResult(ApiResults ar) {
+                    mcv.setSelectedDate(new Date());
+                    if(ar.getResponseCode() == 200){
+                        if(ar.getListEvent().size() != 0){
+                            listEvents.addAll(ar.getListEvent());
+                            for(Event e : listEvents){
+                                if(e.getStart().split(" ")[0].equals(formatter.format(mcv.getSelectedDate().getDate()))){
+                                    listToDisplay.add(e);
+                                }
                             }
+                            if(listToDisplay.isEmpty()){
+                                label.setVisibility(View.VISIBLE);
+                                rv.setVisibility(View.GONE);
+                            }
+                            else{
+                                label.setVisibility(View.GONE);
+                                rv.setVisibility(View.VISIBLE);
+                            }
+
+                            sortElements(listEvents);
+                            addCombinedElements();
+                            removeDuplicateElements();
+
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    int colorsAppointment = Color.rgb(0, 0, 255);
+                                    int colorsSession = Color.rgb(0, 255, 0);
+                                    int[] colorsCombined = {Color.rgb(0, 0, 255) ,Color.rgb(0, 255, 0)};
+                                    mcv.removeDecorators();
+                                    mcv.addDecorator(new EventDecorator(listDaysAppointment,colorsAppointment));
+                                    mcv.addDecorator(new EventDecorator(listDaysSession,colorsSession));
+                                    mcv.addDecorator(new EventDecorator(listDaysCombined,colorsCombined));
+                                    mcv.setSelectedDate(new Date());
+                                    ea.notifyDataSetChanged();
+                                }
+                            });
                         }
-                        if(listToDisplay.isEmpty()){
+                        else{
+                            mcv.removeDecorators();
                             label.setVisibility(View.VISIBLE);
                             rv.setVisibility(View.GONE);
                         }
-                        else{
-                            label.setVisibility(View.GONE);
-                            rv.setVisibility(View.VISIBLE);
-                        }
-
-                        sortElements(listEvents);
-                        addCombinedElements();
-                        removeDuplicateElements();
-
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                int colorsAppointment = Color.rgb(0, 0, 255);
-                                int colorsSession = Color.rgb(0, 255, 0);
-                                int[] colorsCombined = {Color.rgb(0, 0, 255) ,Color.rgb(0, 255, 0)};
-                                mcv.removeDecorators();
-                                mcv.addDecorator(new EventDecorator(listDaysAppointment,colorsAppointment));
-                                mcv.addDecorator(new EventDecorator(listDaysSession,colorsSession));
-                                mcv.addDecorator(new EventDecorator(listDaysCombined,colorsCombined));
-                                mcv.setSelectedDate(new Date());
-                                ea.notifyDataSetChanged();
-                            }
-                        });
                     }
                     else{
-                        mcv.removeDecorators();
-                        label.setVisibility(View.VISIBLE);
-                        rv.setVisibility(View.GONE);
+                        Toast.makeText(getContext(),getCorrespondingErrorMessage(ar.getErrorMessage()),
+                                Toast.LENGTH_LONG).show();
                     }
                 }
-                else{
-                    Toast.makeText(getContext(),getCorrespondingErrorMessage(ar.getErrorMessage()),
-                            Toast.LENGTH_LONG).show();
-                }
-            }
-        });
+            });
+        }
+        else{
+            Toast.makeText(getContext(),R.string.no_connection,Toast.LENGTH_LONG).show();
+        }
+        if (srl.isRefreshing()) {
+            srl.setRefreshing(false);
+        }
         pd.dismiss();
     }
 
@@ -277,5 +291,17 @@ public class EventFragment extends Fragment implements EventAdapter.OnClick{
             listDaysSession.remove(cd);
             listDaysAppointment.remove(cd);
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        if(isNetworkAvailable(getContext())){
+            listEvents.clear();
+            listToDisplay.clear();
+            listDaysAppointment.clear();
+            listDaysSession.clear();
+            listDaysCombined.clear();
+        }
+        prepareData();
     }
 }

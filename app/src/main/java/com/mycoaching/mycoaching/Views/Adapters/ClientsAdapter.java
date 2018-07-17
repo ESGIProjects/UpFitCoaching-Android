@@ -15,7 +15,9 @@ import io.realm.Realm;
 
 /**
  * Created by kevin on 20/05/2018.
+ * Version 1.0
  */
+
 public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.MyViewHolder> {
 
     Realm r;

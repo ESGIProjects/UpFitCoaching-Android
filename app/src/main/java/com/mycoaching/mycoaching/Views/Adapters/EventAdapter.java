@@ -15,7 +15,9 @@ import java.util.List;
 
 /**
  * Created by kevin on 16/05/2018.
+ * Version 1.0
  */
+
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder> {
 
     private List<Event> listEvents;

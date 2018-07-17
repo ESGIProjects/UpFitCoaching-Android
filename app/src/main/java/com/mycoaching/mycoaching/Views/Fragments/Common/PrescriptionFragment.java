@@ -7,6 +7,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -50,7 +51,7 @@ import static com.mycoaching.mycoaching.Util.CommonMethods.refreshToken;
 /**
  * Created by kevin on 07/07/2018.
  */
-public class PrescriptionFragment extends Fragment implements ExerciseAdapter.OnClick{
+public class PrescriptionFragment extends Fragment implements ExerciseAdapter.OnClick, SwipeRefreshLayout.OnRefreshListener{
     Bundle b;
     String id;
     Realm r;
@@ -66,6 +67,9 @@ public class PrescriptionFragment extends Fragment implements ExerciseAdapter.On
 
     @BindView(R.id.buttonPrescription)
     FloatingActionButton prescription;
+
+    @BindView(R.id.swipe)
+    SwipeRefreshLayout srl;
 
     @OnClick(R.id.buttonPrescription)
     public void prescription(){
@@ -135,8 +139,9 @@ public class PrescriptionFragment extends Fragment implements ExerciseAdapter.On
         super.onCreate(savedInstanceState);
         v = inflater.inflate(R.layout.fragment_prescription, container, false);
         b = this.getArguments();
-
         ButterKnife.bind(this, v);
+        srl.setOnRefreshListener(this);
+
         r = Realm.getDefaultInstance();
         ur = r.where(UserRealm.class).findFirst();
 
@@ -198,6 +203,9 @@ public class PrescriptionFragment extends Fragment implements ExerciseAdapter.On
         else{
             Toast.makeText(getContext(),R.string.no_connection,Toast.LENGTH_LONG).show();
         }
+        if (srl.isRefreshing()) {
+            srl.setRefreshing(false);
+        }
         pd.dismiss();
     }
 
@@ -231,4 +239,11 @@ public class PrescriptionFragment extends Fragment implements ExerciseAdapter.On
         }
     }
 
+    @Override
+    public void onRefresh() {
+        if(isNetworkAvailable(getContext())){
+            le.clear();
+        }
+        getPrescription();
+    }
 }

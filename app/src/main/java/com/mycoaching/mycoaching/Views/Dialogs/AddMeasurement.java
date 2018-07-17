@@ -29,14 +29,16 @@ import static com.mycoaching.mycoaching.Util.CommonMethods.refreshToken;
 
 /**
  * Created by kevin on 04/07/2018.
+ * Version 1.0
  */
+
 public class AddMeasurement extends Dialog {
 
-    String id;
-    boolean isOK = false;
-    ProgressDialog pd;
-    Realm r;
-    UserRealm ur;
+    private String id;
+    private boolean isOK = false;
+    private ProgressDialog pd;
+    private UserRealm ur;
+    protected Realm r;
 
     public AddMeasurement(Activity a, String id) {
         super(a);

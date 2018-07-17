@@ -28,16 +28,16 @@ import static com.mycoaching.mycoaching.Util.CommonMethods.refreshToken;
 
 /**
  * Created by kevin on 03/06/2018.
+ * Version 1.0
  */
+
 public class AddThread extends Dialog {
 
-    Realm r;
-    UserRealm ur;
-
-    Activity activity;
-    ProgressDialog pd;
-
-    boolean isOK = false;
+    private ProgressDialog pd;
+    private UserRealm ur;
+    private boolean isOK = false;
+    protected Realm r;
+    protected Activity activity;
 
     @BindView(R.id.thread_title)
     EditText threadTitle;

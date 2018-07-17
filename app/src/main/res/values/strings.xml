@@ -9,8 +9,8 @@
     <string name="sign_up">Inscription</string>
     <string name="user">Utilisateur</string>
     <string name="coach">Coach</string>
-    <string name="connection_success">Connection réussie</string>
-    <string name="no_connection">Aucune connection internet détectée</string>
+    <string name="connection_success">Connexion réussie</string>
+    <string name="no_connection">Aucune connexion internet détectée</string>
     <string name="no_type_defined">Veuillez préciser le type d\'utilisateur</string>
     <string name="missing_fields">Champs manquants !</string>
     <string name="wrong_credentials">Mauvais email/mot de passe !</string>

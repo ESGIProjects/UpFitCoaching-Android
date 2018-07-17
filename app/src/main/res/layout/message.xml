@@ -29,6 +29,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/colorWhite"
         android:id="@+id/message_body"
         android:layout_below="@+id/name"
         android:layout_alignStart="@+id/name"

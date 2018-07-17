@@ -51,6 +51,7 @@ import static com.mycoaching.mycoaching.Util.Constants.DATE_TIME_FORMATTER;
 
 /**
  * Created by kevin on 16/06/2018.
+ * Version 1.0
  */
 
 public class AddEvent extends Dialog{
@@ -65,8 +66,7 @@ public class AddEvent extends Dialog{
     private AutoCompleteTextView listUser;
     private List<String> list;
     private String idSecondUser;
-
-    public int type;
+    protected int type;
 
     @BindView(R.id.event_title)
     EditText eventTitle;
@@ -208,12 +208,12 @@ public class AddEvent extends Dialog{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.dialog_event);
+        ButterKnife.bind(this);
 
         r = Realm.getDefaultInstance();
         ur = r.where(UserRealm.class).findFirst();
-
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.dialog_event);
 
         if(isCoach){
             TextInputLayout til = this.findViewById(R.id.til);
@@ -228,7 +228,6 @@ public class AddEvent extends Dialog{
             listUser.setAdapter(adapter);
             listUser.setThreshold(1);
         }
-        ButterKnife.bind(this);
     }
 
     public boolean getIsOK(){

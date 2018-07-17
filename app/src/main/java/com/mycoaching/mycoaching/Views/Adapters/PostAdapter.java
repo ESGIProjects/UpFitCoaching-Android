@@ -13,7 +13,9 @@ import java.util.List;
 
 /**
  * Created by kevin on 02/06/2018.
+ * Version 1.0
  */
+
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> {
 
     private List<Post> listPosts;

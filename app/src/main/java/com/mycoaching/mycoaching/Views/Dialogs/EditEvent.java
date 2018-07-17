@@ -42,16 +42,18 @@ import static com.mycoaching.mycoaching.Util.Constants.DATE_TIME_FORMATTER;
 
 /**
  * Created by kevin on 18/06/2018.
+ * Version 1.0
  */
+
 public class EditEvent extends Dialog{
 
     private boolean isOK = false;
-    Realm r;
-    UserRealm ur;
+    private UserRealm ur;
     private String eventID, name, type, start, end, updatedBy;
     private ProgressDialog pd;
     private SimpleDateFormat formatterDate = new SimpleDateFormat(DATE_FORMATTER, Locale.getDefault());
     private SimpleDateFormat formatterDateTime = new SimpleDateFormat(DATE_TIME_FORMATTER, Locale.getDefault());
+    protected Realm r;
 
     @BindView(R.id.event_title)
     TextView title;
