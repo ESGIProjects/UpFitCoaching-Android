@@ -124,12 +124,12 @@ public class AddMeasurement extends Dialog {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        r = Realm.getDefaultInstance();
-        ur = r.where(UserRealm.class).findFirst();
-        ButterKnife.bind(this);
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_measurement);
+        ButterKnife.bind(this);
+        r = Realm.getDefaultInstance();
+        ur = r.where(UserRealm.class).findFirst();
     }
 
     public boolean getIsOK(){
